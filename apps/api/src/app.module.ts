@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { EventModule } from './event/event.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { DonationModule } from './donation/donation.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { PrismaModule } from './prisma/prisma.module';
     PrismaModule,
     AuthModule,
     EventModule,
-    GatewayModule
+    GatewayModule,
+    DonationModule
   ],
   controllers: [AppController],
   providers: [AppService],

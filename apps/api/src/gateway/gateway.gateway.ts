@@ -11,10 +11,11 @@ import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: '*', // Allow all origins for now
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    credentials: true,
   },
 })
-export class GatewayGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class DonationGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server!: Server;
 
@@ -34,5 +35,10 @@ export class GatewayGateway implements OnGatewayConnection, OnGatewayDisconnect 
     client.join(eventId);
     console.log(`Client ${client.id} joined event: ${eventId}`);
     return { event: 'joined', eventId };
+  }
+
+  emitDonation(donation: any) {
+    // Broadcast to everyone for now, or specific room if we had eventId
+    this.server.emit('donation.created', donation);
   }
 }

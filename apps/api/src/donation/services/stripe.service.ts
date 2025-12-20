@@ -1,0 +1,55 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import Stripe from 'stripe';
+
+@Injectable()
+export class StripeService {
+    private stripe: Stripe;
+    private readonly logger = new Logger(StripeService.name);
+
+    constructor(private configService: ConfigService) {
+        const secretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
+        if (!secretKey) {
+            this.logger.error('STRIPE_SECRET_KEY is not defined in environment variables');
+            // In dev mode, we might want to throw or just log. For now, logging.
+        }
+
+        this.stripe = new Stripe(secretKey || 'sk_test_placeholder', {
+            // apiVersion: '2024-12-18.acacia', // Letting SDK default to avoid type mismatch
+        });
+    }
+
+    async createPaymentIntent(amount: number, currency: string = 'usd', metadata: Record<string, any> = {}) {
+        try {
+            const paymentIntent = await this.stripe.paymentIntents.create({
+                amount, // Amount in cents
+                currency,
+                metadata,
+                automatic_payment_methods: {
+                    enabled: true,
+                },
+            });
+            return {
+                clientSecret: paymentIntent.client_secret,
+                id: paymentIntent.id
+            };
+        } catch (error) {
+            this.logger.error(`Error creating payment intent: ${error.message}`);
+            throw error;
+        }
+    }
+
+    async constructEventFromPayload(signature: string, payload: Buffer) {
+        const webhookSecret = this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
+
+        if (!webhookSecret) {
+            throw new Error('STRIPE_WEBHOOK_SECRET is not configured');
+        }
+
+        return this.stripe.webhooks.constructEvent(
+            payload,
+            signature,
+            webhookSecret
+        );
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "login": {
+        "title": "Bon retour",
+        "subtitle": "Connectez-vous à votre compte",
+        "email": "Email",
+        "password": "Mot de passe",
+        "submit": "Se connecter",
+        "google": "Continuer avec Google",
+        "loading": "Connexion...",
+        "email_placeholder": "admin@exemple.com"
+    },
+    "nav": {
+        "dashboard": "Tableau de bord",
+        "events": "Événements",
+        "settings": "Paramètres",
+        "logout": "Déconnexion"
+    },
+    "dashboard": {
+        "title": "Tableau de bord",
+        "overview": "Aperçu",
+        "chart_placeholder": "Graphique",
+        "recent_donations": "Dons récents",
+        "stats": {
+            "total_revenue": "Revenu total",
+            "active_events": "Événements actifs",
+            "donations": "Dons",
+            "staff_members": "Membres du personnel"
+        }
+    },
+    "live": {
+        "title": "En Direct",
+        "status": {
+            "connected": "Connecté",
+            "connecting": "Connexion..."
+        },
+        "new_donation": "Nouveau Don!",
+        "amount": "Montant",
+        "from": "De",
+        "anonymous": "Anonyme",
+        "waiting": "En attente de dons..."
+    },
+    "donation": {
+        "title": "Faire un don",
+        "subtitle": "Soutenez notre cause",
+        "amount": "Choisir le montant",
+        "custom_amount": "Montant personnalisé",
+        "contact_info": "Coordonnées",
+        "payment": "Détails du paiement",
+        "name": "Nom complet",
+        "email": "Adresse email",
+        "message": "Message (Optionnel)",
+        "anonymous": "Faire un don anonyme",
+        "submit": "Donner {{amount}}",
+        "processing": "Traitement...",
+        "success": "Merci pour votre don !",
+        "error": "Une erreur est survenue. Veuillez réessayer.",
+        "pay_now": "Payer maintenant"
+    },
+    "common": {
+        "back": "Retour"
+    }
+}

@@ -19,6 +19,9 @@ This document serves as the primary source of truth for all AI agents and develo
     - Always implement documentation for the feature before moving to the next feature.
     - Always implement changelog for the feature before moving to the next feature.
 - Docs via mkdocs.
+- The code should be readable, maintainable and the (cognitive) complexity should be as low as possible.
+- SOLID principles should be followed.
+- The code should be refactored if it is not following the SOLID principles.
 
 - The project follows a **Monorepo** structure (using pnpm workspaces) with a clear separation of concerns between Frontend and Backend, while sharing types and utilities where possible.
 
@@ -108,6 +111,14 @@ fundraising-event/
     *   **Display Logic Only:** The frontend should not perform complex business calculations (e.g., tax receipt generation).
     *   **Optimistic UI:** Allowed for staff entry (offline mode), but must reconcile with server truth.
     *   **Secrets:** NEVER store Stripe Secret Keys or Admin tokens in Frontend code/env.
+
+*   **Test Coverage:**
+    *   **Minimum Coverage:** **60%** (CI should fail if below).
+    *   **Target Coverage:** **80%** (Strive for this in all core modules).
+
+*   **Internationalization (i18n):**
+    *   **No Hardcoded Text:** No label or text should be added directly in the code.
+    *   **Use Locales:** Always use the locales files (e.g., via `t('key')`).
 
 *   **Backend:**
     *   **Source of Truth:** Calculates totals, validates payments, generates PDFs.

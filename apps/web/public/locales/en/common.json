@@ -1,0 +1,62 @@
+{
+    "login": {
+        "title": "Welcome Back",
+        "subtitle": "Sign in to your account",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Sign In",
+        "google": "Sign in with Google",
+        "loading": "Signing in...",
+        "email_placeholder": "admin@example.com"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "events": "Events",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "overview": "Overview",
+        "chart_placeholder": "Chart Placeholder",
+        "recent_donations": "Recent Donations",
+        "stats": {
+            "total_revenue": "Total Revenue",
+            "active_events": "Active Events",
+            "donations": "Donations",
+            "staff_members": "Staff Members"
+        }
+    },
+    "live": {
+        "title": "Live Screen",
+        "status": {
+            "connected": "Connected",
+            "connecting": "Connecting..."
+        },
+        "new_donation": "New Donation!",
+        "amount": "Amount",
+        "from": "From",
+        "anonymous": "Anonymous",
+        "waiting": "Waiting for donations..."
+    },
+    "donation": {
+        "title": "Make a Donation",
+        "subtitle": "Support our cause",
+        "amount": "Select Amount",
+        "custom_amount": "Custom Amount",
+        "contact_info": "Contact Information",
+        "payment": "Payment Details",
+        "name": "Full Name",
+        "email": "Email",
+        "message": "Message (Optional)",
+        "anonymous": "Make this donation anonymous",
+        "submit": "Donate {{amount}}",
+        "processing": "Processing...",
+        "success": "Thank you for your donation!",
+        "error": "Something went wrong. Please try again.",
+        "pay_now": "Pay Now"
+    },
+    "common": {
+        "back": "Back"
+    }
+}

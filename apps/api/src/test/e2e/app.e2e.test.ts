@@ -5,6 +5,12 @@ import { AppModule } from '@/app.module';
 import { PrismaService } from '@/database/prisma.service';
 import { vi, describe, beforeEach, afterAll, it, expect } from 'vitest';
 
+vi.mock('@fundraising/white-labeling', async () => ({
+  loadConfig: () => ({ id: 'default' }),
+  defaultConfig: { id: 'default' },
+  EventConfig: {}
+}));
+
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 

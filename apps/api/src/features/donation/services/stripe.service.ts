@@ -26,6 +26,13 @@ export class StripeService implements PaymentProvider {
     });
   }
 
+  /**
+   * Creates a Stripe PaymentIntent for the specified amount.
+   * @param amount Amount in cents (smallest currency unit)
+   * @param currency Currency code (default: 'usd')
+   * @param metadata Additional metadata to attach to the intent
+   * @returns Object containing the clientSecret and intent ID
+   */
   async createPaymentIntent(
     amount: number,
     currency: string = 'usd',

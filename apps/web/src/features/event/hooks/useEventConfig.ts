@@ -1,27 +1,9 @@
 import { useState, useEffect } from 'react';
-import type { EventConfig } from '../types/event.config';
+import { loadConfig } from '@fundraising/white-labeling';
+import type { EventConfig } from '@fundraising/white-labeling';
 
 // Default fallback config
-// Initial empty state (will be populated by fetch)
-const INITIAL_STATE: EventConfig = {
-    id: '',
-    theme: {
-        primaryColor: '',
-        secondaryColor: '',
-        logoUrl: '',
-        background: { color: '', gradient: '' }
-    },
-    content: { title: '', totalLabel: '', goalAmount: 0 },
-    donation: {
-        form: {
-            phone: { enabled: false, required: false },
-            message: { enabled: false, required: false },
-            anonymous: { enabled: false, required: false }
-        },
-        sharing: { enabled: false, networks: [] },
-        payment: { provider: 'stripe', config: {} }
-    }
-};
+const INITIAL_STATE = loadConfig();
 
 export const useEventConfig = () => {
     const [config, setConfig] = useState<EventConfig>(INITIAL_STATE);
@@ -32,38 +14,20 @@ export const useEventConfig = () => {
             const timestamp = Date.now();
 
             try {
-                // Helper to fetch and parse JSON
-                const fetchJson = async (url: string) => {
-                    const res = await fetch(url);
-                    if (!res.ok) throw new Error(`Failed to load ${url}`);
-                    return res.json();
-                };
-
-                let data;
-                try {
-                    // 1. Try user config
-                    data = await fetchJson(`/config/event-config.json?v=${timestamp}`);
-                } catch {
-                    // 2. Fallback to default
-                    data = await fetchJson(`/config/event-config.default.json?v=${timestamp}`);
+                // Fetch runtime override (e.g. from CMS or server-generated file)
+                // We no longer fetch the default JSON, as it's bundled in the code.
+                const res = await fetch(`/config/event-config.json?v=${timestamp}`);
+                if (res.ok) {
+                    const customConfig = await res.json();
+                    // Smart merge logic is handled by the package
+                    setConfig(loadConfig(customConfig));
+                } else {
+                    // Just use default
+                    setConfig(loadConfig());
                 }
-
-                setConfig(data);
-
-                // Inject CSS Variables for theming
-                if (data.theme) {
-                    const root = document.documentElement;
-                    if (data.theme.primaryColor) root.style.setProperty('--primary', data.theme.primaryColor);
-                    if (data.theme.secondaryColor) root.style.setProperty('--secondary', data.theme.secondaryColor);
-
-                    if (data.theme.background) {
-                        if (data.theme.background.color) root.style.setProperty('--background-color', data.theme.background.color);
-                        if (data.theme.background.gradient) root.style.setProperty('--background-gradient', data.theme.background.gradient);
-                    }
-                }
-
             } catch (error) {
-                console.error('Failed to load event config:', error);
+                console.warn('No custom event config found, using defaults.');
+                setConfig(loadConfig());
             } finally {
                 setIsLoading(false);
             }

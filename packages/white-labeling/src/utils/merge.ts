@@ -1,0 +1,38 @@
+import { DeepPartial } from '../types';
+
+/**
+ * Deep merges two objects.
+ * properties in source override properties in target.
+ * Arrays are replaced, not concatenated (usually preferred for config).
+ */
+export function deepMerge<T extends object>(target: T, source: DeepPartial<T>): T {
+    const output = { ...target };
+
+    if (isObject(target) && isObject(source)) {
+        Object.keys(source).forEach((key) => {
+            const sourceKey = key as keyof typeof source;
+            const targetKey = key as keyof typeof target;
+
+            const sourceValue = source[sourceKey];
+            const targetValue = target[targetKey];
+
+            if (isObject(sourceValue)) {
+                if (!(sourceKey in target)) {
+                    Object.assign(output, { [key]: sourceValue });
+                } else if (isObject(targetValue)) {
+                    (output as any)[key] = deepMerge(targetValue as object, sourceValue as any);
+                } else {
+                    Object.assign(output, { [key]: sourceValue });
+                }
+            } else {
+                Object.assign(output, { [key]: sourceValue });
+            }
+        });
+    }
+
+    return output;
+}
+
+function isObject(item: any): item is Record<string, any> {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+}

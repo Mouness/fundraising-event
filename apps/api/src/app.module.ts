@@ -8,15 +8,19 @@ import { GatewayModule } from './features/gateway/gateway.module';
 import { DatabaseModule } from './database/database.module';
 import { DonationModule } from './features/donation/donation.module';
 import { QueueModule } from './features/queue/queue.module';
+import { EventConfigModule } from './features/event/configuration/event-config.module';
+import { MailModule } from './features/mail/mail.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    DatabaseModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    EventConfigModule,
     AuthModule,
     EventModule,
-    GatewayModule,
     DonationModule,
+    MailModule,
     QueueModule,
   ],
   controllers: [AppController],

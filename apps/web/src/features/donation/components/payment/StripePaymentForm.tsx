@@ -9,8 +9,10 @@ import type { PaymentProviderProps } from '../../types/payment.types';
 // Initialize Stripe outside to avoid recreation
 // In a real app config.publishableKey would come from prop, but loadStripe runs once.
 // We can use a singleton lazily initialized if key changes.
+// Singleton promise to prevent multiple Stripe element initializations
 let stripePromise: Promise<any> | null = null;
 
+// Lazily load Stripe only when needed, reusing the promise
 const getStripePromise = (key: string) => {
     if (!stripePromise) {
         stripePromise = loadStripe(key);

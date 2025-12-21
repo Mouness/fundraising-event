@@ -14,6 +14,7 @@ This project is a real-time fundraising platform featuring:
 - **Getting Started**: [Installation Guide](getting-started.md)
 - **Architecture**: [System Overview](architecture.md)
 - **Configuration**: [Setup & Env Vars](configuration.md)
+- **White Labeling**: [Theming & Config](white-labeling.md)
 
 ### Features
 - [Authentication](features/authentication.md): Admin Login, Staff PIN, Security.

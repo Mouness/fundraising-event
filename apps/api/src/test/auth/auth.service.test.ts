@@ -39,6 +39,26 @@ describe('AuthService', () => {
             },
           },
         },
+        {
+          provide: 'AUTH_PROVIDER',
+          useValue: {
+            verify: vi.fn((credentials) => {
+              // Mock logic for local provider behavior
+              if (credentials.isTrusted) {
+                // Google login scenario
+                if (credentials.email === 'admin@example.com') {
+                  return { id: 'admin', email: credentials.email, role: 'ADMIN', name: credentials.name };
+                }
+                return null;
+              }
+              // Password login
+              if (credentials.email === 'admin@example.com' && credentials.password === 'password') {
+                return { id: 'admin', email: 'admin@example.com', role: 'ADMIN' };
+              }
+              return null;
+            }),
+          },
+        },
       ],
     }).compile();
 

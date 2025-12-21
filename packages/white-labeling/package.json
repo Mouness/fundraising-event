@@ -1,0 +1,27 @@
+{
+    "name": "@fundraising/white-labeling",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc && cp -r src/assets/images dist/assets/ && cp src/theme/theme.default.css dist/theme/",
+        "dev": "tsc -w",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:cov": "vitest run --coverage",
+        "lint": "eslint ."
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.2",
+        "eslint": "^9.39.2",
+        "globals": "^16.5.0",
+        "tailwindcss": "^4.1.18",
+        "typescript": "^5.0.0",
+        "typescript-eslint": "^8.50.0",
+        "vitest": "^4.0.16"
+    },
+    "dependencies": {
+        "zod": "^3.0.0"
+    }
+}

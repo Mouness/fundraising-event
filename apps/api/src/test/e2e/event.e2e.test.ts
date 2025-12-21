@@ -3,7 +3,20 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { PrismaService } from '@/database/prisma.service';
+import { EventConfigService } from '@/features/event/configuration/event-config.service';
 import { vi, describe, beforeEach, afterAll, it, expect } from 'vitest';
+
+// Mock white-labeling package to avoid FS/ESM issues during E2E
+vi.mock('@fundraising/white-labeling', async () => {
+    return {
+        loadConfig: () => ({
+            id: 'e2e-config',
+            theme: { primaryColor: 'test-color' }
+        }),
+        defaultConfig: { id: 'default' },
+        EventConfig: {} // Class/interface mock
+    };
+});
 
 describe('EventController (e2e)', () => {
     let app: INestApplication;
@@ -31,11 +44,13 @@ describe('EventController (e2e)', () => {
                     create: vi.fn().mockResolvedValue(mockEvent),
                 },
                 staffCode: {
-                    findUnique: vi.fn(), // Needed for AuthGuard possibly if it hits db? No, JwtStrategy verification doesn't hit DB unless we implemented it so.
-                    // Actually, AuthService.validateStaff hits DB, but JwtStrategy just validates secret. 
-                    // Wait, does any Guard hit DB?
-                    // JwtStrategy validate() payload usually just returns user object. 
+                    findUnique: vi.fn(),
                 }
+            })
+            .overrideProvider(EventConfigService)
+            .useValue({
+                getConfig: () => ({ id: 'mock-e2e', theme: { primaryColor: 'blue' } }),
+                onModuleInit: vi.fn()
             })
             .compile();
 

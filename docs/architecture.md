@@ -48,3 +48,11 @@ Built with **React 19** and **Vite**:
 1.  **Donation Page**: Public-facing form for donors.
 2.  **Live Page**: Real-time dashboard for event screens (Projectors).
 3.  **Admin Dashboard**: Restricted area for event management.
+
+## Shared Packages
+
+### `@fundraising/white-labeling`
+A central library for handling configuration, assets, and themes. This package ensures that both the API and Web apps share the exact same configuration logic and type definitions, enabling true "White Label" capabilities where the core code remains agnostic of the specific event branding.
+
+### `@fundraising/types` (Planned)
+Shared DTOs and interfaces to ensure type compatibility between Frontend and Backend.

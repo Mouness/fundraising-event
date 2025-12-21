@@ -15,9 +15,9 @@ import { DonationModule } from './donation/donation.module';
     AuthModule,
     EventModule,
     GatewayModule,
-    DonationModule
+    DonationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

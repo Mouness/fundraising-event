@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
@@ -10,77 +9,17 @@ import { Label } from '@/shared/ui/label';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/shared/ui/card';
 import type { DonationFormValues } from '../schemas/donation.schema';
 import { donationSchema } from '../schemas/donation.schema';
+import { useEventConfig } from '../../event/hooks/useEventConfig';
 import { api } from '@/lib/api';
+import { PaymentFormFactory } from './payment/PaymentFormFactory';
 
-// Initialize Stripe outside component to avoid recreation
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || 'pk_test_placeholder');
-
-function PaymentSection({ clientSecret, onSuccess, onBack }: { clientSecret: string, onSuccess: () => void, onBack: () => void }) {
-    const stripe = useStripe();
-    const elements = useElements();
+export const CheckoutForm = () => {
     const { t } = useTranslation('common');
-    const [message, setMessage] = useState<string | null>(null);
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [isStripeReady, setIsStripeReady] = useState(false);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!stripe || !elements) return;
-
-        setIsProcessing(true);
-        const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: window.location.origin + '/donate', // Redirect handled by redirect: 'if_required' usually, but good fallback
-            },
-            redirect: 'if_required'
-        });
-
-        if (error) {
-            setMessage(error.message || t('donation.error'));
-            setIsProcessing(false);
-        } else {
-            onSuccess();
-        }
-    };
-
-    return (
-        <form onSubmit={handleSubmit} className="space-y-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle>{t('donation.payment')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <PaymentElement onReady={() => setIsStripeReady(true)} />
-                    {message && <div className="mt-4 p-3 bg-red-50 text-red-500 rounded text-sm">{message}</div>}
-                </CardContent>
-                <CardFooter className="flex gap-4">
-                    <Button type="button" variant="outline" onClick={onBack} disabled={isProcessing}>
-                        {t('common.back', 'Back')}
-                    </Button>
-                    <Button type="submit" className="w-full" disabled={!stripe || !elements || isProcessing || !isStripeReady}>
-                        {isProcessing ? t('donation.processing') : t('donation.pay_now')}
-                    </Button>
-                </CardFooter>
-            </Card>
-        </form>
-    );
-}
-
-export function CheckoutForm() {
-    const { t } = useTranslation('common');
+    const navigate = useNavigate();
+    const { config } = useEventConfig();
     const [step, setStep] = useState<'details' | 'payment'>('details');
-    const [clientSecret, setClientSecret] = useState<string | null>(null);
+    const [sessionData, setSessionData] = useState<any>(null); // Generic session data
     const [selectedAmount, setSelectedAmount] = useState<number>(20);
-    const [paymentSuccess, setPaymentSuccess] = useState(false);
-
-    // MOCK CONFIGURATION (Later fetch from API)
-    const [formConfig] = useState({
-        phone: { enabled: true, required: true },
-        address: { enabled: false, required: false },
-        message: { enabled: true, required: false },
-        isAnonymous: { enabled: true, required: false }
-    });
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<DonationFormValues>({
         resolver: zodResolver(donationSchema),
@@ -104,7 +43,10 @@ export function CheckoutForm() {
         try {
             // Frontend logic: Send amount in CENTS as verified by backend Controller
             const amountInCents = Math.round(data.amount * 100);
-            const { data: intentData } = await api.post('/donations/stripe/intent', {
+
+            // Note: In a fully abstract system, the endpoint might also be generic like /donations/initiate
+            // For now, we still rely on the Stripe-compatible intent endpoint, but we treat the result generically.
+            const { data: intentData } = await api.post('/donations/intent', {
                 amount: amountInCents,
                 currency: 'usd',
                 metadata: {
@@ -114,7 +56,8 @@ export function CheckoutForm() {
                     isAnonymous: data.isAnonymous ? 'true' : 'false'
                 }
             });
-            setClientSecret(intentData.clientSecret);
+
+            setSessionData(intentData); // Store the whole response (contains clientSecret)
             setStep('payment');
         } catch (err) {
             console.error(err);
@@ -122,28 +65,30 @@ export function CheckoutForm() {
         }
     };
 
-    if (paymentSuccess) {
-        return (
-            <Card className="w-full max-w-md mx-auto mt-10">
-                <CardContent className="pt-6 text-center space-y-4">
-                    <div className="text-green-500 text-5xl mb-4">✓</div>
-                    <h2 className="text-2xl font-bold">{t('donation.success')}</h2>
-                    <p className="text-muted-foreground">Your donation of ${currentAmount} has been received.</p>
-                    <Button onClick={() => window.location.reload()} variant="outline">Make another donation</Button>
-                </CardContent>
-            </Card>
-        );
-    }
+    if (step === 'payment' && sessionData) {
+        // Derive variables for factory
+        // 'stripe' is the default if missing in config, matching our default UseEventConfig
+        const providerId = config?.payment?.provider || 'stripe';
 
-    if (step === 'payment' && clientSecret) {
         return (
-            <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
-                <PaymentSection
-                    clientSecret={clientSecret}
-                    onSuccess={() => setPaymentSuccess(true)}
-                    onBack={() => setStep('details')}
-                />
-            </Elements>
+            <PaymentFormFactory
+                providerId={providerId}
+                sessionData={sessionData}
+                amount={currentAmount}
+                currency="usd"
+                config={config?.payment?.config}
+                onSuccess={() => {
+                    navigate('/thank-you', {
+                        state: {
+                            amount: currentAmount,
+                            donorName: watch('name'),
+                            transactionId: sessionData.id // Generic ID from backend response
+                        }
+                    });
+                }}
+                onBack={() => setStep('details')}
+                onError={(msg: string) => console.error(msg)}
+            />
         );
     }
 
@@ -197,15 +142,15 @@ export function CheckoutForm() {
                         {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
                     </div>
 
-                    {formConfig.phone.enabled && (
+                    {config.features.phone.enabled && (
                         <div className="space-y-2">
-                            <Label htmlFor="phone">Phone Number {formConfig.phone.required && '*'}</Label>
-                            <Input id="phone" type="tel" {...register('phone' as any, { required: formConfig.phone.required ? 'Phone is required' : false })} />
-                            {errors.phone && <p className="text-sm text-red-500">{(errors.phone as any).message}</p>}
+                            <Label htmlFor="phone">{t('donation.phone')} {config.features.phone.required && '*'}</Label>
+                            <Input id="phone" type="tel" {...register('phone', { required: config.features.phone.required ? t('donation.phone_required') : false })} />
+                            {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
                         </div>
                     )}
 
-                    {formConfig.message.enabled && (
+                    {config.features.message.enabled && (
                         <div className="space-y-2">
                             <Label htmlFor="message">{t('donation.message')}</Label>
                             <Input id="message" {...register('message')} />
@@ -223,7 +168,7 @@ export function CheckoutForm() {
                 </CardContent>
                 <CardFooter>
                     <Button type="submit" className="w-full">
-                        {t('donation.submit', { amount: `$${currentAmount || 0}` })}
+                        {t('donation.submit', { amount: `$${currentAmount || 0} ` })}
                     </Button>
                 </CardFooter>
             </Card>

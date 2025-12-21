@@ -7,6 +7,7 @@ const DashboardPage = lazy(() => import('../features/admin/pages/DashboardPage')
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(module => ({ default: module.LoginPage })));
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
 const DonationPage = lazy(() => import('../features/donation/pages/DonationPage').then(module => ({ default: module.DonationPage })));
+const ThankYouPage = lazy(() => import('../features/donation/pages/ThankYouPage').then(module => ({ default: module.ThankYouPage })));
 
 // Loading component
 const PageLoader = () => (
@@ -25,6 +26,14 @@ export const router = createBrowserRouter([
         element: (
             <Suspense fallback={<PageLoader />}>
                 <DonationPage />
+            </Suspense>
+        ),
+    },
+    {
+        path: '/thank-you',
+        element: (
+            <Suspense fallback={<PageLoader />}>
+                <ThankYouPage />
             </Suspense>
         ),
     },

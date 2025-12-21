@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@theme {
+    --color-primary: var(--primary);
+    --color-secondary: var(--secondary);
+}
+
+:root {
+    /* Default fallbacks */
+    --primary: #ec4899;
+    --secondary: #8b5cf6;
+}

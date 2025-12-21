@@ -1,0 +1,38 @@
+site_name: Fundraising Event Documentation
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Guide:
+    - Getting Started: getting-started.md
+    - Configuration: configuration.md
+    - Architecture: architecture.md
+  - Backend:
+    - Auth: backend/auth.md
+    - Event: backend/event.md
+    - Gateway: backend/gateway.md
+  - Frontend:
+    - Auth: frontend/auth.md
+    - Admin: frontend/admin.md
+    - Live Screen: frontend/live.md
+  - Features:
+    - Donation Flow: features/donation.md

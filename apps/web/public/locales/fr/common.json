@@ -37,7 +37,10 @@
         "amount": "Montant",
         "from": "De",
         "anonymous": "Anonyme",
-        "waiting": "En attente de dons..."
+        "waiting": "En attente de dons...",
+        "scan_to_donate": "Scannez pour donner",
+        "total_raised": "Total récolté",
+        "goal": "Objectif"
     },
     "donation": {
         "title": "Faire un don",
@@ -49,14 +52,24 @@
         "name": "Nom complet",
         "email": "Adresse email",
         "message": "Message (Optionnel)",
+        "phone": "Numéro de téléphone",
+        "phone_required": "Numéro requis",
         "anonymous": "Faire un don anonyme",
         "submit": "Donner {{amount}}",
         "processing": "Traitement...",
         "success": "Merci pour votre don !",
+        "success_detail": "Votre don de {{amount}} a bien été reçu.",
+        "make_another": "Faire un autre don",
         "error": "Une erreur est survenue. Veuillez réessayer.",
         "pay_now": "Payer maintenant"
     },
     "common": {
         "back": "Retour"
+    },
+    "error": {
+        "title": "Oups !",
+        "subtitle": "Quelque chose s'est mal passé",
+        "message": "Nous nous excusons pour le désagrément. L'application a rencontré une erreur inattendue.",
+        "reload": "Recharger l'application"
     }
 }

@@ -3,6 +3,6 @@ import { DonationGateway } from './gateway.gateway';
 
 @Module({
   providers: [DonationGateway],
-  exports: [DonationGateway]
+  exports: [DonationGateway],
 })
-export class GatewayModule { }
+export class GatewayModule {}

@@ -25,6 +25,32 @@ The donation flow allows users to make payments using Stripe. It consists of a R
 - **Validation**: Zod schema (`donation.schema.ts`).
 - **i18n**: All text located in `donation` namespace in `common.json`.
 
+## Flow Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant StripeSDK
+    participant Backend
+    participant StripeAPI
+
+    User->>Frontend: Fills Donation Form
+    User->>Frontend: Clicks "Pay"
+    Frontend->>Backend: POST /donations/stripe/intent (amount)
+    Backend->>StripeAPI: Create PaymentIntent
+    StripeAPI-->>Backend: clientSecret
+    Backend-->>Frontend: clientSecret
+    Frontend->>StripeSDK: confirmPayment(clientSecret, cardDetails)
+    StripeSDK->>StripeAPI: Process Payment
+    StripeAPI-->>StripeSDK: Success
+    StripeAPI-)Backend: Webhook: payment_intent.succeeded
+    Backend->>Backend: Record Donation (DB)
+    Backend->>Frontend: WebSocket: donation.created
+    StripeSDK-->>Frontend: Success
+    Frontend->>User: Shows Success Card
+```
+
 ## Configuration
 Required Environment Variables:
 - **Backend**:

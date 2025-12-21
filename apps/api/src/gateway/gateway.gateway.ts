@@ -15,7 +15,9 @@ import { Server, Socket } from 'socket.io';
     credentials: true,
   },
 })
-export class DonationGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class DonationGateway
+  implements OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer()
   server!: Server;
 

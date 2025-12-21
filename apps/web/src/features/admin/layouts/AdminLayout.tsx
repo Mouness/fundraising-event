@@ -1,6 +1,6 @@
 import { Outlet, Link } from 'react-router-dom';
 
-export function AdminLayout() {
+export const AdminLayout = () => {
     return (
         <div className="flex h-screen w-full">
             <aside className="w-64 bg-gray-900 text-white p-4">

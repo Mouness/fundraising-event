@@ -14,7 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller('events')
 export class EventController {
-  constructor(private readonly eventService: EventService) { }
+  constructor(private readonly eventService: EventService) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'))

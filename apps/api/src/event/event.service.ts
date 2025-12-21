@@ -4,7 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class EventService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createEventDto: CreateEventDto) {
     return this.prisma.event.create({
@@ -36,8 +36,12 @@ export class EventService {
       where: { id },
       data: {
         ...(updateEventDto.name && { name: updateEventDto.name }),
-        ...(updateEventDto.goalAmount && { goalAmount: updateEventDto.goalAmount }),
-        ...(updateEventDto.themeConfig && { themeConfig: updateEventDto.themeConfig }),
+        ...(updateEventDto.goalAmount && {
+          goalAmount: updateEventDto.goalAmount,
+        }),
+        ...(updateEventDto.themeConfig && {
+          themeConfig: updateEventDto.themeConfig,
+        }),
       },
     });
   }

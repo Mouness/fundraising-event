@@ -3,7 +3,7 @@ import { Activity, CreditCard, Users, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { DASHBOARD_STATS } from '@/shared/mocks/dashboard';
 
-export function DashboardStats() {
+export const DashboardStats = () => {
     const { t } = useTranslation('common');
 
     return (

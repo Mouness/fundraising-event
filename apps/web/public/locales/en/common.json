@@ -37,7 +37,10 @@
         "amount": "Amount",
         "from": "From",
         "anonymous": "Anonymous",
-        "waiting": "Waiting for donations..."
+        "waiting": "Waiting for donations...",
+        "scan_to_donate": "Scan to Donate",
+        "total_raised": "Total Raised",
+        "goal": "Goal"
     },
     "donation": {
         "title": "Make a Donation",
@@ -49,14 +52,24 @@
         "name": "Full Name",
         "email": "Email",
         "message": "Message (Optional)",
+        "phone": "Phone Number",
+        "phone_required": "Phone is required",
         "anonymous": "Make this donation anonymous",
         "submit": "Donate {{amount}}",
         "processing": "Processing...",
         "success": "Thank you for your donation!",
+        "success_detail": "Your donation of {{amount}} has been received.",
+        "make_another": "Make another donation",
         "error": "Something went wrong. Please try again.",
         "pay_now": "Pay Now"
     },
     "common": {
         "back": "Back"
+    },
+    "error": {
+        "title": "Oops!",
+        "subtitle": "Something went wrong",
+        "message": "We apologize for the inconvenience. The application encountered an unexpected error.",
+        "reload": "Reload Application"
     }
 }

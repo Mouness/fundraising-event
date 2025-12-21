@@ -8,8 +8,8 @@ import { Label } from '@/shared/ui/label';
 import { useTranslation } from 'react-i18next';
 
 const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(1, 'Password is required'),
+    email: z.string().email({ message: 'Invalid email address' }),
+    password: z.string().min(1, { message: 'Password is required' }),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
@@ -18,7 +18,7 @@ import { useLogin } from '../hooks/useLogin';
 
 // ... imports
 
-export function LoginPage() {
+export const LoginPage = () => {
     const { t } = useTranslation('common');
     const { login, error, isLoading } = useLogin();
 

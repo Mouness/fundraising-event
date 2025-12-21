@@ -3,7 +3,7 @@ import { DashboardStats } from '../components/DashboardStats';
 import { useTranslation } from 'react-i18next';
 import { RECENT_DONATIONS, SALES_SUMMARY } from '@/shared/mocks/dashboard';
 
-export function DashboardPage() {
+export const DashboardPage = () => {
     const { t } = useTranslation('common');
 
     return (

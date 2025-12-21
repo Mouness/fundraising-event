@@ -1,0 +1,43 @@
+{
+    "id": "evt_default",
+    "theme": {
+        "primaryColor": "#ec4899",
+        "secondaryColor": "#8b5cf6",
+        "logoUrl": "/images/logo.svg"
+    },
+    "content": {
+        "title": "Default Fundraising Event",
+        "totalLabel": "Total Raised",
+        "goalAmount": 10000
+    },
+    "features": {
+        "phone": {
+            "enabled": true,
+            "required": true
+        },
+        "message": {
+            "enabled": true,
+            "required": false
+        },
+        "anonymous": {
+            "enabled": true,
+            "required": false
+        }
+    },
+    "social": {
+        "sharing": {
+            "enabled": true,
+            "networks": [
+                "facebook",
+                "twitter",
+                "linkedin"
+            ]
+        }
+    },
+    "payment": {
+        "provider": "stripe",
+        "config": {
+            "publishableKey": "pk_test_placeholder"
+        }
+    }
+}

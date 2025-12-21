@@ -1,6 +1,15 @@
-import { Controller, Post, Body, Headers, Req, BadRequestException } from '@nestjs/common';
+import {
+    Controller,
+    Post,
+    Body,
+    Headers,
+    Req,
+    BadRequestException,
+    Inject,
+} from '@nestjs/common';
 import type { RawBodyRequest } from '@nestjs/common';
-import { StripeService } from './services/stripe.service';
+import { PAYMENT_PROVIDER } from './interfaces/payment-provider.interface';
+import type { PaymentProvider } from './interfaces/payment-provider.interface';
 import type { Request } from 'express';
 
 import { DonationGateway } from '../gateway/gateway.gateway';
@@ -8,24 +17,31 @@ import { DonationGateway } from '../gateway/gateway.gateway';
 @Controller('donations')
 export class DonationController {
     constructor(
-        private readonly stripeService: StripeService,
-        private readonly donationGateway: DonationGateway
+        @Inject(PAYMENT_PROVIDER) private readonly paymentService: PaymentProvider,
+        private readonly donationGateway: DonationGateway,
     ) { }
 
-    @Post('stripe/intent')
-    async createPaymentIntent(@Body() body: { amount: number; currency?: string; metadata?: any }) {
+    @Post('intent')
+    async createPaymentIntent(
+        @Body() body: { amount: number; currency?: string; metadata?: any },
+    ) {
         if (!body.amount || body.amount <= 0) {
             throw new BadRequestException('Invalid amount');
         }
-        // Stripe expects amount in cents. Assuming frontend sends cents or we handle conversion.
-        // Let's assume frontend sends standard units (e.g., dollars) and we multiply by 100 for simplicity here, 
-        // OR adhering to standard Stripe practice, API expects cents.
-        // Decision: Frontend should send cents (smallest currency unit).
-        return this.stripeService.createPaymentIntent(body.amount, body.currency || 'usd', body.metadata);
+        // Amount is expected in the smallest currency unit (e.g., cents for USD/EUR).
+        // Frontend is responsible for converting user input to cents.
+        return this.paymentService.createPaymentIntent(
+            body.amount,
+            body.currency || 'usd',
+            body.metadata,
+        );
     }
 
     @Post('stripe/webhook')
-    async handleStripeWebhook(@Headers('stripe-signature') signature: string, @Req() req: RawBodyRequest<Request>) {
+    async handleStripeWebhook(
+        @Headers('stripe-signature') signature: string,
+        @Req() req: RawBodyRequest<Request>,
+    ) {
         if (!signature) {
             throw new BadRequestException('Missing stripe-signature header');
         }
@@ -37,7 +53,10 @@ export class DonationController {
             if (!req.rawBody) {
                 throw new BadRequestException('Raw body not available');
             }
-            const event = await this.stripeService.constructEventFromPayload(signature, req.rawBody);
+            const event = await this.paymentService.constructEventFromPayload(
+                signature,
+                req.rawBody,
+            );
 
             // Handle the event
             switch (event.type) {
@@ -50,7 +69,7 @@ export class DonationController {
                         currency: paymentIntent.currency,
                         donorName: paymentIntent.metadata?.donorName || 'Anonymous',
                         message: paymentIntent.metadata?.message,
-                        isAnonymous: paymentIntent.metadata?.isAnonymous === 'true'
+                        isAnonymous: paymentIntent.metadata?.isAnonymous === 'true',
                     });
                     break;
                 default:

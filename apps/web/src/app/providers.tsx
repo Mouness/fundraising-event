@@ -10,7 +10,7 @@ const queryClient = new QueryClient({
     },
 });
 
-export function AppProviders({ children }: PropsWithChildren) {
+export const AppProviders = ({ children }: PropsWithChildren) => {
     return (
         <QueryClientProvider client={queryClient}>
             {children}

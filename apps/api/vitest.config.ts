@@ -5,6 +5,8 @@ export default defineConfig({
     test: {
         globals: true,
         root: './',
+        include: ['src/**/*.test.ts'],
+        exclude: ['**/node_modules/**', '**/dist/**'],
     },
     resolve: {
         alias: {

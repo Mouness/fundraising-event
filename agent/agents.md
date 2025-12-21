@@ -34,33 +34,37 @@ fundraising-event/
 │
 ├── apps/
 │   ├── api/                  # NestJS Backend
-│   │   ├── deploy/           # Dockerfile & Deployment Configs
+│   │   ├── database/         # Database Schema & Migrations
+│   │   ├── deploy/           # Deployment Config (Docker, etc.)
 │   │   ├── src/
+│   │   │   ├── database/     # NestJS Database Module
+│   │   │   ├── features/     # Feature-based modules
+│   │   │   │   ├── auth/     # Auth (JWT, Google OAuth)
+│   │   │   │   ├── donation/ # Payments & Stripe logic
+│   │   │   │   ├── event/    # Event management
+│   │   │   │   ├── gateway/  # WebSockets (Socket.io)
+│   │   │   │   └── queue/    # BullMQ (Email/PDF Jobs)
+│   │   │   ├── test/         # Unit & E2E Tests
+│   │   │   ├── mock/         # API Mock Data
 │   │   │   ├── app.module.ts
-│   │   │   ├── main.ts
-│   │   │   ├── auth/         # Authentication Module
-│   │   │   ├── donation/     # Donation Logic & Webhooks
-│   │   │   ├── event/        # Event Management
-│   │   │   ├── gateway/      # WebSocket Gateway
-│   │   │   ├── prisma/       # Prisma Module (Global)
-│   │   │   └── queue/        # BullMQ Jobs
-│   │   ├── prisma/           # Database Schema
-│   │   ├── test/             # E2E Tests
+│   │   │   └── main.ts
 │   │   └── package.json
 │   │
 │   └── web/                  # Vite + React Frontend
-│       ├── deploy/           # Dockerfile & Nginx Config
+│       ├── deploy/           # Deployment Config (Nginx, etc.)
+│       ├── public/           # Static Public Assets
 │       ├── src/
-│       │   ├── app/          # App config, wrappers, router
-│       │   ├── assets/       # Static assets
-│       │   ├── features/     # Feature-based modules
-│       │   │   ├── admin/    # Dashboard components
-│       │   │   ├── donation/ # Public donation flow
-│       │   │   ├── live/     # Projection screen components
-│       │   │   └── staff/    # Collector interface
-│       │   ├── shared/       # Reusable UI components & hooks
-│       │   ├── lib/          # 3rd party consumers (axios, stripe)
-│       │   ├── stores/       # Global state (Jotai)
+│       │   ├── app/          # Core App Wrapper/Router
+│       │   ├── assets/       # Style assets & Images
+│       │   ├── features/     # Feature-based components
+│       │   │   ├── admin/    # Dashboard & Event Config
+│       │   │   ├── donation/ # Public Donation Form
+│       │   │   ├── live/     # Projection/Live Screen
+│       │   │   └── staff/    # Collector Interface
+│       │   ├── lib/          # API Clients & Utilities
+│       │   ├── shared/       # Reusable components & hooks
+│       │   ├── test/         # Frontend Tests
+│       │   ├── mock/         # Frontend Mock Data
 │       │   └── main.tsx
 │       ├── index.html
 │       └── package.json
@@ -170,10 +174,11 @@ fundraising-event/
 *   **Start Backend:** `pnpm --filter api dev`.
 *   **Start Frontend:** `pnpm --filter web dev`.
 
-### Database
-*   **Generate Client:** `npx prisma generate` (Run after schema changes).
-*   **Migration:** `npx prisma migrate dev --name <migration_name>` (Run for DB schema updates).
-*   **Studio:** `npx prisma studio` (GUI for database).
+### Database (API)
+*   **Generate Client:** `pnpm db:generate` (Run after schema changes).
+*   **Migration:** `pnpm db:migrate` (Run for DB schema updates).
+*   **Studio:** `pnpm db:studio` (GUI for database).
+*   **Note:** Use `--filter api` if running from the root.
 
 ### Docker
 *   **Start Services:** `docker compose up -d` (Postgres, Redis).
@@ -187,19 +192,3 @@ fundraising-event/
 2. **Naming**: Test files must use the `*.test.{ts,tsx}` extension. `*.spec.*` is forbidden (except for existing e2e if necessary, but prefer converting).
 3. **Mocks**: All mock files/data must be located in `src/mock/`, regardless of usage context.
 4. **Scope**: These rules apply to both `apps/web` and `apps/api`.
-
-### Structure Example
-```
-src/
-  features/
-    auth/
-      AuthService.ts
-  test/
-    features/
-      auth/
-        AuthService.test.ts
-    e2e/
-      auth.e2e-test.ts
-  mock/
-    stripe.mock.ts
-```

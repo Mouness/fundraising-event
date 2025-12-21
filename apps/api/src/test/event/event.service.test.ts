@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventService } from '@/event/event.service';
-import { PrismaService } from '@/prisma/prisma.service';
+import { EventService } from '@/features/event/event.service';
+import { PrismaService } from '@/database/prisma.service';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 import { NotFoundException } from '@nestjs/common';
 import { CreateEventDto, UpdateEventDto } from '@fundraising/types';

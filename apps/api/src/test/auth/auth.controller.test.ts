@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from '@/auth/auth.controller';
-import { AuthService } from '@/auth/auth.service';
+import { AuthController } from '@/features/auth/auth.controller';
+import { AuthService } from '@/features/auth/auth.service';
 import { LoginDto, StaffLoginDto } from '@fundraising/types';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 

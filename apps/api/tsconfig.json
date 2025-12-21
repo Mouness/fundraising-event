@@ -20,8 +20,8 @@
         "src/*"
       ]
     },
-    "incremental": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "incremental": false,
+    "tsBuildInfoFile": null,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
@@ -36,5 +36,8 @@
     "dist",
     "node_modules",
     "database/prisma.config.ts"
+  ],
+  "include": [
+    "src/**/*"
   ]
 }

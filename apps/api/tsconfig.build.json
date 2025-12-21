@@ -10,5 +10,8 @@
     "**/*spec.ts",
     "vitest.config.ts",
     "database/prisma.config.ts"
+  ],
+  "include": [
+    "src/**/*"
   ]
 }

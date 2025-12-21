@@ -13,7 +13,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
@@ -39,7 +39,8 @@ export class AuthController {
   @Get('google')
   @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) {
-    // Initiates the Google OAuth flow
+    // The AuthGuard('google') intercepts the request and redirects to Google.
+    // This function body is intentionally empty and will not be reached.
   }
 
   @Get('google/callback')

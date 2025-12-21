@@ -8,6 +8,8 @@ import { JwtStrategy } from './jwt.strategy';
 
 import { GoogleStrategy } from './google.strategy';
 
+import { LocalAuthProvider } from './providers/local.provider';
+
 @Module({
   imports: [
     PassportModule,
@@ -21,6 +23,20 @@ import { GoogleStrategy } from './google.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, GoogleStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    GoogleStrategy,
+    LocalAuthProvider,
+    {
+      provide: 'AUTH_PROVIDER',
+      useFactory: (configService: ConfigService, localProvider: LocalAuthProvider) => {
+        // Future: switch based on configService.get('AUTH_STRATEGY')
+        // For now, default to local
+        return localProvider;
+      },
+      inject: [ConfigService, LocalAuthProvider],
+    }
+  ],
 })
-export class AuthModule {}
+export class AuthModule { }

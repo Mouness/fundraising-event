@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { useLocation, Link, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import confetti from 'canvas-confetti';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Share2 } from 'lucide-react';
-
 import { useEventConfig } from '../../event/hooks/useEventConfig';
+import { fireConfetti } from '@/lib/confetti';
 
 export const ThankYouPage = () => {
     const { t } = useTranslation('common');
@@ -15,31 +14,7 @@ export const ThankYouPage = () => {
     const state = location.state as { amount?: number; transactionId?: string; donorName?: string } | null;
 
     useEffect(() => {
-        // Trigger confetti on mount
-        const duration = 3000;
-        const end = Date.now() + duration;
-
-        const frame = () => {
-            confetti({
-                particleCount: 2,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#ec4899', '#8b5cf6']
-            });
-            confetti({
-                particleCount: 2,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#ec4899', '#8b5cf6']
-            });
-
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
-        };
-        frame();
+        fireConfetti();
     }, []);
 
     if (!state?.amount) {
@@ -66,10 +41,10 @@ export const ThankYouPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-            <Card className="max-w-md w-full shadow-xl border-t-8 border-t-primary">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 animate-gradient-xy flex items-center justify-center p-4">
+            <Card className="max-w-md w-full shadow-2xl border-white/20 bg-white/90 backdrop-blur-xl">
                 <CardHeader className="text-center pb-2">
-                    <div className="mx-auto bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <div className="mx-auto bg-green-100/50 w-16 h-16 rounded-full flex items-center justify-center mb-4 ring-4 ring-green-50">
                         <CheckCircle className="w-8 h-8 text-green-600" />
                     </div>
                     <CardTitle className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
@@ -105,7 +80,7 @@ export const ThankYouPage = () => {
                             Share your support
                         </div>
                         <div className="flex justify-center gap-4">
-                            {config.social?.sharing?.enabled && config.social.sharing.networks.map(network => {
+                            {config.donation.sharing?.enabled && config.donation.sharing.networks.map(network => {
                                 if (network === 'facebook') {
                                     return (
                                         <Button key={network} variant="outline" size="icon" onClick={() => handleShare('facebook')} className="hover:text-blue-600 hover:border-blue-600">

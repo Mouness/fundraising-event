@@ -1,9 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../../database/prisma.service';
 import { LoginDto, StaffLoginDto } from '@fundraising/types';
 import * as bcrypt from 'bcrypt';
+import type { AuthProvider } from './providers/auth-provider.interface';
 
 @Injectable()
 export class AuthService {
@@ -11,18 +12,11 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private prisma: PrismaService,
+    @Inject('AUTH_PROVIDER') private authProvider: AuthProvider,
   ) { }
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const adminEmail = this.configService.get<string>('ADMIN_EMAIL');
-    const adminPass = this.configService.get<string>('ADMIN_PASSWORD');
-
-    if (email === adminEmail && pass === adminPass) {
-      // In a real app, use bcrypt.compare here too
-      // But for env-based single admin, direct comparison is okay if env is secure
-      return { id: 'admin', email: adminEmail, role: 'ADMIN' };
-    }
-    return null;
+    return this.authProvider.verify({ email, password: pass });
   }
 
   async validateStaff(code: string): Promise<any> {
@@ -65,19 +59,15 @@ export class AuthService {
     email: string;
     firstName: string;
     lastName: string;
+    picture?: string;
   }) {
-    const adminEmail = this.configService.get<string>('ADMIN_EMAIL');
-    // Simple check: Is this the authorized admin?
-    if (details.email === adminEmail) {
-      return {
-        id: 'admin',
-        email: details.email,
-        role: 'ADMIN',
-        name: `${details.firstName} ${details.lastName}`,
-      };
-    }
-    // If we want to allow new admins, we'd creating a User model here.
-    // For now, reject non-admin emails.
-    return null;
+    // Delegate to the active provider to decide if this external user is allowed
+    // For LocalProvider, it checks if email matches env var
+    return this.authProvider.verify({
+      email: details.email,
+      name: `${details.firstName} ${details.lastName}`,
+      picture: details.picture,
+      isTrusted: true
+    });
   }
 }

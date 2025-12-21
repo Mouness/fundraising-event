@@ -77,10 +77,18 @@ const StripeFormContent = ({ onSuccess, onBack, onError }: { onSuccess: () => vo
 export const StripePaymentForm = (props: PaymentProviderProps) => {
     const { sessionData, config } = props;
     const clientSecret = sessionData?.clientSecret;
-    const publishableKey = config?.publishableKey || import.meta.env.VITE_STRIPE_PUBLIC_KEY || 'pk_test_placeholder';
+    const configKey = config?.publishableKey;
+    // If config has placeholder, fallback to ENV.
+    const publishableKey = (configKey && !configKey.includes('placeholder') ? configKey : undefined)
+        || import.meta.env.VITE_STRIPE_PUBLIC_KEY
+        || 'pk_test_placeholder';
 
     if (!clientSecret) {
         return <div className="text-red-500">Error: Missing client secret for Stripe payment.</div>;
+    }
+
+    if (!publishableKey || publishableKey.includes('placeholder')) {
+        return <div className="text-red-500">Configuration Error: Stripe Publishable Key is missing or invalid.</div>;
     }
 
     return (

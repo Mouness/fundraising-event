@@ -7,6 +7,7 @@ import { EventModule } from './features/event/event.module';
 import { GatewayModule } from './features/gateway/gateway.module';
 import { DatabaseModule } from './database/database.module';
 import { DonationModule } from './features/donation/donation.module';
+import { QueueModule } from './features/queue/queue.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { DonationModule } from './features/donation/donation.module';
     EventModule,
     GatewayModule,
     DonationModule,
+    QueueModule,
   ],
   controllers: [AppController],
   providers: [AppService],

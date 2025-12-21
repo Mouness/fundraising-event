@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@fundraising/types": "workspace:*",
+    "@nestjs/bullmq": "^11.0.4",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
@@ -42,6 +43,7 @@
     "@types/passport-local": "^1.0.38",
     "@types/pg": "^8.16.0",
     "bcrypt": "^6.0.0",
+    "bullmq": "^5.66.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",

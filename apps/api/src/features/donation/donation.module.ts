@@ -4,9 +4,10 @@ import { StripeService } from './services/stripe.service';
 import { ConfigModule } from '@nestjs/config';
 import { GatewayModule } from '../gateway/gateway.module';
 import { PAYMENT_PROVIDER } from './interfaces/payment-provider.interface';
+import { QueueModule } from '../queue/queue.module';
 
 @Module({
-  imports: [ConfigModule, GatewayModule],
+  imports: [ConfigModule, GatewayModule, QueueModule],
   controllers: [DonationController],
   providers: [
     StripeService,
@@ -17,4 +18,4 @@ import { PAYMENT_PROVIDER } from './interfaces/payment-provider.interface';
   ],
   exports: [PAYMENT_PROVIDER],
 })
-export class DonationModule {}
+export class DonationModule { }

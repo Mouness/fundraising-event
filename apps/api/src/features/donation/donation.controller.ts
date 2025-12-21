@@ -13,6 +13,7 @@ import type { PaymentProvider } from './interfaces/payment-provider.interface';
 import type { Request } from 'express';
 
 import { GatewayGateway } from '../gateway/gateway.gateway';
+import { EmailProducer } from '../queue/producers/email.producer';
 
 @Controller('donations')
 export class DonationController {
@@ -20,6 +21,7 @@ export class DonationController {
         @Inject('PAYMENT_PROVIDER')
         private readonly paymentService: PaymentProvider,
         private readonly donationGateway: GatewayGateway,
+        private readonly emailProducer: EmailProducer,
     ) { }
 
     @Post('intent')
@@ -72,6 +74,15 @@ export class DonationController {
                         message: paymentIntent.metadata?.message,
                         isAnonymous: paymentIntent.metadata?.isAnonymous === 'true',
                     });
+
+                    // Send Email Receipt
+                    if (paymentIntent.metadata?.donorEmail) {
+                        await this.emailProducer.sendReceipt(
+                            paymentIntent.metadata.donorEmail,
+                            paymentIntent.amount / 100, // Convert cents to dollars/unit
+                            paymentIntent.id
+                        );
+                    }
                     break;
                 default:
                     console.log(`Unhandled event type ${event.type}`);

@@ -3,9 +3,14 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
     test: {
-        include: ['**/*.e2e-spec.ts'],
+        include: ['**/*.e2e.test.ts'],
         globals: true,
         root: './',
     },
-    plugins: [swc.vite()],
+    resolve: {
+        alias: {
+            '@': '../../',
+        },
+    },
+    plugins: [swc.vite() as any],
 });

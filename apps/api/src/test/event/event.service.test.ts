@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventService } from './event.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { EventService } from '@/event/event.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 import { NotFoundException } from '@nestjs/common';
 import { CreateEventDto, UpdateEventDto } from '@fundraising/types';
@@ -38,8 +38,17 @@ describe('EventService', () => {
 
     describe('create', () => {
         it('should create an event', async () => {
-            const dto: CreateEventDto = { name: 'Gala', slug: 'gala', goalAmount: 1000 };
-            const expected = { id: '1', ...dto, themeConfig: {} };
+            const dto: CreateEventDto = {
+                name: 'Gala',
+                slug: 'gala',
+                goalAmount: 1000,
+                themeConfig: {
+                    primaryColor: '#000000',
+                    secondaryColor: '#ffffff',
+                    logoUrl: 'logo.png',
+                },
+            };
+            const expected = { id: '1', ...dto };
 
             (prismaService.event.create as any).mockResolvedValue(expected);
 

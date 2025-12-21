@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
 import { Activity, CreditCard, Users, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { DASHBOARD_STATS } from '@/shared/mocks/dashboard';
+import { DASHBOARD_STATS } from '@/mock/dashboard';
 
 export const DashboardStats = () => {
     const { t } = useTranslation('common');

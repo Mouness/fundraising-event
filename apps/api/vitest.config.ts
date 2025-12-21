@@ -6,11 +6,16 @@ export default defineConfig({
         globals: true,
         root: './',
     },
+    resolve: {
+        alias: {
+            '@': './src',
+        },
+    },
     plugins: [
         // This is required to build the test files with SWC
         swc.vite({
             // Explicitly set the module type to avoid "import" issues
             module: { type: 'es6' },
-        }),
+        }) as any,
     ],
 });

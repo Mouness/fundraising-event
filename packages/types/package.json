@@ -5,7 +5,9 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "dev": "tsc -w"
+        "dev": "tsc -w",
+        "test": "echo 'No tests for types'",
+        "test:cov": "echo 'No tests for types'"
     },
     "devDependencies": {
         "typescript": "^5.0.0"

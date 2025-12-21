@@ -3,14 +3,14 @@ theme:
   name: material
   palette:
     - scheme: default
-      primary: purple
-      accent: deep purple
+      primary: indigo
+      accent: cyan
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - scheme: slate
-      primary: purple
-      accent: deep purple
+      primary: indigo
+      accent: cyan
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
@@ -19,15 +19,6 @@ theme:
     - navigation.sections
     - navigation.expand
     - content.code.copy
+    - navigation.top
+    - toc.integrate
 
-nav:
-  - Home: index.md
-  - Guide:
-    - Getting Started: getting-started.md
-    - Configuration: configuration.md
-    - Architecture: architecture.md
-  - Features:
-    - Authentication: features/authentication.md
-    - Live Event: features/live-event.md
-    - Donation Flow: features/donation.md
-    - Admin Dashboard: features/admin.md

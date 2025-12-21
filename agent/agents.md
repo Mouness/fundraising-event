@@ -180,5 +180,26 @@ fundraising-event/
 *   **Stop Services:** `docker compose down`.
 
 ### Testing
-*   **Run All Tests:** `pnpm test`.
 *   **E2E Tests:** `pnpm test:e2e`.
+
+## 7. Testing Conventions (Strict)
+1. **Location**: All test related files must be located in `src/test/`.
+2. **Naming**: Test files must use the `*.test.{ts,tsx}` extension. `*.spec.*` is forbidden (except for existing e2e if necessary, but prefer converting).
+3. **Mocks**: All mock files/data must be located in `src/mock/`, regardless of usage context.
+4. **Scope**: These rules apply to both `apps/web` and `apps/api`.
+
+### Structure Example
+```
+src/
+  features/
+    auth/
+      AuthService.ts
+  test/
+    features/
+      auth/
+        AuthService.test.ts
+    e2e/
+      auth.e2e-test.ts
+  mock/
+    stripe.mock.ts
+```

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventController } from './event.controller';
-import { EventService } from './event.service';
+import { EventController } from '@/event/event.controller';
+import { EventService } from '@/event/event.service';
 import { CreateEventDto } from '@fundraising/types';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 
@@ -35,7 +35,16 @@ describe('EventController', () => {
 
     describe('create', () => {
         it('should call service.create', async () => {
-            const dto: CreateEventDto = { name: 'Gala', slug: 'gala', goalAmount: 1000 };
+            const dto: CreateEventDto = {
+                name: 'Gala',
+                slug: 'gala',
+                goalAmount: 1000,
+                themeConfig: {
+                    primaryColor: '#000000',
+                    secondaryColor: '#ffffff',
+                    logoUrl: 'logo.png',
+                },
+            };
             const expected = { id: '1', ...dto };
             (service.create as any).mockResolvedValue(expected);
 

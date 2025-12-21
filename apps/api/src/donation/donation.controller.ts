@@ -12,13 +12,14 @@ import { PAYMENT_PROVIDER } from './interfaces/payment-provider.interface';
 import type { PaymentProvider } from './interfaces/payment-provider.interface';
 import type { Request } from 'express';
 
-import { DonationGateway } from '../gateway/gateway.gateway';
+import { GatewayGateway } from '../gateway/gateway.gateway';
 
 @Controller('donations')
 export class DonationController {
     constructor(
-        @Inject(PAYMENT_PROVIDER) private readonly paymentService: PaymentProvider,
-        private readonly donationGateway: DonationGateway,
+        @Inject('PAYMENT_PROVIDER')
+        private readonly paymentService: PaymentProvider,
+        private readonly donationGateway: GatewayGateway,
     ) { }
 
     @Post('intent')

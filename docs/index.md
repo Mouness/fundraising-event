@@ -1,4 +1,4 @@
-# Fundraising Event Project Documentation
+# Fundraising Event
 
 Welcome to the documentation for the Fundraising Event project.
 

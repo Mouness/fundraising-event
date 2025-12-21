@@ -13,11 +13,11 @@ node_modules
 # Build outputs
 dist/
 build/
+site/
 .next/
 out/
 .docusaurus/
 .serverless/
-.site/
 
 # Logs
 logs

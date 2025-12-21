@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/shared/ui/card';
 import { DashboardStats } from '../components/DashboardStats';
 import { useTranslation } from 'react-i18next';
-import { RECENT_DONATIONS, SALES_SUMMARY } from '@/shared/mocks/dashboard';
+import { RECENT_DONATIONS, SALES_SUMMARY } from '@/mock/dashboard';
 
 export const DashboardPage = () => {
     const { t } = useTranslation('common');
@@ -34,7 +34,7 @@ export const DashboardPage = () => {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-8">
-                            {RECENT_DONATIONS.map((donation, index) => (
+                            {RECENT_DONATIONS.map((donation: any, index: number) => (
                                 <div className="flex items-center" key={index}>
                                     <div className="ml-4 space-y-1">
                                         <p className="text-sm font-medium leading-none">{donation.name}</p>

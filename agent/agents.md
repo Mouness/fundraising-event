@@ -56,13 +56,18 @@ fundraising-event/
 │       ├── src/
 │       │   ├── app/          # Core App Wrapper/Router
 │       │   ├── assets/       # Style assets & Images
+│       │   ├── components/   # UI Primitives (@/components/ui)
+│       │   ├── providers/    # React Contexts & Providers
 │       │   ├── features/     # Feature-based components
 │       │   │   ├── admin/    # Dashboard & Event Config
+│       │   │   ├── auth/     # Authentication pages
 │       │   │   ├── donation/ # Public Donation Form
+│       │   │   ├── event/    # Event Logic
 │       │   │   ├── live/     # Projection/Live Screen
-│       │   │   └── staff/    # Collector Interface
-│       │   ├── lib/          # API Clients & Utilities
-│       │   ├── shared/       # Reusable components & hooks
+│       │   │   └── public/   # Public Static pages
+│       │   ├── hooks/        # Reusable React hooks
+│       │   ├── lib/          # Config & Utilities (api, i18n, utils)
+│       │   ├── stores/       # Global State (Jotai)
 │       │   ├── test/         # Frontend Tests
 │       │   ├── mock/         # Frontend Mock Data
 │       │   └── main.tsx
@@ -89,7 +94,7 @@ fundraising-event/
 *   **Comments:** Use JSDoc for complex functions. Explain "Why", not "What".
 
 ### Frontend (React)
-*   **Components:** Functional components only.
+*   **Components:** Arrow Functions only (`const Component = () => {}`).
 *   **Organization:** Colocate styles, tests, and sub-components within the feature folder.
 *   **Hooks:** comprehensive use of custom hooks to separate logic from UI.
 *   **State:**
@@ -101,6 +106,7 @@ fundraising-event/
     *   Avoid inline styles.
     *   **Theme:** Use strict CSS variables for theming (primary, secondary colors) to support the White Label requirement.
 *   **Naming:** PascalCase for components (`DonationForm.tsx`), camelCase for functions/vars.
+*   **Functions:** Use Arrow Functions (`const myFunc = () => {}`) for all components and utilities. Avoid `function` keyword.
 
 ### Backend (NestJS)
 *   **Architecture:** Modular (Module, Controller, Service).

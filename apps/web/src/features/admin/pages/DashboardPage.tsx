@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/shared/ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { DashboardStats } from '../components/DashboardStats';
 import { useTranslation } from 'react-i18next';
 import { RECENT_DONATIONS, SALES_SUMMARY } from '@/mock/dashboard';

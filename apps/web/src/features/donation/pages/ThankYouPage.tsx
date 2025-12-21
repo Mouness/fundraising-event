@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useLocation, Link, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import confetti from 'canvas-confetti';
-import { Button } from '@/shared/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/shared/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Share2 } from 'lucide-react';
 
 import { useEventConfig } from '../../event/hooks/useEventConfig';

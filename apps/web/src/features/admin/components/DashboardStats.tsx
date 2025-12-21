@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Activity, CreditCard, Users, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { DASHBOARD_STATS } from '@/mock/dashboard';

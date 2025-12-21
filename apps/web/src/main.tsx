@@ -5,7 +5,7 @@ import './lib/i18n'
 import './index.css'
 import { router } from './app/router'
 import { AppProviders } from './app/providers'
-import { ErrorBoundary } from './shared/providers/ErrorBoundary'
+import { ErrorBoundary } from './providers/ErrorBoundary'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

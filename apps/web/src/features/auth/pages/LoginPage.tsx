@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/shared/ui/card';
-import { Label } from '@/shared/ui/label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
 import { useTranslation } from 'react-i18next';
 
 const loginSchema = z.object({

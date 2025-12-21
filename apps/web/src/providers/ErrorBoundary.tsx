@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/components/ui/button';
 import { withTranslation } from 'react-i18next';
 import type { WithTranslation } from 'react-i18next';
 

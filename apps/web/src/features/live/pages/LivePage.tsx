@@ -6,7 +6,7 @@ import QRCode from 'react-qr-code';
 import { useEventConfig } from '../../event/hooks/useEventConfig';
 import { DonationFeed, type Donation } from '../components/DonationFeed';
 import { DonationGauge } from '../components/DonationGauge';
-import { fireConfetti } from '@/shared/utils/confetti';
+import { fireConfetti } from '@/lib/confetti';
 
 export const LivePage = () => {
     const { t } = useTranslation('common');

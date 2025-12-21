@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import { PageLoader } from '@/components/ui/PageLoader';
 
 export const AdminLayout = () => {
     return (
@@ -11,7 +13,9 @@ export const AdminLayout = () => {
                 </nav>
             </aside>
             <main className="flex-1 p-8 bg-gray-50 overflow-auto">
-                <Outlet />
+                <Suspense fallback={<PageLoader />}>
+                    <Outlet />
+                </Suspense>
             </main>
         </div>
     );

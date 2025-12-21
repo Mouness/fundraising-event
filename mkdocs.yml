@@ -26,13 +26,8 @@ nav:
     - Getting Started: getting-started.md
     - Configuration: configuration.md
     - Architecture: architecture.md
-  - Backend:
-    - Auth: backend/auth.md
-    - Event: backend/event.md
-    - Gateway: backend/gateway.md
-  - Frontend:
-    - Auth: frontend/auth.md
-    - Admin: frontend/admin.md
-    - Live Screen: frontend/live.md
   - Features:
+    - Authentication: features/authentication.md
+    - Live Event: features/live-event.md
     - Donation Flow: features/donation.md
+    - Admin Dashboard: features/admin.md

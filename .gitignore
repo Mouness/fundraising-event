@@ -17,6 +17,7 @@ build/
 out/
 .docusaurus/
 .serverless/
+.site/
 
 # Logs
 logs

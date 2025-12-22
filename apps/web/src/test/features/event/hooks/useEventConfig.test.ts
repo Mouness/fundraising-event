@@ -53,8 +53,33 @@ describe('useEventConfig', () => {
         expect(result.current.config.content.title).toBe('Custom Config Title');
     });
 
+    it('should inject custom theme css when fetch succeeds', async () => {
+        // Setup mocks for sequence of calls: 1. Config (Fail/Default), 2. CSS (Success)
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('event-config.json')) {
+                return Promise.resolve({ ok: false });
+            }
+            if (url.includes('theme.css')) {
+                return Promise.resolve({
+                    ok: true,
+                    text: async () => ':root { --primary: red; }'
+                });
+            }
+            return Promise.reject('Unknown URL');
+        });
+
+        const { result } = renderHook(() => useEventConfig());
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        // Check DOM for style tag
+        const styleTag = document.getElementById('custom-event-theme');
+        expect(styleTag).not.toBeNull();
+        expect(styleTag?.textContent).toBe(':root { --primary: red; }');
+    });
+
     it('should fallback to defaults when fetch fails', async () => {
-        fetchMock.mockResolvedValueOnce({ ok: false });
+        fetchMock.mockResolvedValue({ ok: false }); // All fetches fail
 
         const { result } = renderHook(() => useEventConfig());
 

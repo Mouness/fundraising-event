@@ -25,7 +25,7 @@ export class MailService {
             ...data,
             eventName: config.content.title,
             logoUrl: absoluteLogoUrl,
-            primaryColor: config.theme.primaryColor,
+            primaryColor: '#ec4899', // Default brand color (theme logic temporarily disabled)
             supportEmail: 'support@example.com', // TODO: Add to EventConfig if not present, or use default
             year: new Date().getFullYear(),
             currency: 'USD',

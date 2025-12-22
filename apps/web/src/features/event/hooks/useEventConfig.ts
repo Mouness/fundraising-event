@@ -10,31 +10,51 @@ export const useEventConfig = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchConfig = async () => {
+        const fetchContext = async () => {
             const timestamp = Date.now();
 
+            // 1. Fetch Config Strategy (Deep Merge)
             try {
-                // Fetch runtime override (e.g. from CMS or server-generated file)
-                // We no longer fetch the default JSON, as it's bundled in the code.
                 const res = await fetch(`/config/event-config.json?v=${timestamp}`);
                 if (res.ok) {
                     const customConfig = await res.json();
-                    // Smart merge logic is handled by the package
                     setConfig(loadConfig(customConfig));
-                } else {
-                    // Just use default
-                    setConfig(loadConfig());
                 }
             } catch (error) {
-                console.warn('No custom event config found, using defaults.');
-                setConfig(loadConfig());
-            } finally {
-                setIsLoading(false);
+                // Ignore, keep default
             }
+
+            // 2. Fetch Theme CSS Strategy (Cascade Override)
+            // We check if a custom theme file exists and inject it to override the default bundle.
+            try {
+                const themeRes = await fetch(`/config/theme.css?v=${timestamp}`);
+                if (themeRes.ok) {
+                    const css = await themeRes.text();
+                    injectThemeStyle(css);
+                }
+            } catch {
+                // Ignore, keep default bundle
+            }
+
+            setIsLoading(false);
         };
 
-        fetchConfig();
+        fetchContext();
     }, []);
 
     return { config, isLoading };
+}
+
+// Helper to inject CSS into the document head
+function injectThemeStyle(css: string) {
+    const styleId = 'custom-event-theme';
+    let style = document.getElementById(styleId) as HTMLStyleElement;
+
+    if (!style) {
+        style = document.createElement('style');
+        style.id = styleId;
+        document.head.appendChild(style);
+    }
+
+    style.textContent = css;
 }

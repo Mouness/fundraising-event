@@ -9,8 +9,6 @@ describe('DonationGauge', () => {
                 totalRaisedCents={5000}
                 prevTotal={0}
                 goalAmount={10000}
-                primaryColor="#ec4899"
-                secondaryColor="#8b5cf6"
             />
         );
 
@@ -27,8 +25,6 @@ describe('DonationGauge', () => {
                 totalRaisedCents={0}
                 prevTotal={0}
                 goalAmount={10000}
-                primaryColor="#ec4899"
-                secondaryColor="#8b5cf6"
             />
         );
         expect(screen.getByText('live.total_raised')).toBeInTheDocument();

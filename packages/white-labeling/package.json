@@ -13,7 +13,7 @@
         "./css": "./dist/theme/theme.default.css"
     },
     "scripts": {
-        "build": "tsup && mkdir -p dist/theme && cp src/theme/theme.default.css dist/theme/",
+        "build": "tsup",
         "dev": "tsup --watch",
         "test": "vitest run",
         "test:watch": "vitest",

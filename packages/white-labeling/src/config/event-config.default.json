@@ -6,13 +6,7 @@
         "goalAmount": 10000
     },
     "theme": {
-        "primaryColor": "#4f46e5",
-        "secondaryColor": "#64748b",
-        "logoUrl": "/images/logo.svg",
-        "background": {
-            "color": "#f8fafc",
-            "gradient": "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)"
-        }
+        "logoUrl": "/images/logo.svg"
     },
     "donation": {
         "form": {

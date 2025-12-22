@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { loadConfig, defaultConfig } from './index';
+import { loadConfig, defaultConfig } from '../config';
 
 describe('loadConfig', () => {
     it('should return default config if no custom config provided', () => {
@@ -15,7 +15,7 @@ describe('loadConfig', () => {
         };
         const result = loadConfig(custom);
         expect(result.content.title).toBe("Custom Event");
-        expect(result.theme.primaryColor).toBe(defaultConfig.theme.primaryColor);
+        expect(result.theme.logoUrl).toBe(defaultConfig.theme.logoUrl);
     });
 
     it('should replace arrays in config (e.g. sharing networks)', () => {

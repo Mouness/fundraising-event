@@ -4,9 +4,17 @@
     "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        },
+        "./css": "./dist/theme/theme.default.css"
+    },
     "scripts": {
-        "build": "tsc && cp -r src/assets/images dist/assets/ && cp src/theme/theme.default.css dist/theme/",
-        "dev": "tsc -w",
+        "build": "tsup && mkdir -p dist/theme && cp src/theme/theme.default.css dist/theme/",
+        "dev": "tsup --watch",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:cov": "vitest run --coverage",
@@ -17,6 +25,7 @@
         "eslint": "^9.39.2",
         "globals": "^16.5.0",
         "tailwindcss": "^4.1.18",
+        "tsup": "^8.5.1",
         "typescript": "^5.0.0",
         "typescript-eslint": "^8.50.0",
         "vitest": "^4.0.16"

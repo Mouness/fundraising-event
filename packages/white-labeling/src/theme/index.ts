@@ -1,4 +1,4 @@
-import './theme.default.css';
+// import './theme.default.css';
 
 /**
  * Helper to get the default theme CSS import.

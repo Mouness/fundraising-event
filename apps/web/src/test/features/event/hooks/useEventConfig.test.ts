@@ -13,8 +13,13 @@ vi.mock('@fundraising/white-labeling', async () => {
         ...actual,
         loadConfig: vi.fn((custom) => ({
             id: custom?.id || 'default-id',
+            content: {
+                title: custom?.content?.title || 'Default Title',
+                totalLabel: custom?.content?.totalLabel || 'Total',
+                goalAmount: custom?.content?.goalAmount || 1000
+            },
             theme: {
-                primaryColor: custom?.theme?.primaryColor || 'default-blue'
+                logoUrl: custom?.theme?.logoUrl || 'default-logo.svg'
             }
         }))
     }
@@ -36,7 +41,7 @@ describe('useEventConfig', () => {
             ok: true,
             json: async () => ({
                 id: 'custom-event',
-                theme: { primaryColor: 'custom-green' }
+                content: { title: 'Custom Config Title' }
             })
         });
 
@@ -45,7 +50,7 @@ describe('useEventConfig', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         expect(result.current.config.id).toBe('custom-event');
-        expect(result.current.config.theme.primaryColor).toBe('custom-green');
+        expect(result.current.config.content.title).toBe('Custom Config Title');
     });
 
     it('should fallback to defaults when fetch fails', async () => {
@@ -56,6 +61,6 @@ describe('useEventConfig', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         expect(result.current.config.id).toBe('default-id');
-        expect(result.current.config.theme.primaryColor).toBe('default-blue');
+        expect(result.current.config.theme.logoUrl).toBe('default-logo.svg');
     });
 });

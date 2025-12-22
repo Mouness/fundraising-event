@@ -113,8 +113,6 @@ export const LivePage = () => {
                             totalRaisedCents={totalRaisedCents}
                             prevTotal={prevTotal}
                             goalAmount={config.content.goalAmount}
-                            primaryColor={config.theme.primaryColor}
-                            secondaryColor={config.theme.secondaryColor}
                             totalLabel={config.content.totalLabel}
                         />
                     </div>

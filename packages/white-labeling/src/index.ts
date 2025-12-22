@@ -1,5 +1,5 @@
 // Types
-export { EventConfig } from './types';
+export type { EventConfig } from './types';
 
 // Config
 export { defaultConfig, loadConfig } from './config';
@@ -11,7 +11,7 @@ export { defaultLocales, mergeLocales } from './locales';
 export { assets, getAssetUrl } from './assets';
 
 // Theme
-export { loadDefaultTheme } from './theme'; // Ensure this matches what's exported
+export { loadDefaultTheme } from './theme';
 
 // Utils
 export { deepMerge } from './utils/merge';

@@ -30,8 +30,56 @@
 }
 
 :root {
-  /* Default fallbacks - can be overridden by config */
+  /* 
+   * --- Core Brand Colors --- 
+   * Customize these to match the organization's brand identity.
+   */
+
+  /* Main brand color. Used for primary buttons, active states, and key highlights. */
   --primary: #ec4899;
+
+  /* Secondary brand color. Used for accents, gradients, and secondary actions. */
   --secondary: #8b5cf6;
+
+  /* 
+   * --- Backgrounds --- 
+   * Controls the overall page appearance.
+   */
+
+  /* Base background color for pages. */
+  --background-color: #f8fafc;
+
+  /* Background gradient. If supported, this will overlay or replace --background-color. */
+  --background-gradient: linear-gradient(135deg, #fce7f3 0%, #ede9fe 100%);
+
+  /* Surface color. Used for cards, panels, and modal backgrounds. */
+  --surface-color: #ffffff;
+
+  /* 
+   * --- Borders --- 
+   */
+
+  /* Default border color for inputs, dividers, and card outlines. */
+  --border-color: #e2e8f0;
+
+  /* 
+   * --- Text --- 
+   * Typography color tokens for optimal contrast.
+   */
+
+  /* Primary text color. Used for headings and body text. */
+  --text-main: #0f172a;
+
+  /* Muted text color. Used for secondary labels, hints, and placeholders. */
+  --text-muted: #64748b;
+
+  /* Inverse text color. Used for text on top of primary/solid dark backgrounds. */
+  --text-inverse: #ffffff;
+
+  /* 
+   * --- Layout & Shape --- 
+   */
+
+  /* Global border radius for cards, buttons, and inputs. */
   --radius: 0.5rem;
 }

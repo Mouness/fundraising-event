@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { mergeLocales, defaultLocales } from './index';
+import { mergeLocales, defaultLocales } from '../locales';
 
 describe('mergeLocales', () => {
     it('should return default locales if no custom translations provided', () => {

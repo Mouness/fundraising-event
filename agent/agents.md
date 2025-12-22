@@ -92,6 +92,7 @@ fundraising-event/
 *   **Formatting:** Prettier (default config).
 *   **Linting:** ESLint (recommended rules).
 *   **Comments:** Use JSDoc for complex functions. Explain "Why", not "What".
+*   **Types:** One type per file. Do not export multiple types from a single file (except for index barrels).
 
 ### Frontend (React)
 *   **Components:** Arrow Functions only (`const Component = () => {}`).

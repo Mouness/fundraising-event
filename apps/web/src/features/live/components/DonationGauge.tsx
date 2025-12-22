@@ -6,8 +6,6 @@ interface DonationGaugeProps {
     totalRaisedCents: number;
     prevTotal: number;
     goalAmount: number;
-    primaryColor: string;
-    secondaryColor: string;
     totalLabel?: string;
 }
 
@@ -15,8 +13,6 @@ export const DonationGauge = ({
     totalRaisedCents,
     prevTotal,
     goalAmount,
-    primaryColor,
-    secondaryColor,
     totalLabel
 }: DonationGaugeProps) => {
     const { t } = useTranslation('common');
@@ -44,8 +40,8 @@ export const DonationGauge = ({
                 />
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor={primaryColor} />
-                        <stop offset="100%" stopColor={secondaryColor} />
+                        <stop offset="0%" stopColor="var(--primary)" />
+                        <stop offset="100%" stopColor="var(--secondary)" />
                     </linearGradient>
                 </defs>
             </svg>

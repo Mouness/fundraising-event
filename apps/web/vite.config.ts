@@ -13,6 +13,15 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        // No rewrite needed if backend has global prefix 'api'
+      },
+    },
+  },
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {

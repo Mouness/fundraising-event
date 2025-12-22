@@ -96,12 +96,18 @@ export const CheckoutForm = () => {
                                         <Input
                                             type="number"
                                             placeholder={t('donation.custom_amount')}
-                                            {...register('amount', { valueAsNumber: true })}
+                                            {...(() => {
+                                                const { onChange, ...rest } = register('amount', { valueAsNumber: true });
+                                                return {
+                                                    ...rest,
+                                                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                                                        onChange(e);
+                                                        const val = parseFloat(e.target.value);
+                                                        if (!isNaN(val)) setSelectedAmount(val);
+                                                    }
+                                                };
+                                            })()}
                                             className="h-12 bg-white/50 border-gray-200 focus:bg-white transition-colors"
-                                            onChange={(e) => {
-                                                const val = parseFloat(e.target.value);
-                                                if (!isNaN(val)) setSelectedAmount(val);
-                                            }}
                                         />
                                     </div>
                                 </div>

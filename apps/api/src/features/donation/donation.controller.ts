@@ -93,4 +93,42 @@ export class DonationController {
             throw new BadRequestException(`Webhook Error: ${err.message}`);
         }
     }
+    @Post()
+    async createOfflineDonation(
+        @Body() body: {
+            amount: number;
+            type: string;
+            donorName?: string;
+            donorEmail?: string;
+            isOfflineCollected?: boolean;
+            collectedAt?: string;
+        },
+    ) {
+        if (!body.amount || body.amount <= 0) {
+            throw new BadRequestException('Invalid amount');
+        }
+
+        console.log('Received offline donation:', body);
+
+        // 1. Emit to Live Screen
+        // Note: For offline items, multiple might come at once. Ideally we emit them individually.
+        this.donationGateway.emitDonation({
+            amount: body.amount,
+            currency: 'usd', // Default for now
+            donorName: body.donorName || 'Anonymous',
+            message: `Collected via ${body.type}`,
+            isAnonymous: !body.donorName,
+        });
+
+        // 2. Send Email Receipt if email provided
+        if (body.donorEmail) {
+            await this.emailProducer.sendReceipt(
+                body.donorEmail,
+                body.amount / 100, // Cents to units
+                `OFFLINE-${Date.now()}` // Mock ID since we don't have DB ID yet
+            );
+        }
+
+        return { success: true };
+    }
 }

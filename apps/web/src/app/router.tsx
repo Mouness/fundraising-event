@@ -16,6 +16,8 @@ const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(mod
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
 const DonationPage = lazy(() => import('../features/donation/pages/DonationPage').then(module => ({ default: module.DonationPage })));
 const ThankYouPage = lazy(() => import('../features/donation/pages/ThankYouPage').then(module => ({ default: module.ThankYouPage })));
+const StaffLayout = lazy(() => import('../features/staff/StaffLayout').then(module => ({ default: module.StaffLayout })));
+const CollectorPage = lazy(() => import('../features/staff/pages/CollectorPage').then(module => ({ default: module.CollectorPage })));
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +57,16 @@ export const router = createBrowserRouter([
                 element: <div>Events List Placeholder</div>
             }
         ],
+    },
+    {
+        path: '/staff',
+        element: Loadable(StaffLayout),
+        children: [
+            {
+                path: 'collect',
+                element: Loadable(CollectorPage),
+            }
+        ]
     },
     {
         path: '*',

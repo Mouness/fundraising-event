@@ -3,13 +3,49 @@ import { DashboardStats } from '../components/DashboardStats';
 import { useTranslation } from 'react-i18next';
 import { RECENT_DONATIONS, SALES_SUMMARY } from '@/mock/dashboard';
 
+import { Button } from '@/components/ui/button';
+import { Download, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { api } from '@/lib/api';
+
 export const DashboardPage = () => {
     const { t } = useTranslation('common');
+    const [isExporting, setIsExporting] = useState(false);
+
+    const handleExport = async () => {
+        try {
+            setIsExporting(true);
+            const response = await api.get('/export/receipts/zip', {
+                responseType: 'blob',
+            });
+
+            // Create blob link to download
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'receipts.zip'); // or extract filename from header
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+
+            console.log('Donation receipts exported successfully');
+        } catch (error) {
+            console.error('Export failed', error);
+            alert('Failed to export receipts');
+        } finally {
+            setIsExporting(false);
+        }
+    };
 
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-bold tracking-tight">{t('dashboard.title')}</h2>
+                <Button onClick={handleExport} disabled={isExporting}>
+                    {isExporting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
+                    Export Receipts (ZIP)
+                </Button>
             </div>
 
             <DashboardStats />

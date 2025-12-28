@@ -10,9 +10,17 @@
     "lint": "pnpm -r --parallel lint"
   },
   "devDependencies": {
-    "concurrently": "^8.0.0"
+    "concurrently": "^8.0.0",
+    "dotenv": "^17.2.3",
+    "ts-node": "^10.9.2"
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "@types/pg": "^8.16.0",
+    "pg": "^8.16.3"
   }
 }

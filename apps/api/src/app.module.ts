@@ -10,6 +10,7 @@ import { DonationModule } from './features/donation/donation.module';
 import { QueueModule } from './features/queue/queue.module';
 import { EventConfigModule } from './features/event/configuration/event-config.module';
 import { MailModule } from './features/mail/mail.module';
+import { ExportModule } from './features/export/export.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MailModule } from './features/mail/mail.module';
     DonationModule,
     MailModule,
     QueueModule,
+    ExportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

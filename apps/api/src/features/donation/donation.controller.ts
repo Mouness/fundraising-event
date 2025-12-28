@@ -14,6 +14,7 @@ import type { Request } from 'express';
 
 import { GatewayGateway } from '../gateway/gateway.gateway';
 import { EmailProducer } from '../queue/producers/email.producer';
+import { DonationService } from './donation.service';
 
 @Controller('donations')
 export class DonationController {
@@ -22,6 +23,7 @@ export class DonationController {
         private readonly paymentService: PaymentProvider,
         private readonly donationGateway: GatewayGateway,
         private readonly emailProducer: EmailProducer,
+        private readonly donationService: DonationService,
     ) { }
 
     @Post('intent')
@@ -31,8 +33,6 @@ export class DonationController {
         if (!body.amount || body.amount <= 0) {
             throw new BadRequestException('Invalid amount');
         }
-        // Amount is expected in the smallest currency unit (e.g., cents for USD/EUR).
-        // Frontend is responsible for converting user input to cents.
         return this.paymentService.createPaymentIntent(
             body.amount,
             body.currency || 'usd',
@@ -49,9 +49,6 @@ export class DonationController {
             throw new BadRequestException('Missing stripe-signature header');
         }
 
-        // NestJS needs raw body for Stripe signature verification
-        // This requires main.ts configuration to allow raw body for this route or globally
-
         try {
             if (!req.rawBody) {
                 throw new BadRequestException('Raw body not available');
@@ -66,7 +63,22 @@ export class DonationController {
                 case 'payment_intent.succeeded':
                     const paymentIntent = event.data.object;
                     console.log('PaymentIntent was successful!', paymentIntent);
-                    // TODO: Record donation in DB via DonationService (to be created)
+
+                    // Persist to DB
+                    await this.donationService.create({
+                        amount: paymentIntent.amount,
+                        transactionId: paymentIntent.id,
+                        status: 'COMPLETED',
+                        paymentMethod: 'stripe',
+                        donorName: paymentIntent.metadata?.donorName,
+                        donorEmail: paymentIntent.metadata?.donorEmail,
+                        // Note: Stripe metadata values are strings. 'true'/'false'.
+                        isAnonymous: paymentIntent.metadata?.isAnonymous === 'true',
+                        message: paymentIntent.metadata?.message,
+                        metadata: paymentIntent.metadata,
+                    });
+
+                    // Emit to Live Screen
                     this.donationGateway.emitDonation({
                         amount: paymentIntent.amount,
                         currency: paymentIntent.currency,
@@ -79,7 +91,7 @@ export class DonationController {
                     if (paymentIntent.metadata?.donorEmail) {
                         await this.emailProducer.sendReceipt(
                             paymentIntent.metadata.donorEmail,
-                            paymentIntent.amount / 100, // Convert cents to dollars/unit
+                            paymentIntent.amount / 100,
                             paymentIntent.id
                         );
                     }
@@ -110,11 +122,28 @@ export class DonationController {
 
         console.log('Received offline donation:', body);
 
+        // Persist to DB
+        // Generate a pseudo-ID for transaction if it's cash, or use timestamp
+        const txId = `OFFLINE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+        await this.donationService.create({
+            amount: body.amount,
+            transactionId: txId,
+            status: 'COMPLETED',
+            paymentMethod: body.type || 'cash',
+            donorName: body.donorName,
+            donorEmail: body.donorEmail,
+            isAnonymous: !body.donorName,
+            metadata: {
+                isOfflineCollected: true,
+                collectedAt: body.collectedAt,
+            }
+        });
+
         // 1. Emit to Live Screen
-        // Note: For offline items, multiple might come at once. Ideally we emit them individually.
         this.donationGateway.emitDonation({
             amount: body.amount,
-            currency: 'usd', // Default for now
+            currency: 'usd',
             donorName: body.donorName || 'Anonymous',
             message: `Collected via ${body.type}`,
             isAnonymous: !body.donorName,
@@ -124,8 +153,8 @@ export class DonationController {
         if (body.donorEmail) {
             await this.emailProducer.sendReceipt(
                 body.donorEmail,
-                body.amount / 100, // Cents to units
-                `OFFLINE-${Date.now()}` // Mock ID since we don't have DB ID yet
+                body.amount / 100,
+                txId
             );
         }
 

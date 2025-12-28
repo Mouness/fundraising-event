@@ -44,4 +44,12 @@ export interface EventConfig {
             config?: Record<string, any>;
         };
     };
+    /** PDF Receipt configuration */
+    receipt: {
+        enabled: boolean;
+        legalName: string;
+        address: string;
+        footerText?: string;
+        logoUrl?: string;
+    };
 }

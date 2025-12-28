@@ -2,9 +2,11 @@ import { Module, Global } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { ConsoleMailProvider } from './providers/console-mail.provider';
 import { ConfigService } from '@nestjs/config';
+import { PdfModule } from '../pdf/pdf.module';
 
 @Global() // Make MailService available everywhere without importing MailModule
 @Module({
+    imports: [PdfModule],
     providers: [
         MailService,
         ConsoleMailProvider,

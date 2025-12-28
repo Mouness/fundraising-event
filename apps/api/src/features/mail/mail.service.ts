@@ -5,12 +5,15 @@ import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
+import { PdfService } from '../pdf/pdf.service';
+
 @Injectable()
 export class MailService {
     constructor(
         @Inject('MAIL_PROVIDER') private readonly mailProvider: MailProvider,
         private readonly eventConfigService: EventConfigService,
         private readonly configService: ConfigService,
+        private readonly pdfService: PdfService,
     ) { }
 
     async sendReceipt(to: string, data: any) {
@@ -31,9 +34,28 @@ export class MailService {
             currency: 'USD',
         };
 
+        // Generate PDF Receipt
+        let attachments: { filename: string, content: Buffer }[] = [];
+        try {
+            const pdfBuffer = await this.pdfService.generateReceipt({
+                amount: data.amount * 100, // Convert dollars to cents for PdfService
+                donorName: data.name || data.donorName || 'Supporter', // Fallback
+                date: new Date(data.date),
+                transactionId: data.transactionId || 'N/A'
+            });
+            attachments.push({
+                filename: `Receipt-${data.transactionId || 'donation'}.pdf`,
+                content: pdfBuffer
+            });
+        } catch (error) {
+            console.error('Failed to generate PDF receipt', error);
+            // Continue sending email without attachment? Or fail? 
+            // Better to log and continue so user at least gets the email.
+        }
+
         const template = await this.renderTemplate('receipt', context);
 
-        await this.mailProvider.send(to, subject, template, context);
+        await this.mailProvider.send(to, subject, template, context, attachments);
     }
 
     private async renderTemplate(templateName: string, context: any): Promise<string> {

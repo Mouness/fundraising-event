@@ -8,8 +8,9 @@ export const AdminLayout = () => {
             <aside className="w-64 bg-gray-900 text-white p-4">
                 <h1 className="text-xl font-bold mb-8">Fundraising Admin</h1>
                 <nav className="flex flex-col gap-2">
-                    <Link to="/admin" className="p-2 hover:bg-gray-800 rounded">Dashboard</Link>
-                    <Link to="/admin/events" className="p-2 hover:bg-gray-800 rounded">Events</Link>
+                    <Link to="/admin" className="p-2 hover:bg-gray-800 rounded flex items-center gap-2">Dashboard</Link>
+                    <Link to="/admin/events" className="p-2 hover:bg-gray-800 rounded flex items-center gap-2">Events</Link>
+                    <Link to="/admin/settings" className="p-2 hover:bg-gray-800 rounded flex items-center gap-2">Settings</Link>
                 </nav>
             </aside>
             <main className="flex-1 p-8 bg-gray-50 overflow-auto">

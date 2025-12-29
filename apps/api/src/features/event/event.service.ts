@@ -6,6 +6,17 @@ import { PrismaService } from '../../database/prisma.service';
 export class EventService {
   constructor(private prisma: PrismaService) { }
 
+  private readonly defaultSelect = {
+    id: true,
+    slug: true,
+    name: true,
+    goalAmount: true,
+    themeConfig: true,
+    formConfig: true,
+    createdAt: true,
+    updatedAt: true,
+  };
+
   async create(createEventDto: CreateEventDto) {
     return this.prisma.event.create({
       data: {
@@ -14,11 +25,12 @@ export class EventService {
         goalAmount: createEventDto.goalAmount,
         themeConfig: createEventDto.themeConfig || {},
       },
+      select: this.defaultSelect,
     });
   }
 
   async findAll() {
-    return this.prisma.event.findMany();
+    return this.prisma.event.findMany({ select: this.defaultSelect });
   }
 
   async findOne(slugOrId: string) {
@@ -26,6 +38,7 @@ export class EventService {
       where: {
         OR: [{ id: slugOrId }, { slug: slugOrId }],
       },
+      select: this.defaultSelect,
     });
     if (!event) throw new NotFoundException('Event not found');
     return event;
@@ -36,6 +49,7 @@ export class EventService {
       where: { id },
       data: {
         ...(updateEventDto.name && { name: updateEventDto.name }),
+        ...(updateEventDto.slug && { slug: updateEventDto.slug }),
         ...(updateEventDto.goalAmount && {
           goalAmount: updateEventDto.goalAmount,
         }),
@@ -43,10 +57,11 @@ export class EventService {
           themeConfig: updateEventDto.themeConfig,
         }),
       },
+      select: this.defaultSelect,
     });
   }
 
   async remove(id: string) {
-    return this.prisma.event.delete({ where: { id } });
+    return this.prisma.event.delete({ where: { id }, select: this.defaultSelect });
   }
 }

@@ -10,6 +10,7 @@ export class CreateEventDto {
 }
 
 export class UpdateEventDto {
+    slug?: string;
     name?: string;
     goalAmount?: number;
     themeConfig?: {

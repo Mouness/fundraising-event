@@ -12,6 +12,7 @@ const Loadable = (Component: ComponentType, fallback = <PageLoader />) => (
 // Lazy load pages
 const AdminLayout = lazy(() => import('../features/admin/layouts/AdminLayout').then(module => ({ default: module.AdminLayout })));
 const DashboardPage = lazy(() => import('../features/admin/pages/DashboardPage').then(module => ({ default: module.DashboardPage })));
+const EventSettingsPage = lazy(() => import('../features/admin/pages/EventSettingsPage').then(module => ({ default: module.EventSettingsPage })));
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(module => ({ default: module.LoginPage })));
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
 const DonationPage = lazy(() => import('../features/donation/pages/DonationPage').then(module => ({ default: module.DonationPage })));
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <DashboardPage />,
+            },
+            {
+                path: 'settings',
+                element: <EventSettingsPage />,
             },
             {
                 path: 'events',

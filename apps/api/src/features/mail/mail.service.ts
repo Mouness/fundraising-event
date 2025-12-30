@@ -21,7 +21,7 @@ export class MailService {
         const subject = `Receipt for your donation of $${data.amount}`;
 
         const frontendUrl = this.configService.get('FRONTEND_URL') || 'http://localhost:5173';
-        const logoPath = config.theme.logoUrl || '';
+        const logoPath = config.theme?.assets?.logo || '';
         const absoluteLogoUrl = logoPath.startsWith('http') ? logoPath : `${frontendUrl}${logoPath}`;
 
         const context = {

@@ -80,7 +80,7 @@ export const ThankYouPage = () => {
                             Share your support
                         </div>
                         <div className="flex justify-center gap-4">
-                            {config.donation.sharing?.enabled && config.donation.sharing.networks.map(network => {
+                            {config.donation.sharing?.enabled && config.donation.sharing.networks.map((network: string) => {
                                 if (network === 'facebook') {
                                     return (
                                         <Button key={network} variant="outline" size="icon" onClick={() => handleShare('facebook')} className="hover:text-blue-600 hover:border-blue-600">

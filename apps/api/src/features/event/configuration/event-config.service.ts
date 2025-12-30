@@ -2,8 +2,9 @@ import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { loadConfig } from '@fundraising/white-labeling';
+import { loadConfigs, deepMerge } from '@fundraising/white-labeling';
 import type { EventConfig } from '@fundraising/white-labeling';
+import { PrismaService } from '../../../database/prisma.service';
 
 @Injectable()
 export class EventConfigService implements OnModuleInit {
@@ -11,7 +12,10 @@ export class EventConfigService implements OnModuleInit {
     private config: EventConfig | null = null;
     private readonly configPath: string;
 
-    constructor(private readonly configService: ConfigService) {
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly prisma: PrismaService
+    ) {
         // Development: Fallback to local 'event-config.json' in API root if it exists
         const defaultDevPath = path.join(process.cwd(), 'event-config.json');
         this.configPath = this.configService.get('EVENT_CONFIG_PATH') || defaultDevPath;
@@ -23,19 +27,60 @@ export class EventConfigService implements OnModuleInit {
 
     async loadConfig() {
         try {
-            this.logger.log(`Loading custom config from: ${this.configPath}`);
-            const data = await fs.readFile(this.configPath, 'utf-8');
-            const customConfig = JSON.parse(data) as Partial<EventConfig>;
-            this.config = loadConfig(customConfig);
-            this.logger.log(`Event config loaded: ${this.config.content.title}`);
+            // 1. Base Defaults
+            let finalConfig = loadConfigs();
+
+            // 2. Local File Override (Dev/Static)
+            try {
+                this.logger.log(`Loading custom config from: ${this.configPath}`);
+                const data = await fs.readFile(this.configPath, 'utf-8');
+                const fileConfig = JSON.parse(data);
+                finalConfig = deepMerge(finalConfig, fileConfig);
+            } catch (fileError) {
+                this.logger.warn(`File config not found or invalid: ${fileError.message}`);
+            }
+
+            // 3. Database Override (Admin Settings)
+            try {
+                // Assuming single event for now, similar to frontend logic
+                const event = await this.prisma.event.findFirst();
+                if (event) {
+                    this.logger.log(`Loading DB config for event: ${event.name}`);
+
+                    // Map DB Event to EventConfig structure (Partial)
+                    // This mapping mirrors what loadConfigs() does in the frontend with getDbConfig()
+                    // But here we do it explicitly server-side.
+                    const dbConfig: any = {
+                        content: {
+                            title: event.name,
+                            goalAmount: Number(event.goalAmount),
+                        },
+                        // We can also map themeConfig purely here if we want strict control
+                        // But usually themeConfig in DB is already essentially partial EventConfig
+                    };
+
+                    // If themeConfig has specific structure we merge it
+                    if (event.themeConfig) {
+                        finalConfig = deepMerge(finalConfig, event.themeConfig as any);
+                    }
+
+                    finalConfig = deepMerge(finalConfig, dbConfig);
+                }
+            } catch (dbError) {
+                this.logger.error(`Failed to load config from DB: ${dbError.message}`);
+            }
+
+            this.config = finalConfig;
+            this.logger.log(`Final Event Config loaded: ${this.config.content.title}`);
+
         } catch (error) {
-            this.logger.warn(`No custom config found or failed to load (${error.message}). Using defaults.`);
-            this.config = loadConfig();
+            this.logger.error(`Critical error loading event config: ${error.message}`);
+            this.config = loadConfigs(); // Fallback to safe defaults
         }
     }
 
     getConfig(): EventConfig {
-        return this.config || loadConfig();
+        return this.config || loadConfigs();
     }
 
     async getThemeVariable(variable: string, fallback: string = ''): Promise<string> {

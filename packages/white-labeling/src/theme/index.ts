@@ -1,11 +1,18 @@
-// import './theme.default.css';
+import { getDbConfig } from '../store';
 
 /**
- * Helper to get the default theme CSS import.
- * In a Vite environment, importing this file (or the css directly) handles the injection.
- * For now, this file mainly ensures the default CSS is included in the bundle when imported.
+ * Loads and optionally applies DB-overridden CSS variables.
+ * @param apply If true, applies variables to document root.
  */
-export const loadDefaultTheme = () => {
-    // No-op: check side-effects (import './theme.default.css')
-    console.log('Default theme loaded');
-};
+export function loadTheme(apply = false): Record<string, string> {
+    const variables = getDbConfig()?.themeConfig?.variables || {};
+
+    if (apply && variables) {
+        const root = document.documentElement;
+        Object.entries(variables).forEach(([key, value]) => {
+            if (value) root.style.setProperty(key, String(value));
+        });
+    }
+
+    return variables;
+}

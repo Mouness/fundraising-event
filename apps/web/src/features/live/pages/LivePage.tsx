@@ -63,9 +63,9 @@ export const LivePage = () => {
                 {/* Header / Title */}
                 <header className="flex justify-between items-start mb-12">
                     <div className="flex items-center gap-6">
-                        {config.theme.logoUrl && (
+                        {config.theme?.assets?.logo && (
                             <img
-                                src={config.theme.logoUrl}
+                                src={config.theme.assets.logo}
                                 alt="Event Logo"
                                 className="h-16 w-auto object-contain rounded-lg bg-white/10 backdrop-blur-sm p-2"
                             />

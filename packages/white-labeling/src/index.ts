@@ -1,18 +1,13 @@
 // Types
 export type { EventConfig } from './types';
 
-// Config
-export { defaultConfig, loadConfig } from './config';
+export { initWhiteLabeling } from './store';
 
-// Locales
-export { defaultLocales, mergeLocales } from './locales';
-
-// Assets
-export { assets, getAssetUrl } from './assets';
-
-// Theme
-export { loadDefaultTheme } from './theme';
+// Loaders
+export { loadAssets } from './assets';
+export { loadConfigs } from './config';
+export { loadLocales } from './locales';
+export { loadTheme } from './theme';
 
 // Utils
 export { deepMerge } from './utils/merge';
-

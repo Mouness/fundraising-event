@@ -2,22 +2,14 @@ export class CreateEventDto {
     slug!: string;
     name!: string;
     goalAmount!: number;
-    themeConfig!: {
-        primaryColor: string;
-        secondaryColor?: string;
-        logoUrl?: string;
-    };
+    themeConfig!: Record<string, any>;
 }
 
 export class UpdateEventDto {
     slug?: string;
     name?: string;
     goalAmount?: number;
-    themeConfig?: {
-        primaryColor?: string;
-        secondaryColor?: string;
-        logoUrl?: string;
-    };
+    themeConfig?: Record<string, any>;
 }
 
 export class EventResponseDto {

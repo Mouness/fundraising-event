@@ -1,7 +1,15 @@
 import logo from './images/logo.svg';
+import { getDbConfig } from '../store';
+import { deepMerge } from '../utils/merge';
 
-export const assets = {
+const defaultAssets = {
     logo
 };
 
-export const getAssetUrl = (path: string) => path;
+/**
+ * Loads the final assets map by merging defaults with database overrides.
+ */
+export function loadAssets(): Record<string, string> {
+    const dbAssets = getDbConfig()?.themeConfig?.assets || {};
+    return deepMerge(defaultAssets, dbAssets);
+}

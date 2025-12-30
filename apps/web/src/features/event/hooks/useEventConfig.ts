@@ -1,60 +1,61 @@
-import { useState, useEffect } from 'react';
-import { loadConfig } from '@fundraising/white-labeling';
-import type { EventConfig } from '@fundraising/white-labeling';
 
-// Default fallback config
-const INITIAL_STATE = loadConfig();
+import { useState, useEffect } from 'react';
+import {
+    initWhiteLabeling,
+    loadConfigs,
+    loadAssets,
+    loadTheme
+} from '@fundraising/white-labeling';
+import type { EventConfig } from '@fundraising/white-labeling';
+import { API_URL } from '@/lib/api';
+
+// Initial state must be a full EventConfig compliant object
+// defaults are available synchronously via loaders when store is empty
+const INITIAL_STATE: EventConfig = {
+    ...loadConfigs(),
+    theme: {
+        assets: loadAssets(),
+        variables: loadTheme()
+    }
+};
 
 export const useEventConfig = () => {
+    // We can also allow local overrides or hydration if needed
     const [config, setConfig] = useState<EventConfig>(INITIAL_STATE);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchContext = async () => {
-            const timestamp = Date.now();
-
-            // 1. Fetch Config Strategy (Deep Merge)
             try {
-                const res = await fetch(`/config/event-config.json?v=${timestamp}`);
-                if (res.ok) {
-                    const customConfig = await res.json();
-                    setConfig(loadConfig(customConfig));
-                }
+                // 1. Initialize DB Store (Async)
+                await initWhiteLabeling(API_URL);
+
+                // 2. Load Domain Specific Configs (Sync / Cached)
+                const baseConfig = loadConfigs();
+                const assets = loadAssets();
+                const themeVars = loadTheme(true); // Load and apply
+
+                // 3. Compose final configuration object for the App
+                const fullConfig: EventConfig = {
+                    ...baseConfig,
+                    theme: {
+                        assets,
+                        variables: themeVars
+                    }
+                };
+
+                // 4. Update State & UI
+                setConfig(fullConfig);
+
             } catch (error) {
-                // Ignore, keep default
+                console.error('Failed to load event config:', error);
+            } finally {
+                setIsLoading(false);
             }
-
-            // 2. Fetch Theme CSS Strategy (Cascade Override)
-            // We check if a custom theme file exists and inject it to override the default bundle.
-            try {
-                const themeRes = await fetch(`/config/theme.css?v=${timestamp}`);
-                if (themeRes.ok) {
-                    const css = await themeRes.text();
-                    injectThemeStyle(css);
-                }
-            } catch {
-                // Ignore, keep default bundle
-            }
-
-            setIsLoading(false);
         };
 
         fetchContext();
     }, []);
 
     return { config, isLoading };
-}
-
-// Helper to inject CSS into the document head
-function injectThemeStyle(css: string) {
-    const styleId = 'custom-event-theme';
-    let style = document.getElementById(styleId) as HTMLStyleElement;
-
-    if (!style) {
-        style = document.createElement('style');
-        style.id = styleId;
-        document.head.appendChild(style);
-    }
-
-    style.textContent = css;
 }

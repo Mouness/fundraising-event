@@ -3,9 +3,12 @@ export interface EventConfig {
     id: string;
 
     /** Visual theme configuration */
-    theme: {
-        /** URL to the logo image */
-        logoUrl?: string;
+    /** Visual theme configuration */
+    theme?: {
+        /** Generic assets map (e.g. logo, background) */
+        assets?: Record<string, string>;
+        /** Generic CSS variables map (e.g. --primary, --radius) */
+        variables?: Record<string, string>;
     };
 
     /** Text content configuration */

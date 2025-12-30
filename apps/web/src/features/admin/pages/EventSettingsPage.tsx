@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { api } from '@/lib/api';
@@ -16,6 +16,7 @@ const eventSchema = z.object({
     goalAmount: z.coerce.number().min(1, 'Goal must be at least 1'),
     slug: z.string().min(1, 'Slug is required'),
     primaryColor: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, 'Invalid hex color'),
+    logoUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
 });
 
 type EventFormValues = z.infer<typeof eventSchema>;
@@ -33,8 +34,13 @@ export const EventSettingsPage = () => {
             goalAmount: 0,
             slug: '',
             primaryColor: '#000000',
+            logoUrl: '',
         },
     });
+
+
+
+    const [currentThemeConfig, setCurrentThemeConfig] = useState<any>({});
 
     useEffect(() => {
         loadEvent();
@@ -47,11 +53,18 @@ export const EventSettingsPage = () => {
             if (data && data.length > 0) {
                 const event = data[0];
                 setEventId(event.id);
+                setCurrentThemeConfig(event.themeConfig || {});
+
+                // Helper to resolve values from new generic structure or legacy fields
+                const logo = event.themeConfig?.assets?.logo || '';
+                const primary = event.themeConfig?.variables?.['--primary'] || '#000000';
+
                 form.reset({
                     name: event.name,
                     goalAmount: Number(event.goalAmount),
                     slug: event.slug,
-                    primaryColor: event.themeConfig?.primaryColor || '#000000',
+                    primaryColor: primary,
+                    logoUrl: logo,
                 });
             }
         } catch (error) {
@@ -66,19 +79,35 @@ export const EventSettingsPage = () => {
 
         try {
             setIsSaving(true);
+
+            // Deep merge or spread to preserve other theme settings (secondary color, background, locales etc.)
+            const updatedThemeConfig = {
+                ...currentThemeConfig,
+                assets: {
+                    ...currentThemeConfig.assets,
+                    logo: values.logoUrl
+                },
+                variables: {
+                    ...currentThemeConfig.variables,
+                    '--primary': values.primaryColor
+                }
+            };
+
             await api.patch(`/events/${eventId}`, {
                 name: values.name,
                 goalAmount: values.goalAmount,
-                slug: values.slug, // Usually slug shouldn't change easily but allowing for now
-                themeConfig: {
-                    primaryColor: values.primaryColor,
-                },
+                slug: values.slug,
+                themeConfig: updatedThemeConfig,
             });
             // toast({ title: "Settings saved", description: "Event configuration updated." });
             alert("Settings saved successfully!");
+
+            // Reload to ensure sync
+            loadEvent();
         } catch (error) {
             console.error('Failed to save settings', error);
-            alert("Failed to save settings.");
+            const msg = (error as any)?.response?.data?.message || (error as any)?.message || "Unknown error";
+            alert(`Failed to save settings: ${msg}`);
         } finally {
             setIsSaving(false);
         }
@@ -132,20 +161,38 @@ export const EventSettingsPage = () => {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="grid gap-2">
+                            <Label htmlFor="logoUrl">Logo URL (Optional)</Label>
+                            <Input id="logoUrl" placeholder="https://..." {...form.register('logoUrl')} />
+                            {form.formState.errors.logoUrl && <p className="text-sm text-red-500">{form.formState.errors.logoUrl.message}</p>}
+                        </div>
+
+                        <div className="grid gap-2">
                             <Label htmlFor="primaryColor">Primary Color</Label>
-                            <div className="flex gap-2">
-                                <Input
-                                    id="primaryColor"
-                                    type="color"
-                                    className="w-12 h-10 p-1 cursor-pointer"
-                                    {...form.register('primaryColor')}
-                                />
-                                <Input
-                                    type="text"
-                                    {...form.register('primaryColor')}
-                                    className="flex-1"
-                                />
-                            </div>
+                            <Controller
+                                control={form.control}
+                                name="primaryColor"
+                                render={({ field }) => (
+                                    <div className="flex gap-2">
+                                        <Input
+                                            id="primaryColor"
+                                            type="color"
+                                            className="w-12 h-10 p-1 cursor-pointer"
+                                            value={field.value || '#000000'}
+                                            onChange={(e) => {
+                                                field.onChange(e.target.value.toUpperCase());
+                                                // Try to force close with timeout
+                                                setTimeout(() => e.target.blur(), 0);
+                                            }}
+                                        />
+                                        <Input
+                                            type="text"
+                                            className="flex-1"
+                                            value={field.value || ''}
+                                            onChange={(e) => field.onChange(e.target.value.toUpperCase())}
+                                        />
+                                    </div>
+                                )}
+                            />
                             {form.formState.errors.primaryColor && <p className="text-sm text-red-500">{form.formState.errors.primaryColor.message}</p>}
                         </div>
                     </CardContent>

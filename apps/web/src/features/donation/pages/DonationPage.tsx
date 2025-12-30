@@ -15,9 +15,9 @@ export const DonationPage = () => {
         >
             <div className="max-w-md mx-auto space-y-8">
                 <div className="text-center">
-                    {config.theme.logoUrl && (
+                    {config.theme?.assets?.logo && (
                         <div className="mb-6 flex justify-center">
-                            <img src={config.theme.logoUrl} alt="Event Logo" className="h-16 w-auto object-contain" />
+                            <img src={config.theme.assets.logo} alt="Event Logo" className="h-16 w-auto object-contain" />
                         </div>
                     )}
                     <h1 className="text-3xl font-extrabold text-gray-900">{config.content.title || t('donation.title')}</h1>

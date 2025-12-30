@@ -1,26 +1,20 @@
 import enDefault from './en.default.json';
 import frDefault from './fr.default.json';
+import { getDbConfig } from '../store';
 import { deepMerge } from '../utils/merge';
 
-export const defaultLocales = {
+const defaultLocales = {
     en: enDefault,
     fr: frDefault
 };
 
-export type LocaleKey = keyof typeof defaultLocales;
-export type TranslationResource = typeof enDefault;
-
-import { DeepPartial } from '../types';
 
 /**
- * Merges a custom translation resource with the default for a given locale.
- * @param locale 'en' | 'fr'
- * @param customTranslations Partial translation object
- * @returns Merged translation object
+ * Loads the application locales.
+ * Currently returns embedded defaults.
+ * Future: Merge with database overrides if 'locales' support is added to EventConfig.
  */
-export function mergeLocales(locale: LocaleKey, customTranslations?: DeepPartial<TranslationResource>): TranslationResource {
-    const base = defaultLocales[locale];
-    if (!customTranslations) return base;
-    return deepMerge(base, customTranslations);
+export function loadLocales(): typeof defaultLocales {
+    const dbLocales = getDbConfig()?.themeConfig?.locales || {};
+    return deepMerge(defaultLocales, dbLocales);
 }
-

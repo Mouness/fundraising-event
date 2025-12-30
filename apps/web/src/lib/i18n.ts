@@ -1,15 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { defaultLocales } from '@fundraising/white-labeling';
+import { loadLocales } from '@fundraising/white-labeling';
+
+const locales = loadLocales();
 
 i18n
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
         resources: {
-            en: { common: defaultLocales.en },
-            fr: { common: defaultLocales.fr }
+            en: { common: locales.en },
+            fr: { common: locales.fr }
         },
         fallbackLng: 'en',
         defaultNS: 'common',

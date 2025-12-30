@@ -36,13 +36,18 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock react-i18next
 vi.mock('react-i18next', () => ({
     useTranslation: () => ({
-        t: (key: string) => key,
+        t: (key: string, options?: any) => {
+            if (options?.amount) return `${key} ${options.amount}`;
+            return key;
+        },
         i18n: {
-            changeLanguage: () => new Promise(() => { }),
+            changeLanguage: () => Promise.resolve(),
         },
     }),
     initReactI18next: {
         type: '3rdParty',
         init: () => { },
     },
+    Trans: ({ children }: any) => children,
+    Translation: ({ children }: any) => children(({ t: (k: string) => k, i18n: {} } as any)),
 }));

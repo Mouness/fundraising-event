@@ -45,7 +45,7 @@ export class EventConfigService implements OnModuleInit {
             // 3. Database Override (Admin Settings)
             try {
                 // Assuming single event for now, similar to frontend logic
-                const event = await this.prisma.event.findFirst();
+                const event = await this.prisma.event?.findFirst();
                 if (event) {
                     this.logger.log(`Loading DB config for event: ${event.name}`);
 

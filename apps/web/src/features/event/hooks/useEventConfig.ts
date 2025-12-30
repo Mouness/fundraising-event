@@ -8,6 +8,7 @@ import {
 } from '@fundraising/white-labeling';
 import type { EventConfig } from '@fundraising/white-labeling';
 import { API_URL } from '@/lib/api';
+import { syncLocales } from '@/lib/i18n';
 
 // Initial state must be a full EventConfig compliant object
 // defaults are available synchronously via loaders when store is empty
@@ -44,7 +45,10 @@ export const useEventConfig = () => {
                     }
                 };
 
-                // 4. Update State & UI
+                // 4. Apply Dynamic Locales
+                syncLocales();
+
+                // 5. Update State & UI
                 setConfig(fullConfig);
 
             } catch (error) {

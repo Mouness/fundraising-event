@@ -30,6 +30,9 @@ describe('AuthController (e2e)', () => {
                         return Promise.resolve(null);
                     }),
                 },
+                event: {
+                    findFirst: vi.fn().mockResolvedValue(null),
+                },
             })
             .compile();
 

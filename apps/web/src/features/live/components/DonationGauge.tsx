@@ -20,9 +20,12 @@ export const DonationGauge = ({
 
     return (
         <div className="relative w-[500px] h-[500px]">
-            <svg className="w-full h-full transform -rotate-90 filter drop-shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+            <svg
+                className="w-full h-full transform -rotate-90 filter"
+                style={{ filter: 'drop-shadow(0 0 15px var(--live-gauge-shadow))' }}
+            >
                 {/* Track */}
-                <circle cx="50%" cy="50%" r="45%" stroke="rgba(255,255,255,0.05)" strokeWidth="12" fill="none" />
+                <circle cx="50%" cy="50%" r="45%" stroke="var(--live-gauge-track)" strokeWidth="12" fill="none" />
                 {/* Progress */}
                 <motion.circle
                     cx="50%" cy="50%" r="45%"
@@ -30,7 +33,7 @@ export const DonationGauge = ({
                     strokeWidth="12"
                     fill="none"
                     strokeLinecap="round"
-                    strokeDasharray="283" // approximate
+                    strokeDasharray="283"
                     strokeDashoffset={283 - (283 * progressPercentage) / 100}
                     initial={{ strokeDashoffset: 283 }}
                     animate={{ strokeDashoffset: 283 - (283 * progressPercentage) / 100 }}
@@ -49,7 +52,8 @@ export const DonationGauge = ({
             {/* Center Counter */}
             <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <motion.div
-                    className="text-8xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400"
+                    className="text-8xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent"
+                    style={{ backgroundImage: 'linear-gradient(to bottom, var(--live-counter-gradient-from), var(--live-counter-gradient-to))' }}
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                 >
@@ -61,10 +65,21 @@ export const DonationGauge = ({
                         decimals={0}
                     />
                 </motion.div>
-                <div className="mt-4 px-6 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 text-sm font-medium tracking-widest uppercase text-slate-300">
+                <div
+                    className="mt-4 px-6 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
+                    style={{
+                        backgroundColor: 'var(--glass-bg)',
+                        backdropFilter: 'blur(var(--glass-blur))',
+                        borderColor: 'var(--glass-border)',
+                        color: 'var(--live-text-secondary)'
+                    }}
+                >
                     {totalLabel || t('live.total_raised')}
                 </div>
-                <div className="mt-2 text-slate-500 text-xs uppercase tracking-widest">
+                <div
+                    className="mt-2 text-xs uppercase tracking-widest"
+                    style={{ color: 'var(--live-text-muted)' }}
+                >
                     {t('live.goal')}: ${goalAmount.toLocaleString()}
                 </div>
             </div>

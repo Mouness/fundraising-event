@@ -31,45 +31,73 @@ export const LoginPage = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-            <Card className="w-full max-w-md">
+        <div
+            className="flex items-center justify-center min-h-screen p-4"
+            style={{ backgroundColor: 'var(--auth-page-bg)' }}
+        >
+            <Card
+                className="w-full max-w-md"
+                style={{ boxShadow: 'var(--auth-card-shadow)', borderRadius: 'var(--auth-card-radius)' }}
+            >
                 <CardHeader>
-                    <CardTitle className="text-2xl text-center">{t('login.title')}</CardTitle>
-                    <CardDescription className="text-center">
+                    <CardTitle className="text-2xl text-center" style={{ color: 'var(--auth-title-color)' }}>{t('login.title')}</CardTitle>
+                    <CardDescription className="text-center" style={{ color: 'var(--auth-subtitle-color)' }}>
                         {t('login.subtitle')}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div className="space-y-2">
-                            <Label htmlFor="email">{t('login.email')}</Label>
+                            <Label htmlFor="email" style={{ color: 'var(--auth-label-color)' }}>{t('login.email')}</Label>
                             <Input
                                 id="email"
                                 type="email"
                                 placeholder={t('login.email_placeholder')}
                                 {...register('email')}
+                                style={{
+                                    backgroundColor: 'var(--auth-input-bg)',
+                                    color: 'var(--auth-input-text)',
+                                    borderColor: 'var(--auth-input-border)'
+                                }}
                             />
                             {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="password">{t('login.password')}</Label>
+                            <Label htmlFor="password" style={{ color: 'var(--auth-label-color)' }}>{t('login.password')}</Label>
                             <Input
                                 id="password"
                                 type="password"
                                 {...register('password')}
+                                style={{
+                                    backgroundColor: 'var(--auth-input-bg)',
+                                    color: 'var(--auth-input-text)',
+                                    borderColor: 'var(--auth-input-border)'
+                                }}
                             />
                             {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
                         </div>
 
                         {error && <p className="text-sm text-red-500 text-center">{error}</p>}
 
-                        <Button type="submit" className="w-full" disabled={isLoading}>
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={isLoading}
+                            style={{
+                                backgroundColor: 'var(--auth-button-bg)',
+                                color: 'var(--auth-button-text)'
+                            }}
+                        >
                             {isLoading ? t('login.loading') : t('login.submit')}
                         </Button>
                     </form>
                 </CardContent>
                 <CardFooter className="flex justify-center">
-                    <a href="/auth/google" className="text-sm text-blue-600 hover:underline">
+                    <a
+                        href="/auth/google"
+                        className="text-sm hover:underline"
+                        style={{ color: 'var(--auth-link-color)' }}
+                    >
                         {t('login.google')}
                     </a>
                 </CardFooter>

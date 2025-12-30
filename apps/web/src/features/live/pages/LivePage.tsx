@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'react-qr-code';
-import { useEventConfig } from '../../event/hooks/useEventConfig';
-import { DonationFeed, type Donation } from '../components/DonationFeed';
-import { DonationGauge } from '../components/DonationGauge';
-import { useLiveSocket } from '../hooks/useLiveSocket';
+import { useEventConfig } from '@/features/event/hooks/useEventConfig';
+import { DonationFeed, type Donation } from '@/features/live/components/DonationFeed';
+import { DonationGauge } from '@/features/live/components/DonationGauge';
+import { useLiveSocket } from '@/features/live/hooks/useLiveSocket';
 import { fireConfetti } from '@/lib/confetti';
 
 export const LivePage = () => {
@@ -39,12 +39,24 @@ export const LivePage = () => {
     }, [lastEvent]);
 
     return (
-        <div className="min-h-screen bg-black text-white overflow-hidden relative font-sans selection:bg-purple-500 selection:text-white">
+        <div
+            className="min-h-screen overflow-hidden relative font-sans selection:bg-purple-500 selection:text-white"
+            style={{
+                backgroundColor: 'var(--live-page-bg)',
+                color: 'var(--live-text-main)'
+            }}
+        >
 
             {/* Animated Background */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] bg-purple-900/20 rounded-full blur-[120px] animate-pulse-slow mix-blend-screen"></div>
-                <div className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] bg-blue-900/20 rounded-full blur-[120px] animate-pulse-slow delay-1000 mix-blend-screen"></div>
+                <div
+                    className="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] rounded-full animate-pulse-slow mix-blend-screen"
+                    style={{ backgroundColor: 'var(--live-bg-accent-1)', filter: 'blur(var(--live-bg-blur))' }}
+                ></div>
+                <div
+                    className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] rounded-full animate-pulse-slow delay-1000 mix-blend-screen"
+                    style={{ backgroundColor: 'var(--live-bg-accent-2)', filter: 'blur(var(--live-bg-blur))' }}
+                ></div>
                 <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
             </div>
 
@@ -57,14 +69,16 @@ export const LivePage = () => {
                             <img
                                 src={config.theme.assets.logo}
                                 alt="Event Logo"
-                                className="h-16 w-auto object-contain rounded-lg bg-white/10 backdrop-blur-sm p-2"
+                                className="h-16 w-auto object-contain rounded-lg p-2"
+                                style={{ backgroundColor: 'var(--glass-bg)', backdropFilter: 'blur(var(--glass-blur))' }}
                             />
                         )}
                         <div>
                             <motion.h1
                                 initial={{ y: -50, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                className="text-4xl font-black tracking-tight text-white uppercase"
+                                className="text-4xl font-black tracking-tight uppercase"
+                                style={{ color: 'var(--live-title-color)' }}
                             >
                                 {config.content.title || t('live.title')}
                             </motion.h1>
@@ -72,9 +86,10 @@ export const LivePage = () => {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 0.6 }}
                                 transition={{ delay: 0.5 }}
-                                className="text-lg text-slate-400 mt-1"
+                                className="text-lg mt-1"
+                                style={{ color: 'var(--live-subtitle-text)' }}
                             >
-                                Give at <span className="text-white font-bold">localhost:5173/donate</span>
+                                Give at <span className="font-bold" style={{ color: 'var(--live-highlight-color)' }}>localhost:5173/donate</span>
                             </motion.p>
                         </div>
                     </div>
@@ -83,7 +98,8 @@ export const LivePage = () => {
                     <motion.div
                         initial={{ scale: 0, rotate: -20 }}
                         animate={{ scale: 1, rotate: 0 }}
-                        className="hidden lg:flex flex-col items-center bg-white p-4 rounded-xl shadow-[0_0_30px_rgba(168,85,247,0.5)]"
+                        className="hidden lg:flex flex-col items-center p-4 rounded-xl"
+                        style={{ backgroundColor: 'var(--live-qr-bg)', boxShadow: '0 0 30px var(--live-qr-shadow)' }}
                     >
                         <QRCode
                             value={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/donate`}
@@ -110,7 +126,10 @@ export const LivePage = () => {
                     {/* RIGHT SIDE: FEED */}
                     <div className="lg:col-span-5 h-[600px] flex flex-col">
                         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                            <div
+                                className="w-2 h-2 rounded-full animate-pulse"
+                                style={{ backgroundColor: 'var(--live-status-indicator)' }}
+                            ></div>
                             {t('live.new_donation')}
                         </h2>
                         <DonationFeed donations={donations} />

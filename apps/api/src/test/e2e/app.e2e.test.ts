@@ -23,6 +23,9 @@ describe('AppController (e2e)', () => {
       .useValue({
         $connect: vi.fn(),
         onModuleInit: vi.fn(),
+        event: {
+          findFirst: vi.fn().mockResolvedValue(null),
+        },
       })
       .compile();
 

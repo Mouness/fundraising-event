@@ -6,15 +6,23 @@ import { useEventConfig } from '@/features/event/hooks/useEventConfig';
 const fetchMock = vi.fn();
 vi.stubGlobal('fetch', fetchMock);
 
-// Mock white-labeling package
-// Mock white-labeling package
+vi.mock('@/lib/i18n', () => ({
+    syncLocales: vi.fn(),
+    default: {
+        use: vi.fn().mockReturnThis(),
+        init: vi.fn().mockReturnThis(),
+        addResourceBundle: vi.fn(),
+    }
+}));
+
 // Mock white-labeling package
 vi.mock('@fundraising/white-labeling', async () => {
     return {
         initWhiteLabeling: vi.fn(),
         loadConfigs: vi.fn(() => ({ content: { title: 'Default Title' } })),
         loadAssets: vi.fn(() => ({ logo: 'default-logo.svg' })),
-        loadTheme: vi.fn(() => ({}))
+        loadTheme: vi.fn(() => ({})),
+        loadLocales: vi.fn(() => ({ en: {}, fr: {} }))
     }
 });
 

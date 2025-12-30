@@ -23,4 +23,15 @@ i18n
         }
     });
 
+/**
+ * Re-syncs i18n resources from the white-labeling package.
+ * This should be called after initWhiteLabeling() to apply dynamic overrides.
+ */
+export function syncLocales() {
+    const locales = loadLocales();
+    Object.entries(locales).forEach(([lng, resources]) => {
+        i18n.addResourceBundle(lng, 'common', resources, true, true);
+    });
+}
+
 export default i18n;

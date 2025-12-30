@@ -1,12 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ThankYouPage } from '@/features/donation/pages/ThankYouPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as router from 'react-router-dom';
 
 // Mocks
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({ t: (key: string, opts?: any) => key + (opts?.amount ? ` ${opts.amount}` : '') }),
-}));
 vi.mock('@/features/event/hooks/useEventConfig', () => ({
     useEventConfig: () => ({
         config: {

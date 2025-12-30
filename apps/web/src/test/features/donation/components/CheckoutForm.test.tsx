@@ -24,9 +24,7 @@ vi.mock('@/lib/api', () => ({
         post: vi.fn(),
     },
 }));
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({ t: (key: string) => key }),
-}));
+
 vi.mock('@/features/donation/components/payment/PaymentFormFactory', () => ({
     PaymentFormFactory: ({ onSuccess, onError }: any) => (
         <div>

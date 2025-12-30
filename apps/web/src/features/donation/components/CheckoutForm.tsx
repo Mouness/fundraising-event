@@ -67,7 +67,8 @@ export const CheckoutForm = () => {
         }
     };
 
-    const glassCardClass = "bg-white/80 backdrop-blur-md border-white/20 shadow-xl overflow-hidden";
+    const glassCardClass = "backdrop-blur-md border shadow-xl overflow-hidden";
+    const glassCardStyle = { backgroundColor: 'var(--glass-bg)', borderColor: 'var(--glass-border)', backdropFilter: 'blur(var(--glass-blur))' };
 
     return (
         <AnimatePresence mode="wait">
@@ -80,7 +81,7 @@ export const CheckoutForm = () => {
                     transition={{ duration: 0.3 }}
                 >
                     <form onSubmit={handleSubmit(onSubmitDetails)} className="space-y-6">
-                        <Card className={glassCardClass}>
+                        <Card className={glassCardClass} style={glassCardStyle}>
                             <CardHeader>
                                 <CardTitle className="text-xl text-gray-800">{t('donation.amount')}</CardTitle>
                             </CardHeader>
@@ -92,7 +93,12 @@ export const CheckoutForm = () => {
                                             type="button"
                                             variant={selectedAmount === amt ? 'default' : 'outline'}
                                             onClick={() => handleAmountSelect(amt)}
-                                            className={`h-12 text-lg transition-all ${selectedAmount === amt ? 'bg-primary shadow-lg scale-105' : 'bg-white/50 hover:bg-white/80'}`}
+                                            className={`h-12 text-lg transition-all ${selectedAmount === amt ? 'shadow-lg scale-105' : 'hover:opacity-90'}`}
+                                            style={{
+                                                backgroundColor: selectedAmount === amt ? 'var(--donation-amount-button-selected-bg)' : 'var(--donation-amount-button-bg)',
+                                                color: selectedAmount === amt ? 'var(--donation-amount-button-selected-text)' : 'var(--donation-amount-button-text)',
+                                                borderColor: selectedAmount !== amt ? 'var(--donation-input-border)' : 'transparent'
+                                            }}
                                         >
                                             ${amt}
                                         </Button>
@@ -112,7 +118,12 @@ export const CheckoutForm = () => {
                                                     }
                                                 };
                                             })()}
-                                            className="h-12 bg-white/50 border-gray-200 focus:bg-white transition-colors"
+                                            className="h-12 transition-colors"
+                                            style={{
+                                                backgroundColor: 'var(--donation-input-bg)',
+                                                color: 'var(--donation-input-text)',
+                                                borderColor: 'var(--donation-input-border)'
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -126,31 +137,62 @@ export const CheckoutForm = () => {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="name" className="text-gray-700">{t('donation.name')} *</Label>
-                                    <Input id="name" {...register('name')} className="bg-white/50 focus:bg-white" />
+                                    <Label htmlFor="name" style={{ color: 'var(--donation-label-color)' }}>{t('donation.name')} *</Label>
+                                    <Input
+                                        id="name"
+                                        {...register('name')}
+                                        style={{
+                                            backgroundColor: 'var(--donation-input-bg)',
+                                            color: 'var(--donation-input-text)',
+                                            borderColor: 'var(--donation-input-border)'
+                                        }}
+                                    />
                                     {errors.name && <p className="text-sm text-red-500 font-medium">{errors.name.message}</p>}
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="email" className="text-gray-700">{t('donation.email')} *</Label>
-                                    <Input id="email" type="email" {...register('email')} className="bg-white/50 focus:bg-white" />
+                                    <Label htmlFor="email" style={{ color: 'var(--donation-label-color)' }}>{t('donation.email')} *</Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        {...register('email')}
+                                        style={{
+                                            backgroundColor: 'var(--donation-input-bg)',
+                                            color: 'var(--donation-input-text)',
+                                            borderColor: 'var(--donation-input-border)'
+                                        }}
+                                    />
                                     {errors.email && <p className="text-sm text-red-500 font-medium">{errors.email.message}</p>}
                                 </div>
 
                                 {config.donation.form.phone.enabled && (
                                     <div className="space-y-2">
-                                        <Label htmlFor="phone">{t('donation.phone')} {config.donation.form.phone.required && '*'}</Label>
-                                        <Input id="phone" type="tel" {...register('phone', { required: config.donation.form.phone.required ? t('donation.phone_required') : false })} className="bg-white/50 focus:bg-white" />
+                                        <Label htmlFor="phone" style={{ color: 'var(--donation-label-color)' }}>{t('donation.phone')} {config.donation.form.phone.required && '*'}</Label>
+                                        <Input
+                                            id="phone"
+                                            type="tel"
+                                            {...register('phone', { required: config.donation.form.phone.required ? t('donation.phone_required') : false })}
+                                            style={{
+                                                backgroundColor: 'var(--donation-input-bg)',
+                                                color: 'var(--donation-input-text)',
+                                                borderColor: 'var(--donation-input-border)'
+                                            }}
+                                        />
                                         {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
                                     </div>
                                 )}
 
                                 {config.donation.form.message.enabled && (
                                     <div className="space-y-2">
-                                        <Label htmlFor="message">{t('donation.message')}</Label>
+                                        <Label htmlFor="message" style={{ color: 'var(--donation-label-color)' }}>{t('donation.message')}</Label>
                                         <textarea
                                             id="message"
                                             {...register('message')}
-                                            className="flex min-h-[80px] w-full rounded-md border border-input bg-white/50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 focus:bg-white"
+                                            className="flex min-h-[80px] w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                            style={{
+                                                backgroundColor: 'var(--donation-input-bg)',
+                                                color: 'var(--donation-input-text)',
+                                                borderColor: 'var(--donation-input-border)'
+                                            }}
                                         />
                                     </div>
                                 )}
@@ -163,13 +205,21 @@ export const CheckoutForm = () => {
                                             {...register('isAnonymous')}
                                             className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                                         />
-                                        <Label htmlFor="isAnonymous">{t('donation.anonymous_label')}</Label>
+                                        <Label htmlFor="isAnonymous" style={{ color: 'var(--donation-label-color)' }}>{t('donation.anonymous')}</Label>
                                     </div>
                                 )}
                             </CardContent>
                             <CardFooter className="flex flex-col gap-2">
                                 {submitError && <p className="text-sm text-red-500 text-center">{submitError}</p>}
-                                <Button type="submit" size="lg" className="w-full text-lg shadow-lg hover:shadow-xl transition-all">
+                                <Button
+                                    type="submit"
+                                    size="lg"
+                                    className="w-full text-lg shadow-lg hover:shadow-xl transition-all"
+                                    style={{
+                                        backgroundColor: 'var(--donation-next-button-bg)',
+                                        color: 'var(--donation-next-button-text)'
+                                    }}
+                                >
                                     {t('donation.submit', { amount: `$${currentAmount || 0} ` })}
                                     <ChevronRight className="ml-2 h-5 w-5" />
                                 </Button>
@@ -185,11 +235,11 @@ export const CheckoutForm = () => {
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
                 >
-                    <Card className={glassCardClass}>
+                    <Card className={glassCardClass} style={glassCardStyle}>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <CreditCard className="h-6 w-6 text-primary" />
-                                {t('donation.payment_details')}
+                                {t('donation.payment')}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -216,7 +266,8 @@ export const CheckoutForm = () => {
                         </CardContent>
                     </Card>
                 </motion.div>
-            )}
-        </AnimatePresence>
+            )
+            }
+        </AnimatePresence >
     );
 }

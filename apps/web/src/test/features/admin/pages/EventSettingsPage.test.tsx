@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { EventSettingsPage } from '@/features/admin/pages/EventSettingsPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { api } from '@/lib/api';

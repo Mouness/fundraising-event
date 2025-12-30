@@ -1,7 +1,272 @@
-@theme {
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
+:root {
+  /* ========================================
+   * SHADCN UI COMPATIBILITY
+   * ======================================== */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #ec4899;
+  --primary-foreground: #ffffff;
+  --secondary: #8b5cf6;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #ec4899;
 
+  /* ========================================
+   * GLOBAL VARIABLES
+   * ======================================== */
+
+  /* --- Global Colors --- */
+  --global-error-color: #ef4444;
+  --global-error-bg: #fef2f2;
+  --global-success-color: #16a34a;
+  --global-success-bg: rgba(220, 252, 231, 0.5);
+  --global-link-color: #2563eb;
+  --global-link-hover: #1d4ed8;
+
+  /* --- Global Radii --- */
+  --global-radius: 0.5rem;
+  --global-radius-sm: 0.25rem;
+  --global-radius-lg: 1rem;
+  --global-radius-full: 9999px;
+
+  /* --- Global Shadows --- */
+  --global-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --global-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --global-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* --- Global Typography --- */
+  --global-font-family: 'Inter', system-ui, sans-serif;
+  --global-font-mono: 'JetBrains Mono', monospace;
+
+  /* --- Global Effects --- */
+  --global-transition-fast: 150ms ease;
+  --global-transition: 300ms ease;
+
+  /* ========================================
+   * GLASSMORPHISM
+   * ======================================== */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-blur: 12px;
+  --glass-opacity: 1;
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+
+  /* ========================================
+   * HEADER VARIABLES
+   * ======================================== */
+  --header-bg: #ffffff;
+  --header-bg-dark: #0f172a;
+  --header-border: var(--border);
+  --header-text: var(--foreground);
+  --header-accent: var(--primary);
+  --header-height: 4rem;
+
+  /* ========================================
+   * AUTH VARIABLES
+   * ======================================== */
+  --auth-page-bg: #f1f5f9;
+  --auth-card-shadow: var(--global-shadow);
+  --auth-card-radius: var(--global-radius-lg);
+  --auth-title-color: var(--foreground);
+  --auth-subtitle-color: var(--muted-foreground);
+  --auth-input-bg: #ffffff;
+  --auth-input-text: var(--foreground);
+  --auth-input-border: var(--border);
+  --auth-label-color: var(--foreground);
+  --auth-button-bg: var(--primary);
+  --auth-button-text: var(--primary-foreground);
+  --auth-link-color: var(--primary);
+
+  /* ========================================
+   * ADMIN VARIABLES
+   * ======================================== */
+  --admin-sidebar-bg: #111827;
+  --admin-sidebar-text: #ffffff;
+  --admin-sidebar-hover: #1f2937;
+  --admin-content-bg: #f9fafb;
+  --admin-sidebar-width: 16rem;
+  --admin-sidebar-padding: 1rem;
+  --admin-content-padding: 2rem;
+  --admin-card-bg: var(--card);
+  --admin-card-text: var(--card-foreground);
+  --admin-heading-color: var(--foreground);
+  --admin-muted-text: var(--muted-foreground);
+  --admin-border-color: var(--border);
+
+  /* ========================================
+   * DONATION VARIABLES
+   * ======================================== */
+  --donation-title-color: var(--foreground);
+  --donation-subtitle-color: var(--muted-foreground);
+  --donation-card-radius: var(--global-radius-lg);
+  --donation-button-radius: var(--global-radius);
+  --donation-card-shadow: var(--global-shadow-lg);
+  --donation-amount-gap: 0.75rem;
+  --donation-page-gradient: linear-gradient(135deg, #fce7f3 0%, #ede9fe 100%);
+  --donation-label-color: var(--foreground);
+  --donation-input-bg: #ffffff;
+  --donation-input-text: var(--foreground);
+  --donation-input-border: var(--border);
+  --donation-amount-button-bg: var(--background);
+  --donation-amount-button-text: var(--foreground);
+  --donation-amount-button-selected-bg: var(--primary);
+  --donation-amount-button-selected-text: var(--primary-foreground);
+  --donation-next-button-bg: var(--primary);
+  --donation-next-button-text: var(--primary-foreground);
+
+  /* ========================================
+   * THANK YOU VARIABLES
+   * ======================================== */
+  --thankyou-gradient-start: #6366f1;
+  --thankyou-gradient-via: #a855f7;
+  --thankyou-gradient-end: #ec4899;
+  --thankyou-card-bg: rgba(255, 255, 255, 0.9);
+  --thankyou-card-radius: var(--global-radius-lg);
+  --thankyou-card-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  --thankyou-card-border: rgba(255, 255, 255, 0.2);
+  --thankyou-title-color: var(--primary);
+  --thankyou-message-color: var(--muted-foreground);
+  --thankyou-icon-color: var(--global-success-color);
+  --thankyou-icon-bg: var(--global-success-bg);
+  --thankyou-receipt-bg: #f3f4f6;
+  --thankyou-receipt-label: #6b7280;
+  --thankyou-receipt-text: var(--foreground);
+  --thankyou-share-label: var(--muted-foreground);
+  --thankyou-share-twitter: #0ea5e9;
+  --thankyou-share-facebook: #2563eb;
+  --thankyou-share-linkedin: #1d4ed8;
+  --thankyou-button-bg: var(--primary);
+  --thankyou-button-text: var(--primary-foreground);
+
+  /* ========================================
+   * LIVE SCREEN VARIABLES
+   * ======================================== */
+  --live-page-bg: #000000;
+  --live-header-text: #ffffff;
+  --live-subtitle-text: #94a3b8;
+  --live-label-text: #cbd5e1;
+  --live-goal-text: #64748b;
+  --live-status-indicator: #22c55e;
+  --live-bg-accent-1: rgba(88, 28, 135, 0.4);
+  --live-bg-accent-2: rgba(30, 58, 138, 0.4);
+  --live-bg-blur: 120px;
+  --live-text-main: #ffffff;
+  --live-title-color: #ffffff;
+  --live-highlight-color: #ffffff;
+  --live-text-secondary: #cbd5e1;
+  --live-text-muted: #64748b;
+  --live-amount-color: #4ade80;
+  --live-avatar-bg-start: #a855f7;
+  --live-avatar-bg-end: #4f46e5;
+  --live-qr-bg: #ffffff;
+  --live-qr-shadow: rgba(168, 85, 247, 0.4);
+  --live-gauge-track: rgba(255, 255, 255, 0.05);
+  --live-gauge-shadow: rgba(168, 85, 247, 0.3);
+  --live-feed-item-bg: rgba(15, 23, 42, 0.6);
+  --live-feed-item-border: rgba(51, 65, 85, 0.5);
+  --live-counter-gradient-from: #ffffff;
+  --live-counter-gradient-to: #94a3b8;
+  --live-gauge-size: 500px;
+  --live-gauge-stroke: 12;
+  --live-qr-size: 120px;
+  --live-counter-size: 6rem;
+  --live-counter-weight: 900;
+  --live-qr-radius: 0.75rem;
+  --live-logo-radius: 0.5rem;
+
+  /* ========================================
+   * STAFF INTERFACE VARIABLES
+   * ======================================== */
+  --staff-page-bg: #213040;
+  --staff-display-bg: #ffffff;
+  --staff-display-border: var(--border);
+  --staff-keypad-bg: #8cb7e2;
+  --staff-keypad-button-bg: #bbaae7;
+  --staff-keypad-button-text: var(--foreground);
+  --staff-input-bg: #d8d5d5;
+  --staff-input-text: var(--foreground);
+  --staff-input-placeholder: var(--foreground);
+  --staff-keypad-shadow: rgba(0, 0, 0, 0.05);
+  --staff-keypad-delete-bg: #444fef;
+  --staff-keypad-delete-hover: #444fef;
+  --staff-keypad-button-height: 4rem;
+  --staff-amount-size: 3rem;
+  --staff-keypad-gap: 0.75rem;
+  --staff-display-radius: 0.75rem;
+  --staff-keypad-radius: 2rem;
+
+  /* --- Staff Labels & Text --- */
+  --staff-label-color: var(--foreground);
+  --staff-amount-color: var(--foreground);
+  --staff-amount-placeholder-color: var(--muted-foreground);
+
+  /* --- Staff Donation Type Buttons --- */
+  --staff-type-button-bg: var(--staff-keypad-button-bg);
+  --staff-type-button-text: var(--foreground);
+  --staff-type-button-border: var(--staff-display-border);
+  --staff-type-button-icon-color: var(--foreground);
+  --staff-type-button-selected-bg: var(--primary);
+  --staff-type-button-selected-text: var(--primary-foreground);
+  --staff-type-button-selected-icon: var(--primary-foreground);
+}
+
+@theme {
+  /* --- Tailwind 4 Color Mappings --- */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* --- Feature Color Mappings --- */
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --color-input-bg: var(--input-bg);
+  --color-live-bg-accent-1: var(--live-bg-accent-1);
+  --color-live-bg-accent-2: var(--live-bg-accent-2);
+  --color-live-qr-bg: var(--live-qr-bg);
+  --color-live-qr-shadow: var(--live-qr-shadow);
+  --color-staff-display-bg: var(--staff-display-bg);
+  --color-staff-display-border: var(--staff-display-border);
+  --color-staff-keypad-bg: var(--staff-keypad-bg);
+
+  /* --- Auth --- */
+  --color-auth-page-bg: var(--auth-page-bg);
+  --color-auth-card-shadow: var(--auth-card-shadow);
+
+  /* --- Admin --- */
+  --color-admin-sidebar-bg: var(--admin-sidebar-bg);
+  --color-admin-sidebar-text: var(--admin-sidebar-text);
+  --color-admin-content-bg: var(--admin-content-bg);
+
+  /* --- Live --- */
+  --color-live-page-bg: var(--live-page-bg);
+  --color-live-text-main: var(--live-text-main);
+  --color-live-highlight: var(--live-highlight-color);
+  --color-live-status: var(--live-status-indicator);
+
+  /* --- Donation --- */
+  --color-donation-title: var(--donation-title-color);
+  --color-donation-subtitle: var(--donation-subtitle-color);
+
+  /* --- Tailwind 4 Radius Mappings --- */
+  --radius-sm: var(--global-radius-sm);
+  --radius-DEFAULT: var(--global-radius);
+  --radius-lg: var(--global-radius-lg);
+  --radius-full: var(--global-radius-full);
+  --radius-global: var(--global-radius);
+  --radius-global-lg: var(--global-radius-lg);
+
+  /* --- Animation --- */
   --animate-gradient-xy: gradient-xy 15s ease infinite;
 
   @keyframes gradient-xy {
@@ -27,59 +292,4 @@
       background-position: 0% 100%;
     }
   }
-}
-
-:root {
-  /* 
-   * --- Core Brand Colors --- 
-   * Customize these to match the organization's brand identity.
-   */
-
-  /* Main brand color. Used for primary buttons, active states, and key highlights. */
-  --primary: #ec4899;
-
-  /* Secondary brand color. Used for accents, gradients, and secondary actions. */
-  --secondary: #8b5cf6;
-
-  /* 
-   * --- Backgrounds --- 
-   * Controls the overall page appearance.
-   */
-
-  /* Base background color for pages. */
-  --background-color: #f8fafc;
-
-  /* Background gradient. If supported, this will overlay or replace --background-color. */
-  --background-gradient: linear-gradient(135deg, #fce7f3 0%, #ede9fe 100%);
-
-  /* Surface color. Used for cards, panels, and modal backgrounds. */
-  --surface-color: #ffffff;
-
-  /* 
-   * --- Borders --- 
-   */
-
-  /* Default border color for inputs, dividers, and card outlines. */
-  --border-color: #e2e8f0;
-
-  /* 
-   * --- Text --- 
-   * Typography color tokens for optimal contrast.
-   */
-
-  /* Primary text color. Used for headings and body text. */
-  --text-main: #0f172a;
-
-  /* Muted text color. Used for secondary labels, hints, and placeholders. */
-  --text-muted: #64748b;
-
-  /* Inverse text color. Used for text on top of primary/solid dark backgrounds. */
-  --text-inverse: #ffffff;
-
-  /* 
-   * --- Layout & Shape --- 
-   */
-
-  /* Global border radius for cards, buttons, and inputs. */
-  --radius: 0.5rem;
 }

@@ -69,4 +69,10 @@ export interface EventConfig {
             footerText?: string;
         };
     };
+
+    /** Generic feature flags and non-visual settings */
+    settings?: Record<string, any>;
+
+    /** Flat-map for localization overrides (e.g. { "en.donation.title": "Give Now" }) */
+    locales?: Record<string, string>;
 }

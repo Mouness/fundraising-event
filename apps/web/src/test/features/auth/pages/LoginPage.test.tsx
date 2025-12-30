@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { LoginPage } from '@/features/auth/pages/LoginPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as useLoginHook from '@/features/auth/hooks/useLogin';
 
 // Mock dependencies
 const mockLogin = vi.fn();
@@ -13,9 +12,7 @@ vi.mock('@/features/auth/hooks/useLogin', () => ({
     }),
 }));
 
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({ t: (key: string) => key }),
-}));
+
 
 vi.mock('@/components/ui/button', () => ({
     Button: ({ children, disabled, type, ...props }: any) => <button disabled={disabled} type={type} {...props}>{children}</button>,

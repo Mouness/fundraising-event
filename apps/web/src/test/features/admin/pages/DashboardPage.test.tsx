@@ -5,9 +5,7 @@ import { api } from '@/lib/api';
 
 // Mock dependencies
 vi.mock('@/lib/api');
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({ t: (key: string) => key }),
-}));
+
 vi.mock('@/features/admin/components/DashboardStats', () => ({
     DashboardStats: () => <div data-testid="dashboard-stats">Stats</div>,
 }));

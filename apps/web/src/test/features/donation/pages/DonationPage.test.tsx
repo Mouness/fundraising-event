@@ -3,15 +3,21 @@ import { DonationPage } from '@/features/donation/pages/DonationPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock dependencies
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({ t: (key: string) => key }),
-}));
+
 vi.mock('@/features/event/hooks/useEventConfig', () => ({
     useEventConfig: () => ({
         config: {
             theme: { assets: { logo: 'logo.png' } },
-            content: { title: 'Test Event' },
-            donation: { form: { phone: {}, message: {}, anonymous: {} } }
+            content: { title: 'Test Event', goalAmount: 1000 },
+            donation: {
+                payment: { provider: 'stripe', config: {} },
+                sharing: { enabled: true, networks: [] },
+                form: {
+                    phone: { enabled: true, required: false },
+                    message: { enabled: true, required: false },
+                    anonymous: { enabled: true }
+                }
+            }
         }
     }),
 }));
@@ -27,7 +33,7 @@ describe('DonationPage', () => {
     it('should render event title and logo', () => {
         render(<DonationPage />);
         expect(screen.getByText('Test Event')).toBeDefined();
-        expect(screen.getByAltText('Event Logo')).toBeDefined();
+        expect(screen.getByAltText('Logo')).toBeDefined();
         expect(screen.getByTestId('checkout-form')).toBeDefined();
     });
 });

@@ -98,17 +98,38 @@ export const CollectorPage = () => {
     return (
         <div className="flex flex-col min-h-[calc(100vh-4rem)] max-w-md mx-auto">
             {/* Display Area */}
-            <div className="flex-1 flex flex-col items-center justify-center min-h-[120px] bg-slate-50 dark:bg-slate-900 mx-4 mt-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-inner">
-                <span className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-1">
+            <div
+                className="flex-1 flex flex-col items-center justify-center min-h-[120px] mx-4 mt-4 border shadow-inner"
+                style={{
+                    backgroundColor: 'var(--staff-display-bg)',
+                    borderColor: 'var(--staff-display-border)',
+                    borderRadius: 'var(--staff-display-radius)'
+                }}
+            >
+                <span
+                    className="text-sm font-medium uppercase tracking-widest mb-1"
+                    style={{ color: 'var(--staff-label-color)' }}
+                >
                     Enter Amount
                 </span>
-                <div className="text-5xl font-bold tracking-tighter text-slate-900 dark:text-white">
-                    {amount ? formatAmount(amount) : <span className="text-slate-300 dark:text-slate-600">$0.00</span>}
+                <div
+                    className="font-bold tracking-tighter"
+                    style={{ fontSize: 'var(--staff-amount-size)', color: 'var(--staff-amount-color)' }}
+                >
+                    {amount ? formatAmount(amount) : <span style={{ color: 'var(--staff-amount-placeholder-color)', opacity: 0.4 }}>$0.00</span>}
                 </div>
             </div>
 
             {/* Controls */}
-            <div className="flex-none mt-4 bg-white dark:bg-slate-900 rounded-t-[2rem] shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] border-t border-slate-100 dark:border-slate-800 pb-6">
+            <div
+                className="flex-none mt-4 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] border-t pb-6"
+                style={{
+                    backgroundColor: 'var(--staff-keypad-bg)',
+                    borderColor: 'var(--staff-display-border)',
+                    borderTopLeftRadius: 'var(--staff-keypad-radius)',
+                    borderTopRightRadius: 'var(--staff-keypad-radius)'
+                }}
+            >
                 <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto my-3" />
 
                 <DonationTypeSelector
@@ -132,17 +153,22 @@ export const CollectorPage = () => {
                     disabled={isSubmitting}
                 />
 
-                <div className="px-4 mt-2">
+                <div className="px-4 mt-2 w-full max-w-sm mx-auto">
                     <Button
                         size="lg"
-                        className="w-full text-lg font-bold h-14 shadow-lg shadow-primary/20"
+                        className="w-full text-lg font-bold h-14"
                         onClick={handleSubmit}
                         disabled={!amount || isSubmitting}
+                        style={{
+                            backgroundColor: 'var(--staff-type-button-selected-bg)',
+                            color: 'var(--staff-type-button-selected-text)',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                        }}
                     >
                         {isSubmitting ? (
-                            <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                            <Loader2 className="mr-2 h-6 w-6 animate-spin" style={{ color: 'var(--staff-type-button-selected-icon)' }} />
                         ) : (
-                            <Check className="mr-2 h-6 w-6" />
+                            <Check className="mr-2 h-6 w-6" style={{ color: 'var(--staff-type-button-selected-icon)' }} />
                         )}
                         Collect Donation
                     </Button>

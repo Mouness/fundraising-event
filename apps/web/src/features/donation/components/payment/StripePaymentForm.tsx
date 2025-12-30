@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+import { CardContent, CardFooter } from '@/components/ui/card';
 import type { PaymentProviderProps } from '../../types/payment.types';
 
 // Initialize Stripe outside to avoid recreation
@@ -53,25 +53,28 @@ const StripeFormContent = ({ onSuccess, onBack, onError }: { onSuccess: () => vo
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle>{t('donation.payment')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <PaymentElement onReady={() => setIsStripeReady(true)} />
-                    {message && <div className="mt-4 p-3 bg-red-50 text-red-500 rounded text-sm">{message}</div>}
-                </CardContent>
-                <CardFooter className="flex gap-4">
-                    {onBack && (
-                        <Button type="button" variant="outline" onClick={onBack} disabled={isProcessing}>
-                            {t('common.back', 'Back')}
-                        </Button>
-                    )}
-                    <Button type="submit" className="w-full" disabled={!stripe || !elements || isProcessing || !isStripeReady}>
-                        {isProcessing ? t('donation.processing') : t('donation.pay_now')}
+            <CardContent>
+                <PaymentElement onReady={() => setIsStripeReady(true)} />
+                {message && <div className="mt-4 p-3 bg-red-50 text-red-500 rounded text-sm">{message}</div>}
+            </CardContent>
+            <CardFooter className="flex gap-4">
+                {onBack && (
+                    <Button type="button" variant="outline" onClick={onBack} disabled={isProcessing}>
+                        {t('common.back', 'Back')}
                     </Button>
-                </CardFooter>
-            </Card>
+                )}
+                <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={!stripe || !elements || isProcessing || !isStripeReady}
+                    style={{
+                        backgroundColor: 'var(--donation-next-button-bg)',
+                        color: 'var(--donation-next-button-text)'
+                    }}
+                >
+                    {isProcessing ? t('donation.processing') : t('donation.pay_now')}
+                </Button>
+            </CardFooter>
         </form>
     );
 }

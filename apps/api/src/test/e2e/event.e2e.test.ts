@@ -9,10 +9,12 @@ import { vi, describe, beforeEach, afterAll, it, expect } from 'vitest';
 // Mock white-labeling package to avoid FS/ESM issues during E2E
 vi.mock('@fundraising/white-labeling', async () => {
     return {
-        loadConfig: () => ({
+        loadConfigs: () => ({
             id: 'e2e-config',
-            theme: { primaryColor: 'test-color' }
+            theme: { primaryColor: 'test-color' },
+            communication: {}
         }),
+        deepMerge: (a: any, b: any) => ({ ...a, ...b }),
         defaultConfig: { id: 'default' },
         EventConfig: {} // Class/interface mock
     };

@@ -14,14 +14,15 @@ The donation flow allows users to make payments using Stripe. It consists of a R
 - **Controller**: `DonationController`
   - `POST /donations/stripe/intent`: Returns `clientSecret`.
   - `POST /donations/stripe/webhook`: Listens for `payment_intent.succeeded`.
+  - `POST /donations`: Handles offline/cash donations (Staff).
 
 ### Frontend (`apps/web`)
 - **Page**: `/donate` (`DonationPage.tsx`) maps to `CheckoutForm`.
 - **Component**: `CheckoutForm.tsx`
-  - Uses `@stripe/react-stripe-js`.
-  - Collects Amount (custom or preset), Name, Email, Anonymous flag.
+  - Uses `PaymentFormFactory` to abstract provider implementation (Stripe).
+  - Collects Amount, Name, Email, Anonymous flag.
   - Submits to backend to get `clientSecret`.
-  - Confirms payment via `stripe.confirmPayment`.
+  - **Refactor**: Strict typing for `sessionData` and `PaymentIntent` responses.
 - **Validation**: Zod schema (`donation.schema.ts`).
 - **i18n**: All text located in `donation` namespace in `common.json`.
 

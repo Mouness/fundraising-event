@@ -1,23 +1,12 @@
-
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
+import { CreateDonationParams } from './interfaces/donation-service.interface';
 
 @Injectable()
 export class DonationService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async create(data: {
-        amount: number; // in cents
-        donorName?: string;
-        donorEmail?: string;
-        message?: string;
-        isAnonymous?: boolean;
-        transactionId: string;
-        status: 'COMPLETED' | 'PENDING' | 'FAILED'; // Map matching schema string
-        paymentMethod: string;
-        metadata?: any;
-        eventId?: string;
-    }) {
+    async create(data: CreateDonationParams) {
         let eventId = data.eventId;
 
         if (!eventId) {

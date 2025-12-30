@@ -19,6 +19,15 @@ vi.mock('module', () => ({
     })),
 }));
 
+import { PrismaService } from '@/database/prisma.service';
+
+// Mock Prisma
+const mockPrismaService = {
+    event: {
+        findFirst: vi.fn(),
+    },
+};
+
 describe('EventConfigService', () => {
     let service: EventConfigService;
     let configService: ConfigService;
@@ -35,6 +44,7 @@ describe('EventConfigService', () => {
             providers: [
                 EventConfigService,
                 { provide: ConfigService, useValue: mockConfigService },
+                { provide: PrismaService, useValue: mockPrismaService },
             ],
         }).compile();
 

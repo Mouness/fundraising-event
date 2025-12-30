@@ -47,12 +47,26 @@ export interface EventConfig {
             config?: Record<string, any>;
         };
     };
-    /** PDF Receipt configuration */
-    receipt: {
-        enabled: boolean;
+    /** Unified Communication configuration (Email & PDF) */
+    communication: {
+        /** Organization Details */
         legalName: string;
         address: string;
-        footerText?: string;
-        logoUrl?: string;
+        website?: string;
+        supportEmail?: string;
+
+        /** PDF Specifics */
+        pdf: {
+            enabled: boolean;
+            footerText?: string;
+            templateStyle?: 'minimal' | 'formal';
+        };
+
+        /** Email Specifics */
+        email: {
+            enabled: boolean;
+            subjectLine?: string;
+            footerText?: string;
+        };
     };
 }

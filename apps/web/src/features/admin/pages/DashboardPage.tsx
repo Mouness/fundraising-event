@@ -70,7 +70,7 @@ export const DashboardPage = () => {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-8">
-                            {RECENT_DONATIONS.map((donation: any, index: number) => (
+                            {RECENT_DONATIONS.map((donation, index) => (
                                 <div className="flex items-center" key={index}>
                                     <div className="ml-4 space-y-1">
                                         <p className="text-sm font-medium leading-none">{donation.name}</p>

@@ -39,11 +39,15 @@ export class PdfService {
         transactionId: string;
     }): Promise<Buffer> {
         const config = this.eventConfigService.getConfig();
-        const receiptConfig = config.receipt;
+        const commConfig = config.communication;
 
-        if (!receiptConfig?.enabled) {
+        if (!commConfig?.pdf?.enabled) {
             this.logger.warn('Receipt generation requested but disabled in config');
         }
+
+        const primaryColor = config.theme?.variables?.['--primary'] || '#ec4899';
+        // const logoUrl = commConfig.logoUrl || config.theme?.assets?.logo; // TODO: Implement image buffer loading
+
 
         const formattedDate = new Date(data.date).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -66,9 +70,11 @@ export class PdfService {
                             [
                                 {
                                     text: [
-                                        { text: receiptConfig?.legalName || 'Organization Name', bold: true },
+                                        { text: commConfig.legalName || 'Organization Name', bold: true },
                                         '\n',
-                                        receiptConfig?.address || 'Organization Address',
+                                        commConfig.address || 'Organization Address',
+                                        '\n',
+                                        { text: commConfig.website || '', italics: true, color: 'blue', decoration: 'underline' }
                                     ],
                                     margin: [0, 10, 0, 10]
                                 },
@@ -97,14 +103,14 @@ export class PdfService {
 
                 { text: 'Thank you for your support!', style: 'highlight', alignment: 'center', margin: [0, 20] },
 
-                { text: receiptConfig?.footerText || 'This is a computer-generated receipt.', style: 'footer', alignment: 'center', margin: [0, 50, 0, 0] }
+                { text: commConfig.pdf?.footerText || 'This is a computer-generated receipt.', style: 'footer', alignment: 'center', margin: [0, 50, 0, 0] }
 
             ],
             styles: {
                 header: {
                     fontSize: 22,
                     bold: true,
-                    color: '#2c3e50'
+                    color: primaryColor
                 },
                 subheader: {
                     fontSize: 16,
@@ -120,7 +126,8 @@ export class PdfService {
                 tableHeader: {
                     bold: true,
                     fontSize: 12,
-                    color: 'black'
+                    color: primaryColor,
+                    fillColor: '#f8f9fa'
                 },
                 highlight: {
                     fontSize: 14,
@@ -137,6 +144,7 @@ export class PdfService {
                 font: 'Roboto'
             }
         };
+
 
         return new Promise((resolve, reject) => {
             try {

@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailService } from '@/features/mail/mail.service';
 import { EventConfigService } from '@/features/event/configuration/event-config.service';
+import { PdfService } from '@/features/pdf/pdf.service';
 import { ConfigService } from '@nestjs/config';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as fs from 'fs/promises';
@@ -40,7 +41,13 @@ describe('MailService', () => {
                     useValue: {
                         getConfig: () => ({
                             content: { title: 'Test Event' },
-                            theme: { logoUrl: 'logo.png' }
+                            theme: { logoUrl: 'logo.png' },
+                            communication: {
+                                legalName: 'Org',
+                                address: 'Addr',
+                                website: 'web',
+                                email: { footerText: 'footer' }
+                            }
                         }),
                         getThemeVariable: vi.fn().mockResolvedValue('blue'),
                     },
@@ -51,11 +58,18 @@ describe('MailService', () => {
                         get: (key: string) => (key === 'FRONTEND_URL' ? 'http://localhost:3000' : null),
                     },
                 },
+                {
+                    provide: PdfService,
+                    useValue: {
+                        generateReceipt: vi.fn().mockResolvedValue(Buffer.from('pdf content')),
+                    },
+                },
             ],
         }).compile();
 
         service = module.get<MailService>(MailService);
     });
+
 
     it('should render template with dynamic color and send email', async () => {
         // Mock template loading

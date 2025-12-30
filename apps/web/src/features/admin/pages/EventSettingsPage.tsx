@@ -40,7 +40,7 @@ export const EventSettingsPage = () => {
 
 
 
-    const [currentThemeConfig, setCurrentThemeConfig] = useState<any>({});
+    const [currentThemeConfig, setCurrentThemeConfig] = useState<NonNullable<import('@fundraising/white-labeling').EventConfig['theme']>>({});
 
     useEffect(() => {
         loadEvent();

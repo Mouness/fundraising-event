@@ -16,6 +16,8 @@ import { GatewayGateway } from '../gateway/gateway.gateway';
 import { EmailProducer } from '../queue/producers/email.producer';
 import { DonationService } from './donation.service';
 
+import { CreateDonationDto, OfflineDonationDto } from '@fundraising/types';
+
 @Controller('donations')
 export class DonationController {
     constructor(
@@ -28,7 +30,7 @@ export class DonationController {
 
     @Post('intent')
     async createPaymentIntent(
-        @Body() body: { amount: number; currency?: string; metadata?: any },
+        @Body() body: CreateDonationDto,
     ) {
         if (!body.amount || body.amount <= 0) {
             throw new BadRequestException('Invalid amount');
@@ -107,14 +109,7 @@ export class DonationController {
     }
     @Post()
     async createOfflineDonation(
-        @Body() body: {
-            amount: number;
-            type: string;
-            donorName?: string;
-            donorEmail?: string;
-            isOfflineCollected?: boolean;
-            collectedAt?: string;
-        },
+        @Body() body: OfflineDonationDto,
     ) {
         if (!body.amount || body.amount <= 0) {
             throw new BadRequestException('Invalid amount');

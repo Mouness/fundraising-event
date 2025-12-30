@@ -20,7 +20,9 @@ export const CheckoutForm = () => {
     const navigate = useNavigate();
     const { config } = useEventConfig();
     const [step, setStep] = useState<'details' | 'payment'>('details');
-    const [sessionData, setSessionData] = useState<any>(null);
+    // Define type or import Response type. For now locally.
+    const [sessionData, setSessionData] = useState<{ id: string; clientSecret: string } | null>(null);
+    const [submitError, setSubmitError] = useState<string | null>(null);
     const [selectedAmount, setSelectedAmount] = useState<number>(20);
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<DonationFormValues>({
@@ -57,8 +59,11 @@ export const CheckoutForm = () => {
 
             setSessionData(intentData);
             setStep('payment');
+            setSessionData(intentData);
+            setStep('payment');
         } catch (err) {
             console.error(err);
+            setSubmitError('Failed to initialize donation. Please try again.');
         }
     };
 
@@ -162,7 +167,8 @@ export const CheckoutForm = () => {
                                     </div>
                                 )}
                             </CardContent>
-                            <CardFooter>
+                            <CardFooter className="flex flex-col gap-2">
+                                {submitError && <p className="text-sm text-red-500 text-center">{submitError}</p>}
                                 <Button type="submit" size="lg" className="w-full text-lg shadow-lg hover:shadow-xl transition-all">
                                     {t('donation.submit', { amount: `$${currentAmount || 0} ` })}
                                     <ChevronRight className="ml-2 h-5 w-5" />

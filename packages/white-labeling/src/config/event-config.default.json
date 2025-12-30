@@ -38,10 +38,20 @@
             }
         }
     },
-    "receipt": {
-        "enabled": true,
+    "communication": {
         "legalName": "My Charity Organization",
         "address": "123 Charity Lane, Philanthropy City",
-        "footerText": "Thank you for your generous support. This is a computer-generated receipt."
+        "website": "https://charity.example.org",
+        "supportEmail": "support@charity.example.org",
+        "pdf": {
+            "enabled": true,
+            "footerText": "Thank you for your generous support. This is a computer-generated receipt.",
+            "templateStyle": "formal"
+        },
+        "email": {
+            "enabled": true,
+            "subjectLine": "Thank you for your donation",
+            "footerText": "You are receiving this email because you made a donation."
+        }
     }
 }

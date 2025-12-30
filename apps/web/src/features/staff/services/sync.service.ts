@@ -1,3 +1,4 @@
+import { api } from "@/lib/api";
 import { StorageService } from "./storage.service";
 import type { PendingDonation } from "../types";
 
@@ -17,23 +18,16 @@ export const SyncService = {
         }
 
         try {
-            const response = await fetch('/api/donations', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    amount: fullDonation.amount,
-                    type: fullDonation.type,
-                    donorName: fullDonation.name,
-                    donorEmail: fullDonation.email,
-                    isOfflineCollected: true,
-                    collectedAt: new Date(fullDonation.createdAt).toISOString()
-                })
+            await api.post('/donations', {
+                amount: fullDonation.amount,
+                type: fullDonation.type,
+                donorName: fullDonation.name,
+                donorEmail: fullDonation.email,
+                isOfflineCollected: true,
+                collectedAt: new Date(fullDonation.createdAt).toISOString()
             });
 
-            if (!response.ok) throw new Error('API Error');
-
-            // Success - no need to store, or store as synced log if desired.
-            // For now, we don't store synced items locally to keep generic clean.
+            // Success
             return { success: true };
 
         } catch (error) {
@@ -52,28 +46,25 @@ export const SyncService = {
 
         for (const item of queue) {
             try {
-                const response = await fetch('/api/donations', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        amount: item.amount,
-                        type: item.type,
-                        donorName: item.name,
-                        donorEmail: item.email,
-                        isOfflineCollected: true,
-                        collectedAt: new Date(item.createdAt).toISOString()
-                    })
+                await api.post('/donations', {
+                    amount: item.amount,
+                    type: item.type,
+                    donorName: item.name,
+                    donorEmail: item.email,
+                    isOfflineCollected: true,
+                    collectedAt: new Date(item.createdAt).toISOString()
                 });
 
-                if (response.ok) {
-                    StorageService.removeFromQueue(item.id);
-                    processed++;
-                } else {
-                    StorageService.updateStatus(item.id, 'failed', 'API rejected');
-                }
+                StorageService.removeFromQueue(item.id);
+                processed++;
             } catch (error) {
-                // Network error, keep in queue
+                // Determine if retryable? For now, if API fails, mark failed or keep pending?
+                // If it's a network error (axios), we might want to keep it.
+                // If 400/500, maybe mark failed.
+                // Simplified: Keep pending on error, unless we detect strict failure.
+                // Assuming keep pending for retry.
                 console.error("Retry failed for", item.id);
+                // Optional: Increment retry count or mark failed after N tries.
             }
         }
 

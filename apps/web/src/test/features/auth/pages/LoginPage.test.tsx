@@ -1,62 +1,81 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { MemoryRouter } from 'react-router-dom';
 import { LoginPage } from '@/features/auth/pages/LoginPage';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as useLoginHook from '@/features/auth/hooks/useLogin';
 
-// Mock the useLogin hook
-const loginMock = vi.fn();
-vi.spyOn(useLoginHook, 'useLogin').mockReturnValue({
-    login: loginMock,
-    isLoading: false,
-    error: null,
+// Mock dependencies
+const mockLogin = vi.fn();
+vi.mock('@/features/auth/hooks/useLogin', () => ({
+    useLogin: () => ({
+        login: mockLogin,
+        error: null,
+        isLoading: false,
+    }),
+}));
+
+vi.mock('react-i18next', () => ({
+    useTranslation: () => ({ t: (key: string) => key }),
+}));
+
+vi.mock('@/components/ui/button', () => ({
+    Button: ({ children, disabled, type, ...props }: any) => <button disabled={disabled} type={type} {...props}>{children}</button>,
+}));
+vi.mock('@/components/ui/input', () => ({
+    Input: ({ id, ...props }: any) => <input id={id} data-testid={id} {...props} />,
+}));
+vi.mock('@/components/ui/card', () => {
+    const MockDiv = ({ children }: any) => <div>{children}</div>;
+    return {
+        Card: MockDiv,
+        CardHeader: MockDiv,
+        CardTitle: MockDiv,
+        CardContent: MockDiv,
+        CardDescription: MockDiv,
+        CardFooter: MockDiv,
+    };
 });
+vi.mock('@/components/ui/label', () => ({
+    Label: ({ htmlFor, children }: any) => <label htmlFor={htmlFor}>{children}</label>,
+}));
 
 describe('LoginPage', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
     it('should render login form', () => {
-        render(
-            <MemoryRouter>
-                <LoginPage />
-            </MemoryRouter>
-        );
-
-        expect(screen.getByLabelText('login.email')).toBeInTheDocument();
-        expect(screen.getByLabelText('login.password')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'login.submit' })).toBeInTheDocument();
+        render(<LoginPage />);
+        expect(screen.getByText('login.title')).toBeDefined();
+        expect(screen.getByLabelText('login.email')).toBeDefined();
+        expect(screen.getByLabelText('login.password')).toBeDefined();
+        expect(screen.getByText('login.submit')).toBeDefined();
     });
 
-    it('should show validation error on empty submit', async () => {
-        render(
-            <MemoryRouter>
-                <LoginPage />
-            </MemoryRouter>
-        );
+    it('should submit form with valid data', async () => {
+        render(<LoginPage />);
 
-        fireEvent.click(screen.getByRole('button', { name: 'login.submit' }));
+        fireEvent.change(screen.getByTestId('email'), { target: { value: 'test@example.com' } });
+        fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
+
+        fireEvent.click(screen.getByText('login.submit'));
 
         await waitFor(() => {
-            expect(screen.getByText(/invalid email/i)).toBeInTheDocument();
+            expect(mockLogin).toHaveBeenCalledWith({
+                email: 'test@example.com',
+                password: 'password123',
+            });
         });
     });
 
-    it('should call login on valid submit', async () => {
-        render(
-            <MemoryRouter>
-                <LoginPage />
-            </MemoryRouter>
-        );
+    it('should display validation errors', async () => {
+        render(<LoginPage />);
 
-        fireEvent.change(screen.getByLabelText('login.email'), { target: { value: 'admin@example.com' } });
-        fireEvent.change(screen.getByLabelText('login.password'), { target: { value: 'password123' } });
-        fireEvent.click(screen.getByRole('button', { name: 'login.submit' }));
+        fireEvent.click(screen.getByText('login.submit'));
 
         await waitFor(() => {
-            expect(loginMock).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    email: 'admin@example.com',
-                    password: 'password123'
-                })
-            );
+            expect(screen.getByText('Invalid email address')).toBeDefined();
+            expect(screen.getByText('Password is required')).toBeDefined();
         });
+        expect(mockLogin).not.toHaveBeenCalled();
     });
 });

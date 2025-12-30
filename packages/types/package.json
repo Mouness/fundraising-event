@@ -6,10 +6,16 @@
     "scripts": {
         "build": "tsc",
         "dev": "tsc -w",
-        "test": "echo 'No tests for types'",
-        "test:cov": "echo 'No tests for types'"
+        "test": "vitest run",
+        "test:cov": "vitest run --coverage"
     },
     "devDependencies": {
-        "typescript": "^5.0.0"
+        "@vitest/coverage-v8": "^4.0.16",
+        "typescript": "^5.0.0",
+        "vitest": "^4.0.16"
+    },
+    "dependencies": {
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.3"
     }
 }

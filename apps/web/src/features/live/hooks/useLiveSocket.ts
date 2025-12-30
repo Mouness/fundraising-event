@@ -2,9 +2,17 @@ import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { API_URL } from '@/lib/api';
 
+export interface DonationEvent {
+    amount: number;
+    currency: string;
+    donorName: string;
+    message?: string;
+    isAnonymous: boolean;
+}
+
 export function useLiveSocket(slug: string) {
     const [isConnected, setIsConnected] = useState(false);
-    const [lastEvent, setLastEvent] = useState<any>(null);
+    const [lastEvent, setLastEvent] = useState<DonationEvent | null>(null);
 
     useEffect(() => {
         if (!slug) return;
@@ -23,7 +31,7 @@ export function useLiveSocket(slug: string) {
             setIsConnected(false);
         });
 
-        socket.on('donation', (data) => {
+        socket.on('donation.created', (data) => {
             console.log('Donation received:', data);
             setLastEvent(data);
         });

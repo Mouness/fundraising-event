@@ -17,7 +17,7 @@ export class EventController {
   constructor(private readonly eventService: EventService) { }
 
   @Post()
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   create(@Body() createEventDto: CreateEventDto) {
     return this.eventService.create(createEventDto);
   }
@@ -33,7 +33,7 @@ export class EventController {
   }
 
   @Patch(':id')
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
     return this.eventService.update(id, updateEventDto);
   }

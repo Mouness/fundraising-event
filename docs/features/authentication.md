@@ -27,15 +27,16 @@ Staff members use a simplified flow optimized for quick access on shared devices
 
 #### Components
 - **`LoginPage`** (`apps/web/src/features/auth/pages/LoginPage.tsx`):
-  - Uses `react-hook-form` + `zod` for validation.
-  - Handles error states and loading feedback.
-  - Redirects to `/admin` upon successful login.
+  - **Form Management**: Uses `react-hook-form` integrated with `zod` for strict schema validation (`email`, `password`).
+  - **UI**: Built with `shadcn/ui` Card and Input components.
+  - **Feedback**: Displays real-time validation errors and API error messages.
 
 #### Hooks
 - **`useLogin`** (`apps/web/src/features/auth/hooks/useLogin.ts`):
-  - Encapsulates the API call to `POST /auth/login`.
-  - Manages `localStorage` for token persistence.
-  - Configures the global Axios/Fetch interceptor for subsequent requests.
+  - **API Integration**: Calls `POST /auth/login` via the centralized `api` client.
+  - **Error Handling**: Uses `isAxiosError` to parse backend exception messages safely.
+  - **Session**: Persists `accessToken` and `user` object to `localStorage`.
+  - **Navigation**: Redirects to `/admin` on success.
 
 ### Backend (`apps/api`)
 

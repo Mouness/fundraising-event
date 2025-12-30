@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'react-qr-code';
 import { useEventConfig } from '../../event/hooks/useEventConfig';
 import { DonationFeed, type Donation } from '../components/DonationFeed';
 import { DonationGauge } from '../components/DonationGauge';
+import { useLiveSocket } from '../hooks/useLiveSocket';
 import { fireConfetti } from '@/lib/confetti';
 
 export const LivePage = () => {
@@ -15,38 +16,27 @@ export const LivePage = () => {
     const [totalRaisedCents, setTotalRaisedCents] = useState(0);
     const [prevTotal, setPrevTotal] = useState(0);
 
+    const { lastEvent } = useLiveSocket(config.id || 'default'); // Assuming event ID or slug is needed
+
     useEffect(() => {
-        const newSocket = io(import.meta.env.VITE_API_URL || 'http://localhost:3000', {
-            withCredentials: true,
-        });
-
-        newSocket.on('connect', () => {
-            console.log('Connected to WebSocket');
-        });
-
-        newSocket.on('donation.created', (data: Omit<Donation, 'timestamp'>) => {
+        if (lastEvent) {
             const newDonation: Donation = {
-                ...data,
+                ...lastEvent,
                 timestamp: Date.now(),
             };
 
-            setPrevTotal((prev) => prev); // Capture current before update for CountUp
+            setPrevTotal((prev) => prev);
             setTotalRaisedCents((prev) => {
-                const newTotal = prev + data.amount;
-                // Trigger confetti if significant donation
-                if (data.amount >= 5000) { // $50+
+                const newTotal = prev + lastEvent.amount;
+                if (lastEvent.amount >= 5000) {
                     fireConfetti();
                 }
                 return newTotal;
             });
 
-            setDonations((prev) => [newDonation, ...prev].slice(0, 8)); // Keep last 8
-        });
-
-        return () => {
-            newSocket.close();
-        };
-    }, []);
+            setDonations((prev) => [newDonation, ...prev].slice(0, 8));
+        }
+    }, [lastEvent]);
 
     return (
         <div className="min-h-screen bg-black text-white overflow-hidden relative font-sans selection:bg-purple-500 selection:text-white">

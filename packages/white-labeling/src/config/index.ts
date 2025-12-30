@@ -20,6 +20,7 @@ export function loadConfigs(): EventConfig {
             title: dbConfig.name,
             goalAmount: Number(dbConfig.goalAmount),
         },
+        theme: dbConfig.themeConfig as DeepPartial<EventConfig['theme']>,
     };
 
     return deepMerge(baseConfig, remoteConfig);

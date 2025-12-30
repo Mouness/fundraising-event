@@ -3,6 +3,8 @@ import { Job } from 'bullmq';
 import { MailService } from '../../mail/mail.service';
 import { Logger } from '@nestjs/common';
 
+import { SendReceiptJobData } from '../interfaces/email-jobs.interface';
+
 @Processor('email')
 export class EmailProcessor extends WorkerHost {
     private readonly logger = new Logger(EmailProcessor.name);
@@ -11,7 +13,7 @@ export class EmailProcessor extends WorkerHost {
         super();
     }
 
-    async process(job: Job<any, any, string>): Promise<any> {
+    async process(job: Job<SendReceiptJobData, any, string>): Promise<any> {
         this.logger.log(`Processing job ${job.id} of type ${job.name}`);
 
         switch (job.name) {
@@ -23,7 +25,7 @@ export class EmailProcessor extends WorkerHost {
         }
     }
 
-    private async handleSendReceipt(data: any) {
+    private async handleSendReceipt(data: SendReceiptJobData) {
         await this.mailService.sendReceipt(data.email, data);
         this.logger.log(`Receipt email sent to ${data.email}`);
     }

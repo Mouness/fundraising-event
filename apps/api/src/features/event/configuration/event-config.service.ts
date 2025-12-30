@@ -6,6 +6,8 @@ import { loadConfigs, deepMerge } from '@fundraising/white-labeling';
 import type { EventConfig } from '@fundraising/white-labeling';
 import { PrismaService } from '../../../database/prisma.service';
 
+
+
 @Injectable()
 export class EventConfigService implements OnModuleInit {
     private readonly logger = new Logger(EventConfigService.name);

@@ -8,6 +8,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { DonationEventPayload } from './interfaces/donation-event.payload';
 
 @WebSocketGateway({
   cors: {
@@ -38,7 +39,7 @@ export class GatewayGateway
     return { event: 'joined', eventId };
   }
 
-  emitDonation(donation: any) {
+  emitDonation(donation: DonationEventPayload) {
     // Broadcast to everyone for now, or specific room if we had eventId
     this.server.emit('donation.created', donation);
   }

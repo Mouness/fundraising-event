@@ -34,15 +34,15 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
+  async login(user: { id: string; email: string; role: string }) {
     const payload = { sub: user.id, email: user.email, role: 'ADMIN' };
     return {
       accessToken: this.jwtService.sign(payload),
-      user: { id: user.id, email: user.email, role: 'ADMIN' },
+      user: { id: user.id, email: user.email, role: 'ADMIN' as const },
     };
   }
 
-  async loginStaff(staff: any) {
+  async loginStaff(staff: { id: string; name: string; role: string; eventId: string }) {
     const payload = {
       sub: staff.id,
       name: staff.name,
@@ -51,7 +51,7 @@ export class AuthService {
     };
     return {
       accessToken: this.jwtService.sign(payload),
-      user: { id: staff.id, name: staff.name, role: 'STAFF' },
+      user: { id: staff.id, name: staff.name, role: 'STAFF' as const },
     };
   }
 

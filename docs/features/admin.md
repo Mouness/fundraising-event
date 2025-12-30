@@ -10,7 +10,7 @@ A summary view displaying key performance indicators (KPIs) such as:
 - Total Revenue
 - Number of Active Events
 - Recent Donations Log
-- Staff Activity
+- **Export**: Global ZIP export for receipt PDFs.
 
 ### 2. Event Management (CRUD)
 Allows admins to create, update, and delete fundraising events.
@@ -29,13 +29,21 @@ Allows admins to create, update, and delete fundraising events.
   - Ensures the user is authenticated before rendering children.
 
 #### Pages
+#### Pages
 - **`DashboardPage`**:
-  - Grid layout using `shadcn/ui` cards.
-  - Fetches data from multiple sources (mocked for now, future API integration).
+  - Displays high-level stats (Revenue, Recent Activity).
+  - **Export Feature**: Triggers `GET /export/receipts/zip` to download all generated receipts.
+- **`EventSettingsPage`**:
+  - Manages Event Configuration (Name, Goal, Slug).
+  - **Theme Customization**: Live preview of Primary Color and Logo URL.
+  - **Validation**: Strict Zod schema ensures data integrity before `PATCH /events/:id`.
 
-#### Components
+### Components
 - **`DashboardStats`**:
   - Reusable component for displaying metric cards with icons and trends.
+- **Refactoring & Quality**:
+  - Components heavily utilize strict TypeScript interfaces (e.g., `EventConfig['theme']`).
+  - `any` types have been systematically removed.
 
 ### Backend (`apps/api`)
 

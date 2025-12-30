@@ -18,7 +18,8 @@ export class MailService {
 
     async sendReceipt(to: string, data: any) {
         const config = this.eventConfigService.getConfig();
-        const subject = `Receipt for your donation of $${data.amount}`;
+        const commConfig = config.communication;
+        const subject = commConfig.email?.subjectLine || `Receipt for your donation of $${data.amount}`;
 
         const frontendUrl = this.configService.get('FRONTEND_URL') || 'http://localhost:5173';
         const logoPath = config.theme?.assets?.logo || '';
@@ -29,7 +30,11 @@ export class MailService {
             eventName: config.content.title,
             logoUrl: absoluteLogoUrl,
             primaryColor: await this.eventConfigService.getThemeVariable('--primary', '#ec4899'),
-            supportEmail: 'support@example.com', // TODO: Add to EventConfig if not present, or use default
+            legalName: commConfig.legalName,
+            address: commConfig.address,
+            website: commConfig.website,
+            supportEmail: commConfig.supportEmail || 'support@example.com',
+            footerText: commConfig.email?.footerText,
             year: new Date().getFullYear(),
             currency: 'USD',
         };

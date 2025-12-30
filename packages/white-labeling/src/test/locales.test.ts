@@ -1,20 +1,43 @@
-import { describe, it, expect } from 'vitest';
-import { mergeLocales, defaultLocales } from '../locales';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { loadLocales } from '../locales';
+import { WhiteLabelStore } from '../store';
+import enDefault from '../locales/en.default.json';
 
-describe('mergeLocales', () => {
-    it('should return default locales if no custom translations provided', () => {
-        const result = mergeLocales('en');
-        expect(result).toEqual(defaultLocales.en);
+describe('loadLocales', () => {
+    beforeEach(() => {
+        // Reset store before each test
+        WhiteLabelStore.getInstance().setDbConfig({
+            name: 'Default',
+            goalAmount: 0,
+            themeConfig: {}
+        });
     });
 
-    it('should merge custom translations', () => {
-        const custom = {
-            donation: {
-                title: "Custom Title"
+    it('should return default locales if no DB config', () => {
+        const result = loadLocales();
+        expect(result.en).toEqual(enDefault);
+        expect(result.fr).toBeDefined();
+    });
+
+    it('should merge database locales', () => {
+        const customTitle = "Custom Donation Title";
+        WhiteLabelStore.getInstance().setDbConfig({
+            name: 'Custom',
+            goalAmount: 100,
+            themeConfig: {
+                locales: {
+                    en: {
+                        donation: {
+                            title: customTitle
+                        }
+                    }
+                }
             }
-        };
-        const result = mergeLocales('en', custom);
-        expect(result.donation.title).toBe("Custom Title");
-        expect(result.donation.submit).toBe(defaultLocales.en.donation.submit);
+        });
+
+        const result = loadLocales();
+        expect(result.en.donation.title).toBe(customTitle);
+        // Should preserve other keys
+        expect(result.en.donation.submit).toBeDefined();
     });
 });

@@ -54,5 +54,5 @@ Built with **React 19** and **Vite**:
 ### `@fundraising/white-labeling`
 A central library for handling configuration, assets, and themes. This package ensures that both the API and Web apps share the exact same configuration logic and type definitions, enabling true "White Label" capabilities where the core code remains agnostic of the specific event branding.
 
-### `@fundraising/types` (Planned)
-Shared DTOs and interfaces to ensure type compatibility between Frontend and Backend.
+### `@fundraising/types`
+Shared DTOs (Data Transfer Objects) and interfaces to ensure type compatibility between Frontend and Backend (e.g., `DonationDto`, `CreateEventDto`).

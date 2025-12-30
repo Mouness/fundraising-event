@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/lib/api';
+import { isAxiosError } from 'axios';
 
 interface LoginCredentials {
     email: string;
@@ -27,9 +28,16 @@ export function useLogin() {
 
             navigate('/admin');
             return { success: true };
-        } catch (err: any) {
+        } catch (err) {
             console.error(err);
-            const errorMessage = err.response?.data?.message || 'Login failed';
+            let errorMessage = 'Login failed';
+
+            if (isAxiosError(err)) {
+                errorMessage = err.response?.data?.message || errorMessage;
+            } else if (err instanceof Error) {
+                errorMessage = err.message;
+            }
+
             setError(errorMessage);
             return { success: false, error: errorMessage };
         } finally {

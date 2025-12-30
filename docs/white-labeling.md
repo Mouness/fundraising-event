@@ -19,9 +19,18 @@ For every customizable element, the package provides a sensible **Default**. If 
 
 The core `EventConfig` object drives the behavior of the application (feature flags, text content, amounts).
 
-- **Default**: The package bundles a complete default configuration.
-- **Custom**: The app loads a runtime `event-config.json`.
-- **Resolution**: `loadConfig(customJson)` performs a deep merge.
+- **Default**: The package bundles a complete default configuration (`src/config/event-config.default.json`).
+- **Custom**: The app initializes via `initWhiteLabeling(apiUrl)` to fetch event data from the backend.
+- **Resolution**: `loadConfigs()` merges Default JSON + Database Overrides.
+
+### Runtime Initialization
+The application must initialize the store before rendering:
+```typescript
+import { initWhiteLabeling } from '@fundraising/white-labeling';
+
+// Fetches /events from API and populates the Singleton Store
+await initWhiteLabeling(import.meta.env.VITE_API_URL);
+```
 
 ### Usage
 ```typescript

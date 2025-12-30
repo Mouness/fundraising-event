@@ -166,19 +166,27 @@ We are abandoning pure Atomic Design in favor of a business feature-based struct
 ```bash
 src/
 ├── app/                  # Global configuration (Providers, Router)
-├── assets/               # Static images, fonts
 ├── features/             # Core application logic
-│   ├── donation/         # Donation logic (Form, Stripe)
-│   ├── live-screen/      # Screen components (Gauge, Confetti)
 │   ├── admin/            # Dashboard and configuration
+│   ├── auth/             # Authentication pages
+│   ├── donation/         # Donation logic (Form, Stripe)
+│   ├── event/            # Event Logic & Hooks
+│   ├── live/             # Screen components (Gauge, Confetti)
+│   ├── public/           # Static pages
 │   └── staff/            # Manual collection interface
-├── shared/               # Shared components (Buttons, Shadcn Inputs)
-│   ├── ui/               # Shadcn/UI Components
-│   ├── hooks/            # Generic Hooks (useDebounce, etc.)
-│   └── utils/            # Utility functions
-├── lib/                  # Third-party configs (axios, queryClient, stripe)
+├── components/           # Shared UI Primitives
+│   └── ui/               # Shadcn/UI Components
+├── hooks/                # Generic Hooks
+├── lib/                  # Utilities (api, i18n, utils)
+├── providers/            # React Context Providers
 └── stores/               # Global Jotai Atoms
 ```
+
+### 3.2 Shared Packages Strategy (Monorepo)
+*   `packages/types`: DTOs shared between NestJS (Backend) and React (Frontend).
+*   `packages/white-labeling`: Shared logic for Theme, Assets, and Configuration.
+    *   **Single Source of Truth:** Contains default assets (Logos) and CSS variables.
+    *   **Deep Merge:** Frontend and Backend use the same logic to merge Defaults < Config File < Database.
 
 ### 3.3 State Management (Jotai + Query)
 * **Example "Donation List" (Admin):** Managed by `useQuery(['donations'], fetchDonations)`.
@@ -194,10 +202,12 @@ socket.on('donation', (data) => store.set(totalAmountAtom, (prev) => prev + data
 
 ### 4.1 NestJS Modules
 * **AuthModule:** JWT Management (Admin) and PIN Code (Staff).
-* **EventModule:** CRUD of events and visual configuration.
 * **DonationModule:** Transaction management, Stripe Webhooks.
+* **EventConfigModule:** Centralized config loader (DB + File + Defaults).
+* **EventModule:** CRUD of events and visual configuration.
 * **GatewayModule:** WebSocket management (Rooms per `event_id`).
-* **QueueModule:** BullMQ Producers/Consumers for heavy tasks (PDF).
+* **PdfModule:** `pdfmake` integration for generating tax receipts.
+* **QueueModule:** BullMQ Producers/Consumers for PDF generation and Emails.
 
 ### 4.2 Database (Prisma Schema)
 ```prisma
@@ -276,12 +286,13 @@ model Donation {
     * Triggers animation (Confetti) via a `lastDonationAtom`.
 
 ### 5.2 "Staff" Donation Flow (Offline Capable)
-1.  **Client (Staff):** Enter donation -> `useMutation`.
-2.  **If Network OK:** Immediate REST API send.
-3.  **If Network KO:**
-    * Storage in `localStorage` (via React Query persist or Jotai).
-    * UI updates total locally (Optimistic Update).
-    * Automatic retry as soon as connection returns.
+1.  **Client (Staff)::** Enter donation -> `useMutation`.
+2.  **SyncService:** Intercepts the request.
+3.  **If Online:** Sends directly to API.
+4.  **If Offline:**
+    *   Stores in `StorageService` (LocalStorage Queue).
+    *   Updates UI optimistically (Total + Notification).
+    *   **Auto-Sync:** `SyncService` listens for `online` event and flushes the queue automatically when connection returns.
 
 ## 6. Security & Deployment
 
@@ -302,7 +313,9 @@ The project will be delivered with a `docker-compose.yml` orchestrating:
 * Default browser language detection.
 * JSON translation files in `/public/locales`.
 
-## 7. Next Steps
-1.  **Repo Initialization:** Monorepo configuration (using pnpm workspaces), Vite (React 19 + Tailwind v4) and NestJS installation.
-2.  **POC (Proof of Concept):** Connect a simple Vite page to a NestJS server via Socket.io to validate real-time.
-3.  **Setup Design System:** Install Tailwind v4 and configure Shadcn/UI with the dynamic CSS variables logic.
+## 7. Remaining Roadmap
+1.  **Donation Management:** Admin table to Edit/Cancel/Hide donations.
+2.  **CSV Export:** Raw data export for accounting.
+3.  **Live Screen Visuals:** Advanced animations (Explosion, Rolling Counters).
+4.  **Security Hardening:** Rate Limiting and strict RBAC.
+5.  **Hybrid Module:** Web Widget & OBS Overlay.

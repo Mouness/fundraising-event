@@ -6,9 +6,7 @@
         "goalAmount": 10000
     },
     "theme": {
-        "assets": {
-            "logo": "/images/logo.svg"
-        }
+        "assets": {}
     },
     "donation": {
         "form": {

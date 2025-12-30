@@ -85,7 +85,8 @@ export const EventSettingsPage = () => {
                 ...currentThemeConfig,
                 assets: {
                     ...currentThemeConfig.assets,
-                    logo: values.logoUrl
+                    // If empty, set to undefined so it doesn't overwrite default with empty string
+                    logo: values.logoUrl || undefined
                 },
                 variables: {
                     ...currentThemeConfig.variables,
@@ -161,7 +162,7 @@ export const EventSettingsPage = () => {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="grid gap-2">
-                            <Label htmlFor="logoUrl">Logo URL (Optional)</Label>
+                            <Label htmlFor="logoUrl">Logo URL (Leave empty for default)</Label>
                             <Input id="logoUrl" placeholder="https://..." {...form.register('logoUrl')} />
                             {form.formState.errors.logoUrl && <p className="text-sm text-red-500">{form.formState.errors.logoUrl.message}</p>}
                         </div>

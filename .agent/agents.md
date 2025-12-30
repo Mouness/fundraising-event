@@ -3,10 +3,10 @@
 This document serves as the primary source of truth for all AI agents and developers working on the **Fundraising Event** project. It outlines the structure, coding standards, boundaries, and tools to ensure consistency and quality.
 
 ## 1. Prime Directive (Context Awareness)
-**CRITICAL:** Before starting ANY task, you must ensure you have read and understood the contents of the `agent/` directory:
-1.  `agent/specs.md` - Functional Specifications.
-2.  `agent/agents.md` - Developer Guidelines (This file).
-3.  `agent/AntiGravity.md` - Context/Memory (if present).
+**CRITICAL:** Before starting ANY task, you must ensure you have read and understood the contents of the `.agent/` directory:
+1.  `.agent/specs.md` - Functional Specifications.
+2.  `.agent/agents.md` - Developer Guidelines (This file).
+3.  `.agent/AntiGravity.md` - Context/Memory (if present).
 
 ## 2. Project Structure
 
@@ -21,11 +21,11 @@ This document serves as the primary source of truth for all AI agents and develo
 - Docs via mkdocs.
 - The code should be readable, maintainable and the (cognitive) complexity should be as low as possible.
 - SOLID principles should be followed.
-- The code should be refactored if it is not following the SOLID principles.
+- The code should be refactored if it does not follow the SOLID principles.
 
 - The project follows a **Monorepo** structure (using pnpm workspaces) with a clear separation of concerns between Frontend and Backend, while sharing types and utilities where possible.
 
-```
+```bash
 fundraising-event/
 ├── agent/                    # AI Context & Docs
 │   ├── agents.md             # Guidelines (This file)
@@ -78,6 +78,7 @@ fundraising-event/
 │   ├── ts-config/
 │   ├── ui/                   # Potential shared UI lib
 │   └── types/                # Shared DTOs/Interfaces
+│   └── white-labeling/       # White Labeling
 │
 ├── docker-compose.yml        # Local dev orchestration
 ├── package.json              # Root scripts

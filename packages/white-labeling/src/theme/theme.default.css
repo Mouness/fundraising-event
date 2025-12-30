@@ -1,6 +1,6 @@
 :root {
   /* ========================================
-   * SHADCN UI COMPATIBILITY
+   * CORE VARIABLES (SHADCN/TAILWIND)
    * ======================================== */
   --background: #f8fafc;
   --foreground: #0f172a;
@@ -13,23 +13,22 @@
   --border: #e2e8f0;
   --input: #e2e8f0;
   --ring: #ec4899;
+  --radius: 0.5rem;
 
   /* ========================================
    * GLOBAL VARIABLES
    * ======================================== */
-
-  /* --- Global Colors --- */
+  --global-link-color: var(--primary);
+  --global-link-hover: var(--primary);
   --global-error-color: #ef4444;
   --global-error-bg: #fef2f2;
   --global-success-color: #16a34a;
   --global-success-bg: rgba(220, 252, 231, 0.5);
-  --global-link-color: #2563eb;
-  --global-link-hover: #1d4ed8;
 
   /* --- Global Radii --- */
-  --global-radius: 0.5rem;
-  --global-radius-sm: 0.25rem;
-  --global-radius-lg: 1rem;
+  --global-radius: var(--radius);
+  --global-radius-sm: calc(var(--radius) - 2px);
+  --global-radius-lg: calc(var(--radius) + 4px);
   --global-radius-full: 9999px;
 
   /* --- Global Shadows --- */
@@ -57,72 +56,68 @@
   /* ========================================
    * HEADER VARIABLES
    * ======================================== */
-  --header-bg: #ffffff;
-  --header-bg-dark: #0f172a;
+  --header-bg: var(--background);
+  --header-bg-dark: var(--foreground);
   --header-border: var(--border);
   --header-text: var(--foreground);
   --header-accent: var(--primary);
   --header-height: 4rem;
 
   /* ========================================
-   * AUTH VARIABLES
+   * FEATURE VARIABLES (INHERITED)
    * ======================================== */
-  --auth-page-bg: #f1f5f9;
-  --auth-card-shadow: var(--global-shadow);
-  --auth-card-radius: var(--global-radius-lg);
-  --auth-title-color: var(--foreground);
-  --auth-subtitle-color: var(--muted-foreground);
-  --auth-input-bg: #ffffff;
-  --auth-input-text: var(--foreground);
+
+  /* --- Auth --- */
+  --auth-page-bg: var(--muted);
+  --auth-input-bg: var(--background);
   --auth-input-border: var(--border);
-  --auth-label-color: var(--foreground);
+  --auth-input-text: var(--foreground);
   --auth-button-bg: var(--primary);
   --auth-button-text: var(--primary-foreground);
+  --auth-title-color: var(--foreground);
+  --auth-subtitle-color: var(--muted-foreground);
+  --auth-label-color: var(--foreground);
   --auth-link-color: var(--primary);
+  --auth-card-shadow: var(--global-shadow);
+  --auth-card-radius: var(--global-radius-lg);
 
-  /* ========================================
-   * ADMIN VARIABLES
-   * ======================================== */
-  --admin-sidebar-bg: #111827;
-  --admin-sidebar-text: #ffffff;
-  --admin-sidebar-hover: #1f2937;
-  --admin-content-bg: #f9fafb;
+  /* --- Admin --- */
+  --admin-sidebar-bg: var(--foreground);
+  --admin-sidebar-text: var(--background);
+  --admin-sidebar-hover: var(--muted-foreground);
+  --admin-content-bg: var(--muted);
+  --admin-card-bg: var(--background);
+  --admin-card-text: var(--foreground);
+  --admin-border-color: var(--border);
+  --admin-heading-color: var(--foreground);
+  --admin-muted-text: var(--muted-foreground);
   --admin-sidebar-width: 16rem;
   --admin-sidebar-padding: 1rem;
   --admin-content-padding: 2rem;
-  --admin-card-bg: var(--card);
-  --admin-card-text: var(--card-foreground);
-  --admin-heading-color: var(--foreground);
-  --admin-muted-text: var(--muted-foreground);
-  --admin-border-color: var(--border);
 
-  /* ========================================
-   * DONATION VARIABLES
-   * ======================================== */
+  /* --- Donation --- */
   --donation-title-color: var(--foreground);
   --donation-subtitle-color: var(--muted-foreground);
   --donation-card-radius: var(--global-radius-lg);
   --donation-button-radius: var(--global-radius);
-  --donation-card-shadow: var(--global-shadow-lg);
-  --donation-amount-gap: 0.75rem;
-  --donation-page-gradient: linear-gradient(135deg, #fce7f3 0%, #ede9fe 100%);
-  --donation-label-color: var(--foreground);
-  --donation-input-bg: #ffffff;
-  --donation-input-text: var(--foreground);
-  --donation-input-border: var(--border);
   --donation-amount-button-bg: var(--background);
   --donation-amount-button-text: var(--foreground);
   --donation-amount-button-selected-bg: var(--primary);
   --donation-amount-button-selected-text: var(--primary-foreground);
   --donation-next-button-bg: var(--primary);
   --donation-next-button-text: var(--primary-foreground);
+  --donation-input-bg: var(--background);
+  --donation-input-text: var(--foreground);
+  --donation-input-border: var(--border);
+  --donation-label-color: var(--foreground);
+  --donation-page-gradient: linear-gradient(135deg, var(--muted) 0%, var(--background) 100%);
+  --donation-card-shadow: var(--global-shadow-lg);
+  --donation-amount-gap: 0.75rem;
 
-  /* ========================================
-   * THANK YOU VARIABLES
-   * ======================================== */
-  --thankyou-gradient-start: #6366f1;
-  --thankyou-gradient-via: #a855f7;
-  --thankyou-gradient-end: #ec4899;
+  /* --- Thank You --- */
+  --thankyou-gradient-start: var(--secondary);
+  --thankyou-gradient-via: var(--primary);
+  --thankyou-gradient-end: var(--ring);
   --thankyou-card-bg: rgba(255, 255, 255, 0.9);
   --thankyou-card-radius: var(--global-radius-lg);
   --thankyou-card-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
@@ -131,8 +126,8 @@
   --thankyou-message-color: var(--muted-foreground);
   --thankyou-icon-color: var(--global-success-color);
   --thankyou-icon-bg: var(--global-success-bg);
-  --thankyou-receipt-bg: #f3f4f6;
-  --thankyou-receipt-label: #6b7280;
+  --thankyou-receipt-bg: var(--muted);
+  --thankyou-receipt-label: var(--muted-foreground);
   --thankyou-receipt-text: var(--foreground);
   --thankyou-share-label: var(--muted-foreground);
   --thankyou-share-twitter: #0ea5e9;
@@ -141,34 +136,32 @@
   --thankyou-button-bg: var(--primary);
   --thankyou-button-text: var(--primary-foreground);
 
-  /* ========================================
-   * LIVE SCREEN VARIABLES
-   * ======================================== */
-  --live-page-bg: #000000;
-  --live-header-text: #ffffff;
-  --live-subtitle-text: #94a3b8;
-  --live-label-text: #cbd5e1;
-  --live-goal-text: #64748b;
-  --live-status-indicator: #22c55e;
+  /* --- Live Screen (Specific Visuals) --- */
+  --live-page-bg: var(--foreground);
+  --live-header-text: var(--primary-foreground);
+  --live-subtitle-text: var(--muted-foreground);
+  --live-label-text: var(--muted-foreground);
+  --live-goal-text: var(--muted-foreground);
+  --live-status-indicator: var(--global-success-color);
   --live-bg-accent-1: rgba(88, 28, 135, 0.4);
   --live-bg-accent-2: rgba(30, 58, 138, 0.4);
   --live-bg-blur: 120px;
-  --live-text-main: #ffffff;
-  --live-title-color: #ffffff;
-  --live-highlight-color: #ffffff;
-  --live-text-secondary: #cbd5e1;
-  --live-text-muted: #64748b;
-  --live-amount-color: #4ade80;
-  --live-avatar-bg-start: #a855f7;
-  --live-avatar-bg-end: #4f46e5;
-  --live-qr-bg: #ffffff;
+  --live-text-main: var(--primary-foreground);
+  --live-title-color: var(--primary-foreground);
+  --live-highlight-color: var(--primary-foreground);
+  --live-text-secondary: var(--muted-foreground);
+  --live-text-muted: var(--muted-foreground);
+  --live-amount-color: var(--global-success-color);
+  --live-avatar-bg-start: var(--primary);
+  --live-avatar-bg-end: var(--secondary);
+  --live-qr-bg: var(--primary-foreground);
   --live-qr-shadow: rgba(168, 85, 247, 0.4);
   --live-gauge-track: rgba(255, 255, 255, 0.05);
   --live-gauge-shadow: rgba(168, 85, 247, 0.3);
   --live-feed-item-bg: rgba(15, 23, 42, 0.6);
   --live-feed-item-border: rgba(51, 65, 85, 0.5);
-  --live-counter-gradient-from: #ffffff;
-  --live-counter-gradient-to: #94a3b8;
+  --live-counter-gradient-from: var(--primary-foreground);
+  --live-counter-gradient-to: var(--muted-foreground);
   --live-gauge-size: 500px;
   --live-gauge-stroke: 12;
   --live-qr-size: 120px;
@@ -177,33 +170,28 @@
   --live-qr-radius: 0.75rem;
   --live-logo-radius: 0.5rem;
 
-  /* ========================================
-   * STAFF INTERFACE VARIABLES
-   * ======================================== */
-  --staff-page-bg: #213040;
-  --staff-display-bg: #ffffff;
+  /* --- Staff --- */
+  --staff-page-bg: var(--muted);
+  --staff-display-bg: var(--background);
   --staff-display-border: var(--border);
-  --staff-keypad-bg: #8cb7e2;
-  --staff-keypad-button-bg: #bbaae7;
-  --staff-keypad-button-text: var(--foreground);
-  --staff-input-bg: #d8d5d5;
+  --staff-keypad-bg: var(--background);
+  --staff-keypad-button-bg: var(--secondary);
+  --staff-keypad-button-text: var(--secondary-foreground);
+  --staff-input-bg: var(--background);
   --staff-input-text: var(--foreground);
-  --staff-input-placeholder: var(--foreground);
+  --staff-input-border: var(--border);
+  --staff-input-placeholder: var(--muted-foreground);
   --staff-keypad-shadow: rgba(0, 0, 0, 0.05);
-  --staff-keypad-delete-bg: #444fef;
-  --staff-keypad-delete-hover: #444fef;
+  --staff-keypad-delete-bg: var(--global-error-color);
+  --staff-keypad-delete-hover: #dc2626;
   --staff-keypad-button-height: 4rem;
   --staff-amount-size: 3rem;
   --staff-keypad-gap: 0.75rem;
-  --staff-display-radius: 0.75rem;
-  --staff-keypad-radius: 2rem;
-
-  /* --- Staff Labels & Text --- */
+  --staff-display-radius: var(--global-radius);
+  --staff-keypad-radius: var(--global-radius-lg);
   --staff-label-color: var(--foreground);
   --staff-amount-color: var(--foreground);
   --staff-amount-placeholder-color: var(--muted-foreground);
-
-  /* --- Staff Donation Type Buttons --- */
   --staff-type-button-bg: var(--staff-keypad-button-bg);
   --staff-type-button-text: var(--foreground);
   --staff-type-button-border: var(--staff-display-border);

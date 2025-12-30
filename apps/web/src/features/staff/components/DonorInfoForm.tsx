@@ -31,10 +31,11 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                         value={name}
                         onChange={(e) => onNameChange(e.target.value)}
                         placeholder="John Doe"
-                        className="staff-input pl-9 h-9 border-0"
+                        className="pl-9 h-9 placeholder-[var(--staff-input-placeholder)] placeholder-opacity-60"
                         style={{
                             backgroundColor: 'var(--staff-input-bg)',
-                            color: 'var(--staff-input-text)'
+                            color: 'var(--staff-input-text)',
+                            borderColor: 'var(--staff-input-border)'
                         }}
                         disabled={disabled}
                     />
@@ -59,10 +60,11 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                         value={email}
                         onChange={(e) => onEmailChange(e.target.value)}
                         placeholder="john@example.com"
-                        className="staff-input pl-9 h-9 border-0"
+                        className="pl-9 h-9 placeholder-[var(--staff-input-placeholder)] placeholder-opacity-60"
                         style={{
                             backgroundColor: 'var(--staff-input-bg)',
-                            color: 'var(--staff-input-text)'
+                            color: 'var(--staff-input-text)',
+                            borderColor: 'var(--staff-input-border)'
                         }}
                         disabled={disabled}
                     />

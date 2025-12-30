@@ -24,36 +24,39 @@ It allows for visualizing donation progress live to encourage generosity (gamifi
 ## Detailed Functional Modules
 
 ### 1. Administration Dashboard (Back-Office)
-This is the control center. It must be accessible via web browser (Desktop/Tablet).
+This is the central control plane, accessible via web browser (Desktop/Tablet). It is divided into two distinct contexts:
 
-**Event Configuration**
-* **Identity:** Event Name, Date, Description.
-* **Goals:** Target amount (Goal) in local currency (multi-currency supported: EUR, USD, CHF, etc.).
-* **Starting Gauge:** Ability to enter an initial amount (e.g., donations received before the event).
+**A. Platform Context (Root Level)**
+* **Overview:** Global management of the platform instance.
+*   **Event List:** View, Create, and Delete fundraising events.
+*   **Global Settings:**
+    *   **Stripe Connect:** Platform-wide OAuth connection module or API key entry (Publishable/Secret keys).
+    *   **Admin Users:** Manage platform administrators.
+*   **Authentication & Security:**
+    *   **External Identity Providers:** Support for Auth0, Okta, Clerk, Kinde, Keycloak, Firebase, etc.
+    *   **Role Management:** Mapping external provider roles to internal application roles (Super Admin, Observer).
 
-**Customization (White Label)**
-* **Branding:** Upload NGO Logo and Event Logo.
-* **Theme:** Color Picker for: Primary Color (Gauge), Secondary Color, Background Color or Background Image.
-* **Texts:** Customization of encouragement messages displayed on the screen.
-
-**Donation Management**
-* **Dashboard:** Chronological list of all donations (Stripe + Manual).
-* **Actions:** Ability to edit a donation (entry error), cancel it, or hide it from the projection screen (moderation).
-* **Export:** "Export CSV" button containing: Date, Last Name, First Name, Email, Amount, Method, Status.
-
-**Stripe Configuration**
-* OAuth connection module or API key entry (Publishable/Secret keys) to link the NGO's Stripe account.
-
-**Authentication & Security**
-* **External Identity Providers:** Support for integrating external token providers (Auth0, Okta, Clerk, Kinde, Keycloak, Firebase, etc.) for Admin access.
-* **Role Management:** Mapping of external provider roles to internal application roles (Super Admin, Observer).
-
-**Fiscal Management and Receipts**
-* **Legal Entity Configuration:** Mandatory fields for the NGO: Legal Name, HQ Address, Registration Number (RNA/SIRET/UID), Official Logo for documents.
-* **Signature:** Upload area for the President/Treasurer's signature image (to automatically sign receipts).
-* **Receipt Template:** Simple editor (or variables) to customize the legal text of the receipt (e.g., "Receipt under Article 200 of the General Tax Code...").
-* **Manual Generation:** Ability for the admin to generate a specific unitary PDF receipt for a specific donation (case of a later request) or regenerate a lost receipt.
-* **Global Export:** Ability to download a ZIP archive containing all PDFs generated over a given period.
+**B. Event Context (Event Level)**
+Navigation switches to manage a specific selected event:
+*   **Dashboard:** High-level metrics (Total Raised, Donor Count), Recent Activity feed, and Quick Actions.
+*   **Donations:** Comprehensive transaction table (Stripe + Manual) with:
+    *   **Management:** Status filtering and moderation (Hide/Cancel).
+    *   **Export:** CSV Export (Data) and ZIP Export (PDF Receipts).
+    *   **Manual Receipt Generation:** Generate specific unitary PDF receipt or regenerate lost ones.
+*   **Design Studio (White Label):**
+    *   **Theme:** Visual editor for `themeConfig` (Primary/Secondary colors, Radii).
+    *   **Branding:** Asset Management (Upload NGO Logo, Event Logo, Background Images).
+    *   **Live Screen:** Customization of animations, layouts, and encouragement messages.
+*   **Configuration:**
+    *   **General Settings:** Event Name, Date, Goal Amount, Starting Gauge (Initial Amount), Currency, Description.
+    *   **Form Builder:** Toggle fields (Phone, Message, Anonymous option).
+    *   **Fiscal Management:**
+        *   **Legal Entity:** Configure Legal Name, HQ Address, Reg Number for receipts.
+        *   **Signature:** Upload President/Treasurer signature image.
+        *   **Receipt Template:** Customize legal text (e.g., "Receipt under Article 200...").
+*   **Team:**
+    *   Manage Staff PIN codes.
+    *   View real-time performance per collector.
 
 ### 2. Projection Screen (Public Front-End)
 This is the interface displayed on the large screen (projector). It must be "Responsive" but optimized for 16:9 format.

@@ -163,24 +163,10 @@ v                      v
 ### 3.1 Folder Structure (Feature-based)
 We are abandoning pure Atomic Design in favor of a business feature-based structure, which is more readable for Open Source.
 
-```bash
-src/
-├── app/                  # Global configuration (Providers, Router)
-├── features/             # Core application logic
-│   ├── admin/            # Dashboard and configuration
-│   ├── auth/             # Authentication pages
-│   ├── donation/         # Donation logic (Form, Stripe)
-│   ├── event/            # Event Logic & Hooks
-│   ├── live/             # Screen components (Gauge, Confetti)
-│   ├── public/           # Static pages
-│   └── staff/            # Manual collection interface
-├── components/           # Shared UI Primitives
-│   └── ui/               # Shadcn/UI Components
-├── hooks/                # Generic Hooks
-├── lib/                  # Utilities (api, i18n, utils)
-├── providers/            # React Context Providers
-└── stores/               # Global Jotai Atoms
-```
+See [Project Structure in agents.md](./agents.md#2-project-structure) for the detailed file tree.
+
+### 3.1 Components Organization
+We are abandoning pure Atomic Design in favor of a business feature-based structure (`features/`), which is more readable for Open Source.
 
 ### 3.2 Shared Packages Strategy (Monorepo)
 *   `packages/types`: DTOs shared between NestJS (Backend) and React (Frontend).

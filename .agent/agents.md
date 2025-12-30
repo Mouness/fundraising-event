@@ -41,8 +41,10 @@ fundraising-event/
 │   │   │   ├── features/     # Feature-based modules
 │   │   │   │   ├── auth/     # Auth (JWT, Google OAuth)
 │   │   │   │   ├── donation/ # Payments & Stripe logic
+│   │   │   │   ├── event-config/ # Centralized Config Loader
 │   │   │   │   ├── event/    # Event management
 │   │   │   │   ├── gateway/  # WebSockets (Socket.io)
+│   │   │   │   ├── pdf/      # PDF Generation (PDFMake)
 │   │   │   │   └── queue/    # BullMQ (Email/PDF Jobs)
 │   │   │   ├── test/         # Unit & E2E Tests
 │   │   │   ├── mock/         # API Mock Data
@@ -55,16 +57,16 @@ fundraising-event/
 │       ├── public/           # Static Public Assets
 │       ├── src/
 │       │   ├── app/          # Core App Wrapper/Router
-│       │   ├── assets/       # Style assets & Images
 │       │   ├── components/   # UI Primitives (@/components/ui)
 │       │   ├── providers/    # React Contexts & Providers
 │       │   ├── features/     # Feature-based components
 │       │   │   ├── admin/    # Dashboard & Event Config
 │       │   │   ├── auth/     # Authentication pages
 │       │   │   ├── donation/ # Public Donation Form
-│       │   │   ├── event/    # Event Logic
+│       │   │   ├── event/    # Event Logic & Hooks
 │       │   │   ├── live/     # Projection/Live Screen
-│       │   │   └── public/   # Public Static pages
+│       │   │   ├── public/   # Public Static pages
+│       │   │   └── staff/    # Producer/Collector Mode
 │       │   ├── hooks/        # Reusable React hooks
 │       │   ├── lib/          # Config & Utilities (api, i18n, utils)
 │       │   ├── stores/       # Global State (Jotai)
@@ -77,8 +79,13 @@ fundraising-event/
 ├── packages/                 # Shared libraries (Optional)
 │   ├── ts-config/
 │   ├── ui/                   # Potential shared UI lib
-│   └── types/                # Shared DTOs/Interfaces
-│   └── white-labeling/       # White Labeling
+│   ├── types/                # Shared DTOs/Interfaces
+│   └── white-labeling/       # White Labeling (Theme, Assets, Config)
+│       ├── src/
+│       │   ├── assets/       # Default SVGs
+│       │   ├── config/       # Default Configurations
+│       │   ├── theme/        # Default CSS Variables
+│       │   └── store.ts      # Config Store
 │
 ├── docker-compose.yml        # Local dev orchestration
 ├── package.json              # Root scripts

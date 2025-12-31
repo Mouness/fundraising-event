@@ -8,8 +8,8 @@ const mockNavigate = vi.fn();
 vi.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
 }));
-vi.mock('@/features/event/hooks/useEventConfig', () => ({
-    useEventConfig: () => ({
+vi.mock('@/providers/AppConfigProvider', () => ({
+    useAppConfig: () => ({
         config: {
             donation: {
                 form: { phone: { enabled: true, required: false }, message: { enabled: true }, anonymous: { enabled: true } },

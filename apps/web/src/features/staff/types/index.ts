@@ -1,4 +1,5 @@
-export type DonationType = 'cash' | 'check' | 'pledge' | 'other';
+import type { DonationType } from '@fundraising/types';
+export type { DonationType };
 
 export interface PendingDonation {
     id: string;

@@ -2,7 +2,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import PdfPrinter from 'pdfmake';
 import * as path from 'path';
-import { EventConfigService } from '../event/configuration/event-config.service';
+import { EventConfigService } from '../events/configuration/event-config.service';
 
 @Injectable()
 export class PdfService {

@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventService } from '@/features/event/event.service';
+import { EventsService } from '@/features/events/events.service';
 import { PrismaService } from '@/database/prisma.service';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 import { NotFoundException } from '@nestjs/common';
 import { CreateEventDto, UpdateEventDto } from '@fundraising/types';
 
-describe('EventService', () => {
-    let service: EventService;
+describe('EventsService', () => {
+    let service: EventsService;
     let prismaService: PrismaService;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
-                EventService,
+                EventsService,
                 {
                     provide: PrismaService,
                     useValue: {
@@ -28,7 +28,7 @@ describe('EventService', () => {
             ],
         }).compile();
 
-        service = module.get<EventService>(EventService);
+        service = module.get<EventsService>(EventsService);
         prismaService = module.get<PrismaService>(PrismaService);
     });
 

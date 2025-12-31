@@ -1,19 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventController } from '@/features/event/event.controller';
-import { EventService } from '@/features/event/event.service';
+import { EventsController } from '@/features/events/events.controller';
+import { EventsService } from '@/features/events/events.service';
 import { CreateEventDto } from '@fundraising/types';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 
-describe('EventController', () => {
-    let controller: EventController;
-    let service: EventService;
+describe('EventsController', () => {
+    let controller: EventsController;
+    let service: EventsService;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            controllers: [EventController],
+            controllers: [EventsController],
             providers: [
                 {
-                    provide: EventService,
+                    provide: EventsService,
                     useValue: {
                         create: vi.fn(),
                         findAll: vi.fn(),
@@ -25,8 +25,8 @@ describe('EventController', () => {
             ],
         }).compile();
 
-        controller = module.get<EventController>(EventController);
-        service = module.get<EventService>(EventService);
+        controller = module.get<EventsController>(EventsController);
+        service = module.get<EventsService>(EventsService);
     });
 
     it('should be defined', () => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'react-qr-code';
-import { useEventConfig } from '@/features/event/hooks/useEventConfig';
+import { useAppConfig } from '@/providers/AppConfigProvider';
 import { DonationFeed, type Donation } from '@/features/live/components/DonationFeed';
 import { DonationGauge } from '@/features/live/components/DonationGauge';
 import { useLiveSocket } from '@/features/live/hooks/useLiveSocket';
@@ -11,7 +11,7 @@ import { fireConfetti } from '@/lib/confetti';
 
 export const LivePage = () => {
     const { t } = useTranslation('common');
-    const { config } = useEventConfig();
+    const { config } = useAppConfig();
     const [donations, setDonations] = useState<Donation[]>([]);
     const [totalRaisedCents, setTotalRaisedCents] = useState(0);
     const [prevTotal, setPrevTotal] = useState(0);

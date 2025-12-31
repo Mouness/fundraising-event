@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import type { MailProvider } from './providers/mail-provider.interface';
-import { EventConfigService } from '../event/configuration/event-config.service';
+import { EventConfigService } from '../events/configuration/event-config.service';
 import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs/promises';
 import * as path from 'path';

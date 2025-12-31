@@ -3,65 +3,105 @@
    * CORE VARIABLES (SHADCN/TAILWIND)
    * ======================================== */
   --background: #f8fafc;
+  /* Main background color of the app */
   --foreground: #0f172a;
+  /* Main text color */
   --primary: #ec4899;
+  /* Primary brand color (Pink) */
   --primary-foreground: #ffffff;
+  /* Text color on primary background */
   --secondary: #8b5cf6;
+  /* Secondary brand color (Purple) */
   --secondary-foreground: #ffffff;
+  /* Text color on secondary background */
   --muted: #f1f5f9;
+  /* Muted background for cards/sections */
   --muted-foreground: #64748b;
+  /* Muted text color for subtitles */
   --border: #e2e8f0;
+  /* Default border color */
   --input: #e2e8f0;
+  /* Default input border color */
   --ring: #ec4899;
+  /* Focus ring color */
   --radius: 0.5rem;
+  /* Base border radius */
 
   /* ========================================
    * GLOBAL VARIABLES
    * ======================================== */
   --global-link-color: var(--primary);
+  /* Color for hyperlinks */
   --global-link-hover: var(--primary);
+  /* Hover state color for links */
   --global-error-color: #ef4444;
+  /* Standard error red */
   --global-error-bg: #fef2f2;
+  /* Background for error alerts */
   --global-success-color: #16a34a;
+  /* Standard success green */
   --global-success-bg: rgba(220, 252, 231, 0.5);
+  /* Background for success alerts */
 
   /* --- Global Radii --- */
   --global-radius: var(--radius);
+  /* Aliased base radius */
   --global-radius-sm: calc(var(--radius) - 2px);
+  /* Small radius for inner elements */
   --global-radius-lg: calc(var(--radius) + 4px);
+  /* Large radius for cards/modals */
   --global-radius-full: 9999px;
+  /* Pill/Circle radius */
 
   /* --- Global Shadows --- */
   --global-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  /* Subtle shadow */
   --global-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Standard depth shadow */
   --global-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  /* Deep shadow for floating elements */
 
   /* --- Global Typography --- */
   --global-font-family: 'Inter', system-ui, sans-serif;
+  /* Primary font stack */
   --global-font-mono: 'JetBrains Mono', monospace;
+  /* Monospace font stack */
 
   /* --- Global Effects --- */
   --global-transition-fast: 150ms ease;
+  /* Fast transition for hovers */
   --global-transition: 300ms ease;
+  /* Standard transition for state changes */
 
   /* ========================================
    * GLASSMORPHISM
    * ======================================== */
   --glass-bg: rgba(255, 255, 255, 0.7);
+  /* Translucent background */
   --glass-blur: 12px;
+  /* Blur strength */
   --glass-opacity: 1;
+  /* Opacity override */
   --glass-border: rgba(255, 255, 255, 0.3);
+  /* Translucent border */
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  /* Soft shadow for glass effect */
 
   /* ========================================
    * HEADER VARIABLES
    * ======================================== */
   --header-bg: var(--background);
+  /* Header background color */
   --header-bg-dark: var(--foreground);
+  /* Header background for dark variants */
   --header-border: var(--border);
+  /* Header bottom border */
   --header-text: var(--foreground);
+  /* Header text color */
   --header-accent: var(--primary);
+  /* Accent color in header */
   --header-height: 4rem;
+  /* Fixed height of the header */
 
   /* ========================================
    * FEATURE VARIABLES (INHERITED)
@@ -69,193 +109,353 @@
 
   /* --- Auth --- */
   --auth-page-bg: var(--muted);
+  /* Background for login pages */
   --auth-input-bg: var(--background);
+  /* Input field background */
   --auth-input-border: var(--border);
+  /* Input field border */
   --auth-input-text: var(--foreground);
+  /* Input text color */
   --auth-button-bg: var(--primary);
+  /* Login button background */
   --auth-button-text: var(--primary-foreground);
+  /* Login button text */
   --auth-title-color: var(--foreground);
+  /* Title text color */
   --auth-subtitle-color: var(--muted-foreground);
+  /* Subtitle text color */
   --auth-label-color: var(--foreground);
+  /* Form label color */
   --auth-link-color: var(--primary);
+  /* Links color in auth forms */
   --auth-card-shadow: var(--global-shadow);
+  /* Shadow for auth card */
   --auth-card-radius: var(--global-radius-lg);
+  /* Radius for auth card */
 
   /* --- Admin --- */
   --admin-sidebar-bg: var(--foreground);
+  /* Sidebar background (Dark) */
   --admin-sidebar-text: var(--background);
+  /* Sidebar text (Light) */
   --admin-sidebar-hover: var(--muted-foreground);
+  /* Sidebar hover state */
   --admin-content-bg: var(--muted);
+  /* Main content area background */
   --admin-card-bg: var(--background);
+  /* Card background in dashboard */
   --admin-card-text: var(--foreground);
+  /* Card text color */
   --admin-border-color: var(--border);
+  /* Border color for admin elements */
   --admin-heading-color: var(--foreground);
+  /* Heading color */
   --admin-muted-text: var(--muted-foreground);
+  /* Secondary text in admin */
   --admin-sidebar-width: 16rem;
+  /* Width of the sidebar */
   --admin-sidebar-padding: 1rem;
+  /* Padding inside sidebar */
   --admin-content-padding: 2rem;
+  /* Padding for content area */
 
   /* --- Donation --- */
   --donation-title-color: var(--foreground);
+  /* Title color for donation flow */
   --donation-subtitle-color: var(--muted-foreground);
+  /* Subtitle color */
   --donation-card-radius: var(--global-radius-lg);
+  /* Card radius */
   --donation-button-radius: var(--global-radius);
+  /* Button radius */
   --donation-amount-button-bg: var(--background);
+  /* Amount button default bg */
   --donation-amount-button-text: var(--foreground);
+  /* Amount button default text */
   --donation-amount-button-selected-bg: var(--primary);
+  /* Selected amount bg */
   --donation-amount-button-selected-text: var(--primary-foreground);
+  /* Selected amount text */
   --donation-next-button-bg: var(--primary);
+  /* Next step button bg */
   --donation-next-button-text: var(--primary-foreground);
+  /* Next step button text */
   --donation-input-bg: var(--background);
+  /* Input background */
   --donation-input-text: var(--foreground);
+  /* Input text */
   --donation-input-border: var(--border);
+  /* Input border */
   --donation-label-color: var(--foreground);
+  /* Input label */
   --donation-page-gradient: linear-gradient(135deg, var(--muted) 0%, var(--background) 100%);
+  /* Page background gradient */
   --donation-card-shadow: var(--global-shadow-lg);
+  /* Main card shadow */
   --donation-amount-gap: 0.75rem;
+  /* Spacing between amount buttons */
 
   /* --- Thank You --- */
   --thankyou-gradient-start: var(--secondary);
+  /* Gradient start color */
   --thankyou-gradient-via: var(--primary);
+  /* Gradient middle color */
   --thankyou-gradient-end: var(--ring);
+  /* Gradient end color */
   --thankyou-card-bg: rgba(255, 255, 255, 0.9);
+  /* Card background (semi-transparent) */
   --thankyou-card-radius: var(--global-radius-lg);
+  /* Card radius */
   --thankyou-card-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  /* Card elevation */
   --thankyou-card-border: rgba(255, 255, 255, 0.2);
+  /* Card border */
   --thankyou-title-color: var(--primary);
+  /* Title text color */
   --thankyou-message-color: var(--muted-foreground);
+  /* Message text color */
   --thankyou-icon-color: var(--global-success-color);
+  /* Success icon color */
   --thankyou-icon-bg: var(--global-success-bg);
+  /* Success icon background */
   --thankyou-receipt-bg: var(--muted);
+  /* Receipt section background */
   --thankyou-receipt-label: var(--muted-foreground);
+  /* Receipt label color */
   --thankyou-receipt-text: var(--foreground);
+  /* Receipt value color */
   --thankyou-share-label: var(--muted-foreground);
+  /* Share section label */
   --thankyou-share-twitter: #0ea5e9;
+  /* Twitter brand color */
   --thankyou-share-facebook: #2563eb;
+  /* Facebook brand color */
   --thankyou-share-linkedin: #1d4ed8;
+  /* LinkedIn brand color */
   --thankyou-button-bg: var(--primary);
+  /* Action button background */
   --thankyou-button-text: var(--primary-foreground);
+  /* Action button text */
 
   /* --- Live Screen (Specific Visuals) --- */
   --live-page-bg: var(--foreground);
+  /* Live screen background */
   --live-header-text: var(--primary-foreground);
+  /* Header text color */
   --live-subtitle-text: var(--muted-foreground);
+  /* Subtitle text color */
   --live-label-text: var(--muted-foreground);
+  /* Label text color */
   --live-goal-text: var(--muted-foreground);
+  /* Goal label color */
   --live-status-indicator: var(--global-success-color);
+  /* Online status dot */
   --live-bg-accent-1: rgba(88, 28, 135, 0.4);
+  /* Background glowing orb 1 */
   --live-bg-accent-2: rgba(30, 58, 138, 0.4);
+  /* Background glowing orb 2 */
   --live-bg-blur: 120px;
+  /* Blur amount for background orbs */
   --live-text-main: var(--primary-foreground);
+  /* Main text color */
   --live-title-color: var(--primary-foreground);
+  /* Title color */
   --live-highlight-color: var(--primary-foreground);
+  /* Highlighted text color */
   --live-text-secondary: var(--muted-foreground);
+  /* Secondary text color */
   --live-text-muted: var(--muted-foreground);
+  /* Muted text color */
   --live-amount-color: var(--global-success-color);
+  /* Amount display color */
   --live-avatar-bg-start: var(--primary);
+  /* Avatar gradient start */
   --live-avatar-bg-end: var(--secondary);
+  /* Avatar gradient end */
   --live-qr-bg: var(--primary-foreground);
+  /* QR Code container background */
   --live-qr-shadow: rgba(168, 85, 247, 0.4);
+  /* QR Code glow/shadow */
   --live-gauge-track: rgba(255, 255, 255, 0.05);
+  /* Gauge background track */
   --live-gauge-shadow: rgba(168, 85, 247, 0.3);
+  /* Gauge glow */
   --live-feed-item-bg: rgba(15, 23, 42, 0.6);
+  /* Feed item background */
   --live-feed-item-border: rgba(51, 65, 85, 0.5);
+  /* Feed item border */
   --live-counter-gradient-from: var(--primary-foreground);
+  /* Counter gradient start */
   --live-counter-gradient-to: var(--muted-foreground);
+  /* Counter gradient end */
   --live-gauge-size: 500px;
+  /* Size of the main gauge */
   --live-gauge-stroke: 12;
+  /* Stroke width of the gauge */
   --live-qr-size: 120px;
+  /* Size of the QR code */
   --live-counter-size: 6rem;
+  /* Font size of the main counter */
   --live-counter-weight: 900;
+  /* Font weight of the main counter */
   --live-qr-radius: 0.75rem;
+  /* Border radius of QR container */
   --live-logo-radius: 0.5rem;
+  /* Border radius of Logo */
 
   /* --- Staff --- */
   --staff-page-bg: var(--muted);
+  /* Staff page background */
   --staff-display-bg: var(--background);
+  /* Amount display background */
   --staff-display-border: var(--border);
+  /* Amount display border */
   --staff-keypad-bg: var(--background);
+  /* Keypad area background */
   --staff-keypad-button-bg: var(--secondary);
+  /* Keypad button background */
   --staff-keypad-button-text: var(--secondary-foreground);
+  /* Keypad button text */
   --staff-input-bg: var(--background);
+  /* Input background */
   --staff-input-text: var(--foreground);
+  /* Input text */
   --staff-input-border: var(--border);
+  /* Input border */
   --staff-input-placeholder: var(--muted-foreground);
+  /* Placeholder text color */
   --staff-keypad-shadow: rgba(0, 0, 0, 0.05);
+  /* Key button shadow */
   --staff-keypad-delete-bg: var(--global-error-color);
+  /* Delete button background */
   --staff-keypad-delete-hover: #dc2626;
+  /* Delete button hover state */
   --staff-keypad-button-height: 4rem;
+  /* Height of keypad buttons */
   --staff-amount-size: 3rem;
+  /* Font size of the amount type display */
   --staff-keypad-gap: 0.75rem;
+  /* Gap between keys */
   --staff-display-radius: var(--global-radius);
+  /* Radius of amount display */
   --staff-keypad-radius: var(--global-radius-lg);
+  /* Radius of keypad container */
   --staff-label-color: var(--foreground);
+  /* Label text color */
   --staff-amount-color: var(--foreground);
+  /* Amount text color */
   --staff-amount-placeholder-color: var(--muted-foreground);
+  /* Amount placeholder color */
   --staff-type-button-bg: var(--staff-keypad-button-bg);
+  /* Donation type button bg */
   --staff-type-button-text: var(--foreground);
+  /* Donation type button text */
   --staff-type-button-border: var(--staff-display-border);
+  /* Type button border */
   --staff-type-button-icon-color: var(--foreground);
+  /* Type button icon color */
   --staff-type-button-selected-bg: var(--primary);
+  /* Selected type background */
   --staff-type-button-selected-text: var(--primary-foreground);
+  /* Selected type text */
   --staff-type-button-selected-icon: var(--primary-foreground);
+  /* Selected type icon */
 }
 
 @theme {
   /* --- Tailwind 4 Color Mappings --- */
   --color-primary: var(--primary);
+  /* Maps primary color to Tailwind */
   --color-primary-foreground: var(--primary-foreground);
+  /* Maps primary foreground text */
   --color-secondary: var(--secondary);
+  /* Maps secondary color */
   --color-secondary-foreground: var(--secondary-foreground);
+  /* Maps secondary foreground text */
   --color-background: var(--background);
+  /* Maps background color */
   --color-foreground: var(--foreground);
+  /* Maps foreground text */
   --color-muted: var(--muted);
+  /* Maps muted background */
   --color-muted-foreground: var(--muted-foreground);
+  /* Maps muted foreground text */
   --color-border: var(--border);
+  /* Maps border color */
   --color-input: var(--input);
+  /* Maps input border color */
   --color-ring: var(--ring);
+  /* Maps focus ring color */
 
   /* --- Feature Color Mappings --- */
   --color-glass-bg: var(--glass-bg);
+  /* Maps glass background for utilities */
   --color-glass-border: var(--glass-border);
+  /* Maps glass border for utilities */
   --color-input-bg: var(--input-bg);
+  /* Maps input background for utilities */
   --color-live-bg-accent-1: var(--live-bg-accent-1);
+  /* Maps live accent 1 */
   --color-live-bg-accent-2: var(--live-bg-accent-2);
+  /* Maps live accent 2 */
   --color-live-qr-bg: var(--live-qr-bg);
+  /* Maps QR background */
   --color-live-qr-shadow: var(--live-qr-shadow);
+  /* Maps QR shadow */
   --color-staff-display-bg: var(--staff-display-bg);
+  /* Maps staff display background */
   --color-staff-display-border: var(--staff-display-border);
+  /* Maps staff display border */
   --color-staff-keypad-bg: var(--staff-keypad-bg);
+  /* Maps staff keypad background */
 
   /* --- Auth --- */
   --color-auth-page-bg: var(--auth-page-bg);
+  /* Maps auth page background */
   --color-auth-card-shadow: var(--auth-card-shadow);
+  /* Maps auth card shadow */
 
   /* --- Admin --- */
   --color-admin-sidebar-bg: var(--admin-sidebar-bg);
+  /* Maps admin sidebar background */
   --color-admin-sidebar-text: var(--admin-sidebar-text);
+  /* Maps admin sidebar text */
   --color-admin-content-bg: var(--admin-content-bg);
+  /* Maps admin content background */
 
   /* --- Live --- */
   --color-live-page-bg: var(--live-page-bg);
+  /* Maps live page background */
   --color-live-text-main: var(--live-text-main);
+  /* Maps live main text */
   --color-live-highlight: var(--live-highlight-color);
+  /* Maps live highlight text */
   --color-live-status: var(--live-status-indicator);
+  /* Maps live status indicator */
 
   /* --- Donation --- */
   --color-donation-title: var(--donation-title-color);
+  /* Maps donation title color */
   --color-donation-subtitle: var(--donation-subtitle-color);
+  /* Maps donation subtitle color */
 
   /* --- Tailwind 4 Radius Mappings --- */
   --radius-sm: var(--global-radius-sm);
+  /* Maps small radius */
   --radius-DEFAULT: var(--global-radius);
+  /* Maps default radius */
   --radius-lg: var(--global-radius-lg);
+  /* Maps large radius */
   --radius-full: var(--global-radius-full);
+  /* Maps full radius (pill) */
   --radius-global: var(--global-radius);
+  /* Maps global radius alias */
   --radius-global-lg: var(--global-radius-lg);
+  /* Maps global large radius alias */
 
   /* --- Animation --- */
   --animate-gradient-xy: gradient-xy 15s ease infinite;
+  /* Defines gradient animation utility */
 
   @keyframes gradient-xy {
 

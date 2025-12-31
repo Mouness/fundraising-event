@@ -3,6 +3,9 @@ export class CreateEventDto {
     name!: string;
     goalAmount!: number;
     themeConfig!: Record<string, any>;
+    date?: string | Date;
+    description?: string;
+    status?: string;
 }
 
 export class UpdateEventDto {
@@ -10,6 +13,9 @@ export class UpdateEventDto {
     name?: string;
     goalAmount?: number;
     themeConfig?: Record<string, any>;
+    date?: string | Date;
+    description?: string;
+    status?: string;
 }
 
 export class EventResponseDto {
@@ -18,6 +24,11 @@ export class EventResponseDto {
     name!: string;
     goalAmount!: number;
     themeConfig!: Record<string, any>;
+    date?: string | Date;
+    description?: string | null;
+    status?: string;
+    raised?: number;
+    donorCount?: number;
     createdAt!: string | Date;
     updatedAt!: string | Date;
 }

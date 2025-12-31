@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { PrismaService } from '@/database/prisma.service';
-import { EventConfigService } from '@/features/event/configuration/event-config.service';
+import { EventConfigService } from '@/features/events/configuration/event-config.service';
 import { vi, describe, beforeEach, afterAll, it, expect } from 'vitest';
 
 // Mock white-labeling package to avoid FS/ESM issues during E2E

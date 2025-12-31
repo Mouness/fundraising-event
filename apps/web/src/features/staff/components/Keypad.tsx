@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface KeypadProps {
     onKeyPress: (key: string) => void;
@@ -9,6 +10,7 @@ interface KeypadProps {
 }
 
 export const Keypad = ({ onKeyPress, onDelete, onClear, disabled }: KeypadProps) => {
+    const { t } = useTranslation('common');
     const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "00", "0"];
 
     return (
@@ -56,7 +58,7 @@ export const Keypad = ({ onKeyPress, onDelete, onClear, disabled }: KeypadProps)
                 className="col-span-3 h-12 uppercase tracking-widest text-sm hover:opacity-80"
                 style={{ backgroundColor: 'var(--staff-keypad-button-bg)', borderColor: 'var(--staff-display-border)', color: 'var(--staff-keypad-button-text)' }}
             >
-                Clear
+                {t('staff.keypad.clear')}
             </Button>
         </div >
     );

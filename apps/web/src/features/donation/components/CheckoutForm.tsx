@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import type { DonationFormValues } from '../schemas/donation.schema';
 import { donationSchema } from '../schemas/donation.schema';
-import { useEventConfig } from '../../event/hooks/useEventConfig';
+import { useAppConfig } from '@/providers/AppConfigProvider';
 import { api } from '@/lib/api';
 import { PaymentFormFactory } from './payment/PaymentFormFactory';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,7 +18,7 @@ import { ChevronRight, CreditCard } from 'lucide-react';
 export const CheckoutForm = () => {
     const { t } = useTranslation('common');
     const navigate = useNavigate();
-    const { config } = useEventConfig();
+    const { config } = useAppConfig();
     const [step, setStep] = useState<'details' | 'payment'>('details');
     // Define type or import Response type. For now locally.
     const [sessionData, setSessionData] = useState<{ id: string; clientSecret: string } | null>(null);
@@ -69,6 +69,15 @@ export const CheckoutForm = () => {
 
     const glassCardClass = "backdrop-blur-md border shadow-xl overflow-hidden";
     const glassCardStyle = { backgroundColor: 'var(--glass-bg)', borderColor: 'var(--glass-border)', backdropFilter: 'blur(var(--glass-blur))' };
+
+    // Soft panel style for contact form to match Staff UI
+    const panelClass = "backdrop-blur-md shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] border-t rounded-3xl overflow-hidden mt-6";
+    const panelStyle = {
+        backgroundColor: 'var(--glass-bg)',
+        borderColor: 'var(--glass-border)',
+        backdropFilter: 'blur(var(--glass-blur))',
+        borderRadius: 'var(--panel-radius, 1.5rem)'
+    };
 
     return (
         <AnimatePresence mode="wait">
@@ -131,7 +140,11 @@ export const CheckoutForm = () => {
                             </CardContent>
                         </Card>
 
-                        <Card className={glassCardClass}>
+
+                        <Card
+                            className={panelClass}
+                            style={panelStyle}
+                        >
                             <CardHeader>
                                 <CardTitle className="text-xl text-gray-800">{t('donation.contact_info')}</CardTitle>
                             </CardHeader>
@@ -235,7 +248,7 @@ export const CheckoutForm = () => {
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
                 >
-                    <Card className={glassCardClass} style={glassCardStyle}>
+                    <Card className={panelClass} style={panelStyle}>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <CreditCard className="h-6 w-6 text-primary" />

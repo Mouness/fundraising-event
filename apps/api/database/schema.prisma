@@ -14,6 +14,9 @@ model Event {
   goalAmount    Decimal
   themeConfig   Json     // Stores { primaryColor, logoUrl, etc. }
   formConfig    Json?    // Stores { phone: { enabled: true, required: false }, ... }
+  date          DateTime @default(now())
+  description   String?
+  status        String   @default("active") // active, draft, closed
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   donations     Donation[]

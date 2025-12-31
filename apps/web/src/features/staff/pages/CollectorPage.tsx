@@ -7,8 +7,10 @@ import type { DonationType } from "../types";
 import { DonorInfoForm } from "../components/DonorInfoForm";
 import { Button } from "@/components/ui/button";
 import { Check, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const CollectorPage = () => {
+    const { t } = useTranslation('common');
     const [amount, setAmount] = useState<string>("");
     const [type, setType] = useState<DonationType>("cash");
     const [name, setName] = useState<string>("");
@@ -69,9 +71,10 @@ export const CollectorPage = () => {
         setIsSubmitting(false);
 
         if (result.success) {
+            const formattedAmount = formatAmount(amount);
             const msg = result.offline
-                ? `OFFLINE: Donation saved to queue! \nAmount: ${formatAmount(amount)}`
-                : `SUCCESS: Donation collected! \nAmount: ${formatAmount(amount)}`;
+                ? t('staff.success_offline', { amount: formattedAmount })
+                : t('staff.success_online', { amount: formattedAmount });
 
             alert(msg); // Simple feedback
 
@@ -80,7 +83,7 @@ export const CollectorPage = () => {
             setEmail("");
             setType("cash");
         } else {
-            alert("Error submitting donation.");
+            alert(t('staff.submit_error'));
         }
     };
 
@@ -88,12 +91,12 @@ export const CollectorPage = () => {
     useEffect(() => {
         const handleOnline = () => {
             SyncService.processQueue().then(count => {
-                if (count > 0) alert(`Back Online: Synced ${count} offline donations!`);
+                if (count > 0) alert(t('staff.back_online', { count }));
             });
         };
         window.addEventListener('online', handleOnline);
         return () => window.removeEventListener('online', handleOnline);
-    }, []);
+    }, [t]);
 
     return (
         <div className="flex flex-col min-h-[calc(100vh-4rem)] max-w-md mx-auto">
@@ -110,7 +113,7 @@ export const CollectorPage = () => {
                     className="text-sm font-medium uppercase tracking-widest mb-1"
                     style={{ color: 'var(--staff-label-color)' }}
                 >
-                    Enter Amount
+                    {t('staff.enter_amount')}
                 </span>
                 <div
                     className="font-bold tracking-tighter"
@@ -126,8 +129,7 @@ export const CollectorPage = () => {
                 style={{
                     backgroundColor: 'var(--staff-keypad-bg)',
                     borderColor: 'var(--staff-display-border)',
-                    borderTopLeftRadius: 'var(--staff-keypad-radius)',
-                    borderTopRightRadius: 'var(--staff-keypad-radius)'
+                    borderRadius: 'var(--panel-radius, 1.5rem)'
                 }}
             >
                 <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto my-3" />
@@ -170,7 +172,7 @@ export const CollectorPage = () => {
                         ) : (
                             <Check className="mr-2 h-6 w-6" style={{ color: 'var(--staff-type-button-selected-icon)' }} />
                         )}
-                        Collect Donation
+                        {t('staff.collect_button')}
                     </Button>
                 </div>
             </div>

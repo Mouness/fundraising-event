@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { User, Mail } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 interface DonorInfoFormProps {
     name: string;
@@ -11,6 +12,7 @@ interface DonorInfoFormProps {
 }
 
 export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabled }: DonorInfoFormProps) => {
+    const { t } = useTranslation('common');
     return (
         <div className="px-4 py-2 space-y-3 w-full max-w-sm mx-auto mb-2">
             <div className="space-y-1">
@@ -19,7 +21,7 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                     className="text-xs ml-1"
                     style={{ color: 'var(--staff-label-color)' }}
                 >
-                    Donor Name (Optional)
+                    {t('staff.donor.name_label')}
                 </Label>
                 <div className="relative">
                     <User
@@ -30,7 +32,7 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                         id="donor-name"
                         value={name}
                         onChange={(e) => onNameChange(e.target.value)}
-                        placeholder="John Doe"
+                        placeholder={t('staff.donor.name_placeholder')}
                         className="pl-9 h-9 placeholder-[var(--staff-input-placeholder)] placeholder-opacity-60"
                         style={{
                             backgroundColor: 'var(--staff-input-bg)',
@@ -47,7 +49,7 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                     className="text-xs ml-1"
                     style={{ color: 'var(--staff-label-color)' }}
                 >
-                    Email Receipt (Optional)
+                    {t('staff.donor.email_label')}
                 </Label>
                 <div className="relative">
                     <Mail
@@ -59,7 +61,7 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                         type="email"
                         value={email}
                         onChange={(e) => onEmailChange(e.target.value)}
-                        placeholder="john@example.com"
+                        placeholder={t('staff.donor.email_placeholder')}
                         className="pl-9 h-9 placeholder-[var(--staff-input-placeholder)] placeholder-opacity-60"
                         style={{
                             backgroundColor: 'var(--staff-input-bg)',

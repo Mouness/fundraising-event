@@ -189,6 +189,11 @@ export const totalAmountAtom = atom(0);
 socket.on('donation', (data) => store.set(totalAmountAtom, (prev) => prev + data.amount));
 ```
 
+### 3.4 Configuration Architecture (AppConfigProvider)
+*   **Initialization:** The application starts with a blocking `AppConfigProvider` that fetches configuration from the API (`initWhiteLabeling`) before rendering any UI.
+*   **Access:** A global hook `useAppConfig()` exposes the configuration (Theme, Event Details, Settings) to all components.
+*   **i18n:** Locales are synchronized dynamically after configuration load.
+
 ### 4.1 NestJS Modules
 * **AuthModule:** JWT Management (Admin) and PIN Code (Staff).
 * **DonationModule:** Transaction management, Stripe Webhooks.

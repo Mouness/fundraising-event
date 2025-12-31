@@ -3,7 +3,7 @@ import { CreateEventDto, UpdateEventDto } from '@fundraising/types';
 import { PrismaService } from '../../database/prisma.service';
 
 @Injectable()
-export class EventService {
+export class EventsService {
   constructor(private prisma: PrismaService) { }
 
   private readonly defaultSelect = {
@@ -13,6 +13,9 @@ export class EventService {
     goalAmount: true,
     themeConfig: true,
     formConfig: true,
+    date: true,
+    description: true,
+    status: true,
     createdAt: true,
     updatedAt: true,
   };
@@ -24,13 +27,33 @@ export class EventService {
         name: createEventDto.name,
         goalAmount: createEventDto.goalAmount,
         themeConfig: createEventDto.themeConfig || {},
+        date: createEventDto.date ? new Date(createEventDto.date) : new Date(),
+        description: createEventDto.description,
+        status: createEventDto.status || 'active',
       },
       select: this.defaultSelect,
     });
   }
 
   async findAll() {
-    return this.prisma.event.findMany({ select: this.defaultSelect });
+    const events = await this.prisma.event.findMany({ select: this.defaultSelect });
+
+    // Aggregate donations (SUCCEEDED only)
+    const aggregations = await this.prisma.donation.groupBy({
+      by: ['eventId'],
+      _sum: { amount: true },
+      _count: { id: true },
+      where: { status: 'SUCCEEDED' },
+    });
+
+    return events.map((event) => {
+      const stats = aggregations.find((a) => a.eventId === event.id);
+      return {
+        ...event,
+        raised: stats?._sum.amount?.toNumber() || 0,
+        donorCount: stats?._count.id || 0,
+      };
+    });
   }
 
   async findOne(slugOrId: string) {
@@ -41,6 +64,11 @@ export class EventService {
       select: this.defaultSelect,
     });
     if (!event) throw new NotFoundException('Event not found');
+
+    // Also attach stats for single event?
+    // The previous implementation didn't, but finding one usually benefits from stats too.
+    // Let's keep it simple for now as findOne is used for config loading mainly.
+    // If needed, I'll add it later.
     return event;
   }
 
@@ -56,6 +84,9 @@ export class EventService {
         ...(updateEventDto.themeConfig && {
           themeConfig: updateEventDto.themeConfig,
         }),
+        ...(updateEventDto.date && { date: new Date(updateEventDto.date) }),
+        ...(updateEventDto.description && { description: updateEventDto.description }),
+        ...(updateEventDto.status && { status: updateEventDto.status }),
       },
       select: this.defaultSelect,
     });

@@ -1,4 +1,5 @@
 import { IsNumber, IsOptional, IsString, IsBoolean, Min, IsEnum, IsDateString } from 'class-validator';
+import { DonationType } from '../enums/donation-type.enum';
 
 export class OfflineDonationDto {
     @IsNumber()
@@ -6,7 +7,7 @@ export class OfflineDonationDto {
     declare amount: number;
 
     @IsString()
-    declare type: string; // 'cash' | 'check' | 'pledge'
+    declare type: DonationType; // 'cash' | 'check' | 'pledge'
 
     @IsString()
     @IsOptional()

@@ -15,6 +15,20 @@
         "settings": "Paramètres",
         "logout": "Déconnexion"
     },
+    "admin_events": {
+        "title": "Événements",
+        "subtitle": "Gérez vos campagnes de collecte de fonds",
+        "create": "Créer un événement",
+        "goal": "Objectif",
+        "donors": "Donateurs",
+        "progress": "Progression",
+        "manage_event": "Gérer l'événement",
+        "status": {
+            "active": "ACTIF",
+            "draft": "BROUILLON",
+            "closed": "FERMÉ"
+        }
+    },
     "dashboard": {
         "title": "Tableau de bord",
         "overview": "Aperçu",
@@ -65,6 +79,45 @@
     },
     "common": {
         "back": "Retour"
+    },
+    "admin": {
+        "header": "Administration"
+    },
+    "app_header": {
+        "title": "Événement de Collecte",
+        "online": "En ligne",
+        "offline": "Hors ligne"
+    },
+    "staff": {
+        "enter_amount": "Entrer le montant",
+        "submit_error": "Erreur lors de la soumission.",
+        "success_offline": "HORS LIGNE : Don sauvegardé ! \nMontant : {{amount}}",
+        "success_online": "SUCCÈS : Don collecté ! \nMontant : {{amount}}",
+        "back_online": "De retour en ligne : {{count}} dons synchronisés !",
+        "collect_button": "Collecter",
+        "donor": {
+            "name_label": "Nom du donateur (Optionnel)",
+            "name_placeholder": "Jean Dupont",
+            "email_label": "Email pour reçu (Optionnel)",
+            "email_placeholder": "jean@exemple.com"
+        },
+        "keypad": {
+            "clear": "Effacer"
+        },
+        "type": {
+            "cash": "Espèces",
+            "check": "Chèque",
+            "pledge": "Promesse",
+            "other": "Autre"
+        }
+    },
+    "thankyou": {
+        "receipt": {
+            "transaction_id": "ID Transaction",
+            "date": "Date",
+            "from": "De",
+            "share_label": "Partager votre soutien"
+        }
     },
     "error": {
         "title": "Oups !",

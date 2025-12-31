@@ -1,4 +1,6 @@
-import { useEventConfig } from '@/features/event/hooks/useEventConfig';
+import { useAppConfig } from '@/providers/AppConfigProvider';
+import { useTranslation } from 'react-i18next';
+import { Globe } from 'lucide-react';
 
 interface AppHeaderProps {
     title?: string;
@@ -7,13 +9,36 @@ interface AppHeaderProps {
     rightContent?: React.ReactNode;
 }
 
+const LanguageSwitcher = () => {
+    const { i18n } = useTranslation();
+
+    return (
+        <div className="relative flex items-center border rounded-md hover:bg-black/5 transition-colors">
+            <Globe
+                className="absolute left-2.5 h-4 w-4 opacity-70 pointer-events-none"
+                style={{ color: 'var(--header-text)' }}
+            />
+            <select
+                value={i18n.language}
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+                className="h-9 w-[110px] appearance-none bg-transparent pl-9 pr-2 text-sm font-medium focus:outline-none cursor-pointer"
+                style={{ color: 'var(--header-text)' }}
+            >
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+            </select>
+        </div>
+    );
+};
+
 export const AppHeader = ({
     title,
     showOnlineStatus = false,
     isOnline = true,
     rightContent
 }: AppHeaderProps) => {
-    const { config } = useEventConfig();
+    const { config } = useAppConfig();
+    const { t } = useTranslation('common');
 
     return (
         <header
@@ -37,7 +62,7 @@ export const AppHeader = ({
                         className="font-bold text-lg tracking-tight"
                         style={{ color: 'var(--header-text)' }}
                     >
-                        {config.content?.title || 'Fundraising Event'}
+                        {config.content?.title || t('app_header.title')}
                         {title && (
                             <span style={{ color: 'var(--header-accent)' }}> · {title}</span>
                         )}
@@ -46,16 +71,18 @@ export const AppHeader = ({
             </div>
 
             <div className="flex items-center gap-2">
+                <LanguageSwitcher />
+
                 {showOnlineStatus && (
                     <>
                         <div
                             className={`h-2 w-2 rounded-full animate-pulse ${isOnline
-                                    ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]'
-                                    : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
+                                ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]'
+                                : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
                                 }`}
                         />
                         <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden sm:inline">
-                            {isOnline ? 'Online' : 'Offline'}
+                            {isOnline ? t('app_header.online') : t('app_header.offline')}
                         </span>
                     </>
                 )}

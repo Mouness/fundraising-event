@@ -3,12 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './features/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { EventModule } from './features/event/event.module';
+import { EventsModule } from './features/events/events.module';
 import { GatewayModule } from './features/gateway/gateway.module';
 import { DatabaseModule } from './database/database.module';
 import { DonationModule } from './features/donation/donation.module';
 import { QueueModule } from './features/queue/queue.module';
-import { EventConfigModule } from './features/event/configuration/event-config.module';
+import { EventConfigModule } from './features/events/configuration/event-config.module';
 import { MailModule } from './features/mail/mail.module';
 import { ExportModule } from './features/export/export.module';
 
@@ -19,7 +19,7 @@ import { ExportModule } from './features/export/export.module';
     }),
     EventConfigModule,
     AuthModule,
-    EventModule,
+    EventsModule,
     DonationModule,
     MailModule,
     QueueModule,

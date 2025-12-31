@@ -5,8 +5,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 // Mocks
 
 
-vi.mock('@/features/event/hooks/useEventConfig', () => ({
-    useEventConfig: () => ({
+vi.mock('@/providers/AppConfigProvider', () => ({
+    useAppConfig: () => ({
         config: {
             id: 'evt_123',
             content: { title: 'Test event', goalAmount: 5000 },

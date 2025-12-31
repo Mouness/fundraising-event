@@ -138,6 +138,10 @@ fundraising-event/
 *   **Internationalization (i18n):**
     *   **No Hardcoded Text:** No label or text should be added directly in the code.
     *   **Use Locales:** Always use the locales files (e.g., via `t('key')`).
+    *   **Bilingual:** Ensure all keys exist in both `en` and `fr` locales.
+*   **Configuration:**
+    *   Always use `useAppConfig()` from `@/providers/AppConfigProvider` to access global settings (theme, event info).
+    *   Do not fetch config manually in components to ensure race-condition-free initialization.
 
 *   **Backend:**
     *   **Source of Truth:** Calculates totals, validates payments, generates PDFs.

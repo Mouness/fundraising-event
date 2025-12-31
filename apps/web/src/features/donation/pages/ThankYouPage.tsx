@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Share2 } from 'lucide-react';
-import { useEventConfig } from '../../event/hooks/useEventConfig';
+import { useAppConfig } from '@/providers/AppConfigProvider';
 import { fireConfetti } from '@/lib/confetti';
 
 export const ThankYouPage = () => {
     const { t } = useTranslation('common');
-    const { config } = useEventConfig();
+    const { config } = useAppConfig();
     const location = useLocation();
     const state = location.state as { amount?: number; transactionId?: string; donorName?: string } | null;
 
@@ -46,12 +46,11 @@ export const ThankYouPage = () => {
             style={{ background: 'linear-gradient(to bottom right, var(--thankyou-gradient-start), var(--thankyou-gradient-via), var(--thankyou-gradient-end))' }}
         >
             <Card
-                className="max-w-md w-full backdrop-blur-xl"
+                className="max-w-md w-full backdrop-blur-xl shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] border-t rounded-3xl overflow-hidden"
                 style={{
                     backgroundColor: 'var(--thankyou-card-bg)',
-                    boxShadow: 'var(--thankyou-card-shadow)',
-                    borderRadius: 'var(--thankyou-card-radius)',
-                    borderColor: 'var(--thankyou-card-border)'
+                    borderColor: 'var(--thankyou-card-border)',
+                    borderRadius: 'var(--panel-radius, 1.5rem)'
                 }}
             >
                 <CardHeader className="text-center pb-2">
@@ -91,7 +90,7 @@ export const ThankYouPage = () => {
                         </div>
                         {state.donorName && (
                             <div className="flex justify-between">
-                                <span style={{ color: 'var(--thankyou-receipt-label)' }}>{t('donation.from')}</span>
+                                <span style={{ color: 'var(--thankyou-receipt-label)' }}>{t('thankyou.receipt.from')}</span>
                                 <span className="font-medium" style={{ color: 'var(--thankyou-receipt-text)' }}>{state.donorName}</span>
                             </div>
                         )}

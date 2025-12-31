@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { isAxiosError } from 'axios';
 
@@ -15,39 +15,40 @@ interface LoginResult {
 
 export function useLogin() {
     const navigate = useNavigate();
-    const [error, setError] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const mutation = useMutation({
+        mutationFn: async (credentials: LoginCredentials) => {
+            const res = await api.post('/auth/login', credentials);
+            return res.data;
+        },
+        onSuccess: (data) => {
+            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            navigate('/admin');
+        },
+        onError: (err) => {
+            console.error(err);
+        }
+    });
 
     const login = async (credentials: LoginCredentials): Promise<LoginResult> => {
-        setIsLoading(true);
-        setError(null);
         try {
-            const res = await api.post('/auth/login', credentials);
-            localStorage.setItem('token', res.data.accessToken);
-            localStorage.setItem('user', JSON.stringify(res.data.user));
-
-            navigate('/admin');
+            await mutation.mutateAsync(credentials);
             return { success: true };
         } catch (err) {
-            console.error(err);
             let errorMessage = 'Login failed';
-
             if (isAxiosError(err)) {
                 errorMessage = err.response?.data?.message || errorMessage;
             } else if (err instanceof Error) {
                 errorMessage = err.message;
             }
-
-            setError(errorMessage);
             return { success: false, error: errorMessage };
-        } finally {
-            setIsLoading(false);
         }
     };
 
     return {
         login,
-        error,
-        isLoading
+        error: mutation.error instanceof Error ? mutation.error.message : null,
+        isLoading: mutation.isPending
     };
 }

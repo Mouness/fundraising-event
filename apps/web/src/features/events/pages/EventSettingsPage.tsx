@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,7 +9,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Loader2, Save } from 'lucide-react';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEvent } from '@/features/events/context/EventContext';
 
 const eventSchema = z.object({
     name: z.string().min(1, 'Name is required'),
@@ -22,10 +23,8 @@ const eventSchema = z.object({
 type EventFormValues = z.infer<typeof eventSchema>;
 
 export const EventSettingsPage = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [isSaving, setIsSaving] = useState(false);
-    const [eventId, setEventId] = useState<string | null>(null);
-    // const { toast } = useToast(); // If not exists, will use alert
+    const queryClient = useQueryClient();
+    const { event, isLoading } = useEvent();
 
     const form = useForm<EventFormValues>({
         resolver: zodResolver(eventSchema),
@@ -38,54 +37,33 @@ export const EventSettingsPage = () => {
         },
     });
 
-
-
-    const [currentThemeConfig, setCurrentThemeConfig] = useState<NonNullable<import('@fundraising/white-labeling').EventConfig['theme']>>({});
-
+    // Populate form when data loads
     useEffect(() => {
-        loadEvent();
-    }, []);
+        if (event) {
+            const primary = event.themeConfig?.variables?.['--primary'] || '#000000';
+            const logo = event.themeConfig?.assets?.logo || '';
 
-    const loadEvent = async () => {
-        try {
-            setIsLoading(true);
-            const { data } = await api.get('/events');
-            if (data && data.length > 0) {
-                const event = data[0];
-                setEventId(event.id);
-                setCurrentThemeConfig(event.themeConfig || {});
-
-                // Helper to resolve values from new generic structure or legacy fields
-                const logo = event.themeConfig?.assets?.logo || '';
-                const primary = event.themeConfig?.variables?.['--primary'] || '#000000';
-
-                form.reset({
-                    name: event.name,
-                    goalAmount: Number(event.goalAmount),
-                    slug: event.slug,
-                    primaryColor: primary,
-                    logoUrl: logo,
-                });
-            }
-        } catch (error) {
-            console.error('Failed to load event', error);
-        } finally {
-            setIsLoading(false);
+            form.reset({
+                name: event.name,
+                goalAmount: Number(event.goalAmount),
+                slug: event.slug,
+                primaryColor: primary,
+                logoUrl: logo,
+            });
         }
-    };
+    }, [event, form]);
 
-    const onSubmit = async (values: EventFormValues) => {
-        if (!eventId) return;
+    const mutation = useMutation({
+        mutationFn: async (values: EventFormValues) => {
+            if (!event?.id) throw new Error('No active event ID');
 
-        try {
-            setIsSaving(true);
+            const currentThemeConfig = event.themeConfig || {};
 
-            // Deep merge or spread to preserve other theme settings (secondary color, background, locales etc.)
+            // Deep merge logic
             const updatedThemeConfig = {
                 ...currentThemeConfig,
                 assets: {
                     ...currentThemeConfig.assets,
-                    // If empty, set to undefined so it doesn't overwrite default with empty string
                     logo: values.logoUrl || undefined
                 },
                 variables: {
@@ -94,31 +72,35 @@ export const EventSettingsPage = () => {
                 }
             };
 
-            await api.patch(`/events/${eventId}`, {
+            await api.patch(`/events/${event.id}`, {
                 name: values.name,
                 goalAmount: values.goalAmount,
                 slug: values.slug,
                 themeConfig: updatedThemeConfig,
             });
-            // toast({ title: "Settings saved", description: "Event configuration updated." });
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['active-event-settings'] });
+            // Ideally invalidate 'events' list too
+            queryClient.invalidateQueries({ queryKey: ['events'] });
             alert("Settings saved successfully!");
-
-            // Reload to ensure sync
-            loadEvent();
-        } catch (error) {
+        },
+        onError: (error: any) => {
             console.error('Failed to save settings', error);
-            const msg = (error as any)?.response?.data?.message || (error as any)?.message || "Unknown error";
+            const msg = error?.response?.data?.message || error?.message || "Unknown error";
             alert(`Failed to save settings: ${msg}`);
-        } finally {
-            setIsSaving(false);
         }
+    });
+
+    const onSubmit = (values: EventFormValues) => {
+        mutation.mutate(values);
     };
 
     if (isLoading) {
         return <div className="flex justify-center p-8"><Loader2 className="h-8 w-8 animate-spin" /></div>;
     }
 
-    if (!eventId) {
+    if (!event) {
         return <div className="p-8">No event found. Please initialize the database.</div>;
     }
 
@@ -181,7 +163,6 @@ export const EventSettingsPage = () => {
                                             value={field.value || '#000000'}
                                             onChange={(e) => {
                                                 field.onChange(e.target.value.toUpperCase());
-                                                // Try to force close with timeout
                                                 setTimeout(() => e.target.blur(), 0);
                                             }}
                                         />
@@ -200,8 +181,8 @@ export const EventSettingsPage = () => {
                 </Card>
 
                 <div className="flex justify-end">
-                    <Button type="submit" disabled={isSaving}>
-                        {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+                    <Button type="submit" disabled={mutation.isPending}>
+                        {mutation.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
                         Save Changes
                     </Button>
                 </div>

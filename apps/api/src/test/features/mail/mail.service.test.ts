@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailService } from '@/features/mail/mail.service';
-import { EventConfigService } from '@/features/event/configuration/event-config.service';
+import { EventConfigService } from '@/features/events/configuration/event-config.service';
 import { PdfService } from '@/features/pdf/pdf.service';
 import { ConfigService } from '@nestjs/config';
 import { describe, it, expect, vi, beforeEach } from 'vitest';

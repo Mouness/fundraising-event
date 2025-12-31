@@ -1,7 +1,7 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { GatewayGateway } from '@/features/gateway/gateway.gateway';
-import { EventService } from '@/features/event/event.service';
+import { EventsService } from '@/features/events/events.service';
 import { Socket } from 'socket.io';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 

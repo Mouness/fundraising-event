@@ -4,8 +4,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as router from 'react-router-dom';
 
 // Mocks
-vi.mock('@/features/event/hooks/useEventConfig', () => ({
-    useEventConfig: () => ({
+vi.mock('@/providers/AppConfigProvider', () => ({
+    useAppConfig: () => ({
         config: {
             donation: { sharing: { enabled: true, networks: ['twitter'] } }
         }

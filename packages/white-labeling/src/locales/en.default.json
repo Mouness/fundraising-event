@@ -15,6 +15,20 @@
         "settings": "Settings",
         "logout": "Logout"
     },
+    "admin_events": {
+        "title": "Events",
+        "subtitle": "Manage your fundraising campaigns",
+        "create": "Create Event",
+        "goal": "Goal",
+        "donors": "Donors",
+        "progress": "Progress",
+        "manage_event": "Manage Event",
+        "status": {
+            "active": "ACTIVE",
+            "draft": "DRAFT",
+            "closed": "CLOSED"
+        }
+    },
     "dashboard": {
         "title": "Dashboard",
         "overview": "Overview",
@@ -65,6 +79,45 @@
     },
     "common": {
         "back": "Back"
+    },
+    "admin": {
+        "header": "Fundraising Admin"
+    },
+    "app_header": {
+        "title": "Fundraising Event",
+        "online": "Online",
+        "offline": "Offline"
+    },
+    "staff": {
+        "enter_amount": "Enter Amount",
+        "submit_error": "Error submitting donation.",
+        "success_offline": "OFFLINE: Donation saved to queue! \nAmount: {{amount}}",
+        "success_online": "SUCCESS: Donation collected! \nAmount: {{amount}}",
+        "back_online": "Back Online: Synced {{count}} offline donations!",
+        "collect_button": "Collect Donation",
+        "donor": {
+            "name_label": "Donor Name (Optional)",
+            "name_placeholder": "John Doe",
+            "email_label": "Email Receipt (Optional)",
+            "email_placeholder": "john@example.com"
+        },
+        "keypad": {
+            "clear": "Clear"
+        },
+        "type": {
+            "cash": "Cash",
+            "check": "Check",
+            "pledge": "Pledge",
+            "other": "Other"
+        }
+    },
+    "thankyou": {
+        "receipt": {
+            "transaction_id": "Transaction ID",
+            "date": "Date",
+            "from": "From",
+            "share_label": "Share your support"
+        }
     },
     "error": {
         "title": "Oops!",

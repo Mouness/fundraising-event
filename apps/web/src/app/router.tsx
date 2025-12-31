@@ -12,13 +12,16 @@ const Loadable = (Component: ComponentType, fallback = <PageLoader />) => (
 // Lazy load pages
 const AdminLayout = lazy(() => import('../features/admin/layouts/AdminLayout').then(module => ({ default: module.AdminLayout })));
 const DashboardPage = lazy(() => import('../features/admin/pages/DashboardPage').then(module => ({ default: module.DashboardPage })));
-const EventSettingsPage = lazy(() => import('../features/admin/pages/EventSettingsPage').then(module => ({ default: module.EventSettingsPage })));
+const EventSettingsPage = lazy(() => import('../features/events/pages/EventSettingsPage').then(module => ({ default: module.EventSettingsPage })));
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(module => ({ default: module.LoginPage })));
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
 const DonationPage = lazy(() => import('../features/donation/pages/DonationPage').then(module => ({ default: module.DonationPage })));
 const ThankYouPage = lazy(() => import('../features/donation/pages/ThankYouPage').then(module => ({ default: module.ThankYouPage })));
-const StaffLayout = lazy(() => import('../features/staff/StaffLayout').then(module => ({ default: module.StaffLayout })));
+const StaffLayout = lazy(() => import('../features/staff/layouts/StaffLayout').then(module => ({ default: module.StaffLayout })));
 const CollectorPage = lazy(() => import('../features/staff/pages/CollectorPage').then(module => ({ default: module.CollectorPage })));
+const EventListPage = lazy(() => import('../features/events/pages/EventListPage').then(module => ({ default: module.EventListPage })));
+const EventLayout = lazy(() => import('../features/events/layouts/EventLayout').then(module => ({ default: module.EventLayout })));
+const EventDashboardPage = lazy(() => import('../features/events/pages/EventDashboardPage').then(module => ({ default: module.EventDashboardPage })));
 
 export const router = createBrowserRouter([
     {
@@ -54,12 +57,26 @@ export const router = createBrowserRouter([
                 element: <DashboardPage />,
             },
             {
-                path: 'settings',
-                element: <EventSettingsPage />,
+                path: 'events',
+                element: Loadable(EventListPage)
             },
             {
-                path: 'events',
-                element: <div>Events List Placeholder</div>
+                path: 'events/:slug',
+                element: Loadable(EventLayout),
+                children: [
+                    {
+                        index: true,
+                        element: Loadable(EventDashboardPage),
+                    },
+                    {
+                        path: 'settings',
+                        element: <EventSettingsPage />,
+                    },
+                    {
+                        path: 'donations',
+                        element: <div>Donations List (Todo)</div>
+                    }
+                ]
             }
         ],
     },

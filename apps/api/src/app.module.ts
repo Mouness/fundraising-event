@@ -11,6 +11,7 @@ import { QueueModule } from './features/queue/queue.module';
 import { EventConfigModule } from './features/events/configuration/event-config.module';
 import { MailModule } from './features/mail/mail.module';
 import { ExportModule } from './features/export/export.module';
+import { StaffModule } from './features/staff/staff.module';
 
 @Module({
   imports: [
@@ -18,12 +19,14 @@ import { ExportModule } from './features/export/export.module';
       isGlobal: true,
     }),
     EventConfigModule,
+    DatabaseModule,
     AuthModule,
     EventsModule,
     DonationModule,
     MailModule,
     QueueModule,
     ExportModule,
+    StaffModule,
   ],
   controllers: [AppController],
   providers: [AppService],

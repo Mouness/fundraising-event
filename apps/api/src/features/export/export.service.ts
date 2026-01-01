@@ -14,15 +14,18 @@ export class ExportService {
         private readonly pdfService: PdfService,
     ) { }
 
-    async exportReceipts(): Promise<StreamableFile> {
-        this.logger.log('Starting global receipt export...');
+    async exportReceipts(eventId?: string): Promise<StreamableFile> {
+        this.logger.log(`Starting global receipt export for event: ${eventId || 'ALL'}...`);
 
         const archive = archiver('zip', {
             zlib: { level: 9 }, // Best compression
         });
 
+        const where: any = { status: 'COMPLETED' };
+        if (eventId) where.eventId = eventId;
+
         const donations = await this.prisma.donation.findMany({
-            where: { status: 'COMPLETED' }, // Only completed donations
+            where,
             orderBy: { createdAt: 'desc' },
         });
 
@@ -65,5 +68,24 @@ export class ExportService {
         archive.finalize();
 
         return new StreamableFile(archive);
+    }
+
+    async getReceipt(donationId: string): Promise<Buffer> {
+        const donation = await this.prisma.donation.findUnique({
+            where: { id: donationId },
+        });
+
+        if (!donation) {
+            throw new Error('Donation not found');
+        }
+
+        const donorName = donation.donorName || 'Supporter';
+
+        return this.pdfService.generateReceipt({
+            amount: donation.amount.toNumber(),
+            donorName: donorName,
+            date: donation.createdAt,
+            transactionId: donation.id,
+        });
     }
 }

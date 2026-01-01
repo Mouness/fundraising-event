@@ -19,6 +19,11 @@ export class WhiteLabelStore {
         return WhiteLabelStore.instance;
     }
 
+    public static reset(): void {
+        // @ts-ignore
+        WhiteLabelStore.instance = null;
+    }
+
     public setDbConfig(config: RawDbEvent): void {
         this.dbConfig = config;
     }
@@ -38,7 +43,7 @@ export const getDbConfig = () => WhiteLabelStore.getInstance().getDbConfig();
  * This should be called once at application startup.
  * @param apiUrl Base URL for the API
  */
-export async function initWhiteLabeling(apiUrl: string): Promise<void> {
+export async function initWhiteLabeling(apiUrl: string, slug?: string): Promise<void> {
     try {
         const response = await fetch(`${apiUrl}/events`, {
             headers: { 'Accept': 'application/json' }
@@ -47,11 +52,33 @@ export async function initWhiteLabeling(apiUrl: string): Promise<void> {
         if (response.ok) {
             const data = await response.json();
             if (Array.isArray(data) && data.length > 0) {
-                // Map the raw response to our config requirement if needed, 
-                // but for now assuming the DB returns a structure we can use or mapping happens in loadConfigs.
-                // Actually, store holds the RAW db object usually, but let's try to be cleaner.
-                // The previous code stored "data[0]" which has "themeConfig".
-                WhiteLabelStore.getInstance().setDbConfig(data[0]);
+                let event;
+
+                if (slug) {
+                    const found = data.find((e: any) => e.slug === slug || e.id === slug);
+                    if (found) {
+                        event = found;
+                    } else {
+                        console.warn(`Event with slug "${slug}" not found, falling back to default.`);
+                        event = data[0];
+                    }
+                } else {
+                    // Portal mode: Try to find a 'portal' event, otherwise use generic platform config
+                    const found = data.find((e: any) => e.slug === 'portal' || e.id === 'portal');
+                    if (found) {
+                        event = found;
+                    } else {
+                        event = {
+                            id: 'platform',
+                            name: 'Fundraising Platform',
+                            slug: 'portal',
+                            goalAmount: 0,
+                            themeConfig: { variables: {} }
+                        };
+                    }
+                }
+
+                WhiteLabelStore.getInstance().setDbConfig(event);
             }
         }
     } catch (error) {

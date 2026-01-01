@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import type { DonationFormValues } from '../schemas/donation.schema';
-import { donationSchema } from '../schemas/donation.schema';
+import { getDonationSchema } from '../schemas/donation.schema';
 import { useAppConfig } from '@/providers/AppConfigProvider';
 import { api } from '@/lib/api';
 import { PaymentFormFactory } from './payment/PaymentFormFactory';
@@ -18,6 +18,7 @@ import { ChevronRight, CreditCard } from 'lucide-react';
 export const CheckoutForm = () => {
     const { t } = useTranslation('common');
     const navigate = useNavigate();
+    const { slug } = useParams<{ slug: string }>();
     const { config } = useAppConfig();
     const [step, setStep] = useState<'details' | 'payment'>('details');
     // Define type or import Response type. For now locally.
@@ -25,8 +26,14 @@ export const CheckoutForm = () => {
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [selectedAmount, setSelectedAmount] = useState<number>(20);
 
+    // Validate slug against config to ensure consistency
+    if (slug && config.slug && slug !== config.slug) {
+        console.warn(`Slug mismatch: URL param '${slug}' does not match config slug '${config.slug}'. Using config slug.`);
+    }
+    const activeSlug = slug || config.slug;
+
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<DonationFormValues>({
-        resolver: zodResolver(donationSchema),
+        resolver: zodResolver(getDonationSchema(t)),
         defaultValues: {
             amount: 20,
             isAnonymous: false,
@@ -44,11 +51,17 @@ export const CheckoutForm = () => {
     };
 
     const onSubmitDetails = async (data: DonationFormValues) => {
+        if (!activeSlug) {
+            setSubmitError(t('donation.error_invalid_event'));
+            return;
+        }
+
         try {
             const amountInCents = Math.round(data.amount * 100);
             const { data: intentData } = await api.post('/donations/intent', {
                 amount: amountInCents,
                 currency: 'usd',
+                eventId: config.id, // Use ID for backend, but slug for navigation
                 metadata: {
                     donorName: data.name,
                     donorEmail: data.email,
@@ -57,8 +70,6 @@ export const CheckoutForm = () => {
                 }
             });
 
-            setSessionData(intentData);
-            setStep('payment');
             setSessionData(intentData);
             setStep('payment');
         } catch (err) {
@@ -259,12 +270,12 @@ export const CheckoutForm = () => {
                             {sessionData && (
                                 <PaymentFormFactory
                                     providerId={config.donation.payment.provider}
-                                    sessionData={sessionData} // Kept sessionData as it's used for clientSecret in some implementations
-                                    amount={currentAmount || 0} // Changed to currentAmount || 0
-                                    currency="usd" // Kept currency as it's a standard prop
+                                    sessionData={sessionData}
+                                    amount={currentAmount || 0}
+                                    currency="usd"
                                     config={config.donation.payment.config}
                                     onSuccess={() => {
-                                        navigate('/thank-you', {
+                                        navigate(`/${slug}/thank-you`, {
                                             state: {
                                                 amount: currentAmount,
                                                 donorName: watch('name'),

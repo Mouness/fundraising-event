@@ -7,12 +7,12 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter }
 import { Label } from '@/components/ui/label';
 import { useTranslation } from 'react-i18next';
 
-const loginSchema = z.object({
-    email: z.string().email({ message: 'Invalid email address' }),
-    password: z.string().min(1, { message: 'Password is required' }),
+const getLoginSchema = (t: any) => z.object({
+    email: z.string().email({ message: t('validation.invalid_email') }),
+    password: z.string().min(1, { message: t('validation.required') }),
 });
 
-type LoginForm = z.infer<typeof loginSchema>;
+type LoginForm = z.infer<ReturnType<typeof getLoginSchema>>;
 
 import { useLogin } from '../hooks/useLogin';
 
@@ -21,7 +21,7 @@ import { useLogin } from '../hooks/useLogin';
 export const LoginPage = () => {
     const { t } = useTranslation('common');
     const { login, error, isLoading } = useLogin();
-
+    const loginSchema = getLoginSchema(t);
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
         resolver: zodResolver(loginSchema),
     });

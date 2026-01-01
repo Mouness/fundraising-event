@@ -13,7 +13,11 @@ interface LoginResult {
     error?: string;
 }
 
-export function useLogin() {
+/**
+ * Handles the administrative login flow using the backend auth module.
+ * Manages token storage and navigation on successful authentication.
+ */
+export const useLogin = () => {
     const navigate = useNavigate();
 
     const mutation = useMutation({
@@ -51,4 +55,4 @@ export function useLogin() {
         error: mutation.error instanceof Error ? mutation.error.message : null,
         isLoading: mutation.isPending
     };
-}
+};

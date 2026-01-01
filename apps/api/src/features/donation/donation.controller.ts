@@ -6,7 +6,12 @@ import {
     Req,
     BadRequestException,
     Inject,
+    Get,
+    Query,
+    Res,
+    UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import type { RawBodyRequest } from '@nestjs/common';
 import { PAYMENT_PROVIDER } from './interfaces/payment-provider.interface';
 import type { PaymentProvider } from './interfaces/payment-provider.interface';
@@ -27,6 +32,36 @@ export class DonationController {
         private readonly emailProducer: EmailProducer,
         private readonly donationService: DonationService,
     ) { }
+
+    @Get()
+    async findAll(
+        @Query('eventId') eventId?: string,
+        @Query('limit') limit: number = 50,
+        @Query('offset') offset: number = 0,
+        @Query('search') search?: string,
+        @Query('status') status?: string,
+    ) {
+        return this.donationService.findAll(eventId, limit, offset, search, status);
+    }
+
+    @Get('export')
+    @UseGuards(AuthGuard('jwt'))
+    async exportCsv(
+        @Res() res: any,
+        @Query('eventId') eventId?: string,
+        @Query('search') search?: string,
+        @Query('status') status?: string,
+    ) {
+        const csv = await this.donationService.getExportData(eventId, search, status);
+        const filename = `donations-${new Date().toISOString().split('T')[0]}.csv`;
+
+        res.set({
+            'Content-Type': 'text/csv',
+            'Content-Disposition': `attachment; filename="${filename}"`,
+        });
+
+        return res.send(csv);
+    }
 
     @Post('intent')
     async createPaymentIntent(
@@ -108,9 +143,17 @@ export class DonationController {
         }
     }
     @Post()
+    @UseGuards(AuthGuard('jwt'))
     async createOfflineDonation(
         @Body() body: OfflineDonationDto,
+        @Req() req: any,
     ) {
+        const user = req.user;
+        const eventId = user.eventId || body.eventId; // Use token eventId if available, fallback to body
+
+        if (!eventId) {
+            throw new BadRequestException('Event ID is required');
+        }
         if (!body.amount || body.amount <= 0) {
             throw new BadRequestException('Invalid amount');
         }
@@ -129,9 +172,11 @@ export class DonationController {
             donorName: body.donorName,
             donorEmail: body.donorEmail,
             isAnonymous: !body.donorName,
+            eventId: eventId,
             metadata: {
                 isOfflineCollected: true,
                 collectedAt: body.collectedAt,
+                collectorId: user.userId,
             }
         });
 

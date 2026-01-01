@@ -10,7 +10,7 @@
   /* Primary brand color (Pink) */
   --primary-foreground: #ffffff;
   /* Text color on primary background */
-  --secondary: #8b5cf6;
+  --secondary: #4a94af;
   /* Secondary brand color (Purple) */
   --secondary-foreground: #ffffff;
   /* Text color on secondary background */
@@ -26,6 +26,22 @@
   /* Focus ring color */
   --radius: 0.5rem;
   /* Base border radius */
+  --popover: #ffffff;
+  /* Background of floating popovers like Select and Dropdown menus */
+  --popover-foreground: #0f172a;
+  /* Text color for popover content */
+  --accent: #f1f5f9;
+  /* Accent background for hovered items in selects and menus */
+  --accent-foreground: #0f172a;
+  /* Text color for accented elements */
+  --card: #ffffff;
+  /* Background for standard cards */
+  --card-foreground: #0f172a;
+  /* Text color within cards */
+  --destructive: #ef4444;
+  /* Color for destructive actions (e.g., delete) */
+  --destructive-foreground: #ffffff;
+  /* Text color on destructive backgrounds */
 
   /* ========================================
    * GLOBAL VARIABLES
@@ -158,6 +174,41 @@
   /* Padding inside sidebar */
   --admin-content-padding: 2rem;
   /* Padding for content area */
+
+  /* --- Landing Page --- */
+  --landing-hero-gradient-primary: 221.2 83.2% 53.3%;
+  /* Primary blob color (Blue) */
+  --landing-hero-gradient-secondary: 262.1 83.3% 57.8%;
+  /* Secondary blob color (Purple) */
+  /* Blob Animation Configuration TODO add comments */
+  --landing-blob-opacity: 0.2;
+  /* Opacity of the animated background blobs */
+  --landing-blob-1-duration: 25s;
+  /* Animation duration for the first blob */
+  --landing-blob-2-duration: 35s;
+  /* Animation duration for the second blob */
+  --landing-card-glass-bg: 0 0% 100%;
+  /* Card background color (White) */
+  --landing-card-glass-alpha: 0.4;
+  /* Card background opacity */
+  --landing-card-glass-border: 0 0% 100%;
+  /* Card border color */
+  --landing-card-glass-border-alpha: 0.1;
+  /* Card border opacity */
+  --landing-hero-bg: 0 0% 100%;
+  /* Hero section background fallback */
+  --landing-hero-text: 222.2 84% 4.9%;
+  /* Hero section text color */
+  --landing-footer-bg: 210 40% 96.1%;
+  /* Footer background color */
+  --landing-footer-text: 215.4 16.3% 46.9%;
+  /* Footer text color */
+  --landing-feature-icon-primary: 346.8 77.2% 49.8%;
+  /* Feature icon 1 (Pink) */
+  --landing-feature-icon-secondary: 217.2 91.2% 59.8%;
+  /* Feature icon 2 (Blue) */
+  --landing-feature-icon-tertiary: 262.1 83.3% 57.8%;
+  /* Feature icon 3 (Purple) */
 
   /* --- Donation --- */
   --donation-title-color: var(--foreground);
@@ -362,6 +413,39 @@
   /* Selected type icon */
 }
 
+/* --- Background Blob Animations --- */
+@keyframes blob-float-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(2vw, -2vh) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-2vw, 2vh) scale(0.9);
+  }
+}
+
+@keyframes blob-float-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(-2vw, 2vh) scale(1.2);
+  }
+
+  66% {
+    transform: translate(2vw, -2vh) scale(0.9);
+  }
+}
+
 @theme {
   /* --- Tailwind 4 Color Mappings --- */
   --color-primary: var(--primary);
@@ -386,6 +470,14 @@
   /* Maps input border color */
   --color-ring: var(--ring);
   /* Maps focus ring color */
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
 
   /* --- Feature Color Mappings --- */
   --color-glass-bg: var(--glass-bg);

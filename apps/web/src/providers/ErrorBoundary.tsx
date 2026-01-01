@@ -1,11 +1,11 @@
-import { Component } from 'react';
-import type { ErrorInfo, ReactNode } from 'react';
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
-import { withTranslation } from 'react-i18next';
-import type { WithTranslation } from 'react-i18next';
+import { RefreshCcw, Home } from 'lucide-react';
+import { withTranslation, type WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation {
     children?: ReactNode;
+    fallback?: ReactNode;
 }
 
 interface State {
@@ -27,29 +27,51 @@ class ErrorBoundaryBase extends Component<Props, State> {
         console.error('Uncaught error:', error, errorInfo);
     }
 
+    private handleReset = () => {
+        this.setState({ hasError: false, error: null });
+        window.location.reload();
+    };
+
     public render() {
-        const { t } = this.props;
+        const { t, fallback } = this.props;
 
         if (this.state.hasError) {
+            if (fallback) {
+                return fallback;
+            }
+
             return (
-                <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-                    <div className="text-center space-y-4 max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
-                        <h1 className="text-4xl font-bold text-gray-900">{t('error.title')}</h1>
-                        <h2 className="text-xl font-semibold text-gray-700">{t('error.subtitle')}</h2>
-                        <p className="text-gray-500">
-                            {t('error.message')}
-                        </p>
+                <div className="min-h-screen flex items-center justify-center p-4 bg-muted/30">
+                    <div className="max-w-md w-full bg-background border shadow-xl rounded-xl p-8 text-center space-y-6">
+                        <div className="bg-destructive/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+                            <RefreshCcw className="h-8 w-8 text-destructive animate-spin-slow" />
+                        </div>
+
+                        <div className="space-y-2">
+                            <h2 className="text-2xl font-bold tracking-tight">
+                                {t('error.title', 'Something went wrong')}
+                            </h2>
+                            <p className="text-muted-foreground text-sm">
+                                {t('error.message', "We encountered an unexpected error. Don't worry, your data is safe.")}
+                            </p>
+                        </div>
+
                         {import.meta.env.DEV && this.state.error && (
-                            <div className="text-left bg-red-50 p-4 rounded text-xs text-red-600 overflow-auto max-h-48">
-                                {this.state.error.toString()}
+                            <div className="p-4 bg-muted rounded text-xs text-left overflow-auto max-h-32 font-mono">
+                                {this.state.error.message}
                             </div>
                         )}
-                        <Button
-                            onClick={() => window.location.reload()}
-                            className="w-full"
-                        >
-                            {t('error.reload')}
-                        </Button>
+
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <Button variant="default" className="flex-1" onClick={this.handleReset}>
+                                <RefreshCcw className="mr-2 h-4 w-4" />
+                                {t('error.reload', 'Try Again')}
+                            </Button>
+                            <Button variant="outline" className="flex-1" onClick={() => window.location.href = '/'}>
+                                <Home className="mr-2 h-4 w-4" />
+                                {t('common.home', 'Go Home')}
+                            </Button>
+                        </div>
                     </div>
                 </div>
             );

@@ -11,7 +11,7 @@ const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter } as any);
 
-async function main() {
+const main = async () => {
     console.log('Seeding database...');
 
     const event = await prisma.event.upsert({
@@ -54,7 +54,20 @@ async function main() {
             },
         ],
     });
-}
+
+    // Add a test staff member for the Collector App
+    await (prisma as any).staffMember.upsert({
+        where: { code: '1234' },
+        update: {},
+        create: {
+            code: '1234',
+            name: 'Test Volunteer',
+            events: { connect: { id: event.id } },
+        },
+    });
+
+    console.log('Seeding completed! Use PIN 1234 for Staff login.');
+};
 
 main()
     .catch((e) => {

@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { api } from '@/lib/api';
@@ -12,20 +13,22 @@ import { Loader2, Save } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEvent } from '@/features/events/context/EventContext';
 
-const eventSchema = z.object({
-    name: z.string().min(1, 'Name is required'),
-    goalAmount: z.coerce.number().min(1, 'Goal must be at least 1'),
-    slug: z.string().min(1, 'Slug is required'),
-    primaryColor: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, 'Invalid hex color'),
-    logoUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
+const getEventSchema = (t: any) => z.object({
+    name: z.string().min(1, t('validation.required')),
+    goalAmount: z.coerce.number().min(1, t('validation.min_value', { count: 1 })),
+    slug: z.string().min(1, t('validation.required')),
+    primaryColor: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, t('validation.invalid_hex')),
+    logoUrl: z.string().url(t('validation.invalid_url')).optional().or(z.literal('')),
 });
 
-type EventFormValues = z.infer<typeof eventSchema>;
+type EventFormValues = z.infer<ReturnType<typeof getEventSchema>>;
 
 export const EventSettingsPage = () => {
     const queryClient = useQueryClient();
     const { event, isLoading } = useEvent();
+    const { t } = useTranslation('common');
 
+    const eventSchema = getEventSchema(t);
     const form = useForm<EventFormValues>({
         resolver: zodResolver(eventSchema),
         defaultValues: {

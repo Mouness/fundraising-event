@@ -19,16 +19,27 @@ export class AuthService {
     return this.authProvider.verify({ email, password: pass });
   }
 
-  async validateStaff(code: string): Promise<any> {
-    const staff = await this.prisma.staffCode.findUnique({
+  async validateStaff(code: string, eventId: string): Promise<any> {
+    const staff = await this.prisma.staffMember.findUnique({
       where: { code },
+      include: {
+        events: {
+          where: {
+            OR: [
+              { id: eventId },
+              { slug: eventId }
+            ]
+          }
+        }
+      }
     });
-    if (staff) {
+
+    if (staff && staff.events.length > 0) {
       return {
         id: staff.id,
         name: staff.name,
         role: 'STAFF',
-        eventId: staff.eventId,
+        eventId: staff.events[0].id,
       };
     }
     return null;

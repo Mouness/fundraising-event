@@ -10,7 +10,11 @@ export interface DonationEvent {
     isAnonymous: boolean;
 }
 
-export function useLiveSocket(slug: string) {
+/**
+ * Manages the WebSocket connection for real-time donation events on the live screen.
+ * Listens for 'donation.created' events and maintains connection status.
+ */
+export const useLiveSocket = (slug: string) => {
     const [isConnected, setIsConnected] = useState(false);
     const [lastEvent, setLastEvent] = useState<DonationEvent | null>(null);
 
@@ -42,4 +46,4 @@ export function useLiveSocket(slug: string) {
     }, [slug]);
 
     return { isConnected, lastEvent };
-}
+};

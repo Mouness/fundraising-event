@@ -29,7 +29,10 @@ export class AuthController {
 
   @Post('staff/login')
   async staffLogin(@Body() staffLoginDto: StaffLoginDto) {
-    const staff = await this.authService.validateStaff(staffLoginDto.code);
+    const staff = await this.authService.validateStaff(
+      staffLoginDto.code,
+      staffLoginDto.eventId,
+    );
     if (!staff) {
       throw new UnauthorizedException('Invalid staff code');
     }

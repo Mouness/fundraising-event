@@ -11,8 +11,12 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
+    const staffToken = localStorage.getItem('staff_token');
+
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
+    } else if (staffToken) {
+        config.headers.Authorization = `Bearer ${staffToken}`;
     }
     return config;
 });
@@ -21,11 +25,25 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            // Clear token and redirect if unauthorized (except for login pages)
-            // We'll handle redirection in the Router or via event/callback to avoid circular dependencies
-            if (!window.location.pathname.includes('/login')) {
-                localStorage.removeItem('token');
-                // window.location.href = '/login'; // Optional: Auto-redirect
+            const isStaffPath = window.location.pathname.includes('/staff');
+
+            if (isStaffPath) {
+                if (!window.location.pathname.includes('/login')) {
+                    localStorage.removeItem('staff_token');
+                    localStorage.removeItem('staff_user');
+                    // Find slug in path - assuming /:slug/staff/...
+                    const match = window.location.pathname.match(/\/([^\/]+)\/staff/);
+                    if (match) {
+                        window.location.href = `/${match[1]}/staff/login`;
+                    } else {
+                        window.location.href = '/';
+                    }
+                }
+            } else {
+                if (!window.location.pathname.includes('/login')) {
+                    localStorage.removeItem('token');
+                    window.location.href = '/login';
+                }
             }
         }
         return Promise.reject(error);

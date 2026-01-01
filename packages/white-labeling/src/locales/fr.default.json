@@ -10,8 +10,9 @@
         "email_placeholder": "admin@exemple.com"
     },
     "nav": {
-        "dashboard": "Tableau de bord",
+        "dashboard": "Tableau de Bord",
         "events": "Événements",
+        "staff": "Équipe",
         "settings": "Paramètres",
         "logout": "Déconnexion"
     },
@@ -27,7 +28,72 @@
             "active": "ACTIF",
             "draft": "BROUILLON",
             "closed": "FERMÉ"
-        }
+        },
+        "total_raised": "Total Collecté",
+        "event_date": "Date de l'événement",
+        "dashboard": {
+            "title": "Tableau de Bord",
+            "overview": "Aperçu du tableau de bord",
+            "collector_app": "App Collecteur",
+            "launch_live": "Lancer le Live",
+            "latest_transactions_for": "Dernières transactions pour {{name}}",
+            "progress_of_goal": "{{progress}}% de l'objectif",
+            "unique_contributors": "Contributeurs uniques",
+            "target_amount": "Montant cible",
+            "manage_donations": "Gérez et suivez les dons de l'événement"
+        },
+        "donations": "Donations",
+        "settings": "Paramètres",
+        "donations_list": "Toutes les Donations",
+        "showing_donations": "Affichage de {{count}} sur {{total}} donations",
+        "search_placeholder": "Cherche par nom ou email...",
+        "filter_status": "Statut",
+        "back_to_events": "Retour aux événements",
+        "event_console": "Console Événement",
+        "export": "Exporter CSV",
+        "export_pdf": "Exporter PDF (ZIP)",
+        "download_receipt": "Télécharger le reçu",
+        "team": "Affectation"
+    },
+    "admin_team": {
+        "title_assign": "Affectation des Bénévoles",
+        "subtitle_assign": "Sélectionnez les membres de l'équipe pour cet événement",
+        "assign_member": "Ajouter à l'événement",
+        "assign_member_desc": "Choisissez un bénévole dans la base globale.",
+        "pool_title": "Base des bénévoles",
+        "pool_desc": "Cliquez pour ajouter à l'événement",
+        "assigned_title_short": "Équipe Affectée",
+        "assigned_empty": "L'équipe est vide",
+        "pool_empty": "Aucun bénévole disponible",
+        "assigned_title": "Bénévoles Affectés",
+        "assigned_desc": "Ces bénévoles sont autorisés à collecter des dons pour cet événement spécifique.",
+        "add_member": "Ajouter à la base",
+        "add_member_desc": "Ajouter un nouveau bénévole à la base globale.",
+        "member_name": "Nom du membre",
+        "pin_code": "Code PIN",
+        "pin_placeholder": "Ex: 1234",
+        "unassign": "Retirer de l'événement",
+        "confirm_unassign": "Êtes-vous sûr de vouloir retirer ce membre de l'événement ? (Il restera dans la base globale)",
+        "success_created": "Membre ajouté à la base.",
+        "success_assigned": "Membre affecté à l'événement.",
+        "success_revoked": "Membre retiré de l'événement.",
+        "error_creation": "Échec de l'ajout à la base.",
+        "error_assignment": "Échec de l'affectation.",
+        "confirm_delete_permanent": "ATTENTION : Cela supprimera définitivement le bénévole du système et de tous ses événements.",
+        "manage_title": "Gestion du Personnel",
+        "manage_subtitle": "Gérez la base globale de bénévoles et leurs codes PIN.",
+        "edit_member": "Modifier le Membre",
+        "edit_member_desc": "Mettre à jour les détails du bénévole.",
+        "create_member_desc": "Créer un nouveau membre du personnel global.",
+        "member_placeholder": "Ex: Jean Dupont",
+        "save_changes": "Enregistrer les modifications",
+        "pool_description": "Tous les bénévoles actuellement enregistrés dans le système.",
+        "table_member": "Membre",
+        "table_pin": "Code PIN",
+        "table_assignments": "Affectations",
+        "loading_staff": "Chargement du personnel...",
+        "no_staff_found": "Aucun membre du personnel trouvé.",
+        "events_count": "{{count}} événements"
     },
     "dashboard": {
         "title": "Tableau de bord",
@@ -54,12 +120,13 @@
         "waiting": "En attente de dons...",
         "scan_to_donate": "Scannez pour donner",
         "total_raised": "Total récolté",
-        "goal": "Objectif"
+        "goal": "Objectif",
+        "give_at": "Donnez sur <1>{{url}}</1>"
     },
     "donation": {
         "title": "Faire un don",
         "subtitle": "Soutenez notre cause",
-        "amount": "Choisir le montant",
+        "select_amount": "Choisir le montant",
         "custom_amount": "Montant personnalisé",
         "contact_info": "Coordonnées",
         "payment": "Détails du paiement",
@@ -75,10 +142,24 @@
         "success_detail": "Votre don de {{amount}} a bien été reçu.",
         "make_another": "Faire un autre don",
         "error": "Une erreur est survenue. Veuillez réessayer.",
-        "pay_now": "Payer maintenant"
+        "error_invalid_event": "Configuration d'événement invalide. Veuillez retourner à l'accueil de l'événement.",
+        "pay_now": "Payer maintenant",
+        "date": "Date",
+        "donor": "Donateur",
+        "amount": "Montant",
+        "status": "Statut"
     },
     "common": {
-        "back": "Retour"
+        "back": "Retour",
+        "actions": "Actions",
+        "loading": "Chargement des données...",
+        "no_results": "Aucun résultat trouvé.",
+        "all": "Tous"
+    },
+    "status": {
+        "completed": "Complété",
+        "pending": "En attente",
+        "failed": "Échoué"
     },
     "admin": {
         "header": "Administration"
@@ -109,6 +190,37 @@
             "check": "Chèque",
             "pledge": "Promesse",
             "other": "Autre"
+        },
+        "login": {
+            "title": "Accès Staff",
+            "subtitle": "Entrez votre code PIN pour commencer la collecte",
+            "pin_label": "Code PIN",
+            "loading": "Connexion...",
+            "submit": "Se connecter"
+        }
+    },
+    "root_landing": {
+        "hero": {
+            "title": "Plateforme d'Impact",
+            "subtitle": "Découvrez et soutenez nos campagnes de collecte de fonds.",
+            "badge": "Plateforme d'Impact",
+            "explore": "Explorer les événements"
+        },
+        "events": {
+            "title": "Campagnes Actives",
+            "subtitle": "Rejoignez la cause et faites la différence.",
+            "showing_count": "Affichage de {{count}} événements"
+        },
+        "event_card": {
+            "raised": "Récolté",
+            "view": "Voir la campagne",
+            "upcoming": "À venir",
+            "active": "Actif",
+            "goal_of": "sur {{amount}} d'objectif"
+        },
+        "empty": "Aucune campagne active trouvée. Revenez bientôt !",
+        "footer": {
+            "rights": "Tous droits réservés."
         }
     },
     "thankyou": {
@@ -119,10 +231,49 @@
             "share_label": "Partager votre soutien"
         }
     },
+    "landing": {
+        "hero": {
+            "welcome": "Bienvenue à",
+            "description": "Rejoignez-nous pour faire la différence. Votre contribution nous aide à atteindre notre objectif de {{goal}}."
+        },
+        "cta": {
+            "donate": "Faire un don",
+            "live": "Voir le direct"
+        },
+        "features": {
+            "impact": {
+                "title": "Impact",
+                "description": "Chaque don va directement au soutien de notre cause."
+            },
+            "community": {
+                "title": "Communauté",
+                "description": "Rejoignez des centaines d'autres donateurs pour cet événement."
+            },
+            "interactive": {
+                "title": "Interactif",
+                "description": "Voyez votre nom apparaître instantanément sur grand écran."
+            }
+        },
+        "footer": {
+            "website": "Site Web",
+            "support": "Support",
+            "rights": "Tous droits réservés.",
+            "staff": "Accès Staff"
+        }
+    },
     "error": {
         "title": "Oups !",
         "subtitle": "Quelque chose s'est mal passé",
         "message": "Nous nous excusons pour le désagrément. L'application a rencontré une erreur inattendue.",
         "reload": "Recharger l'application"
+    },
+    "validation": {
+        "required": "Ce champ est requis",
+        "min_chars": "Au moins {{count}} caractères requis",
+        "max_chars": "Au plus {{count}} caractères autorisés",
+        "invalid_email": "Adresse email invalide",
+        "invalid_url": "URL invalide",
+        "invalid_hex": "Format de couleur invalide (#HEX)",
+        "min_value": "Doit être au moins {{count}}"
     }
 }

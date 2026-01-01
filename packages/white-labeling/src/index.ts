@@ -1,7 +1,7 @@
 // Types
 export type { EventConfig } from './types';
 
-export { initWhiteLabeling } from './store';
+export { initWhiteLabeling, WhiteLabelStore } from './store';
 
 // Loaders
 export { loadAssets } from './assets';

@@ -31,7 +31,7 @@ const AppConfigContext = createContext<AppConfigContextType>({
     error: null
 });
 
-export const AppConfigProvider = ({ children }: PropsWithChildren) => {
+export const AppConfigProvider = ({ children, slug }: PropsWithChildren<{ slug?: string }>) => {
     const [config, setConfig] = useState<EventConfig>(INITIAL_CONFIG);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -40,7 +40,7 @@ export const AppConfigProvider = ({ children }: PropsWithChildren) => {
         const init = async () => {
             try {
                 // 1. Initialize DB Store (Async fetch from API)
-                await initWhiteLabeling(API_URL);
+                await initWhiteLabeling(API_URL, slug);
 
                 // 2. Load Domain Specific Configs (Sync read from store)
                 const baseConfig = loadConfigs();
@@ -69,7 +69,7 @@ export const AppConfigProvider = ({ children }: PropsWithChildren) => {
         };
 
         init();
-    }, []);
+    }, [slug]);
 
     if (isLoading) {
         return (

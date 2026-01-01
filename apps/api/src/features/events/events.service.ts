@@ -95,4 +95,30 @@ export class EventsService {
   async remove(id: string) {
     return this.prisma.event.delete({ where: { id }, select: this.defaultSelect });
   }
+
+  async findStaff(eventId: string) {
+    const event = await this.prisma.event.findUnique({
+      where: { id: eventId },
+      include: { staffMembers: { orderBy: { name: 'asc' } } },
+    });
+    return event?.staffMembers || [];
+  }
+
+  async assignStaff(eventId: string, staffId: string) {
+    return this.prisma.event.update({
+      where: { id: eventId },
+      data: {
+        staffMembers: { connect: { id: staffId } },
+      },
+    });
+  }
+
+  async unassignStaff(eventId: string, memberId: string) {
+    return this.prisma.event.update({
+      where: { id: eventId },
+      data: {
+        staffMembers: { disconnect: { id: memberId } },
+      },
+    });
+  }
 }

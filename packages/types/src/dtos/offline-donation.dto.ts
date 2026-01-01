@@ -24,4 +24,8 @@ export class OfflineDonationDto {
     @IsDateString()
     @IsOptional()
     declare collectedAt?: string;
+
+    @IsString()
+    @IsOptional()
+    declare eventId?: string;
 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import QRCode from 'react-qr-code';
 import { useAppConfig } from '@/providers/AppConfigProvider';
 import { DonationFeed, type Donation } from '@/features/live/components/DonationFeed';
@@ -12,6 +13,9 @@ import { fireConfetti } from '@/lib/confetti';
 export const LivePage = () => {
     const { t } = useTranslation('common');
     const { config } = useAppConfig();
+    const { slug } = useParams<{ slug: string }>();
+    const activeSlug = slug || config.slug || 'default';
+
     const [donations, setDonations] = useState<Donation[]>([]);
     const [totalRaisedCents, setTotalRaisedCents] = useState(0);
     const [prevTotal, setPrevTotal] = useState(0);
@@ -89,7 +93,11 @@ export const LivePage = () => {
                                 className="text-lg mt-1"
                                 style={{ color: 'var(--live-subtitle-text)' }}
                             >
-                                Give at <span className="font-bold" style={{ color: 'var(--live-highlight-color)' }}>localhost:5173/donate</span>
+                                <Trans
+                                    i18nKey="live.give_at"
+                                    values={{ url: `${window.location.host}/${activeSlug}/donate` }}
+                                    components={{ 1: <span className="font-bold" style={{ color: 'var(--live-highlight-color)' }} /> }}
+                                />
                             </motion.p>
                         </div>
                     </div>
@@ -102,7 +110,7 @@ export const LivePage = () => {
                         style={{ backgroundColor: 'var(--live-qr-bg)', boxShadow: '0 0 30px var(--live-qr-shadow)' }}
                     >
                         <QRCode
-                            value={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/donate`}
+                            value={`${window.location.protocol}//${window.location.host}/${activeSlug}/donate`}
                             size={120}
                             bgColor="#ffffff"
                             fgColor="#000000"

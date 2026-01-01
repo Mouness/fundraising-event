@@ -20,15 +20,16 @@ model Event {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   donations     Donation[]
-  staffCodes    StaffCode[]
+  staffMembers  StaffMember[]
 }
 
-model StaffCode {
-  id        String @id @default(uuid())
-  code      String @unique // The pin code
+model StaffMember {
+  id        String   @id @default(uuid())
+  code      String   @unique // The pin code (global)
   name      String // Name of the volunteer
-  eventId   String
-  event     Event  @relation(fields: [eventId], references: [id])
+  events    Event[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Donation {

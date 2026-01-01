@@ -2,6 +2,9 @@ export interface EventConfig {
     /** Unique identifier for the event */
     id: string;
 
+    /** URL slug for the event */
+    slug?: string;
+
     /** Visual theme configuration */
     /** Visual theme configuration */
     theme?: {
@@ -19,6 +22,12 @@ export interface EventConfig {
         totalLabel: string;
         /** Fundraising goal amount in dollars */
         goalAmount: number;
+        /** Landing page configuration (features, footer links) */
+        landing?: {
+            impact?: { url?: string; enabled?: boolean };
+            community?: { url?: string; enabled?: boolean };
+            interactive?: { url?: string; enabled?: boolean };
+        };
     };
 
     /** Donation flow configuration */

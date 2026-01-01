@@ -1,0 +1,170 @@
+import { Plus, Trash2, Loader2, Users } from 'lucide-react';
+
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useEvent } from '@/features/events/context/EventContext';
+import { api } from '@/lib/api';
+import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
+
+
+export const EventTeamPage = () => {
+    const { t } = useTranslation('common');
+    const { event } = useEvent();
+    const queryClient = useQueryClient();
+
+    const { data: staff = [], isLoading } = useQuery({
+        queryKey: ['event-staff', event?.id],
+        queryFn: async () => {
+            if (!event?.id) return [];
+            const res = await api.get(`/events/${event.id}/staff`);
+            return res.data;
+        },
+        enabled: !!event?.id,
+    });
+
+    const { data: globalStaff = [] } = useQuery({
+        queryKey: ['global-staff'],
+        queryFn: async () => {
+            const res = await api.get('/staff');
+            return res.data;
+        },
+    });
+
+    const assignMutation = useMutation({
+        mutationFn: async (staffId: string) => {
+            if (!event?.id) throw new Error('No event ID');
+            await api.post(`/events/${event.id}/staff/${staffId}`);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['event-staff', event?.id] });
+        },
+        onError: (err: any) => {
+            console.error('Failed to assign staff', err);
+            alert(t('admin_team.error_assignment', 'Failed to assign staff member.'));
+        }
+    });
+
+    const unassignMutation = useMutation({
+        mutationFn: async (staffId: string) => {
+            if (!event?.id) throw new Error('No event ID');
+            const res = await api.delete(`/events/${event.id}/staff/${staffId}`);
+            return res.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['event-staff', event?.id] });
+        },
+        onError: (err: any) => {
+            console.error('Failed to unassign staff', err);
+            const msg = err.response?.data?.message || err.message || 'Unknown error';
+            alert(`${t('admin_team.error_revocation', 'Failed to remove member.')} (${msg})`);
+        }
+    });
+
+
+    const handleUnassign = (id: string) => {
+        unassignMutation.mutate(id);
+    };
+
+    if (!event) return null;
+
+    const availableStaff = globalStaff.filter((gs: any) => !staff.some((s: any) => s.id === gs.id));
+
+    return (
+        <div className="space-y-6">
+            <div>
+                <h2 className="text-3xl font-bold tracking-tight" style={{ color: 'var(--admin-heading-color)' }}>
+                    {t('admin_team.title_assign', 'Affectation')}
+                </h2>
+                <p className="text-muted-foreground mt-1">
+                    {t('admin_team.subtitle_assign', 'Configure the team for this event')}
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left Side: Available Pool */}
+                <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }} className="flex flex-col">
+                    <CardHeader>
+                        <CardTitle className="text-lg flex items-center gap-2">
+                            <Plus className="h-4 w-4 text-primary" />
+                            {t('admin_team.pool_title', 'Volunteer Pool')}
+                        </CardTitle>
+                        <CardDescription>{t('admin_team.pool_desc', 'Click to add to event')}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-1">
+                        <div className="space-y-1 max-h-[500px] overflow-auto pr-2">
+                            {availableStaff.length === 0 ? (
+                                <p className="text-sm text-muted-foreground text-center py-8 italic">
+                                    {t('admin_team.pool_empty', 'No available volunteers')}
+                                </p>
+                            ) : (
+                                availableStaff.map((member: any) => (
+                                    <div
+                                        key={member.id}
+                                        className="flex items-center justify-between p-3 rounded-lg border bg-muted/30 hover:bg-muted transition-colors cursor-pointer group"
+                                        onClick={() => assignMutation.mutate(member.id)}
+                                    >
+                                        <span className="font-medium">{member.name}</span>
+                                        <Plus className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Right Side: Assigned Team */}
+                <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }} className="flex flex-col">
+                    <CardHeader>
+                        <CardTitle className="text-lg flex items-center gap-2">
+                            <Users className="h-4 w-4 text-primary" />
+                            {t('admin_team.assigned_title_short', 'Assigned Team')}
+                        </CardTitle>
+                        <CardDescription>{t('admin_team.assigned_desc', 'Authorized to collect donations for this event.')}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-1">
+                        <div className="space-y-1 max-h-[500px] overflow-auto pr-2">
+                            {isLoading ? (
+                                <div className="flex items-center justify-center py-8">
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                </div>
+                            ) : staff.length === 0 ? (
+                                <p className="text-sm text-muted-foreground text-center py-8 italic">
+                                    {t('admin_team.assigned_empty', 'No one assigned yet')}
+                                </p>
+                            ) : (
+                                staff.map((member: any) => (
+                                    <div
+                                        key={member.id}
+                                        className="flex items-center justify-between p-3 rounded-lg border bg-primary/5 hover:border-destructive group transition-all"
+                                    >
+                                        <span className="font-medium">{member.name}</span>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleUnassign(member.id);
+                                            }}
+                                            disabled={unassignMutation.isPending}
+                                            title={t('admin_team.unassign', 'Remove')}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </div>
+    );
+};

@@ -7,6 +7,7 @@ const defaultAssets = {
     favicon: '',
     backgroundDonor: '',
     backgroundLive: '',
+    backgroundLanding: '',
 };
 
 export type AssetRegistry = typeof defaultAssets;

@@ -4,13 +4,16 @@ import PdfPrinter from 'pdfmake';
 import * as path from 'path';
 import { EventConfigService } from '../events/configuration/event-config.service';
 
+import { ConfigService } from '@nestjs/config';
+
 @Injectable()
 export class PdfService {
     private readonly logger = new Logger(PdfService.name);
     private printer: PdfPrinter;
 
     constructor(
-        private readonly eventConfigService: EventConfigService
+        private readonly eventConfigService: EventConfigService,
+        private readonly configService: ConfigService
     ) {
         // Resolve fonts ensuring correct path whether running from root or apps/api
         // But commonly pnpm -r runs in package CWD.
@@ -46,8 +49,16 @@ export class PdfService {
         }
 
         const primaryColor = config.theme?.variables?.['--primary'] || '#ec4899';
-        // const logoUrl = commConfig.logoUrl || config.theme?.assets?.logo; // TODO: Implement image buffer loading
 
+        let logoImage: string | Buffer | null = null;
+        try {
+            const logoPath = config.theme?.assets?.logo;
+            if (logoPath) {
+                logoImage = await this.fetchImage(logoPath);
+            }
+        } catch (error) {
+            this.logger.warn(`Failed to load logo for PDF: ${error.message}`);
+        }
 
         const formattedDate = new Date(data.date).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -57,6 +68,12 @@ export class PdfService {
 
         const docDefinition = {
             content: [
+                logoImage ? {
+                    image: logoImage,
+                    width: 100,
+                    alignment: 'center',
+                    margin: [0, 0, 0, 10]
+                } : {},
                 { text: config.content.title.toUpperCase(), style: 'header', alignment: 'center', margin: [0, 0, 0, 20] },
 
                 { text: 'OFFICIAL DONATION RECEIPT', style: 'subheader', alignment: 'center', margin: [0, 0, 0, 40] },
@@ -70,7 +87,7 @@ export class PdfService {
                             [
                                 {
                                     text: [
-                                        { text: commConfig.legalName || 'Organization Name', bold: true },
+                                        { text: commConfig.legalName || 'Organization Details', bold: true },
                                         '\n',
                                         commConfig.address || 'Organization Address',
                                         '\n',
@@ -158,5 +175,25 @@ export class PdfService {
                 reject(err);
             }
         });
+    }
+
+    private async fetchImage(url: string): Promise<Buffer> {
+        // Resolve absolute URL if relative
+        if (!url.startsWith('http')) {
+            const frontendUrl = this.configService.get('FRONTEND_URL') || 'http://localhost:5173';
+            url = `${frontendUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+        }
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch image: ${response.statusText}`);
+            }
+            const arrayBuffer = await response.arrayBuffer();
+            return Buffer.from(arrayBuffer);
+        } catch (error) {
+            this.logger.error(`Error loading image from ${url}: ${error.message}`);
+            throw error;
+        }
     }
 }

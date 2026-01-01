@@ -1,6 +1,7 @@
 import { useAppConfig } from '@/providers/AppConfigProvider';
 import { useTranslation } from 'react-i18next';
-import { Globe } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface AppHeaderProps {
     title?: string;
@@ -9,27 +10,7 @@ interface AppHeaderProps {
     rightContent?: React.ReactNode;
 }
 
-const LanguageSwitcher = () => {
-    const { i18n } = useTranslation();
 
-    return (
-        <div className="relative flex items-center border rounded-md hover:bg-black/5 transition-colors">
-            <Globe
-                className="absolute left-2.5 h-4 w-4 opacity-70 pointer-events-none"
-                style={{ color: 'var(--header-text)' }}
-            />
-            <select
-                value={i18n.language}
-                onChange={(e) => i18n.changeLanguage(e.target.value)}
-                className="h-9 w-[110px] appearance-none bg-transparent pl-9 pr-2 text-sm font-medium focus:outline-none cursor-pointer"
-                style={{ color: 'var(--header-text)' }}
-            >
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-            </select>
-        </div>
-    );
-};
 
 export const AppHeader = ({
     title,
@@ -39,6 +20,8 @@ export const AppHeader = ({
 }: AppHeaderProps) => {
     const { config } = useAppConfig();
     const { t } = useTranslation('common');
+    const params = useParams();
+    const slug = params?.slug;
 
     return (
         <header
@@ -49,26 +32,40 @@ export const AppHeader = ({
                 borderColor: 'var(--header-border)'
             }}
         >
-            <div className="flex items-center gap-3">
-                {config.theme?.assets?.logo && (
-                    <img
-                        src={config.theme.assets.logo}
-                        alt="Logo"
-                        className="h-8 w-auto object-contain"
-                    />
-                )}
-                <div>
-                    <div
-                        className="font-bold text-lg tracking-tight"
-                        style={{ color: 'var(--header-text)' }}
-                    >
-                        {config.content?.title || t('app_header.title')}
-                        {title && (
-                            <span style={{ color: 'var(--header-accent)' }}> · {title}</span>
+            {(() => {
+                const headerContent = (
+                    <>
+                        {config.theme?.assets?.logo && (
+                            <img
+                                src={config.theme.assets.logo}
+                                alt="Logo"
+                                className="h-8 w-auto object-contain"
+                            />
                         )}
+                        <div>
+                            <div
+                                className="font-bold text-lg tracking-tight"
+                                style={{ color: 'var(--header-text)' }}
+                            >
+                                {config.content?.title || t('app_header.title')}
+                                {title && (
+                                    <span style={{ color: 'var(--header-accent)' }}> · {title}</span>
+                                )}
+                            </div>
+                        </div>
+                    </>
+                );
+
+                return slug ? (
+                    <Link to={`/${slug}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        {headerContent}
+                    </Link>
+                ) : (
+                    <div className="flex items-center gap-3">
+                        {headerContent}
                     </div>
-                </div>
-            </div>
+                );
+            })()}
 
             <div className="flex items-center gap-2">
                 <LanguageSwitcher />

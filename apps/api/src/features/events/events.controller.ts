@@ -43,4 +43,25 @@ export class EventsController {
   remove(@Param('id') id: string) {
     return this.eventsService.remove(id);
   }
+
+  @Get(':id/staff')
+  @UseGuards(AuthGuard('jwt'))
+  findStaff(@Param('id') id: string) {
+    return this.eventsService.findStaff(id);
+  }
+
+  @Post(':id/staff/:staffId')
+  @UseGuards(AuthGuard('jwt'))
+  assignStaff(
+    @Param('id') id: string,
+    @Param('staffId') staffId: string,
+  ) {
+    return this.eventsService.assignStaff(id, staffId);
+  }
+
+  @Delete(':id/staff/:staffId')
+  @UseGuards(AuthGuard('jwt'))
+  unassignStaff(@Param('id') id: string, @Param('staffId') staffId: string) {
+    return this.eventsService.unassignStaff(id, staffId);
+  }
 }

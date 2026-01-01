@@ -1,6 +1,9 @@
 import { Suspense, lazy, type ComponentType } from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Outlet, useParams } from 'react-router-dom';
 import { PageLoader } from '@/components/ui/PageLoader';
+import { AppConfigProvider } from '@/providers/AppConfigProvider';
+import { EventProvider } from '@/features/events/context/EventContext';
+import { StaffGuard } from '../features/staff/components/StaffGuard';
 
 // Helper for lazy loading
 const Loadable = (Component: ComponentType, fallback = <PageLoader />) => (
@@ -12,6 +15,7 @@ const Loadable = (Component: ComponentType, fallback = <PageLoader />) => (
 // Lazy load pages
 const AdminLayout = lazy(() => import('../features/admin/layouts/AdminLayout').then(module => ({ default: module.AdminLayout })));
 const DashboardPage = lazy(() => import('../features/admin/pages/DashboardPage').then(module => ({ default: module.DashboardPage })));
+const DonationsPage = lazy(() => import('../features/events/pages/DonationsPage').then(module => ({ default: module.DonationsPage })));
 const EventSettingsPage = lazy(() => import('../features/events/pages/EventSettingsPage').then(module => ({ default: module.EventSettingsPage })));
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(module => ({ default: module.LoginPage })));
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
@@ -19,47 +23,113 @@ const DonationPage = lazy(() => import('../features/donation/pages/DonationPage'
 const ThankYouPage = lazy(() => import('../features/donation/pages/ThankYouPage').then(module => ({ default: module.ThankYouPage })));
 const StaffLayout = lazy(() => import('../features/staff/layouts/StaffLayout').then(module => ({ default: module.StaffLayout })));
 const CollectorPage = lazy(() => import('../features/staff/pages/CollectorPage').then(module => ({ default: module.CollectorPage })));
+const StaffLoginPage = lazy(() => import('../features/staff/pages/StaffLoginPage').then(module => ({ default: module.StaffLoginPage })));
 const EventListPage = lazy(() => import('../features/events/pages/EventListPage').then(module => ({ default: module.EventListPage })));
 const EventLayout = lazy(() => import('../features/events/layouts/EventLayout').then(module => ({ default: module.EventLayout })));
 const EventDashboardPage = lazy(() => import('../features/events/pages/EventDashboardPage').then(module => ({ default: module.EventDashboardPage })));
+const LandingPage = lazy(() => import('../features/public/pages/LandingPage').then(module => ({ default: module.LandingPage })));
+const RootLandingPage = lazy(() => import('../features/public/pages/RootLandingPage').then(module => ({ default: module.RootLandingPage })));
+const EventTeamPage = lazy(() => import('../features/events/pages/EventTeamPage').then(module => ({ default: module.EventTeamPage })));
+const StaffManagementPage = lazy(() => import('../features/admin/pages/StaffManagementPage').then(module => ({ default: module.StaffManagementPage })));
+
+// Wrapper to provide event context based on URL slug
+const EventContextWrapper = () => {
+    const { slug } = useParams<{ slug: string }>();
+    return (
+        <AppConfigProvider slug={slug}>
+            <EventProvider>
+                <Outlet />
+            </EventProvider>
+        </AppConfigProvider>
+    );
+};
 
 export const router = createBrowserRouter([
+    // Generic Root Landing Page (Platform Portal)
     {
         path: '/',
-        element: <Navigate to="/donate" replace />,
+        element: (
+            <AppConfigProvider>
+                {Loadable(RootLandingPage)}
+            </AppConfigProvider>
+        )
     },
+    // Event specific routes under /:slug
     {
-        path: '/donate',
-        element: Loadable(DonationPage),
+        path: '/:slug',
+        element: <EventContextWrapper />,
+        children: [
+            {
+                index: true,
+                element: Loadable(LandingPage),
+            },
+            {
+                path: 'donate',
+                element: Loadable(DonationPage),
+            },
+            {
+                path: 'thank-you',
+                element: Loadable(ThankYouPage),
+            },
+            {
+                path: 'live',
+                element: Loadable(LivePage),
+            },
+            {
+                path: 'staff',
+                element: Loadable(StaffLayout),
+                children: [
+                    {
+                        path: 'login',
+                        element: Loadable(StaffLoginPage),
+                    },
+                    {
+                        element: <StaffGuard />,
+                        children: [
+                            {
+                                index: true,
+                                element: <Navigate to="collect" replace />
+                            },
+                            {
+                                path: 'collect',
+                                element: Loadable(CollectorPage),
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     },
-    {
-        path: '/thank-you',
-        element: Loadable(ThankYouPage),
-    },
-    {
-        path: '/live',
-        element: Loadable(LivePage),
-    },
-    {
-        path: '/live/:slug',
-        element: Loadable(LivePage, <div className="bg-black min-h-screen text-white p-4">Loading Live Screen...</div>),
-    },
+    // Global / Admin routes (no slug context needed or handled differently)
     {
         path: '/login',
         element: Loadable(LoginPage),
     },
     {
         path: '/admin',
-        element: Loadable(AdminLayout),
         children: [
             {
-                index: true,
-                element: <DashboardPage />,
+                element: Loadable(AdminLayout),
+                children: [
+                    {
+                        path: '',
+                        element: Loadable(DashboardPage),
+                    },
+                    {
+                        path: 'events',
+                        element: Loadable(EventListPage)
+                    },
+                    {
+                        path: 'staff',
+                        element: Loadable(StaffManagementPage)
+                    },
+                    {
+                        path: 'settings',
+                        element: <div>Global Settings (Coming Soon)</div>
+                    }
+                ]
             },
-            {
-                path: 'events',
-                element: Loadable(EventListPage)
-            },
+            // Event specific admin routes (Separate Layout)
             {
                 path: 'events/:slug',
                 element: Loadable(EventLayout),
@@ -69,24 +139,18 @@ export const router = createBrowserRouter([
                         element: Loadable(EventDashboardPage),
                     },
                     {
-                        path: 'settings',
-                        element: <EventSettingsPage />,
+                        path: 'donations',
+                        element: Loadable(DonationsPage),
                     },
                     {
-                        path: 'donations',
-                        element: <div>Donations List (Todo)</div>
+                        path: 'settings',
+                        element: Loadable(EventSettingsPage),
+                    },
+                    {
+                        path: 'team',
+                        element: Loadable(EventTeamPage),
                     }
                 ]
-            }
-        ],
-    },
-    {
-        path: '/staff',
-        element: Loadable(StaffLayout),
-        children: [
-            {
-                path: 'collect',
-                element: Loadable(CollectorPage),
             }
         ]
     },

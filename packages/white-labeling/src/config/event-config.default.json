@@ -3,7 +3,18 @@
     "content": {
         "title": "Default Fundraising Event",
         "totalLabel": "Total Raised",
-        "goalAmount": 10000
+        "goalAmount": 10000,
+        "landing": {
+            "impact": {
+                "url": "/impact"
+            },
+            "community": {
+                "url": "/community"
+            },
+            "interactive": {
+                "url": "/interactive"
+            }
+        }
     },
     "theme": {
         "assets": {},

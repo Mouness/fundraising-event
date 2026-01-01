@@ -16,6 +16,8 @@ export function loadConfigs(): EventConfig {
     }
 
     const remoteConfig: DeepPartial<EventConfig> = {
+        id: dbConfig.id,
+        slug: dbConfig.slug,
         content: {
             title: dbConfig.name,
             goalAmount: Number(dbConfig.goalAmount),

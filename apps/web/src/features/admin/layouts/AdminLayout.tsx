@@ -37,6 +37,14 @@ export const AdminLayout = () => {
                         {t('nav.events')}
                     </Link>
                     <Link
+                        to="/admin/staff"
+                        className="p-2 rounded flex items-center gap-2 transition-colors"
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--admin-sidebar-hover)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    >
+                        {t('nav.staff', 'Staff')}
+                    </Link>
+                    <Link
                         to="/admin/settings"
                         className="p-2 rounded flex items-center gap-2 transition-colors"
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--admin-sidebar-hover)'}

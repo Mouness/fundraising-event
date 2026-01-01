@@ -12,6 +12,7 @@
     "nav": {
         "dashboard": "Dashboard",
         "events": "Events",
+        "staff": "Staff",
         "settings": "Settings",
         "logout": "Logout"
     },
@@ -27,19 +28,73 @@
             "active": "ACTIVE",
             "draft": "DRAFT",
             "closed": "CLOSED"
-        }
+        },
+        "total_raised": "Total Raised",
+        "event_date": "Event Date",
+        "dashboard": {
+            "overview": "Dashboard Overview",
+            "collector_app": "Collector App",
+            "launch_live": "Launch Live",
+            "latest_transactions_for": "Latest transactions for {{name}}",
+            "progress_of_goal": "{{progress}}% of goal",
+            "unique_contributors": "Unique contributors",
+            "target_amount": "Target amount",
+            "manage_donations": "Manage and track event donations"
+        },
+        "donations": "Donations",
+        "settings": "Settings",
+        "donations_list": "All Donations",
+        "showing_donations": "Showing {{count}} of {{total}} donations",
+        "search_placeholder": "Search by name or email...",
+        "filter_status": "Status",
+        "back_to_events": "Back to Events",
+        "event_console": "Event Console",
+        "export": "Export CSV",
+        "export_pdf": "Export PDFs (ZIP)",
+        "download_receipt": "Download Receipt",
+        "team": "Assignment"
     },
-    "dashboard": {
-        "title": "Dashboard",
-        "overview": "Overview",
-        "chart_placeholder": "Chart Placeholder",
-        "recent_donations": "Recent Donations",
-        "stats": {
-            "total_revenue": "Total Revenue",
-            "active_events": "Active Events",
-            "donations": "Donations",
-            "staff_members": "Staff Members"
-        }
+    "admin_team": {
+        "title": "Global Staff Pool",
+        "subtitle": "Manage all volunteers across the platform",
+        "title_assign": "Event Team",
+        "subtitle_assign": "Assign existing volunteers to this event",
+        "assign_member": "Assign Member",
+        "assign_member_desc": "Select an existing volunteer from the pool for this event.",
+        "pool_title": "Volunteer Pool",
+        "pool_desc": "Click to add to event",
+        "assigned_title_short": "Assigned Team",
+        "assigned_empty": "No one assigned yet",
+        "pool_empty": "No available volunteers",
+        "assigned_title": "Assigned Volunteers",
+        "assigned_desc": "These volunteers are authorized to collect donations for this specific event.",
+        "add_member": "Add to Pool",
+        "add_member_desc": "Add a new volunteer to the global pool.",
+        "member_name": "Member Name",
+        "pin_code": "PIN Code",
+        "pin_placeholder": "e.g. 1234",
+        "unassign": "Remove from Event",
+        "confirm_unassign": "Are you sure you want to remove this member from the event? (They will remain in the pool)",
+        "success_created": "Member added to pool.",
+        "success_assigned": "Member assigned to event.",
+        "success_revoked": "Member removed from event.",
+        "error_creation": "Failed to add to pool.",
+        "error_assignment": "Failed to assign member.",
+        "confirm_delete_permanent": "WARNING: This will permanently delete the volunteer from the system and all assigned events.",
+        "manage_title": "Staff Management",
+        "manage_subtitle": "Manage the global pool of volunteers and their PIN codes.",
+        "edit_member": "Edit Member",
+        "edit_member_desc": "Update volunteer details.",
+        "create_member_desc": "Create a new global staff member.",
+        "member_placeholder": "e.g. John Doe",
+        "save_changes": "Save Changes",
+        "pool_description": "All volunteers currently registered in the system.",
+        "table_member": "Member",
+        "table_pin": "PIN Code",
+        "table_assignments": "Assignments",
+        "loading_staff": "Loading staff...",
+        "no_staff_found": "No staff members found.",
+        "events_count": "{{count}} events"
     },
     "live": {
         "title": "Live Screen",
@@ -54,12 +109,13 @@
         "waiting": "Waiting for donations...",
         "scan_to_donate": "Scan to Donate",
         "total_raised": "Total Raised",
-        "goal": "Goal"
+        "goal": "Goal",
+        "give_at": "Give at <1>{{url}}</1>"
     },
     "donation": {
         "title": "Make a Donation",
         "subtitle": "Support our cause",
-        "amount": "Select Amount",
+        "select_amount": "Select Amount",
         "custom_amount": "Custom Amount",
         "contact_info": "Contact Information",
         "payment": "Payment Details",
@@ -75,10 +131,24 @@
         "success_detail": "Your donation of {{amount}} has been received.",
         "make_another": "Make another donation",
         "error": "Something went wrong. Please try again.",
-        "pay_now": "Pay Now"
+        "error_invalid_event": "Invalid event configuration. Please return to the event home page.",
+        "pay_now": "Pay Now",
+        "date": "Date",
+        "donor": "Donor",
+        "amount": "Amount",
+        "status": "Status"
     },
     "common": {
-        "back": "Back"
+        "back": "Back",
+        "actions": "Actions",
+        "loading": "Loading data...",
+        "no_results": "No results found.",
+        "all": "All"
+    },
+    "status": {
+        "completed": "Completed",
+        "pending": "Pending",
+        "failed": "Failed"
     },
     "admin": {
         "header": "Fundraising Admin"
@@ -109,6 +179,13 @@
             "check": "Check",
             "pledge": "Pledge",
             "other": "Other"
+        },
+        "login": {
+            "title": "Staff Access",
+            "subtitle": "Enter your PIN to start collecting donations",
+            "pin_label": "PIN Code",
+            "loading": "Connecting...",
+            "submit": "Connect"
         }
     },
     "thankyou": {
@@ -119,10 +196,97 @@
             "share_label": "Share your support"
         }
     },
+    "root_landing": {
+        "hero": {
+            "title": "Impact Platform",
+            "subtitle": "Discover and support our fundraising campaigns.",
+            "badge": "Impact Platform",
+            "explore": "Explore Events"
+        },
+        "events": {
+            "title": "Active Campaigns",
+            "subtitle": "Join the cause and make a difference.",
+            "showing_count": "Showing {{count}} events"
+        },
+        "event_card": {
+            "raised": "Raised",
+            "view": "View Campaign",
+            "upcoming": "Upcoming",
+            "active": "Active",
+            "goal_of": "of {{amount}} goal"
+        },
+        "empty": "No active campaigns found. Check back soon!",
+        "footer": {
+            "rights": "All rights reserved."
+        }
+    },
+    "landing": {
+        "hero": {
+            "welcome": "Welcome to",
+            "description": "Join us in making a difference. Your contribution helps us achieve our goal of {{goal}}."
+        },
+        "cta": {
+            "donate": "Donate Now",
+            "live": "Watch Live"
+        },
+        "features": {
+            "impact": {
+                "title": "Impact",
+                "description": "Every donation goes directly to supporting our cause."
+            },
+            "community": {
+                "title": "Community",
+                "description": "Join hundreds of other donors in this event."
+            },
+            "interactive": {
+                "title": "Interactive",
+                "description": "Watch your name appear on the big screen instantly."
+            }
+        },
+        "footer": {
+            "website": "Website",
+            "support": "Support",
+            "rights": "All rights reserved.",
+            "staff": "Staff Login",
+            "login": "Admin Login"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "platform_overview": "Platform Overview",
+        "export_receipts": "Export Receipts (ZIP)",
+        "export_failed": "Failed to export receipts. Please try again.",
+        "stats": {
+            "revenue": "Total Revenue",
+            "events_count": "Across {{count}} events",
+            "active_events": "Active Events",
+            "currently_live": "Currently live",
+            "total_donors": "Total Donors",
+            "donors_description": "Lifetime unique donors"
+        },
+        "campaigns": {
+            "title": "Active Campaigns",
+            "empty": "No active events found.",
+            "view_all": "View all events",
+            "active": "Active",
+            "raised": "Raised",
+            "goal": "Goal: {{amount}}",
+            "manage": "Manage Dashboard"
+        }
+    },
     "error": {
         "title": "Oops!",
         "subtitle": "Something went wrong",
         "message": "We apologize for the inconvenience. The application encountered an unexpected error.",
         "reload": "Reload Application"
+    },
+    "validation": {
+        "required": "This field is required",
+        "min_chars": "Must be at least {{count}} characters",
+        "max_chars": "Must be at most {{count}} characters",
+        "invalid_email": "Invalid email address",
+        "invalid_url": "Invalid URL",
+        "invalid_hex": "Invalid hex color",
+        "min_value": "Must be at least {{count}}"
     }
 }

@@ -57,10 +57,17 @@ export const EVENTS = [
                 '--live-page-bg': '#1A1A1A', // Dark Background
                 '--live-text-main': '#F5F5F5', // Light Text
                 '--live-title-color': '#B49349', // Gold Title
-                '--live-subtitle-text': '#A3A3A3',
-                '--live-feed-item-bg': 'rgba(50, 50, 50, 0.6)', // Lighter background for feed to contrast with dark page
+                '--live-subtitle-text': '#FFFFFF', // White subtitle for readability
+                '--live-highlight-color': '#FFFFFF', // White highlight URL
+                '--live-qr-bg': '#FFFFFF', // White QR Background
+                '--live-feed-item-bg': 'rgba(255, 255, 255, 0.1)', // Glassy white feel instead of dark
                 '--live-amount-color': '#B49349', // Gold Amount
-                '--live-gauge-track': 'rgba(255, 255, 255, 0.2)', // More visible track
+                '--live-text-secondary': '#FFFFFF', // White "Total Raised" label
+                '--live-text-muted': '#E5E5E5', // Light grey "Goal" text for hierarchy
+                '--live-badge-bg': 'rgba(255, 255, 255, 0.15)', // More transparent/white
+                '--live-badge-border': 'rgba(255, 255, 255, 0.3)',
+                '--live-badge-text': '#FFFFFF',
+                '--live-gauge-track': 'rgba(255, 255, 255, 0.05)', // More subtle track
                 '--live-gauge-from': '#B49349', // Gold
                 '--live-gauge-to': '#F5F5F5' // White (instead of Dark) to pop against background
             },

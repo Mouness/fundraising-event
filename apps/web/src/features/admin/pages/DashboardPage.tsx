@@ -9,6 +9,7 @@ import { Loader2, TrendingUp, Users, Calendar, ArrowRight } from 'lucide-react';
 export const DashboardPage = () => {
     const { t } = useTranslation('common');
     const { events, isLoading } = useEvents();
+    const { formatCurrency } = useCurrencyFormatter();
 
     if (isLoading) {
         return (
@@ -23,9 +24,6 @@ export const DashboardPage = () => {
     const totalDonors = events.reduce((sum, e) => sum + (e.donorCount || 0), 0);
     const activeEvents = events.filter(e => e.status === 'ACTIVE');
     const activeEventsCount = activeEvents.length;
-
-    // Currency Formatter
-    const { formatCurrency } = useCurrencyFormatter();
 
     return (
         <div className="space-y-8">

@@ -71,10 +71,10 @@ export const DonationGauge = ({
                 <div
                     className="mt-4 px-6 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
                     style={{
-                        backgroundColor: 'var(--glass-bg)',
+                        backgroundColor: 'var(--live-badge-bg, var(--glass-bg))',
                         backdropFilter: 'blur(var(--glass-blur))',
-                        borderColor: 'var(--glass-border)',
-                        color: 'var(--live-text-secondary)'
+                        borderColor: 'var(--live-badge-border, var(--glass-border))',
+                        color: 'var(--live-badge-text, var(--live-text-secondary))'
                     }}
                 >
                     {totalLabel || t('live.total_raised')}

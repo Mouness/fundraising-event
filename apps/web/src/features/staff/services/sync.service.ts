@@ -3,7 +3,7 @@ import { StorageService } from "./storage.service";
 import type { PendingDonation } from "../types";
 
 export const SyncService = {
-    async submitDonation(donation: Omit<PendingDonation, 'status' | 'error' | 'id' | 'createdAt'>): Promise<{ success: boolean; offline?: boolean }> {
+    async submitDonation(donation: Omit<PendingDonation, 'status' | 'error' | 'id' | 'createdAt'>, eventId: string): Promise<{ success: boolean; offline?: boolean; error?: string }> {
         const fullDonation: PendingDonation = {
             ...donation,
             id: crypto.randomUUID(),
@@ -24,17 +24,25 @@ export const SyncService = {
                 donorName: fullDonation.name,
                 donorEmail: fullDonation.email,
                 isOfflineCollected: true,
-                collectedAt: new Date(fullDonation.createdAt).toISOString()
+                collectedAt: new Date(fullDonation.createdAt).toISOString(),
+                eventId
             });
 
             // Success
             return { success: true };
 
-        } catch (error) {
-            console.error("Submission failed, queueing", error);
-            fullDonation.error = error instanceof Error ? error.message : 'Unknown error';
-            StorageService.saveToQueue(fullDonation);
-            return { success: true, offline: true }; // Treat as success (queued)
+        } catch (error: any) {
+            console.error("Submission failed", error);
+
+            // If it's a network error (no response), queue it
+            if (!error.response) {
+                fullDonation.error = error instanceof Error ? error.message : 'Network Error';
+                StorageService.saveToQueue(fullDonation);
+                return { success: true, offline: true };
+            }
+
+            // If it's a server error (400, 500), return failure
+            return { success: false, error: error.response?.data?.message || 'Submission failed' };
         }
     },
 

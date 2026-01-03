@@ -60,35 +60,56 @@ const main = async () => {
             });
         }
 
-        // Add dummy donations
-        console.log(`   💰 Adding donations to ${evt.name}...`);
+        // Generate Smart Mock Data
+        console.log(`   💰 Generating smart donations for ${evt.name}...`);
+
+        const DONOR_FIRST_NAMES = ['Ahmed', 'Fatima', 'Mohamed', 'Aisha', 'Ibrahim', 'Sarah', 'Youssef', 'Layla', 'Omar', 'Zainab', 'Ali', 'Mariam', 'Jean', 'Pierre', 'Marie', 'Sophie', 'Thomas', 'Lucas'];
+        const DONOR_LAST_NAMES = ['Al-Sayed', 'Benali', 'Dubois', 'Martin', 'Khan', 'Rahman', 'Lopez', 'Silva', 'Muller', 'Weber', 'Hassan', 'Othman'];
+        const MESSAGES = [
+            'Barak Allah oufikoum pour cette initiative.',
+            'Qu\'Allah accepte nos dons.',
+            'For the orphans ❤️',
+            'Keep up the great work!',
+            'Un petit geste pour une grande cause.',
+            'Douas pour vous tous.',
+            'Ramadan Mubarak!',
+            undefined, undefined, undefined // Higher chance of no message
+        ];
+
+        const generateRandomDonation = () => {
+            const isAnonymous = Math.random() > 0.7;
+            const hasMessage = Math.random() > 0.6;
+            const amountTiers = [1000, 2000, 5000, 10000, 20000, 50000, 100000]; // in Cents
+            const amount = amountTiers[Math.floor(Math.random() * amountTiers.length)];
+
+            // Random date within last 30 days
+            const date = new Date();
+            date.setDate(date.getDate() - Math.floor(Math.random() * 30));
+            date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
+
+            const statusRoll = Math.random();
+            let status = 'SUCCEEDED';
+            if (statusRoll > 0.95) status = 'FAILED';
+            else if (statusRoll > 0.90) status = 'PENDING';
+
+            return {
+                amount,
+                currency: 'CHF', // Could vary based on config if needed
+                donorName: isAnonymous ? null : `${DONOR_FIRST_NAMES[Math.floor(Math.random() * DONOR_FIRST_NAMES.length)]} ${DONOR_LAST_NAMES[Math.floor(Math.random() * DONOR_LAST_NAMES.length)]}`,
+                donorEmail: isAnonymous ? null : `donor${Math.floor(Math.random() * 1000)}@example.com`,
+                isAnonymous,
+                message: hasMessage ? MESSAGES[Math.floor(Math.random() * MESSAGES.length)] : null,
+                eventId: createdEvent.id,
+                status,
+                paymentMethod: Math.random() > 0.3 ? 'STRIPE' : 'CASH',
+                createdAt: date
+            };
+        };
+
+        const donations = Array.from({ length: Math.floor(Math.random() * 50) + 20 }).map(generateRandomDonation);
+
         await prisma.donation.createMany({
-            data: [
-                {
-                    amount: 50,
-                    currency: 'CHF',
-                    donorName: 'Anonymous',
-                    eventId: createdEvent.id,
-                    status: 'SUCCEEDED',
-                    paymentMethod: 'CASH',
-                },
-                {
-                    amount: 120,
-                    currency: 'CHF',
-                    donorName: 'Fatima Al-Sayed',
-                    eventId: createdEvent.id,
-                    status: 'SUCCEEDED',
-                    paymentMethod: 'STRIPE',
-                },
-                {
-                    amount: 500,
-                    currency: 'CHF',
-                    donorName: 'Local Business Inc',
-                    eventId: createdEvent.id,
-                    status: 'SUCCEEDED',
-                    paymentMethod: 'STRIPE',
-                }
-            ]
+            data: donations
         });
     }
 

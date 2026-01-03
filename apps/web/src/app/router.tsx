@@ -27,6 +27,7 @@ const StaffLayout = lazy(() => import('../features/staff/layouts/StaffLayout').t
 const CollectorPage = lazy(() => import('../features/staff/pages/CollectorPage').then(module => ({ default: module.CollectorPage })));
 const StaffLoginPage = lazy(() => import('../features/staff/pages/StaffLoginPage').then(module => ({ default: module.StaffLoginPage })));
 const EventListPage = lazy(() => import('../features/events/pages/EventListPage').then(module => ({ default: module.EventListPage })));
+const CreateEventPage = lazy(() => import('../features/events/pages/CreateEventPage').then(module => ({ default: module.CreateEventPage })));
 const EventLayout = lazy(() => import('../features/events/layouts/EventLayout').then(module => ({ default: module.EventLayout })));
 const EventDashboardPage = lazy(() => import('../features/events/pages/EventDashboardPage').then(module => ({ default: module.EventDashboardPage })));
 const LandingPage = lazy(() => import('../features/public/pages/LandingPage').then(module => ({ default: module.LandingPage })));
@@ -122,7 +123,11 @@ export const router = createBrowserRouter([
     // Global / Admin routes (no slug context needed or handled differently)
     {
         path: '/login',
-        element: Loadable(LoginPage),
+        element: (
+            <AppConfigProvider>
+                {Loadable(LoginPage)}
+            </AppConfigProvider>
+        ),
     },
     {
         path: '/admin',
@@ -137,6 +142,10 @@ export const router = createBrowserRouter([
                             {
                                 path: '',
                                 element: Loadable(DashboardPage),
+                            },
+                            {
+                                path: 'events/new',
+                                element: Loadable(CreateEventPage)
                             },
                             {
                                 path: 'events',
@@ -186,6 +195,10 @@ export const router = createBrowserRouter([
     },
     {
         path: '*',
-        element: <div>404 Not Found</div>
+        element: (
+            <AppConfigProvider>
+                <div>404 Not Found</div>
+            </AppConfigProvider>
+        )
     }
 ]);

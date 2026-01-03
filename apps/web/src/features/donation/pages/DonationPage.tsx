@@ -1,21 +1,30 @@
+import { useAppConfig } from '@/providers/AppConfigProvider';
 import { CheckoutForm } from '../components/CheckoutForm';
 import { AppHeader } from '@/components/AppHeader';
 
 export const DonationPage = () => {
+    const { config } = useAppConfig();
+    const bgImage = config.theme?.assets?.backgroundDonor;
+
     return (
         <div
-            className="min-h-screen transition-colors duration-500"
+            className="min-h-screen transition-colors duration-500 bg-cover bg-center bg-no-repeat bg-fixed"
             style={{
-                background: 'var(--donation-page-gradient)'
+                backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+                backgroundColor: 'var(--background)', // Fallback
             }}
         >
-            <AppHeader />
+            {/* Overlay for readability if image exists */}
+            {bgImage && <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-0" />}
 
-            <main className="py-8 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md mx-auto">
-                    <CheckoutForm />
-                </div>
-            </main>
+            <div className="relative z-10">
+                <AppHeader />
+                <main className="py-8 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-md mx-auto">
+                        <CheckoutForm />
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }

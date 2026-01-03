@@ -14,7 +14,7 @@ export const VariableRow = ({ label, name, type = 'color' }: VariableRowProps) =
 
     return (
         <div className="flex items-center gap-4 mb-2">
-            <Label className="w-40 shrink-0 text-right font-medium text-sm text-muted-foreground">{label || name}</Label>
+            <Label className="w-40 shrink-0 text-right font-medium text-sm text-muted-foreground">{label}</Label>
             <Input {...register(name)} className="flex-1 font-mono h-9 text-xs" />
 
             {/* Preview Box */}

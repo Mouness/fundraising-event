@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { SyncService } from "../services/sync.service";
-// import { useToast } from "@/hooks/use-toast";
+import { useStaffAuth } from "../hooks/useStaffAuth";
+
 import { Keypad } from "../components/Keypad";
 import { DonationTypeSelector } from "../components/DonationTypeSelector";
 import type { DonationType } from "../types";
@@ -12,12 +13,13 @@ import { useTranslation } from "react-i18next";
 
 export const CollectorPage = () => {
     const { t } = useTranslation('common');
+    const { getStaffUser } = useStaffAuth();
     const [amount, setAmount] = useState<string>("");
     const [type, setType] = useState<DonationType>("cash");
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    // const { toast } = useToast();
+
 
     const handleKeyPress = (key: string) => {
         if (amount.length >= 8) return;
@@ -46,14 +48,7 @@ export const CollectorPage = () => {
         }).format(num);
     };
 
-    // const { toast } = useToast();
-    // Use window.alert for now or simple UI feedback until toast is fixed, 
-    // BUT user wanted toast earlier. Let's try to restore it if possible, otherwise use a simple status message.
-    // The previous error was about useToast path. I will use a simple state message or alert for now to avoid risking build,
-    // prioritizing the Sync logic correctness.
-    // Actually, I can allow toast usage if I fix the import? Stick to safe simple feedback first.
 
-    // Changing approach: Use alert/confirm for success message for now, formatted nicely.
 
     const handleSubmit = async () => {
         if (!amount || parseInt(amount) === 0) return;
@@ -67,7 +62,13 @@ export const CollectorPage = () => {
             email: email || undefined
         };
 
-        const result = await SyncService.submitDonation(donationData);
+        const staffUser = getStaffUser();
+        if (!staffUser?.eventId) {
+            toast.error("Session invalid. Please login again.");
+            return;
+        }
+
+        const result = await SyncService.submitDonation(donationData, staffUser.eventId);
 
         setIsSubmitting(false);
 
@@ -84,7 +85,7 @@ export const CollectorPage = () => {
             setEmail("");
             setType("cash");
         } else {
-            toast.error(t('staff.submit_error'));
+            toast.error(result.error || t('staff.submit_error'));
         }
     };
 

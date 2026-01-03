@@ -118,8 +118,11 @@ export const RootLandingPage = () => {
 
                                             <CardHeader className="relative z-10">
                                                 <div className="flex justify-between items-start mb-4">
-                                                    <div className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
-                                                        {t('root_landing.event_card.active', 'Active')}
+                                                    <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${event.status === 'active' || event.status === 'ACTIVE'
+                                                        ? 'bg-green-600 text-white dark:bg-green-500'
+                                                        : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                                                        }`}>
+                                                        {event.status || 'DRAFT'}
                                                     </div>
                                                     <ArrowRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                                                 </div>
@@ -138,7 +141,11 @@ export const RootLandingPage = () => {
                                                         <div className="flex flex-col">
                                                             <span className="text-sm text-muted-foreground font-medium uppercase tracking-wide">{t('root_landing.event_card.raised', 'Raised')}</span>
                                                             <span className="text-2xl font-bold text-foreground">
-                                                                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(raised)}
+                                                                {new Intl.NumberFormat('en-US', {
+                                                                    style: 'currency',
+                                                                    currency: config.donation?.payment?.currency || 'USD',
+                                                                    maximumFractionDigits: 0
+                                                                }).format(raised)}
                                                             </span>
                                                         </div>
                                                         <div className="text-right">
@@ -159,7 +166,18 @@ export const RootLandingPage = () => {
                                                     </div>
 
                                                     <div className="flex justify-between text-xs text-muted-foreground">
-                                                        <span>{t('root_landing.event_card.goal_of', { amount: new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(event.goalAmount), defaultValue: `of ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(event.goalAmount)} goal` })}</span>
+                                                        <span>{t('root_landing.event_card.goal_of', {
+                                                            amount: new Intl.NumberFormat('en-US', {
+                                                                style: 'currency',
+                                                                currency: config.donation?.payment?.currency || 'USD',
+                                                                maximumFractionDigits: 0
+                                                            }).format(event.goalAmount),
+                                                            defaultValue: `of ${new Intl.NumberFormat('en-US', {
+                                                                style: 'currency',
+                                                                currency: config.donation?.payment?.currency || 'USD',
+                                                                maximumFractionDigits: 0
+                                                            }).format(event.goalAmount)} goal`
+                                                        })}</span>
                                                     </div>
                                                 </div>
                                             </CardContent>

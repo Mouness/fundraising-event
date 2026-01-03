@@ -42,27 +42,35 @@ export const LivePage = () => {
         }
     }, [lastEvent]);
 
+    const bgImage = config.theme?.assets?.backgroundLive;
+
     return (
         <div
-            className="min-h-screen overflow-hidden relative font-sans selection:bg-purple-500 selection:text-white"
+            className="min-h-screen overflow-hidden relative font-sans selection:bg-purple-500 selection:text-white bg-cover bg-center bg-no-repeat"
             style={{
                 backgroundColor: 'var(--live-page-bg)',
-                color: 'var(--live-text-main)'
+                color: 'var(--live-text-main)',
+                backgroundImage: bgImage ? `url(${bgImage})` : undefined
             }}
         >
 
-            {/* Animated Background */}
-            <div className="absolute inset-0 z-0">
-                <div
-                    className="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] rounded-full animate-pulse-slow mix-blend-screen"
-                    style={{ backgroundColor: 'var(--live-bg-accent-1)', filter: 'blur(var(--live-bg-blur))' }}
-                ></div>
-                <div
-                    className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] rounded-full animate-pulse-slow delay-1000 mix-blend-screen"
-                    style={{ backgroundColor: 'var(--live-bg-accent-2)', filter: 'blur(var(--live-bg-blur))' }}
-                ></div>
-                <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
-            </div>
+            {/* Animated Background (Only if no image, or as an overlay) */}
+            {!bgImage && (
+                <div className="absolute inset-0 z-0">
+                    <div
+                        className="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] rounded-full animate-pulse-slow mix-blend-screen"
+                        style={{ backgroundColor: 'var(--live-bg-accent-1)', filter: 'blur(var(--live-bg-blur))' }}
+                    ></div>
+                    <div
+                        className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] rounded-full animate-pulse-slow delay-1000 mix-blend-screen"
+                        style={{ backgroundColor: 'var(--live-bg-accent-2)', filter: 'blur(var(--live-bg-blur))' }}
+                    ></div>
+                    <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
+                </div>
+            )}
+
+            {/* Overlay for readability if image exists */}
+            {bgImage && <div className="absolute inset-0 bg-black/60 z-0" />}
 
             <main className="relative z-10 w-full h-screen flex flex-col p-8 lg:p-16">
 

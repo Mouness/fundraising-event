@@ -7,19 +7,39 @@ export const GLOBAL_SETTINGS = {
     website: 'https://islamic-demo.org',
     address: 'Genève, Suisse',
     themeVariables: {
-        '--color-primary': BRAND_COLORS.primary,
-        '--color-primary-fg': '#FFFFFF',
-        '--color-secondary': BRAND_COLORS.secondary,
-        '--color-accent': BRAND_COLORS.accent,
-        '--color-background': BRAND_COLORS.background,
-        '--color-foreground': BRAND_COLORS.text,
+        // Base Colors
+        '--primary': BRAND_COLORS.primary,        // #0062A7 (Blue)
+        '--primary-foreground': '#FFFFFF',
+        '--secondary': BRAND_COLORS.secondary,    // #EDEDED (Light Gray)
+        '--secondary-foreground': '#1A1A1A',
+        '--accent': BRAND_COLORS.accent,          // #FDB913 (Gold)
+        '--accent-foreground': '#1A1A1A',
+        '--destructive': '#ef4444',
+        '--destructive-foreground': '#FFFFFF',
+
+        // Background / Foreground
+        '--background': BRAND_COLORS.background,
+        '--foreground': BRAND_COLORS.text,
+
+        // UI Elements
+        '--muted': '#f1f5f9',
+        '--muted-foreground': '#64748b',
+        '--card': '#FFFFFF',
+        '--card-foreground': '#1A1A1A',
+        '--popover': '#FFFFFF',
+        '--popover-foreground': '#1A1A1A',
+        '--border': '#e2e8f0',
+        '--input': '#e2e8f0',
+        '--ring': BRAND_COLORS.primary,           // Ring matches primary
+
+        // Radii
         '--radius': '0.5rem',
-        '--shadow-sm': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-        '--shadow-md': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-        '--font-family': '"Inter", sans-serif'
+        '--radius-sm': '0.3rem',
+        '--radius-lg': '0.7rem'
     },
+
     assets: {
-        logo: BRAND_ASSETS.logo,
+        logo: BRAND_ASSETS.logoIcon,
         favicon: BRAND_ASSETS.favicon,
         backgroundLanding: BRAND_ASSETS.bgLanding,
         backgroundDonor: BRAND_ASSETS.bgDonor,
@@ -38,7 +58,7 @@ export const GLOBAL_SETTINGS = {
         }
     },
     payment: {
-        currency: 'CHF',
+        currency: 'EUR',
         provider: 'stripe'
     },
     locales: {

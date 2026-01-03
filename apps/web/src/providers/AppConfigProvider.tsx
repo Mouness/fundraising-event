@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
     initWhiteLabeling,
     loadConfigs,
@@ -14,6 +15,7 @@ interface AppConfigContextType {
     config: EventConfig;
     isLoading: boolean;
     error: Error | null;
+    refreshConfig: () => Promise<void>;
 }
 
 // Initial state as fallback (synchronous defaults)
@@ -28,48 +30,61 @@ const INITIAL_CONFIG: EventConfig = {
 const AppConfigContext = createContext<AppConfigContextType>({
     config: INITIAL_CONFIG,
     isLoading: true,
-    error: null
+    error: null,
+    refreshConfig: async () => { }
 });
 
 export const AppConfigProvider = ({ children, slug }: PropsWithChildren<{ slug?: string }>) => {
     const [config, setConfig] = useState<EventConfig>(INITIAL_CONFIG);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+    const location = useLocation();
+
+    const loadConfig = async () => {
+        setIsLoading(true);
+        try {
+            // 1. Initialize DB Store (Async fetch from API)
+            await initWhiteLabeling(API_URL, slug);
+
+            // 2. Load Domain Specific Configs (Sync read from store)
+            const baseConfig = loadConfigs();
+            const assets = loadAssets();
+            const themeVars = loadTheme(true); // Load and Apply CSS variables to :root
+
+            // 3. Compose final configuration object
+            const fullConfig: EventConfig = {
+                ...baseConfig,
+                theme: {
+                    assets,
+                    variables: themeVars
+                }
+            };
+
+            // 4. Apply Dynamic Locales
+            syncLocales();
+
+            setConfig(fullConfig);
+        } catch (err) {
+            console.error("Failed to initialize app config:", err);
+            setError(err instanceof Error ? err : new Error('Unknown error'));
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const init = async () => {
-            try {
-                // 1. Initialize DB Store (Async fetch from API)
-                await initWhiteLabeling(API_URL, slug);
+        loadConfig();
+    }, [slug, location.pathname]); // React to path changes to enforce correct config (event vs global)
 
-                // 2. Load Domain Specific Configs (Sync read from store)
-                const baseConfig = loadConfigs();
-                const assets = loadAssets();
-                const themeVars = loadTheme(true); // Load and Apply CSS variables to :root
 
-                // 3. Compose final configuration object
-                const fullConfig: EventConfig = {
-                    ...baseConfig,
-                    theme: {
-                        assets,
-                        variables: themeVars
-                    }
-                };
+    const refreshConfig = async () => {
+        await mt_loadConfig();
+    };
 
-                // 4. Apply Dynamic Locales
-                syncLocales();
+    // Helper to avoid closure staleness if needed, but loadConfig depends on slug which is in scope or prop.
+    // Actually, define loadConfig inside component is fine.
+    const mt_loadConfig = loadConfig;
 
-                setConfig(fullConfig);
-            } catch (err) {
-                console.error("Failed to initialize app config:", err);
-                setError(err instanceof Error ? err : new Error('Unknown error'));
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        init();
-    }, [slug]);
 
     if (isLoading) {
         return (
@@ -80,7 +95,7 @@ export const AppConfigProvider = ({ children, slug }: PropsWithChildren<{ slug?:
     }
 
     return (
-        <AppConfigContext.Provider value={{ config, isLoading, error }}>
+        <AppConfigContext.Provider value={{ config, isLoading, error, refreshConfig }}>
             {children}
         </AppConfigContext.Provider>
     );

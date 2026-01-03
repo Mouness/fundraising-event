@@ -52,7 +52,7 @@ export class EventsService {
       const stats = aggregations.find((a) => a.eventId === event.id);
       return {
         ...event,
-        raised: stats?._sum.amount?.toNumber() || 0,
+        raised: (stats?._sum.amount?.toNumber() || 0) / 100,
         donorCount: stats?._count.id || 0,
       };
     });
@@ -67,11 +67,18 @@ export class EventsService {
     });
     if (!event) throw new NotFoundException('Event not found');
 
-    // Also attach stats for single event?
-    // The previous implementation didn't, but finding one usually benefits from stats too.
-    // Let's keep it simple for now as findOne is used for config loading mainly.
-    // If needed, I'll add it later.
-    return event;
+    // Aggregate donations (SUCCEEDED only)
+    const stats = await this.prisma.donation.aggregate({
+      _sum: { amount: true },
+      _count: { id: true },
+      where: { eventId: event.id, status: 'SUCCEEDED' },
+    });
+
+    return {
+      ...event,
+      raised: (stats._sum.amount?.toNumber() || 0) / 100,
+      donorCount: stats._count.id || 0,
+    };
   }
 
   async update(id: string, updateEventDto: UpdateEventDto) {

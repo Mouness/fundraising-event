@@ -62,7 +62,7 @@ export class AuthService {
     };
     return {
       accessToken: this.jwtService.sign(payload),
-      user: { id: staff.id, name: staff.name, role: 'STAFF' as const },
+      user: { id: staff.id, name: staff.name, role: 'STAFF' as const, eventId: staff.eventId },
     };
   }
 

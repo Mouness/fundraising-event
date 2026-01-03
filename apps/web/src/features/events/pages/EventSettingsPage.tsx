@@ -11,6 +11,7 @@ import { Settings, Palette, Save, Loader2 } from 'lucide-react';
 import { GeneralForm } from '../components/event-settings/GeneralForm';
 import { BrandingForm } from '../components/event-settings/BrandingForm';
 import { useEvent } from '../context/EventContext';
+import { useAppConfig } from '@/providers/AppConfigProvider';
 
 const getCombinedSchema = (t: any) => z.object({
     // General
@@ -47,6 +48,7 @@ const getCombinedSchema = (t: any) => z.object({
 export const EventSettingsPage = () => {
     const { t } = useTranslation('common');
     const { event, isLoading: isEventLoading } = useEvent();
+    const { refreshConfig } = useAppConfig();
     const queryClient = useQueryClient();
     const [activeSection, setActiveSection] = useState('general');
 
@@ -174,6 +176,7 @@ export const EventSettingsPage = () => {
             queryClient.invalidateQueries({ queryKey: ['active-event-settings'] });
             queryClient.invalidateQueries({ queryKey: ['event-settings', event?.slug] });
             queryClient.invalidateQueries({ queryKey: ['events'] });
+            refreshConfig();
             toast.success(t('common.saved_successfully', 'Settings saved successfully'));
         },
         onError: (error: any) => {

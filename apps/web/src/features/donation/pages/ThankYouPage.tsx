@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, Link, Navigate } from 'react-router-dom';
+import { useLocation, Link, Navigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -138,7 +138,7 @@ export const ThankYouPage = () => {
                             color: 'var(--thankyou-button-text)'
                         }}
                     >
-                        <Link to="/donate">
+                        <Link to={`/${useParams().slug}/donate`}>
                             {t('donation.make_another')}
                         </Link>
                     </Button>

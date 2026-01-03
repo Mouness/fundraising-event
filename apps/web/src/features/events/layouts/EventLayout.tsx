@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { PageLoader } from '@/components/ui/page-loader';
 import { EventProvider, useEvent } from '@/features/events/context/EventContext';
+import { useAppConfig } from '@/providers/AppConfigProvider';
 import { LayoutDashboard, Settings, DollarSign, ArrowLeft, ExternalLink, Users } from 'lucide-react';
 import { AppHeader } from '@/components/AppHeader';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,7 @@ const EventSidebar = () => {
     const { event } = useEvent();
     const location = useLocation();
     const { t } = useTranslation('common');
+    const { refreshConfig } = useAppConfig();
 
     if (!event) return null;
 
@@ -27,7 +29,11 @@ const EventSidebar = () => {
             }}
         >
             <div className="mb-6">
-                <Link to="/admin/events" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-[var(--admin-sidebar-text)] mb-4 transition-colors">
+                <Link
+                    to="/admin/events"
+                    onClick={() => refreshConfig()}
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-[var(--admin-sidebar-text)] mb-4 transition-colors"
+                >
                     <ArrowLeft className="h-4 w-4" /> {t('admin_events.back_to_events', 'Back to Events')}
                 </Link>
                 <div className="px-2">

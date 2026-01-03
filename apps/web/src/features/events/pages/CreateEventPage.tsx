@@ -1,0 +1,99 @@
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { api } from '@/lib/api';
+import { toast } from 'sonner';
+import { Loader2, ArrowLeft } from 'lucide-react';
+
+const createEventSchema = z.object({
+    name: z.string().min(3, 'Name must be at least 3 characters'),
+    slug: z.string().min(3, 'Slug must be at least 3 characters').regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with dashes'),
+    goalAmount: z.coerce.number().min(1, 'Goal must be at least 1'),
+});
+
+type CreateEventFormValues = z.infer<typeof createEventSchema>;
+
+export const CreateEventPage = () => {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+
+    const form = useForm<CreateEventFormValues>({
+        resolver: zodResolver(createEventSchema),
+        defaultValues: {
+            name: '',
+            slug: '',
+            goalAmount: 10000
+        }
+    });
+
+    const onSubmit = async (values: CreateEventFormValues) => {
+        try {
+            await api.post('/events', values);
+            toast.success(t('admin_events.create_success', 'Event created successfully'));
+            navigate('/admin/events');
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message || t('admin_events.create_error', 'Failed to create event'));
+        }
+    };
+
+    return (
+        <div className="space-y-6 max-w-2xl mx-auto">
+            <div className="flex items-center gap-4">
+                <Button variant="ghost" size="icon" onClick={() => navigate('/admin/events')}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight">{t('admin_events.create_title', 'Create New Campaign')}</h1>
+                    <p className="text-muted-foreground">{t('admin_events.create_subtitle', 'Launch a new fundraising campaign')}</p>
+                </div>
+            </div>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>{t('admin_events.details', 'Event Details')}</CardTitle>
+                    <CardDescription>{t('admin_events.details_desc', 'Basic information about your campaign')}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="name">{t('admin_events.name', 'Campaign Name')}</Label>
+                            <Input id="name" {...form.register('name')} placeholder="e.g. Ramadan 2024" />
+                            {form.formState.errors.name && <span className="text-sm text-red-500">{form.formState.errors.name.message}</span>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="slug">{t('admin_events.slug', 'URL Slug')}</Label>
+                            <div className="flex items-center gap-2">
+                                <span className="text-muted-foreground text-sm font-mono bg-muted px-2 py-1.5 rounded">{window.location.host}/</span>
+                                <Input id="slug" {...form.register('slug')} placeholder="ramadan-2024" className="font-mono" />
+                            </div>
+                            {form.formState.errors.slug && <span className="text-sm text-red-500">{form.formState.errors.slug.message}</span>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="goalAmount">{t('admin_events.goal_amount', 'Fundraising Goal')}</Label>
+                            <Input id="goalAmount" type="number" {...form.register('goalAmount')} />
+                            {form.formState.errors.goalAmount && <span className="text-sm text-red-500">{form.formState.errors.goalAmount.message}</span>}
+                        </div>
+
+                        <div className="flex justify-end pt-4">
+                            <Button type="submit" disabled={form.formState.isSubmitting}>
+                                {form.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                {t('admin_events.create_action', 'Create Campaign')}
+                            </Button>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
+        </div>
+    );
+};
+
+// Default export for lazy loading
+export default CreateEventPage;

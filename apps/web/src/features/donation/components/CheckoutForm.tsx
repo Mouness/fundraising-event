@@ -60,7 +60,7 @@ export const CheckoutForm = () => {
             const amountInCents = Math.round(data.amount * 100);
             const { data: intentData } = await api.post('/donations/intent', {
                 amount: amountInCents,
-                currency: 'usd',
+                currency: config.donation?.payment?.currency || 'usd',
                 eventId: config.id, // Use ID for backend, but slug for navigation
                 metadata: {
                     donorName: data.name,
@@ -272,7 +272,7 @@ export const CheckoutForm = () => {
                                     providerId={config.donation.payment.provider}
                                     sessionData={sessionData}
                                     amount={currentAmount || 0}
-                                    currency="usd"
+                                    currency={config.donation?.payment?.currency || 'usd'}
                                     config={config.donation.payment.config}
                                     onSuccess={() => {
                                         navigate(`/${slug}/thank-you`, {

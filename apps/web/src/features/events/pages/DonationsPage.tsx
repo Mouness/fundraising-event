@@ -220,7 +220,7 @@ export const DonationsPage = () => {
                                             </TableCell>
                                             <TableCell>
                                                 <div className="font-medium">
-                                                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: donation.currency }).format(donation.amount)}
+                                                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: donation.currency }).format(donation.amount / 100)}
                                                 </div>
                                                 <span className="text-xs text-muted-foreground capitalize">{donation.paymentMethod}</span>
                                             </TableCell>

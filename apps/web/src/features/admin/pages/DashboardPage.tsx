@@ -3,32 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useEvents } from '@/features/events/hooks/useEvents';
-import { Loader2, TrendingUp, Users, Calendar, ArrowRight, FileText } from 'lucide-react';
-import { toast } from 'sonner';
-import { api } from '@/lib/api';
+import { Loader2, TrendingUp, Users, Calendar, ArrowRight } from 'lucide-react';
 
 export const DashboardPage = () => {
     const { t } = useTranslation('common');
     const { events, isLoading } = useEvents();
-
-    const handleExportReceipts = async () => {
-        try {
-            const response = await api.get('/export/receipts/zip', {
-                responseType: 'blob',
-            });
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `receipts-all-${new Date().toISOString().split('T')[0]}.zip`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-        } catch (error) {
-            console.error('Receipt export failed', error);
-            toast.error(t('dashboard.export_failed', 'Failed to export receipts. Please try again.'));
-        }
-    };
 
     if (isLoading) {
         return (
@@ -62,10 +41,6 @@ export const DashboardPage = () => {
                         {t('dashboard.platform_overview')}
                     </p>
                 </div>
-                <Button variant="outline" onClick={handleExportReceipts}>
-                    <FileText className="mr-2 h-4 w-4" />
-                    {t('dashboard.export_receipts')}
-                </Button>
             </div>
 
             {/* Global Stats */}

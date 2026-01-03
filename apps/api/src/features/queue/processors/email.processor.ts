@@ -27,6 +27,6 @@ export class EmailProcessor extends WorkerHost {
 
     private async handleSendReceipt(data: SendReceiptJobData) {
         await this.mailService.sendReceipt(data.email, data);
-        this.logger.log(`Receipt email sent to ${data.email}`);
+        this.logger.log(`Receipt email sent to ${data.email} for event ${data.eventSlug}`);
     }
 }

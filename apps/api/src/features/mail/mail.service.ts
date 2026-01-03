@@ -1,35 +1,54 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import type { MailProvider } from './providers/mail-provider.interface';
-import { EventConfigService } from '../events/configuration/event-config.service';
+import { WhiteLabelingService } from '../white-labeling/white-labeling.service';
 import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
 import { PdfService } from '../pdf/pdf.service';
 
+
 @Injectable()
 export class MailService {
+    private readonly logger = new Logger(MailService.name);
+
     constructor(
         @Inject('MAIL_PROVIDER') private readonly mailProvider: MailProvider,
-        private readonly eventConfigService: EventConfigService,
+        private readonly whiteLabelingService: WhiteLabelingService,
         private readonly configService: ConfigService,
         private readonly pdfService: PdfService,
     ) { }
 
     async sendReceipt(to: string, data: any) {
-        const config = this.eventConfigService.getConfig();
-        const commConfig = config.communication;
+        // data MUST contain eventSlug. If not, we can't label correctly.
+        const eventSlug = data.eventSlug;
+        if (!eventSlug) {
+            this.logger.error('Missing eventSlug in sendReceipt data. Cannot send branded receipt.');
+            return;
+        }
+
+        const config = await this.whiteLabelingService.getEventSettings(eventSlug);
+        if (!config) {
+            this.logger.error(`Event config not found for slug: ${eventSlug}`);
+            return;
+        }
+
+        const settings = ((config as any).settings as any) || {};
+        const commConfig = settings.communication || (config as any).communication || {};
         const subject = commConfig.email?.subjectLine || `Receipt for your donation of $${data.amount}`;
 
         const frontendUrl = this.configService.get('FRONTEND_URL') || 'http://localhost:5173';
-        const logoPath = config.theme?.assets?.logo || '';
+        const logoPath = (config.theme as any)?.assets?.logo || '';
         const absoluteLogoUrl = logoPath.startsWith('http') ? logoPath : `${frontendUrl}${logoPath}`;
+
+        const themeVars = (config.theme as any)?.variables || {};
+        const primaryColor = themeVars['--primary'] || '#000000';
 
         const context = {
             ...data,
             eventName: config.content.title,
             logoUrl: absoluteLogoUrl,
-            primaryColor: await this.eventConfigService.getThemeVariable('--primary', '#ec4899'),
+            primaryColor: primaryColor,
             legalName: commConfig.legalName,
             address: commConfig.address,
             website: commConfig.website,
@@ -42,7 +61,7 @@ export class MailService {
         // Generate PDF Receipt
         let attachments: { filename: string, content: Buffer }[] = [];
         try {
-            const pdfBuffer = await this.pdfService.generateReceipt({
+            const pdfBuffer = await this.pdfService.generateReceipt(eventSlug, {
                 amount: data.amount * 100, // Convert dollars to cents for PdfService
                 donorName: data.name || data.donorName || 'Supporter', // Fallback
                 date: new Date(data.date),

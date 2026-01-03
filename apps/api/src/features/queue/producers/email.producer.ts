@@ -8,11 +8,12 @@ import { SendReceiptJobData } from '../interfaces/email-jobs.interface';
 export class EmailProducer {
     constructor(@InjectQueue('email') private emailQueue: Queue) { }
 
-    async sendReceipt(email: string, amount: number, transactionId: string) {
+    async sendReceipt(email: string, amount: number, transactionId: string, eventSlug: string) {
         const jobData: SendReceiptJobData = {
             email,
             amount,
             transactionId,
+            eventSlug,
             date: new Date(),
         };
         await this.emailQueue.add('send-receipt', jobData, {

@@ -2,7 +2,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import PdfPrinter from 'pdfmake';
 import * as path from 'path';
-import { EventConfigService } from '../events/configuration/event-config.service';
+import { WhiteLabelingService } from '../white-labeling/white-labeling.service';
 
 import { ConfigService } from '@nestjs/config';
 
@@ -12,7 +12,7 @@ export class PdfService {
     private printer: PdfPrinter;
 
     constructor(
-        private readonly eventConfigService: EventConfigService,
+        private readonly whiteLabelingService: WhiteLabelingService,
         private readonly configService: ConfigService
     ) {
         // Resolve fonts ensuring correct path whether running from root or apps/api
@@ -35,24 +35,33 @@ export class PdfService {
         }
     }
 
-    async generateReceipt(data: {
+    async generateReceipt(eventSlug: string, data: {
         amount: number;
         donorName: string;
         date: Date;
         transactionId: string;
     }): Promise<Buffer> {
-        const config = this.eventConfigService.getConfig();
-        const commConfig = config.communication;
+        // Resolve Config
+        const eventConfig = await this.whiteLabelingService.getEventSettings(eventSlug);
+        // Fallback for null config handled by checking required fields or using defaults if needed
+        // But WhiteLabelingService.getEventSettings returns null if event not found.
+        if (!eventConfig) {
+            throw new Error(`Event config not found for slug: ${eventSlug}`);
+        }
+
+        const settings = ((eventConfig as any).settings as any) || {};
+        const commConfig = settings.communication || (eventConfig as any).communication || {};
 
         if (!commConfig?.pdf?.enabled) {
             this.logger.warn('Receipt generation requested but disabled in config');
         }
 
-        const primaryColor = config.theme?.variables?.['--primary'] || '#ec4899';
+        const themeVars = (eventConfig.theme as any)?.variables || {};
+        const primaryColor = themeVars['--primary'] || '#000000';
 
         let logoImage: string | Buffer | null = null;
         try {
-            const logoPath = config.theme?.assets?.logo;
+            const logoPath = (eventConfig.theme as any)?.assets?.logo;
             if (logoPath) {
                 logoImage = await this.fetchImage(logoPath);
             }
@@ -74,7 +83,7 @@ export class PdfService {
                     alignment: 'center',
                     margin: [0, 0, 0, 10]
                 } : {},
-                { text: config.content.title.toUpperCase(), style: 'header', alignment: 'center', margin: [0, 0, 0, 20] },
+                { text: eventConfig.content.title.toUpperCase(), style: 'header', alignment: 'center', margin: [0, 0, 0, 20] },
 
                 { text: 'OFFICIAL DONATION RECEIPT', style: 'subheader', alignment: 'center', margin: [0, 0, 0, 40] },
 

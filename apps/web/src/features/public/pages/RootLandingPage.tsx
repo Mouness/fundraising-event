@@ -6,7 +6,7 @@ import { LandingBackground } from '@/features/public/components/LandingBackgroun
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEvents } from '@/features/events/hooks/useEvents';
-import { PageLoader } from '@/components/ui/PageLoader';
+import { PageLoader } from '@/components/ui/page-loader';
 import { useAppConfig } from '@/providers/AppConfigProvider';
 import { motion, useScroll, useTransform } from 'framer-motion';
 

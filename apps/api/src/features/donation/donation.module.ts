@@ -7,9 +7,10 @@ import { PAYMENT_PROVIDER } from './interfaces/payment-provider.interface';
 import { QueueModule } from '../queue/queue.module';
 import { DonationService } from './donation.service';
 import { DatabaseModule } from '../../database/database.module';
+import { EventsModule } from '../events/events.module';
 
 @Module({
-  imports: [ConfigModule, GatewayModule, QueueModule, DatabaseModule],
+  imports: [ConfigModule, GatewayModule, QueueModule, DatabaseModule, EventsModule],
   controllers: [DonationController],
   providers: [
     StripeService,

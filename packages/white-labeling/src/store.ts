@@ -1,16 +1,11 @@
-interface RawDbEvent {
-    name: string;
-    goalAmount: number | string;
-    themeConfig: Record<string, any>;
-    [key: string]: any;
-}
+import type { EventConfig } from './types';
 
 export class WhiteLabelStore {
     private static instance: WhiteLabelStore;
-    private dbConfig: RawDbEvent | null = null;
+    private globalConfig: EventConfig | null = null;
+    private eventConfig: EventConfig | null = null;
 
     private constructor() { }
-
 
     public static getInstance(): WhiteLabelStore {
         if (!WhiteLabelStore.instance) {
@@ -24,65 +19,87 @@ export class WhiteLabelStore {
         WhiteLabelStore.instance = null;
     }
 
-    public setDbConfig(config: RawDbEvent): void {
-        this.dbConfig = config;
+    public setGlobalConfig(config: EventConfig | null): void {
+        this.globalConfig = config;
     }
 
-    public getDbConfig(): RawDbEvent | null {
-        return this.dbConfig;
+    public setEventConfig(config: EventConfig | null): void {
+        this.eventConfig = config;
+    }
+
+    public getGlobalConfig(): EventConfig | null {
+        return this.globalConfig;
+    }
+
+    public getEventConfig(): EventConfig | null {
+        return this.eventConfig;
     }
 }
 
 /**
- * Helper accessor to get the current DB config.
+ * Helper accessors
  */
-export const getDbConfig = () => WhiteLabelStore.getInstance().getDbConfig();
+export const getGlobalConfig = () => WhiteLabelStore.getInstance().getGlobalConfig();
+export const getEventConfig = () => WhiteLabelStore.getInstance().getEventConfig();
 
 /**
  * Initializes the white-labeling library by fetching configuration from the backend.
- * This should be called once at application startup.
- * @param apiUrl Base URL for the API
+ * This function now expects specific endpoints for global and event settings.
  */
-export async function initWhiteLabeling(apiUrl: string, slug?: string): Promise<void> {
+/**
+ * Fetches global configuration and updates the store.
+ */
+export async function fetchGlobalConfig(apiUrl: string): Promise<EventConfig | null> {
     try {
-        const response = await fetch(`${apiUrl}/events`, {
-            headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            if (Array.isArray(data) && data.length > 0) {
-                let event;
-
-                if (slug) {
-                    const found = data.find((e: any) => e.slug === slug || e.id === slug);
-                    if (found) {
-                        event = found;
-                    } else {
-                        console.warn(`Event with slug "${slug}" not found, falling back to default.`);
-                        event = data[0];
-                    }
-                } else {
-                    // Portal mode: Try to find a 'portal' event, otherwise use generic platform config
-                    const found = data.find((e: any) => e.slug === 'portal' || e.id === 'portal');
-                    if (found) {
-                        event = found;
-                    } else {
-                        event = {
-                            id: 'platform',
-                            name: 'Fundraising Platform',
-                            slug: 'portal',
-                            goalAmount: 0,
-                            themeConfig: { variables: {} }
-                        };
-                    }
-                }
-
-                WhiteLabelStore.getInstance().setDbConfig(event);
-            }
+        const store = WhiteLabelStore.getInstance();
+        const res = await fetch(`${apiUrl}/settings/global`, { headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+            const data = await res.json();
+            store.setGlobalConfig(data);
+            return data;
         }
     } catch (error) {
-        console.error('Failed to initialize white-labeling:', error);
-        // State remains null, loaders will fallback to defaults
+        console.error('Failed to fetch global config:', error);
+    }
+    return null;
+}
+
+/**
+ * Fetches event configuration and updates the store.
+ */
+export async function fetchEventConfig(apiUrl: string, slug: string): Promise<EventConfig | null> {
+    try {
+        const store = WhiteLabelStore.getInstance();
+        const res = await fetch(`${apiUrl}/events/${slug}/settings`, { headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+            const data = await res.json();
+            store.setEventConfig(data);
+            return data;
+        } else {
+            console.warn(`Event config for "${slug}" not found.`);
+            store.setEventConfig(null);
+        }
+    } catch (error) {
+        console.error('Failed to fetch event config:', error);
+    }
+    return null;
+}
+
+/**
+ * Initializes the white-labeling library by fetching configuration from the backend.
+ * This function now expects specific endpoints for global and event settings.
+ */
+export async function initWhiteLabeling(apiUrl: string, slug?: string): Promise<void> {
+    await fetchGlobalConfig(apiUrl);
+
+    if (slug) {
+        await fetchEventConfig(apiUrl, slug);
+    } else {
+        WhiteLabelStore.getInstance().setEventConfig(null);
     }
 }
+
+/**
+ * Resets the white-labeling store for testing purposes.
+ */
+export const resetWhiteLabelStore = () => WhiteLabelStore.reset();

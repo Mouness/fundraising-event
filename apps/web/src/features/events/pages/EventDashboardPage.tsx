@@ -30,26 +30,26 @@ export const EventDashboardPage = () => {
                         {event.name}
                     </h2>
                     <p className="text-muted-foreground mt-1">
-                        {t('admin_events.dashboard.overview', 'Dashboard Overview')}
+                        {t('admin_events.dashboard.overview')}
                     </p>
                 </div>
                 <div className="flex gap-2">
                     <Button variant="outline" asChild>
                         <Link to={`/admin/events/${event.slug}/settings`}>
                             <Settings className="mr-2 h-4 w-4" />
-                            {t('nav.settings', 'Settings')}
+                            {t('nav.settings')}
                         </Link>
                     </Button>
                     <Button variant="outline" asChild>
                         <Link to={`/${event.slug}/staff`} target="_blank">
                             <Smartphone className="mr-2 h-4 w-4" />
-                            {t('admin_events.dashboard.collector_app', 'Collector App')}
+                            {t('admin_events.dashboard.collector_app')}
                         </Link>
                     </Button>
                     <Button asChild>
                         <Link to={`/${event.slug}/live`} target="_blank">
                             <ExternalLink className="mr-2 h-4 w-4" />
-                            {t('admin_events.dashboard.launch_live', 'Launch Live')}
+                            {t('admin_events.dashboard.launch_live')}
                         </Link>
                     </Button>
                 </div>
@@ -59,7 +59,7 @@ export const EventDashboardPage = () => {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.total_raised', 'Total Raised')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">{t('admin_events.total_raised')}</CardTitle>
                         <TrendingUp className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
@@ -74,7 +74,7 @@ export const EventDashboardPage = () => {
 
                 <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.donors', 'Donors')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">{t('admin_events.donors')}</CardTitle>
                         <Users className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
@@ -82,14 +82,14 @@ export const EventDashboardPage = () => {
                             {donors}
                         </div>
                         <p className="text-xs text-muted-foreground">
-                            {t('admin_events.dashboard.unique_contributors', 'Unique contributors')}
+                            {t('admin_events.dashboard.unique_contributors')}
                         </p>
                     </CardContent>
                 </Card>
 
                 <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.goal', 'Goal')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">{t('admin_events.goal')}</CardTitle>
                         <Target className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
@@ -97,14 +97,14 @@ export const EventDashboardPage = () => {
                             {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(goal)}
                         </div>
                         <p className="text-xs text-muted-foreground">
-                            {t('admin_events.dashboard.target_amount', 'Target amount')}
+                            {t('admin_events.dashboard.target_amount')}
                         </p>
                     </CardContent>
                 </Card>
 
                 <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.event_date', 'Event Date')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">{t('admin_events.event_date')}</CardTitle>
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
@@ -121,7 +121,7 @@ export const EventDashboardPage = () => {
             {/* Recent Donations List */}
             <Card className="col-span-4" style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
                 <CardHeader>
-                    <CardTitle>{t('dashboard.recent_donations', 'Recent Donations')}</CardTitle>
+                    <CardTitle>{t('dashboard.recent_donations')}</CardTitle>
                     <CardDescription>
                         {t('admin_events.dashboard.latest_transactions_for', { name: event.name })}
                     </CardDescription>

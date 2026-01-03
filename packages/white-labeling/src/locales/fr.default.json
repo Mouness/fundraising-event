@@ -53,7 +53,31 @@
         "export": "Exporter CSV",
         "export_pdf": "Exporter PDF (ZIP)",
         "download_receipt": "Télécharger le reçu",
-        "team": "Affectation"
+        "team": "Affectation",
+        "donation_modal": {
+            "edit_title": "Modifier le Don",
+            "edit_description": "Mettre à jour les détails du donateur pour cette transaction.",
+            "cancel_title": "Annuler le Don",
+            "cancel_description": "Êtes-vous sûr de vouloir annuler ce don ? Cette action est irréversible.",
+            "donor_name": "Nom du Donateur",
+            "donor_email": "Email du Donateur",
+            "hide_public": "Masquer du fil public (Anonyme)",
+            "message": "Message",
+            "message_placeholder": "Message du don...",
+            "save_changes": "Enregistrer",
+            "keep": "Garder le Don",
+            "refund_stripe": "Rembourser via Stripe",
+            "refund_desc": "Tenter de rembourser automatiquement ce paiement sur la carte du donateur.",
+            "offline_refund_notice": "Les paiements hors ligne doivent être remboursés manuellement en dehors de ce système.",
+            "refund_and_cancel": "Rembourser & Annuler",
+            "cancel_only": "Annuler le Don",
+            "summary": "Don de {{amount}} par {{donor}}",
+            "success_update": "Don mis à jour avec succès",
+            "error_update": "Échec de la mise à jour du don",
+            "success_cancel": "Don annulé",
+            "success_refund": "Don remboursé et annulé",
+            "error_cancel": "Échec de l'annulation du don"
+        }
     },
     "admin_team": {
         "title_assign": "Affectation des Bénévoles",
@@ -79,6 +103,7 @@
         "success_revoked": "Membre retiré de l'événement.",
         "error_creation": "Échec de l'ajout à la base.",
         "error_assignment": "Échec de l'affectation.",
+        "error_revocation": "Échec du retrait du membre.",
         "confirm_delete_permanent": "ATTENTION : Cela supprimera définitivement le bénévole du système et de tous ses événements.",
         "manage_title": "Gestion du Personnel",
         "manage_subtitle": "Gérez la base globale de bénévoles et leurs codes PIN.",
@@ -93,7 +118,9 @@
         "table_assignments": "Affectations",
         "loading_staff": "Chargement du personnel...",
         "no_staff_found": "Aucun membre du personnel trouvé.",
-        "events_count": "{{count}} événements"
+        "events_count": "{{count}} événements",
+        "confirm_delete_title": "Supprimer le bénévole",
+        "member_updated": "Membre mis à jour avec succès"
     },
     "dashboard": {
         "title": "Tableau de bord",
@@ -147,14 +174,22 @@
         "date": "Date",
         "donor": "Donateur",
         "amount": "Montant",
-        "status": "Statut"
+        "status": "Statut",
+        "export_failed": "Échec de l'exportation des données. Veuillez réessayer.",
+        "receipt_failed": "Échec du téléchargement du reçu. Veuillez réessayer."
     },
     "common": {
         "back": "Retour",
         "actions": "Actions",
         "loading": "Chargement des données...",
         "no_results": "Aucun résultat trouvé.",
-        "all": "Tous"
+        "all": "Tous",
+        "edit": "Modifier",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "save_changes": "Enregistrer les modifications",
+        "saving": "Enregistrement...",
+        "saved_successfully": "Paramètres enregistrés avec succès"
     },
     "status": {
         "completed": "Complété",
@@ -275,5 +310,175 @@
         "invalid_url": "URL invalide",
         "invalid_hex": "Format de couleur invalide (#HEX)",
         "min_value": "Doit être au moins {{count}}"
+    },
+    "admin_branding": {
+        "title": "Centre de Personnalisation Graphique",
+        "subtitle": "Gérez l'identité, le thème et les paramètres de base de votre organisation.",
+        "save": "Enregistrer les modifications",
+        "saving": "Enregistrement...",
+        "success_save": "Personnalisation enregistrée avec succès",
+        "error_save": "Échec de l'enregistrement des paramètres",
+        "nav": {
+            "identity": "Identité",
+            "communication": "Communication",
+            "theme": "Design de Marque",
+            "assets": "Ressources",
+            "modules": "Modules & Localisation"
+        },
+        "preview": {
+            "title": "Aperçu en Direct",
+            "organization_placeholder": "Nom de l'organisation",
+            "charity_placeholder": "Nom de l'association",
+            "email_placeholder": "contact@exemple.com",
+            "theme_colors": "Couleurs du Thème"
+        },
+        "identity": {
+            "title": "Détails de l'Identité",
+            "description": "Informations de base sur votre organisation.",
+            "org_name": "Nom de l'organisation (Nom légal)",
+            "org_placeholder": "Ex: Charity Gala Inc.",
+            "org_hint": "Ce nom apparaîtra dans les pieds de page des e-mails et les avis juridiques.",
+            "website": "URL du site web",
+            "website_placeholder": "https://..."
+        },
+        "communication": {
+            "contact": {
+                "title": "Points de Contact",
+                "description": "Informations de contact publiques pour le support.",
+                "email": "Email de support",
+                "email_placeholder": "support@...",
+                "phone": "Numéro de téléphone",
+                "phone_placeholder": "+1...",
+                "address": "Adresse physique"
+            },
+            "email": {
+                "title": "Reçus par E-mail",
+                "description": "Configurez les reçus automatisés envoyés aux donateurs.",
+                "enable": "Activer",
+                "sender": "Nom de l'expéditeur",
+                "reply_to": "Email de réponse",
+                "subject": "Objet de l'e-mail",
+                "footer": "Pied de page de l'e-mail"
+            },
+            "pdf": {
+                "title": "Reçus PDF",
+                "description": "Configurez les reçus PDF téléchargeables.",
+                "enable": "Activer",
+                "template": "Style de modèle",
+                "formal": "Formel",
+                "minimal": "Minimal",
+                "footer": "Texte de pied de page PDF"
+            }
+        },
+        "theme": {
+            "colors": {
+                "title": "Palette de Couleurs",
+                "description": "Couleurs principales utilisées dans l'application.",
+                "primary": "Couleur de Marque Principale",
+                "primary_fg": "Texte Principal",
+                "background": "Arrière-plan",
+                "foreground": "Texte",
+                "card": "Fond de Carte",
+                "card_fg": "Texte de Carte",
+                "muted": "Fond Atténué",
+                "muted_fg": "Texte Atténué"
+            },
+            "elements": {
+                "title": "Éléments d'Interface",
+                "border": "Couleur de Bordure",
+                "input": "Fond d'Entrée",
+                "ring": "Anneau de Focus",
+                "radius": "Rayon de Base"
+            },
+            "secondary_colors": {
+                "title": "Couleurs Secondaires",
+                "secondary": "Secondaire",
+                "secondary_fg": "Texte Secondaire",
+                "accent": "Accent",
+                "accent_fg": "Texte d'Accent",
+                "destructive": "Destructeur",
+                "destructive_fg": "Texte Destructeur"
+            },
+            "custom": {
+                "title": "Variables CSS Personnalisées",
+                "description": "Surcharges avancées.",
+                "add": "Ajouter une Variable",
+                "name": "Nom de la Variable",
+                "value": "Valeur",
+                "empty": "Aucune variable personnalisée ajoutée"
+            }
+        },
+        "assets": {
+            "title": "Ressources Numériques",
+            "description": "Gérez les logos et l'imagerie.",
+            "logo": "URL du Logo",
+            "logo_hint": "Recommandé : PNG transparent, min 200px de large.",
+            "favicon": "URL du Favicon",
+            "backgrounds": "Images d'Arrière-plan",
+            "landing": "Fond de Page d'Accueil",
+            "donor": "Fond Donateur / Authentification",
+            "live": "Fond d'Écran en Direct"
+        },
+        "localization": {
+            "title": "Localisation de l'Interface",
+            "description": "Gérez les langues supportées et les surcharges de texte.",
+            "supported_languages": "Langues Supportées",
+            "label_overrides": "Surcharges de Libellés",
+            "language": "Langue",
+            "key": "Clé",
+            "key_placeholder": "Ex: auth.login",
+            "no_overrides": "Aucune surcharge pour {{locale}}",
+            "translation": "Traduction..."
+        },
+        "modules": {
+            "payment_title": "Configuration du Paiement",
+            "currency": "Devise",
+            "provider": "Prestataire"
+        }
+    },
+    "event_settings": {
+        "title": "Paramètres de l'Événement",
+        "subtitle": "Configurez les détails et l'apparence de l'événement.",
+        "nav": {
+            "general": "Général",
+            "branding": "Design & Marque"
+        },
+        "general": {
+            "basic_details_title": "Détails de Base",
+            "basic_details_desc": "Informations principales concernant votre événement de collecte.",
+            "event_name": "Nom de l'événement",
+            "url_slug": "Slug URL",
+            "status": "Statut",
+            "status_placeholder": "Sélectionner un statut",
+            "goal_amount": "Objectif de Collecte ($)",
+            "event_date": "Date de l'événement",
+            "form_config_title": "Configuration du Formulaire",
+            "form_config_desc": "Sélectionnez les champs supplémentaires à collecter auprès des donateurs.",
+            "collect_phone": "Collecter le numéro de téléphone",
+            "collect_address": "Collecter l'adresse",
+            "collect_company": "Collecter le nom de l'entreprise",
+            "success_save": "Paramètres généraux enregistrés avec succès !",
+            "error_save": "Échec de l'enregistrement des paramètres",
+            "no_event": "Aucun événement trouvé. Veuillez initialiser la base de données."
+        },
+        "branding": {
+            "success_save": "Paramètres de design mis à jour",
+            "saved_successfully": "Paramètres enregistrés avec succès",
+            "save_changes": "Enregistrer les modifications",
+            "subtitle": "Configurez les détails et l'apparence de l'événement.",
+            "error_save": "Échec de l'enregistrement des paramètres",
+            "strategy_title": "Stratégie de Marque",
+            "strategy_desc": "Décidez si cet événement doit suivre la marque de l'organisation ou avoir sa propre identité.",
+            "use_global": "Utiliser la Marque de l'Organisation (Recommandé)",
+            "use_global_desc": "Hériter du logo, des couleurs et des infos de l'organisation depuis le Centre de Marque Global.",
+            "preview_title": "Aperçu de l'Identité de l'Organisation",
+            "org_default": "Défaut Organisation",
+            "display_name": "Nom d'Affichage de l'Événement (Surcharge)",
+            "display_name_placeholder": "Titre Personnalisé de l'Événement",
+            "logo_url": "URL du Logo de l'Événement",
+            "accent_color": "Couleur d'Accent de l'Événement",
+            "override_warning": "La marque personnalisée de l'événement remplace l'apparence standard de l'organisation pour cet événement spécifique.",
+            "apply_overrides": "Appliquer les Surcharges de Thème"
+        }
     }
 }

@@ -10,8 +10,6 @@ interface AppHeaderProps {
     rightContent?: React.ReactNode;
 }
 
-
-
 export const AppHeader = ({
     title,
     showOnlineStatus = false,

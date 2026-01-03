@@ -7,6 +7,7 @@ import type { DonationType } from "../types";
 import { DonorInfoForm } from "../components/DonorInfoForm";
 import { Button } from "@/components/ui/button";
 import { Check, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 
 export const CollectorPage = () => {
@@ -76,14 +77,14 @@ export const CollectorPage = () => {
                 ? t('staff.success_offline', { amount: formattedAmount })
                 : t('staff.success_online', { amount: formattedAmount });
 
-            alert(msg); // Simple feedback
+            toast.success(msg);
 
             setAmount("");
             setName("");
             setEmail("");
             setType("cash");
         } else {
-            alert(t('staff.submit_error'));
+            toast.error(t('staff.submit_error'));
         }
     };
 
@@ -91,7 +92,7 @@ export const CollectorPage = () => {
     useEffect(() => {
         const handleOnline = () => {
             SyncService.processQueue().then(count => {
-                if (count > 0) alert(t('staff.back_online', { count }));
+                if (count > 0) toast.success(t('staff.back_online', { count }));
             });
         };
         window.addEventListener('online', handleOnline);

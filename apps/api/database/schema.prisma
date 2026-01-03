@@ -7,15 +7,45 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ConfigScope {
+  GLOBAL
+  EVENT
+}
+
+model Configuration {
+  id               String      @id @default(uuid())
+  scope            ConfigScope @default(GLOBAL)
+  entityId         String?     // Null for GLOBAL, matches Event.id for EVENT
+  
+  // Isolated Identity
+  organization     String?
+  address          String?
+  phone            String?
+  logo             String?
+  email            String?
+  website          String?
+
+  // Granular JSON Blocks
+  themeVariables   Json?       // Record<string, string>
+  assets           Json?       
+  event            Json?       
+  form             Json?       
+  communication    Json?       
+  payment          Json?       
+  socialNetwork    Json?       
+  locales          Json?       
+
+  updatedAt        DateTime    @updatedAt
+  @@unique([scope, entityId])
+}
+
 model Event {
   id            String   @id @default(uuid())
   slug          String   @unique
   name          String
-  goalAmount    Decimal
-  themeConfig   Json     // Stores { primaryColor, logoUrl, etc. }
-  formConfig    Json?    // Stores { phone: { enabled: true, required: false }, ... }
   date          DateTime @default(now())
   description   String?
+  goalAmount    Decimal
   status        String   @default("active") // active, draft, closed
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

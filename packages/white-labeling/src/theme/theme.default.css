@@ -449,27 +449,16 @@
 @theme {
   /* --- Tailwind 4 Color Mappings --- */
   --color-primary: var(--primary);
-  /* Maps primary color to Tailwind */
   --color-primary-foreground: var(--primary-foreground);
-  /* Maps primary foreground text */
   --color-secondary: var(--secondary);
-  /* Maps secondary color */
   --color-secondary-foreground: var(--secondary-foreground);
-  /* Maps secondary foreground text */
   --color-background: var(--background);
-  /* Maps background color */
   --color-foreground: var(--foreground);
-  /* Maps foreground text */
   --color-muted: var(--muted);
-  /* Maps muted background */
   --color-muted-foreground: var(--muted-foreground);
-  /* Maps muted foreground text */
   --color-border: var(--border);
-  /* Maps border color */
   --color-input: var(--input);
-  /* Maps input border color */
   --color-ring: var(--ring);
-  /* Maps focus ring color */
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-accent: var(--accent);
@@ -481,69 +470,42 @@
 
   /* --- Feature Color Mappings --- */
   --color-glass-bg: var(--glass-bg);
-  /* Maps glass background for utilities */
   --color-glass-border: var(--glass-border);
-  /* Maps glass border for utilities */
   --color-input-bg: var(--input-bg);
-  /* Maps input background for utilities */
   --color-live-bg-accent-1: var(--live-bg-accent-1);
-  /* Maps live accent 1 */
   --color-live-bg-accent-2: var(--live-bg-accent-2);
-  /* Maps live accent 2 */
   --color-live-qr-bg: var(--live-qr-bg);
-  /* Maps QR background */
   --color-live-qr-shadow: var(--live-qr-shadow);
-  /* Maps QR shadow */
   --color-staff-display-bg: var(--staff-display-bg);
-  /* Maps staff display background */
   --color-staff-display-border: var(--staff-display-border);
-  /* Maps staff display border */
   --color-staff-keypad-bg: var(--staff-keypad-bg);
-  /* Maps staff keypad background */
 
   /* --- Auth --- */
   --color-auth-page-bg: var(--auth-page-bg);
-  /* Maps auth page background */
   --color-auth-card-shadow: var(--auth-card-shadow);
-  /* Maps auth card shadow */
 
   /* --- Admin --- */
   --color-admin-sidebar-bg: var(--admin-sidebar-bg);
-  /* Maps admin sidebar background */
   --color-admin-sidebar-text: var(--admin-sidebar-text);
-  /* Maps admin sidebar text */
   --color-admin-content-bg: var(--admin-content-bg);
-  /* Maps admin content background */
 
   /* --- Live --- */
   --color-live-page-bg: var(--live-page-bg);
-  /* Maps live page background */
   --color-live-text-main: var(--live-text-main);
-  /* Maps live main text */
   --color-live-highlight: var(--live-highlight-color);
-  /* Maps live highlight text */
   --color-live-status: var(--live-status-indicator);
-  /* Maps live status indicator */
 
   /* --- Donation --- */
   --color-donation-title: var(--donation-title-color);
-  /* Maps donation title color */
   --color-donation-subtitle: var(--donation-subtitle-color);
-  /* Maps donation subtitle color */
 
   /* --- Tailwind 4 Radius Mappings --- */
   --radius-sm: var(--global-radius-sm);
-  /* Maps small radius */
   --radius-DEFAULT: var(--global-radius);
-  /* Maps default radius */
   --radius-lg: var(--global-radius-lg);
-  /* Maps large radius */
   --radius-full: var(--global-radius-full);
-  /* Maps full radius (pill) */
   --radius-global: var(--global-radius);
-  /* Maps global radius alias */
   --radius-global-lg: var(--global-radius-lg);
-  /* Maps global large radius alias */
 
   /* --- Animation --- */
   --animate-gradient-xy: gradient-xy 15s ease infinite;

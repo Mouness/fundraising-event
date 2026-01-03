@@ -45,6 +45,7 @@
         },
         "payment": {
             "provider": "stripe",
+            "currency": "USD",
             "config": {
                 "publishableKey": "pk_test_placeholder"
             }
@@ -66,8 +67,11 @@
             "footerText": "You are receiving this email because you made a donation."
         }
     },
-    "settings": {
-        "showAnalytics": true
-    },
-    "locales": {}
+    "locales": {
+        "default": "en",
+        "supported": [
+            "en",
+            "fr"
+        ]
+    }
 }

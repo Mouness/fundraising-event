@@ -5,7 +5,13 @@ import { DeepPartial } from '../types';
  * properties in source override properties in target.
  * Arrays are replaced, not concatenated (usually preferred for config).
  */
-export function deepMerge<T extends object>(target: T, source: DeepPartial<T>): T {
+export function deepMerge<T extends object>(target: T, ...sources: DeepPartial<T>[]): T {
+    if (!sources.length) return target;
+
+    // Merge the first source into target
+    const source = sources.shift();
+    if (!source) return deepMerge(target, ...sources);
+
     const output = { ...target };
 
     if (isObject(target) && isObject(source)) {
@@ -30,7 +36,8 @@ export function deepMerge<T extends object>(target: T, source: DeepPartial<T>): 
         });
     }
 
-    return output;
+    // Recursively merge remaining sources
+    return deepMerge(output, ...sources);
 }
 
 function isObject(item: any): item is Record<string, any> {

@@ -1,5 +1,5 @@
 import eventConfigDefault from './event-config.default.json';
-import { getDbConfig } from '../store';
+import { getGlobalConfig, getEventConfig } from '../store';
 import { deepMerge } from '../utils/merge';
 import type { DeepPartial, EventConfig } from '../types';
 
@@ -8,22 +8,24 @@ import type { DeepPartial, EventConfig } from '../types';
  * Merges defaults with database overrides (if any).
  */
 export function loadConfigs(): EventConfig {
-    const dbConfig = getDbConfig();
+    const globalConfig = getGlobalConfig();
+    const eventConfig = getEventConfig();
     const baseConfig = eventConfigDefault as EventConfig;
 
-    if (!dbConfig) {
-        return baseConfig;
+    // 1. Defaults
+    let result = baseConfig;
+
+    // 2. Global Overrides
+    if (globalConfig) {
+        result = deepMerge(result, globalConfig as DeepPartial<EventConfig>);
     }
 
-    const remoteConfig: DeepPartial<EventConfig> = {
-        id: dbConfig.id,
-        slug: dbConfig.slug,
-        content: {
-            title: dbConfig.name,
-            goalAmount: Number(dbConfig.goalAmount),
-        },
-        theme: dbConfig.themeConfig as DeepPartial<EventConfig['theme']>,
-    };
+    // 3. Event Overrides
+    if (eventConfig) {
+        result = deepMerge(result, eventConfig as DeepPartial<EventConfig>);
+    }
 
-    return deepMerge(baseConfig, remoteConfig);
+    return result;
 }
+
+export { eventConfigDefault as defaultConfig };

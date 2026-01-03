@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { AppConfigProvider, useAppConfig } from '@/providers/AppConfigProvider';
 import { MemoryRouter, Route, Routes, useParams } from 'react-router-dom';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { WhiteLabelStore } from '@fundraising/white-labeling';
+import { resetWhiteLabelStore } from '@fundraising/white-labeling';
 
 // Component to display config for verification
 const ConfigDisplay = () => {
@@ -45,15 +45,35 @@ describe('Multi-Event Integration', () => {
 
     beforeEach(() => {
         // Reset store
-        WhiteLabelStore.reset();
+        resetWhiteLabelStore();
 
         // Mock fetch
-        vi.stubGlobal('fetch', vi.fn().mockImplementation(() =>
-            Promise.resolve({
-                ok: true,
-                json: () => Promise.resolve(mockEvents)
-            })
-        ));
+        vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => {
+            if (url.includes('/settings/global')) {
+                return Promise.resolve({
+                    ok: true,
+                    json: () => Promise.resolve({
+                        content: { title: 'Fundraising Platform' },
+                        id: 'platform'
+                    })
+                });
+            }
+
+            const slug = url.split('/events/')[1]?.split('/settings')[0];
+            const event = mockEvents.find(e => e.slug === slug);
+
+            if (event) {
+                return Promise.resolve({
+                    ok: true,
+                    json: () => Promise.resolve({
+                        content: { title: event.name },
+                        id: event.id
+                    })
+                });
+            }
+
+            return Promise.resolve({ ok: false, status: 404 });
+        }));
     });
 
     afterEach(() => {

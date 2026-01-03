@@ -2,17 +2,20 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEventDto, UpdateEventDto } from '@fundraising/types';
 import { PrismaService } from '../../database/prisma.service';
 
+import { WhiteLabelingService } from '../white-labeling/white-labeling.service';
+
 @Injectable()
 export class EventsService {
-  constructor(private prisma: PrismaService) { }
+  constructor(
+    private prisma: PrismaService,
+    private whiteLabelingService: WhiteLabelingService
+  ) { }
 
   private readonly defaultSelect = {
     id: true,
     slug: true,
     name: true,
     goalAmount: true,
-    themeConfig: true,
-    formConfig: true,
     date: true,
     description: true,
     status: true,
@@ -26,7 +29,6 @@ export class EventsService {
         slug: createEventDto.slug,
         name: createEventDto.name,
         goalAmount: createEventDto.goalAmount,
-        themeConfig: createEventDto.themeConfig || {},
         date: createEventDto.date ? new Date(createEventDto.date) : new Date(),
         description: createEventDto.description,
         status: createEventDto.status || 'active',
@@ -73,6 +75,12 @@ export class EventsService {
   }
 
   async update(id: string, updateEventDto: UpdateEventDto) {
+    // Check for formConfig in the payload (extra field from frontend)
+    const formConfig = (updateEventDto as any).formConfig;
+    if (formConfig) {
+      await this.whiteLabelingService.updateEventSettings(id, { formConfig });
+    }
+
     return this.prisma.event.update({
       where: { id },
       data: {
@@ -80,9 +88,6 @@ export class EventsService {
         ...(updateEventDto.slug && { slug: updateEventDto.slug }),
         ...(updateEventDto.goalAmount && {
           goalAmount: updateEventDto.goalAmount,
-        }),
-        ...(updateEventDto.themeConfig && {
-          themeConfig: updateEventDto.themeConfig,
         }),
         ...(updateEventDto.date && { date: new Date(updateEventDto.date) }),
         ...(updateEventDto.description && { description: updateEventDto.description }),

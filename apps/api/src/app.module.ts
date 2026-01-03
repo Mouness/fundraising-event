@@ -8,17 +8,18 @@ import { GatewayModule } from './features/gateway/gateway.module';
 import { DatabaseModule } from './database/database.module';
 import { DonationModule } from './features/donation/donation.module';
 import { QueueModule } from './features/queue/queue.module';
-import { EventConfigModule } from './features/events/configuration/event-config.module';
 import { MailModule } from './features/mail/mail.module';
 import { ExportModule } from './features/export/export.module';
 import { StaffModule } from './features/staff/staff.module';
+
+import { WhiteLabelingModule } from './features/white-labeling/white-labeling.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    EventConfigModule,
+
     DatabaseModule,
     AuthModule,
     EventsModule,
@@ -27,6 +28,8 @@ import { StaffModule } from './features/staff/staff.module';
     QueueModule,
     ExportModule,
     StaffModule,
+    StaffModule,
+    WhiteLabelingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

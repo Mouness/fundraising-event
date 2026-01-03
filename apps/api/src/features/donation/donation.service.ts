@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateDonationParams } from './interfaces/donation-service.interface';
+import { Inject, BadRequestException, NotFoundException } from '@nestjs/common';
+import type { PaymentProvider } from './interfaces/payment-provider.interface';
 
 @Injectable()
 export class DonationService {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(
+        private readonly prisma: PrismaService,
+        @Inject('PAYMENT_PROVIDER') private readonly paymentService: PaymentProvider,
+    ) { }
 
     async create(data: CreateDonationParams) {
         let eventId = data.eventId;
@@ -39,6 +44,46 @@ export class DonationService {
             console.error('Error creating donation:', error);
             throw error;
         }
+    }
+
+    async update(id: string, data: { donorName?: string; donorEmail?: string; isAnonymous?: boolean; message?: string }) {
+        return this.prisma.donation.update({
+            where: { id },
+            data,
+        });
+    }
+
+    async cancel(id: string, shouldRefund: boolean = false) {
+        const donation = await this.prisma.donation.findUnique({ where: { id } });
+        if (!donation) throw new NotFoundException('Donation not found');
+
+        if (donation.status === 'CANCELLED' || donation.status === 'REFUNDED') {
+            throw new BadRequestException('Donation is already cancelled or refunded');
+        }
+
+        let newStatus = 'CANCELLED';
+
+        if (shouldRefund) {
+            if (donation.paymentMethod !== 'stripe' || !donation.stripePaymentIntentId) {
+                if (donation.paymentMethod === 'stripe') {
+                    throw new BadRequestException('Cannot refund: Missing Stripe Payment Intent ID');
+                }
+                newStatus = 'REFUNDED';
+            } else {
+                try {
+                    await this.paymentService.refundDonation(donation.stripePaymentIntentId);
+                    newStatus = 'REFUNDED';
+                } catch (error) {
+                    console.error('Stripe refund failed:', error);
+                    throw new BadRequestException('Failed to process refund with Stripe');
+                }
+            }
+        }
+
+        return this.prisma.donation.update({
+            where: { id },
+            data: { status: newStatus },
+        });
     }
 
     async findAll(

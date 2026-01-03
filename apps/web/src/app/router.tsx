@@ -1,9 +1,10 @@
 import { Suspense, lazy, type ComponentType } from 'react';
 import { createBrowserRouter, Navigate, Outlet, useParams } from 'react-router-dom';
-import { PageLoader } from '@/components/ui/PageLoader';
+import { PageLoader } from '@/components/ui/page-loader';
 import { AppConfigProvider } from '@/providers/AppConfigProvider';
 import { EventProvider } from '@/features/events/context/EventContext';
 import { StaffGuard } from '../features/staff/components/StaffGuard';
+import { AuthGuard } from '../features/auth/components/AuthGuard';
 
 // Helper for lazy loading
 const Loadable = (Component: ComponentType, fallback = <PageLoader />) => (
@@ -17,6 +18,7 @@ const AdminLayout = lazy(() => import('../features/admin/layouts/AdminLayout').t
 const DashboardPage = lazy(() => import('../features/admin/pages/DashboardPage').then(module => ({ default: module.DashboardPage })));
 const DonationsPage = lazy(() => import('../features/events/pages/DonationsPage').then(module => ({ default: module.DonationsPage })));
 const EventSettingsPage = lazy(() => import('../features/events/pages/EventSettingsPage').then(module => ({ default: module.EventSettingsPage })));
+const GlobalSettingsPage = lazy(() => import('../features/admin/pages/GlobalSettingsPage').then(module => ({ default: module.GlobalSettingsPage })));
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(module => ({ default: module.LoginPage })));
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
 const DonationPage = lazy(() => import('../features/donation/pages/DonationPage').then(module => ({ default: module.DonationPage })));
@@ -40,6 +42,23 @@ const EventContextWrapper = () => {
             <EventProvider>
                 <Outlet />
             </EventProvider>
+        </AppConfigProvider>
+    );
+};
+
+const EventAdminWrapper = () => {
+    const { slug } = useParams<{ slug: string }>();
+    return (
+        <AppConfigProvider slug={slug}>
+            <Outlet />
+        </AppConfigProvider>
+    );
+};
+
+const GlobalAdminWrapper = () => {
+    return (
+        <AppConfigProvider>
+            <Outlet />
         </AppConfigProvider>
     );
 };
@@ -107,48 +126,59 @@ export const router = createBrowserRouter([
     },
     {
         path: '/admin',
+        element: <GlobalAdminWrapper />,
         children: [
             {
-                element: Loadable(AdminLayout),
+                element: <AuthGuard />,
                 children: [
                     {
-                        path: '',
-                        element: Loadable(DashboardPage),
+                        element: Loadable(AdminLayout),
+                        children: [
+                            {
+                                path: '',
+                                element: Loadable(DashboardPage),
+                            },
+                            {
+                                path: 'events',
+                                element: Loadable(EventListPage)
+                            },
+                            {
+                                path: 'staff',
+                                element: Loadable(StaffManagementPage)
+                            },
+                            {
+                                path: 'settings',
+                                element: Loadable(GlobalSettingsPage)
+                            }
+                        ]
                     },
+                    // Event specific admin routes (Separate Layout)
                     {
-                        path: 'events',
-                        element: Loadable(EventListPage)
-                    },
-                    {
-                        path: 'staff',
-                        element: Loadable(StaffManagementPage)
-                    },
-                    {
-                        path: 'settings',
-                        element: <div>Global Settings (Coming Soon)</div>
-                    }
-                ]
-            },
-            // Event specific admin routes (Separate Layout)
-            {
-                path: 'events/:slug',
-                element: Loadable(EventLayout),
-                children: [
-                    {
-                        index: true,
-                        element: Loadable(EventDashboardPage),
-                    },
-                    {
-                        path: 'donations',
-                        element: Loadable(DonationsPage),
-                    },
-                    {
-                        path: 'settings',
-                        element: Loadable(EventSettingsPage),
-                    },
-                    {
-                        path: 'team',
-                        element: Loadable(EventTeamPage),
+                        path: 'events/:slug',
+                        element: <EventAdminWrapper />,
+                        children: [
+                            {
+                                element: Loadable(EventLayout),
+                                children: [
+                                    {
+                                        index: true,
+                                        element: Loadable(EventDashboardPage),
+                                    },
+                                    {
+                                        path: 'donations',
+                                        element: Loadable(DonationsPage),
+                                    },
+                                    {
+                                        path: 'settings',
+                                        element: Loadable(EventSettingsPage),
+                                    },
+                                    {
+                                        path: 'team',
+                                        element: Loadable(EventTeamPage),
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }

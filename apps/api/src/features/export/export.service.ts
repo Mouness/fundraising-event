@@ -27,6 +27,7 @@ export class ExportService {
         const donations = await this.prisma.donation.findMany({
             where,
             orderBy: { createdAt: 'desc' },
+            include: { event: { select: { slug: true } } },
         });
 
         this.logger.log(`Found ${donations.length} donations to process.`);
@@ -49,7 +50,12 @@ export class ExportService {
                     // Assuming 'donorName' field holds the real name entered in form.
                 }
 
-                const pdfBuffer = await this.pdfService.generateReceipt({
+                if (!donation.event?.slug) {
+                    this.logger.warn(`Skipping receipt for donation ${donation.id}: Event slug not found`);
+                    continue;
+                }
+
+                const pdfBuffer = await this.pdfService.generateReceipt(donation.event.slug, {
                     amount: donation.amount.toNumber(), // Convert Decimal to number (cents)
                     donorName: donorName,
                     date: donation.createdAt,
@@ -73,15 +79,20 @@ export class ExportService {
     async getReceipt(donationId: string): Promise<Buffer> {
         const donation = await this.prisma.donation.findUnique({
             where: { id: donationId },
+            include: { event: { select: { slug: true } } },
         });
 
         if (!donation) {
             throw new Error('Donation not found');
         }
 
+        if (!donation.event?.slug) {
+            throw new Error('Event context missing for donation');
+        }
+
         const donorName = donation.donorName || 'Supporter';
 
-        return this.pdfService.generateReceipt({
+        return this.pdfService.generateReceipt(donation.event.slug, {
             amount: donation.amount.toNumber(),
             donorName: donorName,
             date: donation.createdAt,

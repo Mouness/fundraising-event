@@ -1,195 +1,241 @@
-
-import { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { api } from '@/lib/api';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { Loader2, Save } from 'lucide-react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEvent } from '@/features/events/context/EventContext';
+import { Settings, Palette, Save, Loader2 } from 'lucide-react';
+import { GeneralForm } from '../components/event-settings/GeneralForm';
+import { BrandingForm } from '../components/event-settings/BrandingForm';
+import { useEvent } from '../context/EventContext';
 
-const getEventSchema = (t: any) => z.object({
+const getCombinedSchema = (t: any) => z.object({
+    // General
     name: z.string().min(1, t('validation.required')),
     goalAmount: z.coerce.number().min(1, t('validation.min_value', { count: 1 })),
     slug: z.string().min(1, t('validation.required')),
-    primaryColor: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, t('validation.invalid_hex')),
-    logoUrl: z.string().url(t('validation.invalid_url')).optional().or(z.literal('')),
+    status: z.enum(['active', 'draft', 'closed']),
+    date: z.string().optional(),
+    formConfig: z.object({
+        collectPhone: z.boolean(),
+        collectAddress: z.boolean(),
+        collectCompany: z.boolean(),
+    }),
+    // Branding Overrides
+    useGlobalBranding: z.boolean(),
+    organization: z.string().optional(),
+    assets: z.object({
+        logo: z.string().url().optional().or(z.literal('')),
+        backgroundLanding: z.string().url().optional().or(z.literal('')),
+        backgroundLive: z.string().url().optional().or(z.literal('')),
+    }).optional(),
+    themeVariables: z.array(z.object({
+        key: z.string(),
+        value: z.string()
+    })).optional(),
+    communication: z.object({
+        enabled: z.boolean().default(false),
+        senderName: z.string().optional(),
+        replyTo: z.string().email().optional().or(z.literal('')),
+        subjectLine: z.string().optional(),
+    }).optional(),
 });
 
-type EventFormValues = z.infer<ReturnType<typeof getEventSchema>>;
-
 export const EventSettingsPage = () => {
-    const queryClient = useQueryClient();
-    const { event, isLoading } = useEvent();
     const { t } = useTranslation('common');
+    const { event, isLoading: isEventLoading } = useEvent();
+    const queryClient = useQueryClient();
+    const [activeSection, setActiveSection] = useState('general');
 
-    const eventSchema = getEventSchema(t);
-    const form = useForm<EventFormValues>({
-        resolver: zodResolver(eventSchema),
+    const form = useForm({
+        resolver: zodResolver(getCombinedSchema(t)),
         defaultValues: {
-            name: '',
-            goalAmount: 0,
-            slug: '',
-            primaryColor: '#000000',
-            logoUrl: '',
-        },
+            // General Defaults
+            name: '', goalAmount: 0, slug: '', status: 'draft', date: '',
+            formConfig: { collectPhone: false, collectAddress: false, collectCompany: false },
+
+            // Branding Defaults
+            useGlobalBranding: true,
+            organization: '',
+            assets: { logo: '', backgroundLanding: '', backgroundLive: '' },
+            themeVariables: [],
+            communication: { enabled: false, senderName: '', replyTo: '', subjectLine: '' },
+        }
     });
 
-    // Populate form when data loads
-    useEffect(() => {
-        if (event) {
-            const primary = event.themeConfig?.variables?.['--primary'] || '#000000';
-            const logo = event.themeConfig?.assets?.logo || '';
+    const navItems = [
+        { id: 'general', label: t('event_settings.nav.general', 'General'), icon: Settings },
+        { id: 'branding', label: t('event_settings.nav.branding', 'Design & Branding'), icon: Palette },
+    ];
 
-            form.reset({
-                name: event.name,
-                goalAmount: Number(event.goalAmount),
-                slug: event.slug,
-                primaryColor: primary,
-                logoUrl: logo,
-            });
+    const renderActiveSection = () => {
+        switch (activeSection) {
+            case 'general': return <GeneralForm />;
+            case 'branding': return <BrandingForm />;
+            default: return null;
         }
-    }, [event, form]);
+    };
+
+    // Load Event Data and Branding Override using useQuery
+    const { data: eventSettings } = useQuery({
+        queryKey: ['event-settings', event?.slug],
+        queryFn: async () => {
+            if (!event?.slug) return null;
+            // First fetch the raw settings to get general details and override status
+            const res = await api.get(`/events/${event.slug}/settings`);
+            return res.data;
+        },
+        enabled: !!event?.slug
+    });
+
+    // Sync form with loaded data
+    useEffect(() => {
+        if (!event || !eventSettings) return;
+
+        const data = eventSettings;
+        const variables = data.theme?.variables || {};
+        const variableArray = Object.entries(variables).map(([key, value]) => ({ key, value: String(value) }));
+
+        form.reset({
+            // General
+            name: event.name,
+            goalAmount: Number(event.goalAmount),
+            slug: event.slug,
+            status: (event.status as any) || 'draft',
+            date: event.date ? new Date(event.date).toISOString().split('T')[0] : '',
+            formConfig: {
+                collectPhone: data.donation?.form?.collectPhone || false,
+                collectAddress: data.donation?.form?.collectAddress || false,
+                collectCompany: data.donation?.form?.collectCompany || false,
+            },
+            // Branding
+            useGlobalBranding: !data.isOverride,
+            organization: data.content?.title || '',
+            assets: {
+                logo: data.theme?.assets?.logo || '',
+                backgroundLanding: data.theme?.assets?.backgroundLanding || '',
+                backgroundLive: data.theme?.assets?.backgroundLive || '',
+            },
+            themeVariables: variableArray,
+            communication: {
+                enabled: data.overrides?.communication ?? !!data.communication?.email?.senderName,
+                senderName: data.communication?.email?.senderName || '',
+                replyTo: data.communication?.email?.replyTo || '',
+                subjectLine: data.communication?.email?.subjectLine || '',
+            }
+        });
+    }, [event, eventSettings, form]);
 
     const mutation = useMutation({
-        mutationFn: async (values: EventFormValues) => {
+        mutationFn: async (values: any) => {
             if (!event?.id) throw new Error('No active event ID');
 
-            const currentThemeConfig = event.themeConfig || {};
-
-            // Deep merge logic
-            const updatedThemeConfig = {
-                ...currentThemeConfig,
-                assets: {
-                    ...currentThemeConfig.assets,
-                    logo: values.logoUrl || undefined
-                },
-                variables: {
-                    ...currentThemeConfig.variables,
-                    '--primary': values.primaryColor
-                }
-            };
-
+            // 1. Save General Settings
             await api.patch(`/events/${event.id}`, {
                 name: values.name,
                 goalAmount: values.goalAmount,
                 slug: values.slug,
-                themeConfig: updatedThemeConfig,
+                status: values.status,
+                date: values.date ? new Date(values.date).toISOString() : undefined,
+                formConfig: values.formConfig,
             });
+
+            // 2. Save Branding Settings
+            if (values.useGlobalBranding) {
+                // Delete event-specific branding overrides (reset to global)
+                await api.delete(`/events/${event.id}/branding`);
+            } else {
+                // Transform variables array back to object
+                const variablesMap = (values.themeVariables || []).reduce((acc: any, curr: any) => {
+                    if (curr.key && curr.value) acc[curr.key] = curr.value;
+                    return acc;
+                }, {});
+
+                await api.patch(`/events/${event.id}/branding`, {
+                    organization: values.organization || null,
+                    theme: {
+                        assets: values.assets,
+                        variables: variablesMap,
+                    },
+                    communication: values.communication.enabled ? {
+                        email: {
+                            senderName: values.communication.senderName,
+                            replyTo: values.communication.replyTo,
+                            subjectLine: values.communication.subjectLine,
+                        }
+                    } : null
+                });
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['active-event-settings'] });
-            // Ideally invalidate 'events' list too
+            queryClient.invalidateQueries({ queryKey: ['event-settings', event?.slug] });
             queryClient.invalidateQueries({ queryKey: ['events'] });
-            alert("Settings saved successfully!");
+            toast.success(t('common.saved_successfully', 'Settings saved successfully'));
         },
         onError: (error: any) => {
-            console.error('Failed to save settings', error);
-            const msg = error?.response?.data?.message || error?.message || "Unknown error";
-            alert(`Failed to save settings: ${msg}`);
+            toast.error(error?.response?.data?.message || t('common.error_saving', 'Failed to save settings'));
         }
     });
 
-    const onSubmit = (values: EventFormValues) => {
-        mutation.mutate(values);
-    };
-
-    if (isLoading) {
-        return <div className="flex justify-center p-8"><Loader2 className="h-8 w-8 animate-spin" /></div>;
-    }
-
-    if (!event) {
-        return <div className="p-8">No event found. Please initialize the database.</div>;
-    }
-
     return (
-        <div className="space-y-6 max-w-4xl mx-auto">
-            <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold tracking-tight">Event Settings</h2>
-            </div>
-
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>General Information</CardTitle>
-                        <CardDescription>Basic details about your fundraising event.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="grid gap-2">
-                            <Label htmlFor="name">Event Name</Label>
-                            <Input id="name" {...form.register('name')} />
-                            {form.formState.errors.name && <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>}
-                        </div>
-
-                        <div className="grid gap-2">
-                            <Label htmlFor="slug">URL Slug</Label>
-                            <Input id="slug" {...form.register('slug')} />
-                            {form.formState.errors.slug && <p className="text-sm text-red-500">{form.formState.errors.slug.message}</p>}
-                        </div>
-
-                        <div className="grid gap-2">
-                            <Label htmlFor="goalAmount">Fundraising Goal ($)</Label>
-                            <Input id="goalAmount" type="number" {...form.register('goalAmount')} />
-                            {form.formState.errors.goalAmount && <p className="text-sm text-red-500">{form.formState.errors.goalAmount.message}</p>}
-                        </div>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Branding & Theme</CardTitle>
-                        <CardDescription>Customize the look and feel of public pages.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="grid gap-2">
-                            <Label htmlFor="logoUrl">Logo URL (Leave empty for default)</Label>
-                            <Input id="logoUrl" placeholder="https://..." {...form.register('logoUrl')} />
-                            {form.formState.errors.logoUrl && <p className="text-sm text-red-500">{form.formState.errors.logoUrl.message}</p>}
-                        </div>
-
-                        <div className="grid gap-2">
-                            <Label htmlFor="primaryColor">Primary Color</Label>
-                            <Controller
-                                control={form.control}
-                                name="primaryColor"
-                                render={({ field }) => (
-                                    <div className="flex gap-2">
-                                        <Input
-                                            id="primaryColor"
-                                            type="color"
-                                            className="w-12 h-10 p-1 cursor-pointer"
-                                            value={field.value || '#000000'}
-                                            onChange={(e) => {
-                                                field.onChange(e.target.value.toUpperCase());
-                                                setTimeout(() => e.target.blur(), 0);
-                                            }}
-                                        />
-                                        <Input
-                                            type="text"
-                                            className="flex-1"
-                                            value={field.value || ''}
-                                            onChange={(e) => field.onChange(e.target.value.toUpperCase())}
-                                        />
-                                    </div>
-                                )}
-                            />
-                            {form.formState.errors.primaryColor && <p className="text-sm text-red-500">{form.formState.errors.primaryColor.message}</p>}
-                        </div>
-                    </CardContent>
-                </Card>
-
-                <div className="flex justify-end">
-                    <Button type="submit" disabled={mutation.isPending}>
-                        {mutation.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                        Save Changes
-                    </Button>
+        <FormProvider {...form}>
+            <div className="max-w-[1400px] mx-auto pb-10">
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">{t('event_settings.title', 'Event Settings')}</h2>
+                        <p className="text-muted-foreground">{t('event_settings.subtitle', 'Configure event details and appearance.')}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Button
+                            onClick={form.handleSubmit((data) => mutation.mutate(data))}
+                            disabled={mutation.isPending || isEventLoading}
+                        >
+                            {mutation.isPending ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    {t('common.saving', 'Saving...')}
+                                </>
+                            ) : (
+                                <>
+                                    <Save className="mr-2 h-4 w-4" />
+                                    {t('common.save_changes', 'Save Changes')}
+                                </>
+                            )}
+                        </Button>
+                    </div>
                 </div>
-            </form>
-        </div>
+
+                <div className="grid grid-cols-12 gap-8">
+                    {/* Settings Sidebar */}
+                    <div className="col-span-12 md:col-span-3 lg:col-span-2 space-y-2">
+                        {navItems.map(item => (
+                            <button
+                                key={item.id}
+                                onClick={() => setActiveSection(item.id)}
+                                type="button"
+                                className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-md transition-colors ${activeSection === item.id
+                                    ? 'bg-primary/10 text-primary'
+                                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                                    } `}
+                            >
+                                <item.icon className="h-4 w-4" />
+                                {item.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Main Content Area */}
+                    <div className="col-span-12 md:col-span-9 lg:col-span-10">
+                        <div className="max-w-4xl">
+                            {renderActiveSection()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </FormProvider>
     );
 };

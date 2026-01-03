@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 import type { PropsWithChildren } from 'react';
 import { AppConfigProvider } from '@/providers/AppConfigProvider';
 
@@ -16,6 +17,7 @@ export const AppProviders = ({ children }: PropsWithChildren) => {
         <QueryClientProvider client={queryClient}>
             <AppConfigProvider>
                 {children}
+                <Toaster richColors position="top-center" closeButton />
             </AppConfigProvider>
         </QueryClientProvider>
     );

@@ -1,4 +1,5 @@
 import { Plus, Trash2, Loader2, Users } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +48,7 @@ export const EventTeamPage = () => {
         },
         onError: (err: any) => {
             console.error('Failed to assign staff', err);
-            alert(t('admin_team.error_assignment', 'Failed to assign staff member.'));
+            toast.error(t('admin_team.error_assignment'));
         }
     });
 
@@ -63,7 +64,7 @@ export const EventTeamPage = () => {
         onError: (err: any) => {
             console.error('Failed to unassign staff', err);
             const msg = err.response?.data?.message || err.message || 'Unknown error';
-            alert(`${t('admin_team.error_revocation', 'Failed to remove member.')} (${msg})`);
+            toast.error(`${t('admin_team.error_revocation')} (${msg})`);
         }
     });
 
@@ -80,10 +81,10 @@ export const EventTeamPage = () => {
         <div className="space-y-6">
             <div>
                 <h2 className="text-3xl font-bold tracking-tight" style={{ color: 'var(--admin-heading-color)' }}>
-                    {t('admin_team.title_assign', 'Affectation')}
+                    {t('admin_team.title_assign')}
                 </h2>
                 <p className="text-muted-foreground mt-1">
-                    {t('admin_team.subtitle_assign', 'Configure the team for this event')}
+                    {t('admin_team.subtitle_assign')}
                 </p>
             </div>
 
@@ -93,15 +94,15 @@ export const EventTeamPage = () => {
                     <CardHeader>
                         <CardTitle className="text-lg flex items-center gap-2">
                             <Plus className="h-4 w-4 text-primary" />
-                            {t('admin_team.pool_title', 'Volunteer Pool')}
+                            {t('admin_team.pool_title')}
                         </CardTitle>
-                        <CardDescription>{t('admin_team.pool_desc', 'Click to add to event')}</CardDescription>
+                        <CardDescription>{t('admin_team.pool_desc')}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-1">
                         <div className="space-y-1 max-h-[500px] overflow-auto pr-2">
                             {availableStaff.length === 0 ? (
                                 <p className="text-sm text-muted-foreground text-center py-8 italic">
-                                    {t('admin_team.pool_empty', 'No available volunteers')}
+                                    {t('admin_team.pool_empty')}
                                 </p>
                             ) : (
                                 availableStaff.map((member: any) => (
@@ -124,9 +125,9 @@ export const EventTeamPage = () => {
                     <CardHeader>
                         <CardTitle className="text-lg flex items-center gap-2">
                             <Users className="h-4 w-4 text-primary" />
-                            {t('admin_team.assigned_title_short', 'Assigned Team')}
+                            {t('admin_team.assigned_title_short')}
                         </CardTitle>
-                        <CardDescription>{t('admin_team.assigned_desc', 'Authorized to collect donations for this event.')}</CardDescription>
+                        <CardDescription>{t('admin_team.assigned_desc')}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-1">
                         <div className="space-y-1 max-h-[500px] overflow-auto pr-2">
@@ -136,7 +137,7 @@ export const EventTeamPage = () => {
                                 </div>
                             ) : staff.length === 0 ? (
                                 <p className="text-sm text-muted-foreground text-center py-8 italic">
-                                    {t('admin_team.assigned_empty', 'No one assigned yet')}
+                                    {t('admin_team.assigned_empty')}
                                 </p>
                             ) : (
                                 staff.map((member: any) => (
@@ -154,7 +155,7 @@ export const EventTeamPage = () => {
                                                 handleUnassign(member.id);
                                             }}
                                             disabled={unassignMutation.isPending}
-                                            title={t('admin_team.unassign', 'Remove')}
+                                            title={t('admin_team.unassign')}
                                         >
                                             <Trash2 className="h-4 w-4" />
                                         </Button>

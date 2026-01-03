@@ -1,9 +1,11 @@
 import enDefault from './en.default.json';
 import frDefault from './fr.default.json';
-import { getDbConfig } from '../store';
+import { getGlobalConfig, getEventConfig } from '../store';
 import { deepMerge } from '../utils/merge';
 
-const defaultLocales = {
+import { SupportedLocale } from '../types/locales';
+
+const defaultLocales: Record<SupportedLocale, any> = {
     en: enDefault,
     fr: frDefault
 };
@@ -14,16 +16,35 @@ const defaultLocales = {
  * Supports both nested structures and flat-map overrides (e.g. { "en.donation.title": "..." }).
  */
 export function loadLocales(): typeof defaultLocales {
-    const config = getDbConfig();
+    const globalConfig = getGlobalConfig();
+    const eventConfig = getEventConfig();
 
-    // Start with default locales merged with legacy nested overrides
-    const result = deepMerge(defaultLocales, (config?.themeConfig?.locales || {}) as any);
+    // 1. Defaults
+    let result = defaultLocales;
 
-    // Apply modern flat-map overrides (e.g. { "en.donation.title": "New Title" })
-    const flatOverrides = config?.locales || {};
-    Object.entries(flatOverrides).forEach(([path, value]) => {
-        applyFlatOverride(result, path, String(value));
-    });
+    // 2. Global Overrides (Nested Structure + Flat Map)
+    if (globalConfig?.locales?.overrides) {
+        // First, deep merge to handle nested objects (e.g. { en: { ... } })
+        result = deepMerge(result, globalConfig.locales.overrides);
+
+        // Then, scan for dot-notation keys to handle flat overrides
+        Object.keys(globalConfig.locales.overrides).forEach(key => {
+            if (key.includes('.')) {
+                applyFlatOverride(result, key, String(globalConfig.locales!.overrides![key]));
+            }
+        });
+    }
+
+    // 3. Event Overrides (Nested Structure + Flat Map)
+    if (eventConfig?.locales?.overrides) {
+        result = deepMerge(result, eventConfig.locales.overrides);
+
+        Object.keys(eventConfig.locales.overrides).forEach(key => {
+            if (key.includes('.')) {
+                applyFlatOverride(result, key, String(eventConfig.locales!.overrides![key]));
+            }
+        });
+    }
 
     return result;
 }

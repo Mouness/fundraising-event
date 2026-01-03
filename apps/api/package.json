@@ -21,7 +21,8 @@
     "test:e2e": "vitest run --config ./src/test/e2e/vitest-e2e.config.ts",
     "db:generate": "prisma generate --schema=./database/schema.prisma",
     "db:migrate": "prisma migrate dev --schema=./database/schema.prisma --config=./database/prisma.config.ts",
-    "db:studio": "prisma studio --schema=./database/schema.prisma"
+    "db:studio": "prisma studio --schema=./database/schema.prisma",
+    "db:seed": "ts-node database/mock/seed.ts"
   },
   "dependencies": {
     "@fundraising/types": "workspace:*",

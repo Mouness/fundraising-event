@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Plus, Trash2, Loader2, Key, Edit, Users } from 'lucide-react';
+import { toast } from 'sonner';
+import { ConfirmationDialog } from '@/components/ConfirmationDialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -35,6 +37,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 
+
 // Schema for staff creation
 const getStaffSchema = (t: any) => z.object({
     name: z.string().min(2, t('validation.min_chars', { count: 2 })),
@@ -50,6 +53,7 @@ export const StaffManagementPage = () => {
     const queryClient = useQueryClient();
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [editingStaff, setEditingStaff] = useState<any>(null);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const { data: staff = [], isLoading } = useQuery({
         queryKey: ['global-staff'],
@@ -81,11 +85,12 @@ export const StaffManagementPage = () => {
             setIsAddOpen(false);
             setEditingStaff(null);
             form.reset();
+            toast.success(editingStaff ? t('admin_team.member_updated') : t('admin_team.member_created'));
         },
         onError: (err: any) => {
             console.error('Failed to save staff', err);
-            const message = err.response?.data?.message || t('donation.error', 'Something went wrong. Please try again.');
-            alert(message);
+            const message = err.response?.data?.message || t('donation.error');
+            toast.error(message);
         }
     });
 
@@ -95,7 +100,12 @@ export const StaffManagementPage = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['global-staff'] });
+            toast.success(t('admin_team.member_deleted'));
+            setDeleteId(null); // Close the confirmation dialog
         },
+        onError: () => {
+            toast.error(t('admin_team.error_delete'));
+        }
     });
 
     const onSubmit = (values: StaffFormValues) => {
@@ -112,18 +122,16 @@ export const StaffManagementPage = () => {
     };
 
     const handleDelete = (id: string) => {
-        if (confirm(t('admin_team.confirm_delete_permanent', 'Are you sure? This will permanently delete this volunteer from all events.'))) {
-            deleteMutation.mutate(id);
-        }
+        setDeleteId(id);
     };
 
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">{t('admin_team.manage_title', 'Staff Management')}</h2>
+                    <h2 className="text-3xl font-bold tracking-tight">{t('admin_team.manage_title')}</h2>
                     <p className="text-muted-foreground mt-1">
-                        {t('admin_team.manage_subtitle', 'Manage the global pool of volunteers and their PIN codes.')}
+                        {t('admin_team.manage_subtitle')}
                     </p>
                 </div>
 
@@ -137,27 +145,27 @@ export const StaffManagementPage = () => {
                     <DialogTrigger asChild>
                         <Button>
                             <Plus className="mr-2 h-4 w-4" />
-                            {t('admin_team.add_member', 'Add Member')}
+                            {t('admin_team.add_member')}
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle>{editingStaff ? t('admin_team.edit_member') : t('admin_team.add_member', 'Add Member')}</DialogTitle>
+                            <DialogTitle>{editingStaff ? t('admin_team.edit_member') : t('admin_team.add_member')}</DialogTitle>
                             <DialogDescription>
                                 {editingStaff ? t('admin_team.edit_member_desc') : t('admin_team.create_member_desc')}
                             </DialogDescription>
                         </DialogHeader>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">{t('admin_team.member_name', 'Member Name')}</Label>
-                                <Input id="name" {...form.register('name')} placeholder={t('admin_team.member_placeholder', 'e.g. John Doe')} />
+                                <Label htmlFor="name">{t('admin_team.member_name')}</Label>
+                                <Input id="name" {...form.register('name')} placeholder={t('admin_team.member_placeholder')} />
                                 {form.formState.errors.name && (
                                     <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
                                 )}
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="code">{t('admin_team.pin_code', 'PIN Code')}</Label>
-                                <Input id="code" {...form.register('code')} placeholder="1234" />
+                                <Label htmlFor="code">{t('admin_team.pin_code')}</Label>
+                                <Input id="code" {...form.register('code')} placeholder={t('admin_team.pin_placeholder')} />
                                 {form.formState.errors.code && (
                                     <p className="text-sm text-red-500">{form.formState.errors.code.message}</p>
                                 )}
@@ -165,17 +173,27 @@ export const StaffManagementPage = () => {
                             <DialogFooter>
                                 <Button type="submit" disabled={createMutation.isPending}>
                                     {createMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                    {editingStaff ? t('admin_team.save_changes') : t('admin_team.add_member', 'Add Member')}
+                                    {editingStaff ? t('admin_team.save_changes') : t('admin_team.add_member')}
                                 </Button>
                             </DialogFooter>
                         </form>
                     </DialogContent>
                 </Dialog>
+
+                <ConfirmationDialog
+                    open={!!deleteId}
+                    onOpenChange={(open) => !open && setDeleteId(null)}
+                    onConfirm={() => deleteMutation.mutate(deleteId!)}
+                    title={t('admin_team.confirm_delete_title')}
+                    description={t('admin_team.confirm_delete_permanent')}
+                    confirmText={t('common.delete')}
+                    variant="destructive"
+                />
             </div>
 
             <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
                 <CardHeader>
-                    <CardTitle>{t('admin_team.pool_title', 'Staff Pool')}</CardTitle>
+                    <CardTitle>{t('admin_team.pool_title')}</CardTitle>
                     <CardDescription>
                         {t('admin_team.pool_description')}
                     </CardDescription>
@@ -188,7 +206,7 @@ export const StaffManagementPage = () => {
                                     <TableHead>{t('admin_team.table_member')}</TableHead>
                                     <TableHead>{t('admin_team.table_pin')}</TableHead>
                                     <TableHead>{t('admin_team.table_assignments')}</TableHead>
-                                    <TableHead className="text-right">{t('common.actions', 'Actions')}</TableHead>
+                                    <TableHead className="text-right">{t('common.actions')}</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>

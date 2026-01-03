@@ -25,7 +25,7 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            const isStaffPath = window.location.pathname.includes('/staff');
+            const isStaffPath = window.location.pathname.includes('/staff') && !window.location.pathname.startsWith('/admin');
 
             if (isStaffPath) {
                 if (!window.location.pathname.includes('/login')) {

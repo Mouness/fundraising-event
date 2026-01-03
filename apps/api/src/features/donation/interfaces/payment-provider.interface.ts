@@ -10,6 +10,7 @@ export interface PaymentProvider {
     metadata?: any,
   ): Promise<CreatePaymentIntentResult>;
   constructEventFromPayload(signature: string, payload: Buffer): Promise<any>;
+  refundDonation(paymentIntentId: string): Promise<any>;
 }
 
 export const PAYMENT_PROVIDER = 'PAYMENT_PROVIDER';

@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { PageLoader } from '@/components/ui/PageLoader';
+import { PageLoader } from '@/components/ui/page-loader';
 import { EventProvider, useEvent } from '@/features/events/context/EventContext';
 import { LayoutDashboard, Settings, DollarSign, ArrowLeft, ExternalLink, Users } from 'lucide-react';
 import { AppHeader } from '@/components/AppHeader';
@@ -39,7 +39,7 @@ const EventSidebar = () => {
             <nav className="flex flex-col gap-1 flex-1">
                 <Link
                     to={baseUrl}
-                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(baseUrl) ? 'bg-primary/10 text-primary' : 'hover:bg-muted/10'
+                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(baseUrl) ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-muted/10'
                         }`}
                 >
                     <LayoutDashboard className="h-4 w-4" />
@@ -47,7 +47,7 @@ const EventSidebar = () => {
                 </Link>
                 <Link
                     to={`${baseUrl}/donations`}
-                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(`${baseUrl}/donations`) ? 'bg-primary/10 text-primary' : 'hover:bg-muted/10'
+                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(`${baseUrl}/donations`) ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-muted/10'
                         }`}
                 >
                     <DollarSign className="h-4 w-4" />
@@ -55,7 +55,7 @@ const EventSidebar = () => {
                 </Link>
                 <Link
                     to={`${baseUrl}/settings`}
-                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(`${baseUrl}/settings`) ? 'bg-primary/10 text-primary' : 'hover:bg-muted/10'
+                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(`${baseUrl}/settings`) && !isActive(`${baseUrl}/settings/design`) ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-muted/10'
                         }`}
                 >
                     <Settings className="h-4 w-4" />
@@ -63,7 +63,7 @@ const EventSidebar = () => {
                 </Link>
                 <Link
                     to={`${baseUrl}/team`}
-                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(`${baseUrl}/team`) ? 'bg-primary/10 text-primary' : 'hover:bg-muted/10'
+                    className={`p-2 rounded flex items-center gap-3 transition-colors ${isActive(`${baseUrl}/team`) ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-muted/10'
                         }`}
                 >
                     <Users className="h-4 w-4" />
@@ -89,21 +89,23 @@ const EventSidebar = () => {
 export const EventLayout = () => {
     return (
         <EventProvider>
-            <div className="flex h-screen w-full">
-                <EventSidebar />
-                <main
-                    className="flex-1 flex flex-col min-w-0" // Flex col to stack header and content
-                    style={{
-                        backgroundColor: 'var(--admin-content-bg)',
-                    }}
-                >
-                    <AppHeader title="Event Management" />
-                    <div className="flex-1 overflow-auto" style={{ padding: 'var(--admin-content-padding)' }}>
-                        <Suspense fallback={<PageLoader />}>
-                            <Outlet />
-                        </Suspense>
-                    </div>
-                </main>
+            <div className="flex flex-col h-screen w-full overflow-hidden">
+                <AppHeader title="Event Management" />
+                <div className="flex flex-1 overflow-hidden">
+                    <EventSidebar />
+                    <main
+                        className="flex-1 overflow-auto"
+                        style={{
+                            backgroundColor: 'var(--admin-content-bg)',
+                        }}
+                    >
+                        <div className="p-6" style={{ padding: 'var(--admin-content-padding)' }}>
+                            <Suspense fallback={<PageLoader />}>
+                                <Outlet />
+                            </Suspense>
+                        </div>
+                    </main>
+                </div>
             </div>
         </EventProvider>
     );

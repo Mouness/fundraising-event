@@ -75,4 +75,15 @@ export class StripeService implements PaymentProvider {
       webhookSecret,
     );
   }
+
+  async refundDonation(paymentIntentId: string): Promise<any> {
+    try {
+      return await this.stripe.refunds.create({
+        payment_intent: paymentIntentId,
+      });
+    } catch (error) {
+      this.logger.error(`Error refunding donation ${paymentIntentId}: ${error.message}`);
+      throw error;
+    }
+  }
 }

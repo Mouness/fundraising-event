@@ -1,3 +1,5 @@
+import { SupportedLocale } from './locales';
+
 export interface EventConfig {
     /** Unique identifier for the event */
     id: string;
@@ -5,7 +7,6 @@ export interface EventConfig {
     /** URL slug for the event */
     slug?: string;
 
-    /** Visual theme configuration */
     /** Visual theme configuration */
     theme?: {
         /** Generic assets map (e.g. logo, background) */
@@ -52,6 +53,8 @@ export interface EventConfig {
         /** Payment provider configuration */
         payment: {
             provider: 'stripe' | 'paypal' | string;
+            /** Currency code (e.g. USD, EUR) */
+            currency: string;
             /** Provider-specific config (public keys, etc.) */
             config?: Record<string, any>;
         };
@@ -63,6 +66,7 @@ export interface EventConfig {
         address: string;
         website?: string;
         supportEmail?: string;
+        phone?: string;
 
         /** PDF Specifics */
         pdf: {
@@ -74,14 +78,19 @@ export interface EventConfig {
         /** Email Specifics */
         email: {
             enabled: boolean;
+            senderName?: string;
+            replyTo?: string;
             subjectLine?: string;
             footerText?: string;
         };
     };
 
-    /** Generic feature flags and non-visual settings */
-    settings?: Record<string, any>;
-
-    /** Flat-map for localization overrides (e.g. { "en.donation.title": "Give Now" }) */
-    locales?: Record<string, string>;
+    /** Localization overrides */
+    locales?: {
+        default: SupportedLocale;
+        supported: SupportedLocale[];
+        /** Key-value overrides for translations */
+        overrides?: Record<string, any>;
+    };
 }
+

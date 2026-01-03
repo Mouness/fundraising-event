@@ -52,7 +52,31 @@
         "export": "Export CSV",
         "export_pdf": "Export PDFs (ZIP)",
         "download_receipt": "Download Receipt",
-        "team": "Assignment"
+        "team": "Assignment",
+        "donation_modal": {
+            "edit_title": "Edit Donation",
+            "edit_description": "Update donor details for this transaction.",
+            "cancel_title": "Cancel Donation",
+            "cancel_description": "Are you sure you want to cancel this donation? This action cannot be undone.",
+            "donor_name": "Donor Name",
+            "donor_email": "Donor Email",
+            "hide_public": "Hide from public feed (Anonymous)",
+            "message": "Message",
+            "message_placeholder": "Donation message...",
+            "save_changes": "Save Changes",
+            "keep": "Keep Donation",
+            "refund_stripe": "Refund via Stripe",
+            "refund_desc": "Attempt to automatically refund this payment to the donor's card.",
+            "offline_refund_notice": "Offline payments must be refunded manually outside this system.",
+            "refund_and_cancel": "Refund & Cancel",
+            "cancel_only": "Cancel Donation",
+            "summary": "Donation of {{amount}} from {{donor}}",
+            "success_update": "Donation updated successfully",
+            "error_update": "Failed to update donation",
+            "success_cancel": "Donation cancelled",
+            "success_refund": "Donation refunded and cancelled",
+            "error_cancel": "Failed to cancel donation"
+        }
     },
     "admin_team": {
         "title": "Global Staff Pool",
@@ -80,6 +104,7 @@
         "success_revoked": "Member removed from event.",
         "error_creation": "Failed to add to pool.",
         "error_assignment": "Failed to assign member.",
+        "error_revocation": "Failed to remove member.",
         "confirm_delete_permanent": "WARNING: This will permanently delete the volunteer from the system and all assigned events.",
         "manage_title": "Staff Management",
         "manage_subtitle": "Manage the global pool of volunteers and their PIN codes.",
@@ -136,14 +161,19 @@
         "date": "Date",
         "donor": "Donor",
         "amount": "Amount",
-        "status": "Status"
+        "status": "Status",
+        "export_failed": "Failed to export data. Please try again.",
+        "receipt_failed": "Failed to download receipt. Please try again."
     },
     "common": {
         "back": "Back",
         "actions": "Actions",
         "loading": "Loading data...",
         "no_results": "No results found.",
-        "all": "All"
+        "all": "All",
+        "edit": "Edit",
+        "cancel": "Cancel",
+        "delete": "Delete"
     },
     "status": {
         "completed": "Completed",
@@ -288,5 +318,171 @@
         "invalid_url": "Invalid URL",
         "invalid_hex": "Invalid hex color",
         "min_value": "Must be at least {{count}}"
+    },
+    "admin_branding": {
+        "title": "Global Branding Center",
+        "subtitle": "Manage your organization's identity, theme, and core settings.",
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "success_save": "Global branding saved successfully",
+        "error_save": "Failed to save settings",
+        "nav": {
+            "identity": "Identity",
+            "communication": "Communication",
+            "theme": "Brand Design",
+            "assets": "Assets",
+            "modules": "Modules & Localization"
+        },
+        "preview": {
+            "title": "Live Preview",
+            "organization_placeholder": "Organization Name",
+            "charity_placeholder": "Charity Name",
+            "email_placeholder": "contact@example.com",
+            "theme_colors": "Theme Colors"
+        },
+        "identity": {
+            "title": "Identity Details",
+            "description": "Basic information about your organization.",
+            "org_name": "Organization Name (Legal Name)",
+            "org_placeholder": "e.g. Charity Gala Inc.",
+            "org_hint": "This name will appear in email footers and legal notices.",
+            "website": "Website URL",
+            "website_placeholder": "https://..."
+        },
+        "communication": {
+            "contact": {
+                "title": "Contact Points",
+                "description": "Public contact information for support.",
+                "email": "Support Email",
+                "email_placeholder": "support@...",
+                "phone": "Phone Number",
+                "phone_placeholder": "+1...",
+                "address": "Physical Address"
+            },
+            "email": {
+                "title": "Email Receipts",
+                "description": "Configure automated email receipts sent to donors.",
+                "enable": "Enable",
+                "sender": "Sender Name",
+                "reply_to": "Reply-To Email",
+                "subject": "Subject Line",
+                "footer": "Email Footer"
+            },
+            "pdf": {
+                "title": "PDF Receipts",
+                "description": "Configure downloadable PDF receipts.",
+                "enable": "Enable",
+                "template": "Template Style",
+                "formal": "Formal",
+                "minimal": "Minimal",
+                "footer": "PDF Footer Text"
+            }
+        },
+        "theme": {
+            "colors": {
+                "title": "Color Palette",
+                "description": "Primary colors used throughout the application.",
+                "primary": "Primary Brand Color",
+                "primary_fg": "Primary Text",
+                "background": "Background",
+                "foreground": "Foreground (Text)",
+                "card": "Card Background",
+                "card_fg": "Card Text",
+                "muted": "Muted Background",
+                "muted_fg": "Muted Text"
+            },
+            "elements": {
+                "title": "UI Elements",
+                "border": "Border Color",
+                "input": "Input Background",
+                "ring": "Focus Ring",
+                "radius": "Base Radius"
+            },
+            "secondary_colors": {
+                "title": "Secondary Colors",
+                "secondary": "Secondary",
+                "secondary_fg": "Secondary Text",
+                "accent": "Accent",
+                "accent_fg": "Accent Text",
+                "destructive": "Destructive",
+                "destructive_fg": "Destructive Text"
+            },
+            "custom": {
+                "title": "Custom CSS Variables",
+                "description": "Advanced overrides.",
+                "add": "Add Variable",
+                "name": "Variable Name",
+                "value": "Value",
+                "empty": "No custom variables added"
+            }
+        },
+        "assets": {
+            "title": "Digital Assets",
+            "description": "Manage logos and imagery.",
+            "logo": "Logo URL",
+            "logo_hint": "Recommended: Transparent PNG, min 200px width.",
+            "favicon": "Favicon URL",
+            "backgrounds": "Background Images",
+            "landing": "Landing Page Background",
+            "donor": "Donor/Auth Background",
+            "live": "Live Screen Background"
+        },
+        "localization": {
+            "title": "Interface Localization",
+            "description": "Manage supported languages and text overrides.",
+            "supported_languages": "Supported Languages",
+            "label_overrides": "Label Overrides",
+            "language": "Language",
+            "key": "Key",
+            "key_placeholder": "e.g. auth.login",
+            "no_overrides": "No overrides for {{locale}}",
+            "translation": "Translation..."
+        },
+        "modules": {
+            "payment_title": "Payment Configuration",
+            "currency": "Currency",
+            "provider": "Provider"
+        }
+    },
+    "event_settings": {
+        "title": "Event Settings",
+        "nav": {
+            "general": "General",
+            "branding": "Design & Branding"
+        },
+        "general": {
+            "basic_details_title": "Basic Details",
+            "basic_details_desc": "Main information about your fundraising event.",
+            "event_name": "Event Name",
+            "url_slug": "URL Slug",
+            "status": "Status",
+            "status_placeholder": "Select status",
+            "goal_amount": "Fundraising Goal ($)",
+            "event_date": "Event Date",
+            "form_config_title": "Form Configuration",
+            "form_config_desc": "Select additional fields to collect from donors.",
+            "collect_phone": "Collect Phone Number",
+            "collect_address": "Collect Address",
+            "collect_company": "Collect Company Name",
+            "success_save": "General settings saved successfully!",
+            "error_save": "Failed to save settings",
+            "no_event": "No event found. Please initialize the database."
+        },
+        "branding": {
+            "success_save": "Design settings updated",
+            "error_save": "Failed to save settings",
+            "strategy_title": "Branding Strategy",
+            "strategy_desc": "Decide if this event should follow organization-wide branding or have its own identity.",
+            "use_global": "Use Organization Branding (Recommended)",
+            "use_global_desc": "Inherit logo, colors, and organization info from the Global Branding Center.",
+            "preview_title": "Previewing Organization Identity",
+            "org_default": "Organization Default",
+            "display_name": "Event Display Name (Override)",
+            "display_name_placeholder": "Custom Event Title",
+            "logo_url": "Event Logo URL",
+            "accent_color": "Event Accent Color",
+            "override_warning": "Custom event branding overrides the organization's standard look for this specific event.",
+            "apply_overrides": "Apply Theme Overrides"
+        }
     }
 }

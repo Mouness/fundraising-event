@@ -21,6 +21,7 @@ const EventSettingsPage = lazy(() => import('../features/events/pages/EventSetti
 const GlobalSettingsPage = lazy(() => import('../features/admin/pages/GlobalSettingsPage').then(module => ({ default: module.GlobalSettingsPage })));
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(module => ({ default: module.LoginPage })));
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
+const LiveEmbedPage = lazy(() => import('../features/live/pages/LiveEmbedPage').then(module => ({ default: module.LiveEmbedPage })));
 const DonationPage = lazy(() => import('../features/donation/pages/DonationPage').then(module => ({ default: module.DonationPage })));
 const ThankYouPage = lazy(() => import('../features/donation/pages/ThankYouPage').then(module => ({ default: module.ThankYouPage })));
 const StaffLayout = lazy(() => import('../features/staff/layouts/StaffLayout').then(module => ({ default: module.StaffLayout })));
@@ -94,6 +95,10 @@ export const router = createBrowserRouter([
             {
                 path: 'live',
                 element: Loadable(LivePage),
+            },
+            {
+                path: 'embed',
+                element: Loadable(LiveEmbedPage),
             },
             {
                 path: 'staff',

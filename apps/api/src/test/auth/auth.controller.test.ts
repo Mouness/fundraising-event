@@ -39,11 +39,17 @@ describe('AuthController', () => {
       const user = { id: 'admin', email: 'admin@test.com' };
 
       (authService.validateUser as any).mockResolvedValue(user);
-      (authService.login as any).mockResolvedValue({ accessToken: 'token', user });
+      (authService.login as any).mockResolvedValue({
+        accessToken: 'token',
+        user,
+      });
 
       const result = await controller.login(loginDto);
 
-      expect(authService.validateUser).toHaveBeenCalledWith('admin@test.com', 'pass');
+      expect(authService.validateUser).toHaveBeenCalledWith(
+        'admin@test.com',
+        'pass',
+      );
       expect(result).toEqual({ accessToken: 'token', user });
     });
   });
@@ -54,7 +60,10 @@ describe('AuthController', () => {
       const staff = { id: '1', name: 'John' };
 
       (authService.validateStaff as any).mockResolvedValue(staff);
-      (authService.loginStaff as any).mockResolvedValue({ accessToken: 'token', user: staff });
+      (authService.loginStaff as any).mockResolvedValue({
+        accessToken: 'token',
+        user: staff,
+      });
 
       const result = await controller.staffLogin(dto);
 
@@ -69,7 +78,10 @@ describe('AuthController', () => {
       const req = { user: { email: 'admin@test.com' } };
 
       (authService.validateGoogleUser as any).mockResolvedValue(user);
-      (authService.login as any).mockResolvedValue({ accessToken: 'token', user });
+      (authService.login as any).mockResolvedValue({
+        accessToken: 'token',
+        user,
+      });
 
       const result = await controller.googleAuthRedirect(req);
       expect(authService.validateGoogleUser).toHaveBeenCalledWith(req.user);

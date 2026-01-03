@@ -1,3 +1,5 @@
+import { IncomingHttpHeaders } from 'http';
+
 export interface CreatePaymentIntentResult {
   clientSecret: string;
   id: string;
@@ -9,7 +11,10 @@ export interface PaymentProvider {
     currency: string,
     metadata?: any,
   ): Promise<CreatePaymentIntentResult>;
-  constructEventFromPayload(signature: string, payload: Buffer): Promise<any>;
+  constructEventFromPayload(
+    headers: IncomingHttpHeaders | string,
+    payload: Buffer,
+  ): Promise<any>;
   refundDonation(paymentIntentId: string): Promise<any>;
 }
 

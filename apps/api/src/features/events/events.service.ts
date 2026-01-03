@@ -8,8 +8,8 @@ import { WhiteLabelingService } from '../white-labeling/white-labeling.service';
 export class EventsService {
   constructor(
     private prisma: PrismaService,
-    private whiteLabelingService: WhiteLabelingService
-  ) { }
+    private whiteLabelingService: WhiteLabelingService,
+  ) {}
 
   private readonly defaultSelect = {
     id: true,
@@ -38,7 +38,9 @@ export class EventsService {
   }
 
   async findAll() {
-    const events = await this.prisma.event.findMany({ select: this.defaultSelect });
+    const events = await this.prisma.event.findMany({
+      select: this.defaultSelect,
+    });
 
     // Aggregate donations (SUCCEEDED only)
     const aggregations = await this.prisma.donation.groupBy({
@@ -97,7 +99,9 @@ export class EventsService {
           goalAmount: updateEventDto.goalAmount,
         }),
         ...(updateEventDto.date && { date: new Date(updateEventDto.date) }),
-        ...(updateEventDto.description && { description: updateEventDto.description }),
+        ...(updateEventDto.description && {
+          description: updateEventDto.description,
+        }),
         ...(updateEventDto.status && { status: updateEventDto.status }),
       },
       select: this.defaultSelect,
@@ -105,7 +109,10 @@ export class EventsService {
   }
 
   async remove(id: string) {
-    return this.prisma.event.delete({ where: { id }, select: this.defaultSelect });
+    return this.prisma.event.delete({
+      where: { id },
+      select: this.defaultSelect,
+    });
   }
 
   async findStaff(eventId: string) {

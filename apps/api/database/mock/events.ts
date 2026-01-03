@@ -35,21 +35,21 @@ export const EVENTS = [
             },
             themeVariables: {
                 '--primary': '#B49349', // Goldish
-                '--primary-foreground': '#000000', // Black text on Gold
-                '--secondary': '#1A1A1A', // Dark Night
-                '--secondary-foreground': '#F5F5F5',
-                '--background': '#3B3B3B', // Dark mode feel
-                '--foreground': '#F5F5F5',
-                '--card': '#454545', // Slightly lighter than background
-                '--card-foreground': '#F5F5F5',
-                '--popover': '#3B3B3B',
-                '--popover-foreground': '#F5F5F5',
-                '--muted': '#282828',
-                '--muted-foreground': '#A3A3A3',
-                '--accent': '#525252',
-                '--accent-foreground': '#F5F5F5',
-                '--border': '#575757',
-                '--input': '#575757',
+                '--primary-foreground': '#FFFFFF', // White on Gold
+                '--secondary': '#F5F5F5', // Light
+                '--secondary-foreground': '#1A1A1A',
+                '--background': '#FFFFFF', // White Background (Clean)
+                '--foreground': '#1A1A1A', // Dark Text (Readable)
+                '--card': '#FFFFFF', // White Cards
+                '--card-foreground': '#1A1A1A', // Dark Text on Cards
+                '--popover': '#FFFFFF',
+                '--popover-foreground': '#1A1A1A',
+                '--muted': '#F5F5F5',
+                '--muted-foreground': '#525252', // Darker gray for muted text
+                '--accent': '#F5F5F5',
+                '--accent-foreground': '#1A1A1A',
+                '--border': '#E5E5E5',
+                '--input': '#FFFFFF',
                 '--ring': '#B49349',
                 '--radius': '1rem', // Soft rounded
 

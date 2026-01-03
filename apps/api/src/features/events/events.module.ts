@@ -10,4 +10,4 @@ import { WhiteLabelingModule } from '../white-labeling/white-labeling.module';
   providers: [EventsService],
   exports: [EventsService],
 })
-export class EventsModule { }
+export class EventsModule {}

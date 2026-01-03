@@ -11,13 +11,15 @@ import {
 import { EventsService } from './events.service';
 import { CreateEventDto, UpdateEventDto } from '@fundraising/types';
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('events')
 export class EventsController {
-  constructor(private readonly eventsService: EventsService) { }
+  constructor(private readonly eventsService: EventsService) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN')
   create(@Body() createEventDto: CreateEventDto) {
     return this.eventsService.create(createEventDto);
   }
@@ -34,33 +36,35 @@ export class EventsController {
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN')
   update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
     return this.eventsService.update(id, updateEventDto);
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN')
   remove(@Param('id') id: string) {
     return this.eventsService.remove(id);
   }
 
   @Get(':id/staff')
   @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN', 'STAFF') // Staff should check their own assignment? Or just Admin? Let's say Admin/Staff.
   findStaff(@Param('id') id: string) {
     return this.eventsService.findStaff(id);
   }
 
   @Post(':id/staff/:staffId')
   @UseGuards(AuthGuard('jwt'))
-  assignStaff(
-    @Param('id') id: string,
-    @Param('staffId') staffId: string,
-  ) {
+  @Roles('ADMIN')
+  assignStaff(@Param('id') id: string, @Param('staffId') staffId: string) {
     return this.eventsService.assignStaff(id, staffId);
   }
 
   @Delete(':id/staff/:staffId')
   @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN')
   unassignStaff(@Param('id') id: string, @Param('staffId') staffId: string) {
     return this.eventsService.unassignStaff(id, staffId);
   }

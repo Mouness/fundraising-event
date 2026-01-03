@@ -4,9 +4,9 @@ import { WhiteLabelingService } from './white-labeling.service';
 import { DatabaseModule } from '../../database/database.module';
 
 @Module({
-    imports: [DatabaseModule],
-    controllers: [WhiteLabelingController],
-    providers: [WhiteLabelingService],
-    exports: [WhiteLabelingService],
+  imports: [DatabaseModule],
+  controllers: [WhiteLabelingController],
+  providers: [WhiteLabelingService],
+  exports: [WhiteLabelingService],
 })
-export class WhiteLabelingModule { }
+export class WhiteLabelingModule {}

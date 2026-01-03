@@ -94,7 +94,7 @@ const main = async () => {
 
             return {
                 amount,
-                currency: 'CHF', // Could vary based on config if needed
+                currency: (config as any)?.payment?.currency || (GLOBAL_SETTINGS as any)?.payment?.currency || 'USD',
                 donorName: isAnonymous ? null : `${DONOR_FIRST_NAMES[Math.floor(Math.random() * DONOR_FIRST_NAMES.length)]} ${DONOR_LAST_NAMES[Math.floor(Math.random() * DONOR_LAST_NAMES.length)]}`,
                 donorEmail: isAnonymous ? null : `donor${Math.floor(Math.random() * 1000)}@example.com`,
                 isAnonymous,
@@ -102,6 +102,7 @@ const main = async () => {
                 eventId: createdEvent.id,
                 status,
                 paymentMethod: Math.random() > 0.3 ? 'STRIPE' : 'CASH',
+                transactionId: `SEED-${Math.floor(Math.random() * 1000000)}`,
                 createdAt: date
             };
         };

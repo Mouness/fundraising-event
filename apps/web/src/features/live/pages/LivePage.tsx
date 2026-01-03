@@ -35,6 +35,10 @@ export const LivePage = () => {
                 if (lastEvent.amount >= 5000) {
                     fireConfetti();
                 }
+                // Trigger Goal Celebration
+                if (prev < (config.content.goalAmount * 100) && newTotal >= (config.content.goalAmount * 100)) {
+                    import('@/lib/confetti').then(mod => mod.fireGoalCelebration());
+                }
                 return newTotal;
             });
 

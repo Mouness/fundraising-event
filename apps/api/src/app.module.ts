@@ -11,11 +11,20 @@ import { QueueModule } from './features/queue/queue.module';
 import { MailModule } from './features/mail/mail.module';
 import { ExportModule } from './features/export/export.module';
 import { StaffModule } from './features/staff/staff.module';
+import { APP_GUARD, Reflector } from '@nestjs/core';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { RolesGuard } from './features/auth/guards/roles.guard';
 
 import { WhiteLabelingModule } from './features/white-labeling/white-labeling.module';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -23,15 +32,25 @@ import { WhiteLabelingModule } from './features/white-labeling/white-labeling.mo
     DatabaseModule,
     AuthModule,
     EventsModule,
+    GatewayModule,
     DonationModule,
     MailModule,
     QueueModule,
     ExportModule,
     StaffModule,
-    StaffModule,
     WhiteLabelingModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
-export class AppModule { }
+export class AppModule {}

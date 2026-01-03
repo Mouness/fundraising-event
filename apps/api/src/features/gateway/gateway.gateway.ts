@@ -17,7 +17,8 @@ import { DonationEventPayload } from './interfaces/donation-event.payload';
   },
 })
 export class GatewayGateway
-  implements OnGatewayConnection, OnGatewayDisconnect {
+  implements OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer()
   server!: Server;
 

@@ -6,10 +6,14 @@ import { PrismaService } from '@/database/prisma.service';
 import { vi, describe, beforeEach, afterAll, it, expect } from 'vitest';
 
 vi.mock('@fundraising/white-labeling', async () => ({
-  loadConfigs: () => ({ content: { title: 'Default' }, theme: {}, communication: {} }),
+  loadConfigs: () => ({
+    content: { title: 'Default' },
+    theme: {},
+    communication: {},
+  }),
   deepMerge: (a: any, b: any) => ({ ...a, ...b }),
   defaultConfig: { id: 'default' },
-  EventConfig: {}
+  EventConfig: {},
 }));
 
 describe('AppController (e2e)', () => {

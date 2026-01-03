@@ -13,7 +13,7 @@ export class AuthService {
     private configService: ConfigService,
     private prisma: PrismaService,
     @Inject('AUTH_PROVIDER') private authProvider: AuthProvider,
-  ) { }
+  ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
     return this.authProvider.verify({ email, password: pass });
@@ -25,13 +25,10 @@ export class AuthService {
       include: {
         events: {
           where: {
-            OR: [
-              { id: eventId },
-              { slug: eventId }
-            ]
-          }
-        }
-      }
+            OR: [{ id: eventId }, { slug: eventId }],
+          },
+        },
+      },
     });
 
     if (staff && staff.events.length > 0) {
@@ -53,7 +50,12 @@ export class AuthService {
     };
   }
 
-  async loginStaff(staff: { id: string; name: string; role: string; eventId: string }) {
+  async loginStaff(staff: {
+    id: string;
+    name: string;
+    role: string;
+    eventId: string;
+  }) {
     const payload = {
       sub: staff.id,
       name: staff.name,
@@ -62,7 +64,12 @@ export class AuthService {
     };
     return {
       accessToken: this.jwtService.sign(payload),
-      user: { id: staff.id, name: staff.name, role: 'STAFF' as const, eventId: staff.eventId },
+      user: {
+        id: staff.id,
+        name: staff.name,
+        role: 'STAFF' as const,
+        eventId: staff.eventId,
+      },
     };
   }
 
@@ -78,7 +85,7 @@ export class AuthService {
       email: details.email,
       name: `${details.firstName} ${details.lastName}`,
       picture: details.picture,
-      isTrusted: true
+      isTrusted: true,
     });
   }
 }

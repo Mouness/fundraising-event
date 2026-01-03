@@ -1,4 +1,3 @@
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { GatewayGateway } from '@/features/gateway/gateway.gateway';
 import { EventsService } from '@/features/events/events.service';

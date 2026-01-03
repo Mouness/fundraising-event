@@ -72,7 +72,7 @@ model Donation {
   isAnonymous   Boolean  @default(false)
   status        String   // PENDING, SUCCEEDED, FAILED, CANCELLED
   paymentMethod String   // STRIPE, CASH, CHECK, PLEDGE
-  stripePaymentIntentId String? @unique
+  transactionId String? @unique
   eventId       String
   event         Event    @relation(fields: [eventId], references: [id])
   createdAt     DateTime @default(now())

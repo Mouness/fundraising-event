@@ -23,81 +23,83 @@ const mockTemplate = `
 `;
 
 describe('MailService', () => {
-    let service: MailService;
-    let mailProviderMock: { send: ReturnType<typeof vi.fn> };
+  let service: MailService;
+  let mailProviderMock: { send: ReturnType<typeof vi.fn> };
 
-    beforeEach(async () => {
-        mailProviderMock = { send: vi.fn() };
+  beforeEach(async () => {
+    mailProviderMock = { send: vi.fn() };
 
-        const module: TestingModule = await Test.createTestingModule({
-            providers: [
-                MailService,
-                {
-                    provide: 'MAIL_PROVIDER',
-                    useValue: mailProviderMock,
-                },
-                {
-                    provide: EventConfigService,
-                    useValue: {
-                        getConfig: () => ({
-                            content: { title: 'Test Event' },
-                            theme: { logoUrl: 'logo.png' },
-                            communication: {
-                                legalName: 'Org',
-                                address: 'Addr',
-                                website: 'web',
-                                email: { footerText: 'footer' }
-                            }
-                        }),
-                        getThemeVariable: vi.fn().mockResolvedValue('blue'),
-                    },
-                },
-                {
-                    provide: ConfigService,
-                    useValue: {
-                        get: (key: string) => (key === 'FRONTEND_URL' ? 'http://localhost:3000' : null),
-                    },
-                },
-                {
-                    provide: PdfService,
-                    useValue: {
-                        generateReceipt: vi.fn().mockResolvedValue(Buffer.from('pdf content')),
-                    },
-                },
-            ],
-        }).compile();
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        MailService,
+        {
+          provide: 'MAIL_PROVIDER',
+          useValue: mailProviderMock,
+        },
+        {
+          provide: EventConfigService,
+          useValue: {
+            getConfig: () => ({
+              content: { title: 'Test Event' },
+              theme: { logoUrl: 'logo.png' },
+              communication: {
+                legalName: 'Org',
+                address: 'Addr',
+                website: 'web',
+                email: { footerText: 'footer' },
+              },
+            }),
+            getThemeVariable: vi.fn().mockResolvedValue('blue'),
+          },
+        },
+        {
+          provide: ConfigService,
+          useValue: {
+            get: (key: string) =>
+              key === 'FRONTEND_URL' ? 'http://localhost:3000' : null,
+          },
+        },
+        {
+          provide: PdfService,
+          useValue: {
+            generateReceipt: vi
+              .fn()
+              .mockResolvedValue(Buffer.from('pdf content')),
+          },
+        },
+      ],
+    }).compile();
 
-        service = module.get<MailService>(MailService);
-    });
+    service = module.get<MailService>(MailService);
+  });
 
+  it('should render template with dynamic color and send email', async () => {
+    // Mock template loading
+    mockedFs.readFile.mockResolvedValue(mockTemplate);
 
-    it('should render template with dynamic color and send email', async () => {
-        // Mock template loading
-        mockedFs.readFile.mockResolvedValue(mockTemplate);
+    const data = {
+      donorName: 'John Doe',
+      amount: 50,
+      date: '2023-01-01',
+      transactionId: '123',
+      email: 'john@example.com',
+    };
 
-        const data = {
-            donorName: 'John Doe',
-            amount: 50,
-            date: '2023-01-01',
-            transactionId: '123',
-            email: 'john@example.com',
-        };
+    await service.sendReceipt('john@example.com', data);
 
-        await service.sendReceipt('john@example.com', data);
+    // Verify FS load path (approximate check)
+    expect(mockedFs.readFile).toHaveBeenCalled();
 
-        // Verify FS load path (approximate check)
-        expect(mockedFs.readFile).toHaveBeenCalled();
+    // Verify MailProvider called
+    expect(mailProviderMock.send).toHaveBeenCalledTimes(1);
 
-        // Verify MailProvider called
-        expect(mailProviderMock.send).toHaveBeenCalledTimes(1);
+    const [to, subject, html, context] = mailProviderMock.send.mock.calls[0];
 
-        const [to, subject, html, context] = mailProviderMock.send.mock.calls[0];
+    expect(to).toBe('john@example.com');
+    expect(subject).toContain('$50');
 
-        expect(to).toBe('john@example.com');
-        expect(subject).toContain('$50');
-
-        // CRITICAL CHECK: Did {{primaryColor}} get replaced by 'blue'?
-        expect(html).toContain('background-color: blue');
-        expect(html).toContain('Hello John Doe');
-    });
+    // CRITICAL CHECK: Did {{primaryColor}} get replaced by 'blue'?
+    expect(html).toContain('background-color: blue');
+    expect(html).toContain('Hello John Doe');
+  });
 });

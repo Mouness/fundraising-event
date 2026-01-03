@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { IncomingHttpHeaders } from 'http';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 
@@ -60,13 +61,22 @@ export class StripeService implements PaymentProvider {
     }
   }
 
-  async constructEventFromPayload(signature: string, payload: Buffer) {
+  async constructEventFromPayload(
+    headers: IncomingHttpHeaders | string,
+    payload: Buffer,
+  ) {
     const webhookSecret = this.configService.get<string>(
       'STRIPE_WEBHOOK_SECRET',
     );
 
     if (!webhookSecret) {
       throw new Error('STRIPE_WEBHOOK_SECRET is not configured');
+    }
+
+    const signature =
+      typeof headers === 'string' ? headers : headers['stripe-signature'];
+    if (!signature) {
+      throw new Error('Missing stripe-signature header');
     }
 
     return this.stripe.webhooks.constructEvent(
@@ -82,7 +92,9 @@ export class StripeService implements PaymentProvider {
         payment_intent: paymentIntentId,
       });
     } catch (error) {
-      this.logger.error(`Error refunding donation ${paymentIntentId}: ${error.message}`);
+      this.logger.error(
+        `Error refunding donation ${paymentIntentId}: ${error.message}`,
+      );
       throw error;
     }
   }

@@ -30,13 +30,16 @@ import { LocalAuthProvider } from './providers/local.provider';
     LocalAuthProvider,
     {
       provide: 'AUTH_PROVIDER',
-      useFactory: (configService: ConfigService, localProvider: LocalAuthProvider) => {
+      useFactory: (
+        configService: ConfigService,
+        localProvider: LocalAuthProvider,
+      ) => {
         // Future: switch based on configService.get('AUTH_STRATEGY')
         // For now, default to local
         return localProvider;
       },
       inject: [ConfigService, LocalAuthProvider],
-    }
+    },
   ],
 })
-export class AuthModule { }
+export class AuthModule {}

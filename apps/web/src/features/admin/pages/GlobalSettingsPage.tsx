@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { api, API_URL } from '@/lib/api';
 import { toast } from 'sonner';
@@ -12,6 +10,7 @@ import { AssetsForm } from '../components/global-settings/AssetsForm';
 import { CommunicationForm } from '../components/global-settings/CommunicationForm';
 import { BrandDesignForm } from '../components/global-settings/BrandDesignForm';
 import { LocalizationForm } from '../components/global-settings/LocalizationForm';
+import { PaymentForm } from '../components/global-settings/PaymentForm';
 import { defaultConfig, fetchGlobalConfig, loadTheme, type EventConfig } from '@fundraising/white-labeling';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { type GlobalSettingsForm } from '../types/settings';
@@ -90,7 +89,7 @@ export const GlobalSettingsPage = () => {
         }
     });
 
-    const { register, handleSubmit, reset, watch } = methods;
+    const { handleSubmit, reset, watch } = methods;
 
     const [localeOverrides, setLocaleOverrides] = useState<{ key: string, value: string, locale: string }[]>([]);
 
@@ -234,17 +233,7 @@ export const GlobalSettingsPage = () => {
             case 'assets': return <AssetsForm />;
             case 'modules': return (
                 <div className="space-y-6">
-                    <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
-                        <CardHeader>
-                            <CardTitle>{t('admin_branding.modules.payment_title')}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="grid gap-2"><Label>{t('admin_branding.modules.currency')}</Label><Input {...register('payment.currency')} /></div>
-                                <div className="grid gap-2"><Label>{t('admin_branding.modules.provider')}</Label><Input {...register('payment.provider')} /></div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <PaymentForm />
                     <LocalizationForm localeOverrides={localeOverrides} setLocaleOverrides={setLocaleOverrides} />
                 </div>
             );

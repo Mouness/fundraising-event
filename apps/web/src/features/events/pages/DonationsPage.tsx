@@ -1,4 +1,5 @@
 import { useEvent } from '@/features/events/context/EventContext';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { useDonationsTable, type DonationTableData } from '../hooks/useDonationsTable';
 import { useState } from 'react';
 import { EditDonationDialog } from '../components/EditDonationDialog';
@@ -46,6 +47,7 @@ import { timeAgo } from '@/lib/date';
 export const DonationsPage = () => {
     const { event } = useEvent();
     const { t } = useTranslation('common');
+    const { formatCurrency } = useCurrencyFormatter();
 
     if (!event) return null;
 
@@ -220,13 +222,13 @@ export const DonationsPage = () => {
                                             </TableCell>
                                             <TableCell>
                                                 <div className="font-medium">
-                                                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: donation.currency }).format(donation.amount / 100)}
+                                                    {formatCurrency(donation.amount / 100, { currency: donation.currency })}
                                                 </div>
                                                 <span className="text-xs text-muted-foreground capitalize">{donation.paymentMethod}</span>
                                             </TableCell>
                                             <TableCell>
                                                 <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold 
-                                                    ${donation.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
+                                                    ${(donation.status === 'COMPLETED' || donation.status === 'SUCCEEDED') ? 'bg-green-100 text-green-800' :
                                                         donation.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
                                                             'bg-red-100 text-red-800'}`}>
                                                     {donation.status}

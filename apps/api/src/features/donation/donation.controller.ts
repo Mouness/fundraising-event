@@ -1,247 +1,250 @@
 import {
-    Controller,
-    Post,
-    Body,
-    Headers,
-    Req,
-    BadRequestException,
-    Inject,
-    Get,
-    Query,
-    Res,
-    UseGuards,
-    Patch,
-    Param,
+  Controller,
+  Post,
+  Body,
+  Headers,
+  Req,
+  BadRequestException,
+  Inject,
+  Get,
+  Query,
+  Res,
+  UseGuards,
+  Patch,
+  Param,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from '../auth/decorators/roles.decorator';
 import type { RawBodyRequest } from '@nestjs/common';
-import { PAYMENT_PROVIDER } from './interfaces/payment-provider.interface';
-import type { PaymentProvider } from './interfaces/payment-provider.interface';
 import type { Request } from 'express';
 
-import { GatewayGateway } from '../gateway/gateway.gateway';
-import { EmailProducer } from '../queue/producers/email.producer';
 import { DonationService } from './donation.service';
 
 import { CreateDonationDto, OfflineDonationDto } from '@fundraising/types';
-import { EventsService } from '../events/events.service';
+
+import { PaymentService } from './services/payment.service';
 
 @Controller('donations')
 export class DonationController {
-    constructor(
-        @Inject('PAYMENT_PROVIDER')
-        private readonly paymentService: PaymentProvider,
-        private readonly donationGateway: GatewayGateway,
-        private readonly emailProducer: EmailProducer,
-        private readonly donationService: DonationService,
-        private readonly eventsService: EventsService,
-    ) { }
+  constructor(
+    private readonly paymentService: PaymentService,
+    private readonly donationService: DonationService,
+  ) {}
 
-    @Get()
-    async findAll(
-        @Query('eventId') eventId?: string,
-        @Query('limit') limit: number = 50,
-        @Query('offset') offset: number = 0,
-        @Query('search') search?: string,
-        @Query('status') status?: string,
-    ) {
-        return this.donationService.findAll(eventId, limit, offset, search, status);
+  @Get()
+  async findAll(
+    @Query('eventId') eventId?: string,
+    @Query('limit') limit: number = 50,
+    @Query('offset') offset: number = 0,
+    @Query('search') search?: string,
+    @Query('status') status?: string,
+  ) {
+    return this.donationService.findAll(eventId, limit, offset, search, status);
+  }
+
+  @Get('export')
+  @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN', 'STAFF')
+  async exportCsv(
+    @Res() res: any,
+    @Query('eventId') eventId?: string,
+    @Query('search') search?: string,
+    @Query('status') status?: string,
+  ) {
+    const csv = await this.donationService.getExportData(
+      eventId,
+      search,
+      status,
+    );
+    const filename = `donations-${new Date().toISOString().split('T')[0]}.csv`;
+
+    res.set({
+      'Content-Type': 'text/csv',
+      'Content-Disposition': `attachment; filename="${filename}"`,
+    });
+
+    return res.send(csv);
+  }
+
+  @Post('intent')
+  async createPaymentIntent(@Body() body: CreateDonationDto) {
+    if (!body.amount || body.amount <= 0) {
+      throw new BadRequestException('Invalid amount');
     }
+    return this.paymentService.createPaymentIntent(
+      body.amount,
+      body.currency || 'usd',
+      body.metadata,
+    );
+  }
 
-    @Get('export')
-    @UseGuards(AuthGuard('jwt'))
-    async exportCsv(
-        @Res() res: any,
-        @Query('eventId') eventId?: string,
-        @Query('search') search?: string,
-        @Query('status') status?: string,
-    ) {
-        const csv = await this.donationService.getExportData(eventId, search, status);
-        const filename = `donations-${new Date().toISOString().split('T')[0]}.csv`;
+  @Post('stripe/webhook')
+  async handleStripeWebhook(@Req() req: RawBodyRequest<Request>) {
+    try {
+      if (!req.rawBody) {
+        throw new BadRequestException('Raw body not available');
+      }
+      // Pass headers for signature extraction
+      const event = await this.paymentService.constructEventFromPayload(
+        req.headers,
+        req.rawBody,
+        'stripe',
+      );
 
-        res.set({
-            'Content-Type': 'text/csv',
-            'Content-Disposition': `attachment; filename="${filename}"`,
+      // Handle the event
+      switch (event.type) {
+        case 'payment_intent.succeeded':
+          const paymentIntent = event.data.object;
+          console.log('PaymentIntent was successful!', paymentIntent);
+
+          await this.donationService.processSuccessfulDonation({
+            amount: paymentIntent.amount,
+            currency: paymentIntent.currency,
+            transactionId: paymentIntent.id,
+            paymentMethod: 'stripe',
+            donorName: paymentIntent.metadata?.donorName,
+            donorEmail: paymentIntent.metadata?.donorEmail,
+            isAnonymous: paymentIntent.metadata?.isAnonymous === 'true',
+            message: paymentIntent.metadata?.message,
+            metadata: paymentIntent.metadata,
+            eventId: paymentIntent.metadata?.eventId,
+          });
+          break;
+        default:
+          console.log(`Unhandled event type ${event.type}`);
+      }
+
+      return { received: true };
+    } catch (err) {
+      throw new BadRequestException(`Webhook Error: ${err.message}`);
+    }
+  }
+
+  @Post('paypal/webhook')
+  async handlePayPalWebhook(@Req() req: RawBodyRequest<Request>) {
+    try {
+      if (!req.rawBody) {
+        throw new BadRequestException('Raw body not available');
+      }
+
+      const event = await this.paymentService.constructEventFromPayload(
+        req.headers,
+        req.rawBody,
+        'paypal',
+      );
+
+      if (event.event_type === 'CHECKOUT.ORDER.COMPLETED') {
+        const resource = event.resource;
+        const intentId = resource.id; // Order ID match
+        const purchaseUnit = resource.purchase_units?.[0];
+        const amountValue = purchaseUnit?.amount?.value;
+        const amountCents = Math.round(parseFloat(amountValue || '0') * 100);
+
+        // Parse metadata from custom_id which we stored as JSON string
+        let metadata: any = {};
+        if (purchaseUnit?.custom_id) {
+          try {
+            metadata = JSON.parse(purchaseUnit.custom_id);
+          } catch (e) {
+            console.warn('Failed to parse PayPal metadata', e);
+          }
+        }
+
+        // Payer info
+        const payerEmail = resource.payer?.email_address;
+        const payerName = [
+          resource.payer?.name?.given_name,
+          resource.payer?.name?.surname,
+        ]
+          .join(' ')
+          .trim();
+
+        await this.donationService.processSuccessfulDonation({
+          amount: amountCents,
+          currency: purchaseUnit?.amount?.currency_code || 'USD',
+          transactionId: intentId,
+          paymentMethod: 'paypal',
+          donorName: payerName || metadata.donorName,
+          donorEmail: payerEmail || metadata.donorEmail,
+          isAnonymous: metadata.isAnonymous,
+          message: metadata.message,
+          metadata: metadata,
+          eventId: metadata.eventId,
         });
+      }
 
-        return res.send(csv);
+      return { received: true };
+    } catch (err) {
+      throw new BadRequestException(`PayPal Webhook Error: ${err.message}`);
+    }
+  }
+  @Post()
+  @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN', 'STAFF')
+  async createOfflineDonation(
+    @Body() body: OfflineDonationDto,
+    @Req() req: any,
+  ) {
+    const user = req.user;
+    const eventId = user.eventId || body.eventId; // Use token eventId if available, fallback to body
+
+    if (!eventId) {
+      throw new BadRequestException('Event ID is required');
+    }
+    if (!body.amount || body.amount <= 0) {
+      throw new BadRequestException('Invalid amount');
     }
 
-    @Post('intent')
-    async createPaymentIntent(
-        @Body() body: CreateDonationDto,
-    ) {
-        if (!body.amount || body.amount <= 0) {
-            throw new BadRequestException('Invalid amount');
-        }
-        return this.paymentService.createPaymentIntent(
-            body.amount,
-            body.currency || 'usd',
-            body.metadata,
-        );
-    }
+    console.log('Received offline donation:', body);
 
-    @Post('stripe/webhook')
-    async handleStripeWebhook(
-        @Headers('stripe-signature') signature: string,
-        @Req() req: RawBodyRequest<Request>,
-    ) {
-        if (!signature) {
-            throw new BadRequestException('Missing stripe-signature header');
-        }
+    // Generate a pseudo-ID for transaction if it's cash, or use timestamp
+    const txId = `OFFLINE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-        try {
-            if (!req.rawBody) {
-                throw new BadRequestException('Raw body not available');
-            }
-            const event = await this.paymentService.constructEventFromPayload(
-                signature,
-                req.rawBody,
-            );
+    const currency = await this.paymentService.getGlobalCurrency();
 
-            // Handle the event
-            switch (event.type) {
-                case 'payment_intent.succeeded':
-                    const paymentIntent = event.data.object;
-                    console.log('PaymentIntent was successful!', paymentIntent);
+    await this.donationService.processSuccessfulDonation({
+      amount: body.amount,
+      currency: currency,
+      transactionId: txId,
+      paymentMethod: body.type || 'cash',
+      donorName: body.donorName,
+      donorEmail: body.donorEmail,
+      isAnonymous: !body.donorName,
+      message: `Collected via ${body.type}`,
+      metadata: {
+        isOfflineCollected: true,
+        collectedAt: body.collectedAt,
+        collectorId: user.userId,
+      },
+      eventId: eventId,
+    });
 
-                    // Persist to DB
-                    await this.donationService.create({
-                        amount: paymentIntent.amount,
-                        transactionId: paymentIntent.id,
-                        status: 'COMPLETED',
-                        paymentMethod: 'stripe',
-                        donorName: paymentIntent.metadata?.donorName,
-                        donorEmail: paymentIntent.metadata?.donorEmail,
-                        // Note: Stripe metadata values are strings. 'true'/'false'.
-                        isAnonymous: paymentIntent.metadata?.isAnonymous === 'true',
-                        message: paymentIntent.metadata?.message,
-                        metadata: paymentIntent.metadata,
-                    });
+    return { success: true };
+  }
 
-                    // Emit to Live Screen
-                    this.donationGateway.emitDonation({
-                        amount: paymentIntent.amount,
-                        currency: paymentIntent.currency,
-                        donorName: paymentIntent.metadata?.donorName || 'Anonymous',
-                        message: paymentIntent.metadata?.message,
-                        isAnonymous: paymentIntent.metadata?.isAnonymous === 'true',
-                    });
+  @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN', 'STAFF')
+  async updateDonation(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      donorName?: string;
+      donorEmail?: string;
+      isAnonymous?: boolean;
+      message?: string;
+    },
+  ) {
+    return this.donationService.update(id, body);
+  }
 
-                    // Send Email Receipt
-                    if (paymentIntent.metadata?.donorEmail) {
-                        try {
-                            // Resolve Event Slug
-                            const eventId = paymentIntent.metadata?.eventId;
-                            // If eventId is missing, we can't send a branded receipt. 
-                            // Fallback to default or skip? Skipping or erroring is safer.
-                            if (eventId) {
-                                const event = await this.eventsService.findOne(eventId);
-                                if (event) {
-                                    await this.emailProducer.sendReceipt(
-                                        paymentIntent.metadata.donorEmail,
-                                        paymentIntent.amount / 100,
-                                        paymentIntent.id,
-                                        event.slug
-                                    );
-                                }
-                            }
-                        } catch (e) {
-                            console.error('Failed to send receipt email', e);
-                        }
-                    }
-                    break;
-                default:
-                    console.log(`Unhandled event type ${event.type}`);
-            }
-
-            return { received: true };
-        } catch (err) {
-            throw new BadRequestException(`Webhook Error: ${err.message}`);
-        }
-    }
-    @Post()
-    @UseGuards(AuthGuard('jwt'))
-    async createOfflineDonation(
-        @Body() body: OfflineDonationDto,
-        @Req() req: any,
-    ) {
-        const user = req.user;
-        const eventId = user.eventId || body.eventId; // Use token eventId if available, fallback to body
-
-        if (!eventId) {
-            throw new BadRequestException('Event ID is required');
-        }
-        if (!body.amount || body.amount <= 0) {
-            throw new BadRequestException('Invalid amount');
-        }
-
-        console.log('Received offline donation:', body);
-
-        // Persist to DB
-        // Generate a pseudo-ID for transaction if it's cash, or use timestamp
-        const txId = `OFFLINE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-        await this.donationService.create({
-            amount: body.amount,
-            transactionId: txId,
-            status: 'COMPLETED',
-            paymentMethod: body.type || 'cash',
-            donorName: body.donorName,
-            donorEmail: body.donorEmail,
-            isAnonymous: !body.donorName,
-            eventId: eventId,
-            metadata: {
-                isOfflineCollected: true,
-                collectedAt: body.collectedAt,
-                collectorId: user.userId,
-            }
-        });
-
-        // 1. Emit to Live Screen
-        this.donationGateway.emitDonation({
-            amount: body.amount,
-            currency: 'usd',
-            donorName: body.donorName || 'Anonymous',
-            message: `Collected via ${body.type}`,
-            isAnonymous: !body.donorName,
-        });
-
-        // 2. Send Email Receipt if email provided
-        if (body.donorEmail) {
-            try {
-                const event = await this.eventsService.findOne(eventId);
-                if (event) {
-                    await this.emailProducer.sendReceipt(
-                        body.donorEmail,
-                        body.amount / 100,
-                        txId,
-                        event.slug
-                    );
-                }
-            } catch (e) {
-                console.error('Failed to send offline receipt', e);
-            }
-        }
-
-        return { success: true };
-    }
-
-    @Patch(':id')
-    @UseGuards(AuthGuard('jwt'))
-    async updateDonation(
-        @Param('id') id: string,
-        @Body() body: { donorName?: string; donorEmail?: string; isAnonymous?: boolean; message?: string },
-    ) {
-        return this.donationService.update(id, body);
-    }
-
-    @Post(':id/cancel')
-    @UseGuards(AuthGuard('jwt'))
-    async cancelDonation(
-        @Param('id') id: string,
-        @Body() body: { shouldRefund?: boolean },
-    ) {
-        return this.donationService.cancel(id, body.shouldRefund);
-    }
+  @Post(':id/cancel')
+  @UseGuards(AuthGuard('jwt'))
+  @Roles('ADMIN')
+  async cancelDonation(
+    @Param('id') id: string,
+    @Body() body: { shouldRefund?: boolean },
+  ) {
+    return this.donationService.cancel(id, body.shouldRefund);
+  }
 }

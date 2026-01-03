@@ -5,4 +5,4 @@ import { GatewayGateway } from './gateway.gateway';
   providers: [GatewayGateway],
   exports: [GatewayGateway],
 })
-export class GatewayModule { }
+export class GatewayModule {}

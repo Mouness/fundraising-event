@@ -25,11 +25,17 @@ export const AppHeader = ({
     const slug = params?.slug;
 
     const handleLogout = () => {
+        const isStaff = !!localStorage.getItem('staff_token');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('staff_token');
         localStorage.removeItem('staff_user');
-        navigate('/login');
+
+        if (isStaff) {
+            navigate(slug ? `/${slug}` : '/');
+        } else {
+            navigate('/login');
+        }
     };
 
     const user = (() => {
@@ -114,22 +120,22 @@ export const AppHeader = ({
                 )}
                 {rightContent}
 
-                {(localStorage.getItem('token') || localStorage.getItem('staff_token')) && (
+                {!rightContent && (localStorage.getItem('token') || localStorage.getItem('staff_token')) && (
                     <div className="flex items-center gap-3 ml-2 pl-2 border-l border-muted/20">
                         {user && (
-                            <span className="text-sm font-medium hidden lg:inline opacity-80" style={{ color: 'var(--header-text)' }}>
+                            <span className="text-sm font-medium hidden md:inline opacity-80" style={{ color: 'var(--header-text)' }}>
                                 {user.name || user.email}
                             </span>
                         )}
                         <Button
                             variant="ghost"
-                            size="sm"
+                            size="icon"
                             onClick={handleLogout}
-                            className="flex items-center gap-2 hover:bg-black/5"
+                            className="hover:bg-black/5"
                             style={{ color: 'var(--header-text)' }}
+                            title={t('common.logout', 'Log off')}
                         >
                             <LogOut className="h-4 w-4" />
-                            <span className="font-medium">{t('common.logout', 'Log off')}</span>
                         </Button>
                     </div>
                 )}

@@ -47,10 +47,6 @@ import { WhiteLabelingModule } from './features/white-labeling/white-labeling.mo
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
   ],
 })
-export class AppModule {}
+export class AppModule { }

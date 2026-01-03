@@ -9,12 +9,13 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { WhiteLabelingService } from './white-labeling.service';
 
 @Controller()
 export class WhiteLabelingController {
-  constructor(private readonly service: WhiteLabelingService) {}
+  constructor(private readonly service: WhiteLabelingService) { }
 
   @Get('settings/global')
   async getGlobalSettings() {
@@ -22,7 +23,7 @@ export class WhiteLabelingController {
   }
 
   @Patch('settings/global')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
   async updateGlobalSettings(@Body() config: any) {
     return this.service.updateGlobalSettings(config);
@@ -38,14 +39,14 @@ export class WhiteLabelingController {
   }
 
   @Patch('events/:id/branding')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
   async updateEventSettings(@Param('id') eventId: string, @Body() config: any) {
     return this.service.updateEventSettings(eventId, config);
   }
 
   @Delete('events/:id/branding')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
   async resetEventSettings(@Param('id') eventId: string) {
     return this.service.resetEventSettings(eventId);

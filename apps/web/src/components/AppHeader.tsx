@@ -1,7 +1,9 @@
 import { useAppConfig } from '@/providers/AppConfigProvider';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { Button } from './ui/button';
+import { LogOut } from 'lucide-react';
 
 interface AppHeaderProps {
     title?: string;
@@ -19,7 +21,36 @@ export const AppHeader = ({
     const { config } = useAppConfig();
     const { t } = useTranslation('common');
     const params = useParams();
+    const navigate = useNavigate();
     const slug = params?.slug;
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('staff_token');
+        localStorage.removeItem('staff_user');
+        navigate('/login');
+    };
+
+    const user = (() => {
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+            try {
+                return JSON.parse(userStr);
+            } catch (e) {
+                return null;
+            }
+        }
+        const staffUserStr = localStorage.getItem('staff_user');
+        if (staffUserStr) {
+            try {
+                return JSON.parse(staffUserStr);
+            } catch (e) {
+                return null;
+            }
+        }
+        return null;
+    })();
 
     return (
         <header
@@ -82,6 +113,26 @@ export const AppHeader = ({
                     </>
                 )}
                 {rightContent}
+
+                {(localStorage.getItem('token') || localStorage.getItem('staff_token')) && (
+                    <div className="flex items-center gap-3 ml-2 pl-2 border-l border-muted/20">
+                        {user && (
+                            <span className="text-sm font-medium hidden lg:inline opacity-80" style={{ color: 'var(--header-text)' }}>
+                                {user.name || user.email}
+                            </span>
+                        )}
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 hover:bg-black/5"
+                            style={{ color: 'var(--header-text)' }}
+                        >
+                            <LogOut className="h-4 w-4" />
+                            <span className="font-medium">{t('common.logout', 'Log off')}</span>
+                        </Button>
+                    </div>
+                )}
             </div>
         </header>
     );

@@ -10,16 +10,17 @@ import {
 import { ExportService } from './export.service';
 import type { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('export')
 export class ExportController {
   private readonly logger = new Logger(ExportController.name);
 
-  constructor(private readonly exportService: ExportService) {}
+  constructor(private readonly exportService: ExportService) { }
 
   @Get('receipts/zip')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN', 'STAFF')
   async downloadAllReceipts(
     @Res({ passthrough: true }) res: Response,
@@ -38,7 +39,7 @@ export class ExportController {
   }
 
   @Get('receipts/:id')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN', 'STAFF')
   async downloadSingleReceipt(@Param('id') id: string, @Res() res: Response) {
     this.logger.log(`Received request for single receipt download: ${id}`);

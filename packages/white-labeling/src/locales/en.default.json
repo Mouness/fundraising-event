@@ -40,6 +40,7 @@
         "total_raised": "Total Raised",
         "event_date": "Event Date",
         "dashboard": {
+            "title": "Dashboard",
             "overview": "Dashboard Overview",
             "collector_app": "Collector App",
             "launch_live": "Launch Live",
@@ -127,7 +128,9 @@
         "table_assignments": "Assignments",
         "loading_staff": "Loading staff...",
         "no_staff_found": "No staff members found.",
-        "events_count": "{{count}} events"
+        "events_count": "{{count}} events",
+        "confirm_delete_title": "Delete staff member",
+        "member_updated": "Staff member updated successfully"
     },
     "live": {
         "title": "Live Screen",
@@ -183,7 +186,11 @@
         "all": "All",
         "edit": "Edit",
         "cancel": "Cancel",
-        "delete": "Delete"
+        "delete": "Delete",
+        "logout": "Log off",
+        "save_changes": "Save Changes",
+        "saving": "Saving...",
+        "saved_successfully": "Saved successfully"
     },
     "status": {
         "completed": "Completed",
@@ -293,7 +300,10 @@
     },
     "dashboard": {
         "title": "Dashboard",
+        "overview": "Overview",
         "platform_overview": "Platform Overview",
+        "recent_donations": "Recent Donations",
+        "chart_placeholder": "Chart",
         "export_receipts": "Export Receipts (ZIP)",
         "export_failed": "Failed to export receipts. Please try again.",
         "stats": {
@@ -302,7 +312,10 @@
             "active_events": "Active Events",
             "currently_live": "Currently live",
             "total_donors": "Total Donors",
-            "donors_description": "Lifetime unique donors"
+            "donors_description": "Lifetime unique donors",
+            "total_revenue": "Total Revenue",
+            "donations": "Donations",
+            "staff_members": "Staff Members"
         },
         "campaigns": {
             "title": "Active Campaigns",
@@ -456,6 +469,7 @@
     },
     "event_settings": {
         "title": "Event Settings",
+        "subtitle": "Configure event details and appearance.",
         "nav": {
             "general": "General",
             "branding": "Design & Branding"
@@ -494,7 +508,10 @@
             "logo_url": "Event Logo URL",
             "accent_color": "Event Accent Color",
             "override_warning": "Custom event branding overrides the organization's standard look for this specific event.",
-            "apply_overrides": "Apply Theme Overrides"
+            "apply_overrides": "Apply Theme Overrides",
+            "saved_successfully": "Branding saved successfully",
+            "save_changes": "Save Changes",
+            "subtitle": "Configure event branding and appearance."
         }
     }
 }

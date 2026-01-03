@@ -14,6 +14,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import type { RawBodyRequest } from '@nestjs/common';
 import type { Request } from 'express';
@@ -29,7 +30,7 @@ export class DonationController {
   constructor(
     private readonly paymentService: PaymentService,
     private readonly donationService: DonationService,
-  ) {}
+  ) { }
 
   @Get()
   async findAll(
@@ -43,7 +44,7 @@ export class DonationController {
   }
 
   @Get('export')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN', 'STAFF')
   async exportCsv(
     @Res() res: any,
@@ -179,7 +180,7 @@ export class DonationController {
     }
   }
   @Post()
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN', 'STAFF')
   async createOfflineDonation(
     @Body() body: OfflineDonationDto,
@@ -223,7 +224,7 @@ export class DonationController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN', 'STAFF')
   async updateDonation(
     @Param('id') id: string,
@@ -239,7 +240,7 @@ export class DonationController {
   }
 
   @Post(':id/cancel')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
   async cancelDonation(
     @Param('id') id: string,

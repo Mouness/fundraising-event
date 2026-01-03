@@ -6,6 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useTranslation } from 'react-i18next';
+import { useLogin } from '../hooks/useLogin';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const getLoginSchema = (t: any) => z.object({
     email: z.string().email({ message: t('validation.invalid_email') }),
@@ -14,13 +17,25 @@ const getLoginSchema = (t: any) => z.object({
 
 type LoginForm = z.infer<ReturnType<typeof getLoginSchema>>;
 
-import { useLogin } from '../hooks/useLogin';
-
-// ... imports
-
 export const LoginPage = () => {
     const { t } = useTranslation('common');
+    const navigate = useNavigate();
     const { login, error, isLoading } = useLogin();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const userStr = localStorage.getItem('user');
+        if (token && userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                if (user.role === 'ADMIN' || user.role === 'STAFF') {
+                    navigate('/admin');
+                }
+            } catch (e) {
+                // Ignore parse error
+            }
+        }
+    }, [navigate]);
     const loginSchema = getLoginSchema(t);
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
         resolver: zodResolver(loginSchema),

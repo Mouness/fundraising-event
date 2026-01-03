@@ -88,6 +88,8 @@
         }
     },
     "admin_team": {
+        "title": "Base Globale du Personnel",
+        "subtitle": "Gérez tous les bénévoles sur la plateforme",
         "title_assign": "Affectation des Bénévoles",
         "subtitle_assign": "Sélectionnez les membres de l'équipe pour cet événement",
         "assign_member": "Ajouter à l'événement",
@@ -133,13 +135,30 @@
     "dashboard": {
         "title": "Tableau de bord",
         "overview": "Aperçu",
+        "platform_overview": "Aperçu de la plateforme",
+        "export_receipts": "Exporter les reçus (ZIP)",
+        "export_failed": "Échec de l'exportation des reçus. Veuillez réessayer.",
         "chart_placeholder": "Graphique",
         "recent_donations": "Dons récents",
         "stats": {
+            "revenue": "Revenu total",
             "total_revenue": "Revenu total",
             "active_events": "Événements actifs",
+            "currently_live": "Actuellement en direct",
             "donations": "Dons",
-            "staff_members": "Membres du personnel"
+            "total_donors": "Total donateurs",
+            "donors_description": "Donateurs uniques à vie",
+            "staff_members": "Membres du personnel",
+            "events_count": "Sur {{count}} événements"
+        },
+        "campaigns": {
+            "title": "Campagnes Actives",
+            "empty": "Aucune campagne active trouvée.",
+            "view_all": "Voir tous les événements",
+            "active": "ACTIF",
+            "raised": "Récolté",
+            "goal": "Objectif: {{amount}}",
+            "manage": "Gérer le Tableau de Bord"
         }
     },
     "live": {
@@ -199,7 +218,8 @@
         "delete": "Supprimer",
         "save_changes": "Enregistrer les modifications",
         "saving": "Enregistrement...",
-        "saved_successfully": "Paramètres enregistrés avec succès"
+        "saved_successfully": "Paramètres enregistrés avec succès",
+        "logout": "Se déconnecter"
     },
     "status": {
         "completed": "Complété",
@@ -303,7 +323,8 @@
             "website": "Site Web",
             "support": "Support",
             "rights": "Tous droits réservés.",
-            "staff": "Accès Staff"
+            "staff": "Accès Staff",
+            "login": "Connexion Admin"
         }
     },
     "error": {

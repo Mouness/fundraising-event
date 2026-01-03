@@ -11,6 +11,7 @@ import type { DonationFormValues } from '../schemas/donation.schema';
 import { getDonationSchema } from '../schemas/donation.schema';
 import { useAppConfig } from '@/providers/AppConfigProvider';
 import { api } from '@/lib/api';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { PaymentFormFactory } from './payment/PaymentFormFactory';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, CreditCard } from 'lucide-react';
@@ -25,6 +26,8 @@ export const CheckoutForm = () => {
     const [sessionData, setSessionData] = useState<{ id: string; clientSecret: string } | null>(null);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [selectedAmount, setSelectedAmount] = useState<number>(20);
+
+    const { formatCurrency, currency } = useCurrencyFormatter();
 
     // Validate slug against config to ensure consistency
     if (slug && config.slug && slug !== config.slug) {
@@ -60,7 +63,7 @@ export const CheckoutForm = () => {
             const amountInCents = Math.round(data.amount * 100);
             const { data: intentData } = await api.post('/donations/intent', {
                 amount: amountInCents,
-                currency: config.donation?.payment?.currency || 'usd',
+                currency: currency,
                 eventId: config.id, // Use ID for backend, but slug for navigation
                 metadata: {
                     donorName: data.name,
@@ -120,7 +123,7 @@ export const CheckoutForm = () => {
                                                 borderColor: selectedAmount !== amt ? 'var(--donation-input-border)' : 'transparent'
                                             }}
                                         >
-                                            ${amt}
+                                            {formatCurrency(amt)}
                                         </Button>
                                     ))}
                                     <div className="col-span-2 relative">
@@ -205,6 +208,38 @@ export const CheckoutForm = () => {
                                     </div>
                                 )}
 
+                                {config.donation.form.address?.enabled && (
+                                    <div className="space-y-2">
+                                        <Label htmlFor="address" style={{ color: 'var(--donation-label-color)' }}>{t('donation.address')} {config.donation.form.address.required && '*'}</Label>
+                                        <Input
+                                            id="address"
+                                            {...register('address', { required: config.donation.form.address.required ? t('validation.required') : false })}
+                                            style={{
+                                                backgroundColor: 'var(--donation-input-bg)',
+                                                color: 'var(--donation-input-text)',
+                                                borderColor: 'var(--donation-input-border)'
+                                            }}
+                                        />
+                                        {errors.address && <p className="text-sm text-red-500">{errors.address.message}</p>}
+                                    </div>
+                                )}
+
+                                {config.donation.form.company?.enabled && (
+                                    <div className="space-y-2">
+                                        <Label htmlFor="company" style={{ color: 'var(--donation-label-color)' }}>{t('donation.company')} {config.donation.form.company.required && '*'}</Label>
+                                        <Input
+                                            id="company"
+                                            {...register('company', { required: config.donation.form.company.required ? t('validation.required') : false })}
+                                            style={{
+                                                backgroundColor: 'var(--donation-input-bg)',
+                                                color: 'var(--donation-input-text)',
+                                                borderColor: 'var(--donation-input-border)'
+                                            }}
+                                        />
+                                        {errors.company && <p className="text-sm text-red-500">{errors.company.message}</p>}
+                                    </div>
+                                )}
+
                                 {config.donation.form.message.enabled && (
                                     <div className="space-y-2">
                                         <Label htmlFor="message" style={{ color: 'var(--donation-label-color)' }}>{t('donation.message')}</Label>
@@ -244,7 +279,7 @@ export const CheckoutForm = () => {
                                         color: 'var(--donation-next-button-text)'
                                     }}
                                 >
-                                    {t('donation.submit', { amount: `$${currentAmount || 0} ` })}
+                                    {t('donation.submit', { amount: formatCurrency(currentAmount || 0) })}
                                     <ChevronRight className="ml-2 h-5 w-5" />
                                 </Button>
                             </CardFooter>

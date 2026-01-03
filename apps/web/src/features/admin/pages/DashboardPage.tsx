@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useEvents } from '@/features/events/hooks/useEvents';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Loader2, TrendingUp, Users, Calendar, ArrowRight } from 'lucide-react';
 
 export const DashboardPage = () => {
@@ -24,8 +25,7 @@ export const DashboardPage = () => {
     const activeEventsCount = activeEvents.length;
 
     // Currency Formatter
-    const formatCurrency = (amount: number) =>
-        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
+    const { formatCurrency } = useCurrencyFormatter();
 
     return (
         <div className="space-y-8">

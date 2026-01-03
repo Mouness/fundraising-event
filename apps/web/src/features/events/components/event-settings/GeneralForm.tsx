@@ -54,7 +54,7 @@ export const GeneralForm = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
-                            <Label htmlFor="goalAmount">{t('event_settings.general.goal_amount', 'Fundraising Goal ($)')}</Label>
+                            <Label htmlFor="goalAmount">{t('event_settings.general.goal_amount', 'Fundraising Goal')}</Label>
                             <Input id="goalAmount" type="number" {...register('goalAmount')} />
                             {errors.goalAmount && <p className="text-sm text-red-500">{errors.goalAmount.message as string}</p>}
                         </div>
@@ -76,7 +76,7 @@ export const GeneralForm = () => {
                     <div className="flex items-center space-x-2">
                         <Controller
                             control={control}
-                            name="formConfig.collectPhone"
+                            name="formConfig.phone.enabled"
                             render={({ field }) => (
                                 <Checkbox id="collectPhone" checked={field.value} onCheckedChange={field.onChange} />
                             )}
@@ -86,7 +86,7 @@ export const GeneralForm = () => {
                     <div className="flex items-center space-x-2">
                         <Controller
                             control={control}
-                            name="formConfig.collectAddress"
+                            name="formConfig.address.enabled"
                             render={({ field }) => (
                                 <Checkbox id="collectAddress" checked={field.value} onCheckedChange={field.onChange} />
                             )}
@@ -96,12 +96,32 @@ export const GeneralForm = () => {
                     <div className="flex items-center space-x-2">
                         <Controller
                             control={control}
-                            name="formConfig.collectCompany"
+                            name="formConfig.company.enabled"
                             render={({ field }) => (
                                 <Checkbox id="collectCompany" checked={field.value} onCheckedChange={field.onChange} />
                             )}
                         />
                         <Label htmlFor="collectCompany">{t('event_settings.general.collect_company', 'Collect Company Name')}</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Controller
+                            control={control}
+                            name="formConfig.message.enabled"
+                            render={({ field }) => (
+                                <Checkbox id="collectMessage" checked={field.value} onCheckedChange={field.onChange} />
+                            )}
+                        />
+                        <Label htmlFor="collectMessage">{t('event_settings.general.collect_message', 'Collect Message')}</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Controller
+                            control={control}
+                            name="formConfig.anonymous.enabled"
+                            render={({ field }) => (
+                                <Checkbox id="allowAnonymous" checked={field.value} onCheckedChange={field.onChange} />
+                            )}
+                        />
+                        <Label htmlFor="allowAnonymous">{t('event_settings.general.allow_anonymous', 'Allow Anonymous Donations')}</Label>
                     </div>
                 </CardContent>
             </Card>

@@ -26,6 +26,14 @@
                 "enabled": true,
                 "required": false
             },
+            "address": {
+                "enabled": false,
+                "required": false
+            },
+            "company": {
+                "enabled": false,
+                "required": false
+            },
             "message": {
                 "enabled": true,
                 "required": false

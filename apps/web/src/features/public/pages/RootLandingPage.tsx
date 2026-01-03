@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useEvents } from '@/features/events/hooks/useEvents';
 import { PageLoader } from '@/components/ui/page-loader';
 import { useAppConfig } from '@/providers/AppConfigProvider';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 export const RootLandingPage = () => {
@@ -15,6 +16,7 @@ export const RootLandingPage = () => {
     const { config } = useAppConfig();
     const { t } = useTranslation('common');
     const { scrollY } = useScroll();
+    const { formatCurrency } = useCurrencyFormatter();
 
     // Parallax effect
     const y = useTransform(scrollY, [0, 500], [0, 200]);
@@ -141,11 +143,7 @@ export const RootLandingPage = () => {
                                                         <div className="flex flex-col">
                                                             <span className="text-sm text-muted-foreground font-medium uppercase tracking-wide">{t('root_landing.event_card.raised', 'Raised')}</span>
                                                             <span className="text-2xl font-bold text-foreground">
-                                                                {new Intl.NumberFormat('en-US', {
-                                                                    style: 'currency',
-                                                                    currency: config.donation?.payment?.currency || 'USD',
-                                                                    maximumFractionDigits: 0
-                                                                }).format(raised)}
+                                                                {formatCurrency(raised)}
                                                             </span>
                                                         </div>
                                                         <div className="text-right">
@@ -167,16 +165,8 @@ export const RootLandingPage = () => {
 
                                                     <div className="flex justify-between text-xs text-muted-foreground">
                                                         <span>{t('root_landing.event_card.goal_of', {
-                                                            amount: new Intl.NumberFormat('en-US', {
-                                                                style: 'currency',
-                                                                currency: config.donation?.payment?.currency || 'USD',
-                                                                maximumFractionDigits: 0
-                                                            }).format(event.goalAmount),
-                                                            defaultValue: `of ${new Intl.NumberFormat('en-US', {
-                                                                style: 'currency',
-                                                                currency: config.donation?.payment?.currency || 'USD',
-                                                                maximumFractionDigits: 0
-                                                            }).format(event.goalAmount)} goal`
+                                                            amount: formatCurrency(event.goalAmount),
+                                                            defaultValue: `of ${formatCurrency(event.goalAmount)} goal`
                                                         })}</span>
                                                     </div>
                                                 </div>

@@ -10,10 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Check, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { useCurrencyFormatter } from "@/hooks/useCurrencyFormatter";
 
 export const CollectorPage = () => {
     const { t } = useTranslation('common');
     const { getStaffUser } = useStaffAuth();
+    const { formatCurrency } = useCurrencyFormatter();
     const [amount, setAmount] = useState<string>("");
     const [type, setType] = useState<DonationType>("cash");
     const [name, setName] = useState<string>("");
@@ -40,12 +42,9 @@ export const CollectorPage = () => {
     };
 
     const formatAmount = (val: string) => {
-        if (!val) return "$0.00";
+        if (!val) return formatCurrency(0, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const num = parseInt(val) / 100;
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-        }).format(num);
+        return formatCurrency(num, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
 
 
@@ -121,7 +120,7 @@ export const CollectorPage = () => {
                     className="font-bold tracking-tighter"
                     style={{ fontSize: 'var(--staff-amount-size)', color: 'var(--staff-amount-color)' }}
                 >
-                    {amount ? formatAmount(amount) : <span style={{ color: 'var(--staff-amount-placeholder-color)', opacity: 0.4 }}>$0.00</span>}
+                    {amount ? formatAmount(amount) : <span style={{ color: 'var(--staff-amount-placeholder-color)', opacity: 0.4 }}>{formatCurrency(0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>}
                 </div>
             </div>
 

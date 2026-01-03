@@ -51,7 +51,18 @@ export const EVENTS = [
                 '--border': '#575757',
                 '--input': '#575757',
                 '--ring': '#B49349',
-                '--radius': '1rem' // Soft rounded
+                '--radius': '1rem', // Soft rounded
+
+                // Live Page Overrides for Contrast
+                '--live-page-bg': '#1A1A1A', // Dark Background
+                '--live-text-main': '#F5F5F5', // Light Text
+                '--live-title-color': '#B49349', // Gold Title
+                '--live-subtitle-text': '#A3A3A3',
+                '--live-feed-item-bg': 'rgba(50, 50, 50, 0.6)', // Lighter background for feed to contrast with dark page
+                '--live-amount-color': '#B49349', // Gold Amount
+                '--live-gauge-track': 'rgba(255, 255, 255, 0.2)', // More visible track
+                '--live-gauge-from': '#B49349', // Gold
+                '--live-gauge-to': '#F5F5F5' // White (instead of Dark) to pop against background
             },
             form: {
                 collectAddress: false,

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Plus, Calendar, Target, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEvents } from '@/features/events/hooks/useEvents';
@@ -8,7 +9,8 @@ import { PageLoader } from '@/components/ui/page-loader';
 
 export const EventListPage = () => {
     const { events, isLoading } = useEvents();
-    const { t } = useTranslation();
+    const { t } = useTranslation('common');
+    const { formatCurrency } = useCurrencyFormatter();
 
     if (isLoading) {
         return <div className="flex justify-center items-center h-64"><PageLoader /></div>;
@@ -70,8 +72,8 @@ export const EventListPage = () => {
                                         <span className="text-xs text-muted-foreground flex items-center gap-1">
                                             <Target className="h-3 w-3" /> {t('admin_events.goal')}
                                         </span>
-                                        <div className="font-semibold" style={{ color: 'var(--admin-card-text)' }}>
-                                            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(event.goalAmount)}
+                                        <div className="text-sm text-muted-foreground mt-1">
+                                            {formatCurrency(event.raised || 0)} / {formatCurrency(event.goalAmount)}
                                         </div>
                                     </div>
                                     <div className="space-y-1">

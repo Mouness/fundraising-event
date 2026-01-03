@@ -21,9 +21,11 @@ const getCombinedSchema = (t: any) => z.object({
     status: z.enum(['active', 'draft', 'closed']),
     date: z.string().optional(),
     formConfig: z.object({
-        collectPhone: z.boolean(),
-        collectAddress: z.boolean(),
-        collectCompany: z.boolean(),
+        phone: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
+        address: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
+        company: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
+        message: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
+        anonymous: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
     }),
     // Branding Overrides
     useGlobalBranding: z.boolean(),
@@ -57,7 +59,13 @@ export const EventSettingsPage = () => {
         defaultValues: {
             // General Defaults
             name: '', goalAmount: 0, slug: '', status: 'draft', date: '',
-            formConfig: { collectPhone: false, collectAddress: false, collectCompany: false },
+            formConfig: {
+                phone: { enabled: false, required: false },
+                address: { enabled: false, required: false },
+                company: { enabled: false, required: false },
+                message: { enabled: true, required: false },
+                anonymous: { enabled: true, required: false },
+            },
 
             // Branding Defaults
             useGlobalBranding: true,
@@ -101,6 +109,8 @@ export const EventSettingsPage = () => {
         const variables = data.theme?.variables || {};
         const variableArray = Object.entries(variables).map(([key, value]) => ({ key, value: String(value) }));
 
+        const donationForm = data.donation?.form;
+
         form.reset({
             // General
             name: event.name,
@@ -109,9 +119,11 @@ export const EventSettingsPage = () => {
             status: (event.status as any) || 'draft',
             date: event.date ? new Date(event.date).toISOString().split('T')[0] : '',
             formConfig: {
-                collectPhone: data.donation?.form?.collectPhone || false,
-                collectAddress: data.donation?.form?.collectAddress || false,
-                collectCompany: data.donation?.form?.collectCompany || false,
+                phone: { enabled: donationForm?.phone?.enabled ?? false, required: false },
+                address: { enabled: donationForm?.address?.enabled ?? false, required: false },
+                company: { enabled: donationForm?.company?.enabled ?? false, required: false },
+                message: { enabled: donationForm?.message?.enabled ?? true, required: false },
+                anonymous: { enabled: donationForm?.anonymous?.enabled ?? true, required: false },
             },
             // Branding
             useGlobalBranding: !data.isOverride,

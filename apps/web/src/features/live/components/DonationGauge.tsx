@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 interface DonationGaugeProps {
     totalRaisedCents: number;
@@ -16,6 +17,7 @@ export const DonationGauge = ({
     totalLabel
 }: DonationGaugeProps) => {
     const { t } = useTranslation('common');
+    const { formatCurrency } = useCurrencyFormatter();
     const progressPercentage = Math.min((totalRaisedCents / (goalAmount * 100)) * 100, 100);
 
     return (
@@ -43,8 +45,8 @@ export const DonationGauge = ({
                 />
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="var(--primary)" />
-                        <stop offset="100%" stopColor="var(--secondary)" />
+                        <stop offset="0%" stopColor="var(--live-gauge-from, var(--primary))" />
+                        <stop offset="100%" stopColor="var(--live-gauge-to, var(--secondary))" />
                     </linearGradient>
                 </defs>
             </svg>
@@ -57,12 +59,13 @@ export const DonationGauge = ({
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                 >
-                    $<CountUp
+                    <CountUp
                         start={prevTotal / 100}
                         end={totalRaisedCents / 100}
                         duration={2.5}
                         separator=","
                         decimals={0}
+                        formattingFn={(value) => formatCurrency(value)}
                     />
                 </motion.div>
                 <div
@@ -80,7 +83,7 @@ export const DonationGauge = ({
                     className="mt-2 text-xs uppercase tracking-widest"
                     style={{ color: 'var(--live-text-muted)' }}
                 >
-                    {t('live.goal')}: ${goalAmount.toLocaleString()}
+                    {t('live.goal')}: {formatCurrency(goalAmount)}
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '@/providers/AppConfigProvider';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { LandingBackground } from '@/features/public/components/LandingBackground';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,10 +13,8 @@ export const LandingPage = () => {
     const { t } = useTranslation('common');
     const { slug } = useParams<{ slug: string }>();
 
-    const formattedGoal = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-    }).format(config.content.goalAmount);
+    const { formatCurrency } = useCurrencyFormatter();
+    const formattedGoal = formatCurrency(config.content.goalAmount);
 
     return (
         <div className="min-h-screen flex flex-col font-sans transition-colors duration-300 bg-background text-foreground overflow-hidden relative">

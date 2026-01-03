@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 export interface Donation {
     amount: number; // in cents
@@ -16,6 +17,7 @@ interface DonationFeedProps {
 
 export const DonationFeed = ({ donations }: DonationFeedProps) => {
     const { t } = useTranslation('common');
+    const { formatCurrency } = useCurrencyFormatter();
 
     return (
         <div className="flex-1 overflow-hidden relative fade-mask-bottom">
@@ -63,7 +65,7 @@ export const DonationFeed = ({ donations }: DonationFeedProps) => {
                                 className="text-2xl font-bold z-10"
                                 style={{ color: 'var(--live-amount-color)' }}
                             >
-                                +${(d.amount / 100).toLocaleString()}
+                                +{formatCurrency((d.amount / 100), { currency: d.currency })}
                             </div>
                         </div>
                     </motion.div>

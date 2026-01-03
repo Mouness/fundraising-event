@@ -2,6 +2,7 @@ import { useDonations } from '@/features/donation/hooks/useDonations';
 import { Loader2, MessageSquare } from 'lucide-react';
 import { timeAgo } from '@/lib/date';
 import { useTranslation } from 'react-i18next';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 interface RecentDonationsListProps {
     eventId: string;
@@ -9,6 +10,7 @@ interface RecentDonationsListProps {
 
 export const RecentDonationsList = ({ eventId }: RecentDonationsListProps) => {
     const { t } = useTranslation(['common', 'white-labeling']);
+    const { formatCurrency } = useCurrencyFormatter();
     const { donations, isLoading } = useDonations(eventId, 5); // Show last 5
 
     if (isLoading) {
@@ -49,11 +51,7 @@ export const RecentDonationsList = ({ eventId }: RecentDonationsListProps) => {
                     </div>
                     <div className="text-right">
                         <div className="font-bold text-base" style={{ color: 'var(--primary)' }}>
-                            {new Intl.NumberFormat(undefined, {
-                                style: 'currency',
-                                currency: donation.currency || 'USD',
-                                minimumFractionDigits: 0,
-                            }).format(donation.amount / 100)}
+                            {formatCurrency(donation.amount / 100, { currency: donation.currency || 'USD' })}
                         </div>
                         <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
                             {donation.status}

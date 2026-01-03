@@ -37,6 +37,10 @@ export interface EventConfig {
         form: {
             /** Collect donor phone number */
             phone: { enabled: boolean; required: boolean };
+            /** Collect donor address */
+            address: { enabled: boolean; required: boolean };
+            /** Collect company name */
+            company: { enabled: boolean; required: boolean };
             /** Collect donor message/comment */
             message: { enabled: boolean; required: boolean };
             /** Allow anonymous donations */

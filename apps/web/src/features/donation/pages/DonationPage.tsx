@@ -15,7 +15,7 @@ export const DonationPage = () => {
             }}
         >
             {/* Overlay for readability if image exists */}
-            {bgImage && <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-0" />}
+            {bgImage && <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-0" />}
 
             <div className="relative z-10">
                 <AppHeader />

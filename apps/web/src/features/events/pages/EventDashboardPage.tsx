@@ -1,14 +1,19 @@
-import { useEvent } from '@/features/events/context/EventContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Target, Users, TrendingUp, Calendar, ExternalLink, Settings, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { RecentDonationsList } from '../components/RecentDonationsList';
+import { useEvents } from '@/features/events/hooks/useEvents';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { useTranslation } from 'react-i18next';
 
 export const EventDashboardPage = () => {
-    const { event } = useEvent();
+    const { slug } = useParams<{ slug: string }>();
     const { t } = useTranslation('common');
+    const { events } = useEvents();
+    const { formatCurrency } = useCurrencyFormatter();
+
+    const event = events.find(e => e.slug === slug);
 
     if (!event) return null;
 
@@ -64,7 +69,7 @@ export const EventDashboardPage = () => {
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold" style={{ color: 'var(--admin-card-text)' }}>
-                            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(raised)}
+                            {formatCurrency(raised)}
                         </div>
                         <p className="text-xs text-muted-foreground">
                             {t('admin_events.dashboard.progress_of_goal', { progress })}
@@ -94,7 +99,7 @@ export const EventDashboardPage = () => {
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold" style={{ color: 'var(--admin-card-text)' }}>
-                            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(goal)}
+                            {formatCurrency(goal)}
                         </div>
                         <p className="text-xs text-muted-foreground">
                             {t('admin_events.dashboard.target_amount')}

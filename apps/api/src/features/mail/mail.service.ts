@@ -16,7 +16,7 @@ export class MailService {
     private readonly whiteLabelingService: WhiteLabelingService,
     private readonly configService: ConfigService,
     private readonly pdfService: PdfService,
-  ) {}
+  ) { }
 
   async sendReceipt(to: string, data: any) {
     // data MUST contain eventSlug. If not, we can't label correctly.
@@ -34,22 +34,24 @@ export class MailService {
       return;
     }
 
-    const settings = (config as any).settings || {};
-    const commConfig =
-      settings.communication || (config as any).communication || {};
+    const { communication: commConfig, theme } = config;
     const subject =
       commConfig.email?.subjectLine ||
       `Receipt for your donation of $${data.amount}`;
 
     const frontendUrl =
       this.configService.get('FRONTEND_URL') || 'http://localhost:5173';
-    const logoPath = (config.theme as any)?.assets?.logo || '';
-    const absoluteLogoUrl = logoPath.startsWith('http')
-      ? logoPath
-      : `${frontendUrl}${logoPath}`;
 
-    const themeVars = (config.theme as any)?.variables || {};
-    const primaryColor = themeVars['--primary'] || '#000000';
+    // Resolve absolute logo URL
+    let absoluteLogoUrl = '';
+    const logoPath = theme?.assets?.logo;
+    if (logoPath) {
+      absoluteLogoUrl = logoPath.startsWith('http')
+        ? logoPath
+        : `${frontendUrl}${logoPath}`;
+    }
+
+    const primaryColor = theme?.variables?.['--primary'] || '#000000';
 
     const context = {
       ...data,
@@ -62,7 +64,7 @@ export class MailService {
       supportEmail: commConfig.supportEmail || 'support@example.com',
       footerText: commConfig.email?.footerText,
       year: new Date().getFullYear(),
-      currency: 'USD',
+      currency: config.donation.payment.currency || 'USD',
     };
 
     // Generate PDF Receipt

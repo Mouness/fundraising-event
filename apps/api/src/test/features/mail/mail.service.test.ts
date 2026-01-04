@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailService } from '@/features/mail/mail.service';
-import { EventConfigService } from '@/features/events/configuration/event-config.service';
+import { WhiteLabelingService } from '@/features/white-labeling/white-labeling.service';
 import { PdfService } from '@/features/pdf/pdf.service';
 import { ConfigService } from '@nestjs/config';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -24,6 +24,7 @@ const mockTemplate = `
 
 describe('MailService', () => {
   let service: MailService;
+  let whiteLabelingService: WhiteLabelingService;
   let mailProviderMock: { send: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
@@ -37,47 +38,76 @@ describe('MailService', () => {
           useValue: mailProviderMock,
         },
         {
-          provide: EventConfigService,
+          provide: WhiteLabelingService,
           useValue: {
-            getConfig: () => ({
-              content: { title: 'Test Event' },
-              theme: { logoUrl: 'logo.png' },
-              communication: {
-                legalName: 'Org',
-                address: 'Addr',
-                website: 'web',
-                email: { footerText: 'footer' },
-              },
-            }),
-            getThemeVariable: vi.fn().mockResolvedValue('blue'),
+            getEventSettings: vi.fn(),
           },
         },
         {
           provide: ConfigService,
           useValue: {
-            get: (key: string) =>
-              key === 'FRONTEND_URL' ? 'http://localhost:3000' : null,
+            get: vi.fn().mockReturnValue('http://localhost:3000'),
           },
         },
         {
           provide: PdfService,
           useValue: {
-            generateReceipt: vi
-              .fn()
-              .mockResolvedValue(Buffer.from('pdf content')),
+            generateReceipt: vi.fn().mockResolvedValue(Buffer.from('pdf')),
           },
         },
       ],
     }).compile();
 
     service = module.get<MailService>(MailService);
+    whiteLabelingService = module.get<WhiteLabelingService>(WhiteLabelingService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
+  it('should send receipt with branding', async () => {
+    const mockSettings = {
+      content: { title: 'Test Event', goalAmount: 1000 },
+      theme: { assets: { logo: '/logo.png' }, variables: { '--primary': '#fff' } },
+      communication: { email: { subjectLine: 'Test Subject' } },
+    };
+
+    vi.spyOn(whiteLabelingService, 'getEventSettings').mockResolvedValue(mockSettings as any);
+    // Mock private renderTemplate if needed, or rely on it failing gracefully/working if template exists
+    // Since renderTemplate is private and reads from FS, integration test might be better, 
+    // or we mock fs. But for now let's assume it logs warning if template missing.
+    // Actually, renderTemplate is private. We can spy on 'send'
+
+    await service.sendReceipt('test@example.com', {
+      eventSlug: 'test-event',
+      amount: 100,
+      date: new Date(),
+      transactionId: '123',
+    });
+
+    expect(whiteLabelingService.getEventSettings).toHaveBeenCalledWith('test-event');
+    expect(mailProviderMock.send).toHaveBeenCalled();
   });
 
   it('should render template with dynamic color and send email', async () => {
     // Mock template loading
     mockedFs.readFile.mockResolvedValue(mockTemplate);
 
+    const mockSettings = {
+      content: { title: 'Test Event' },
+      theme: { assets: { logo: 'logo.png' }, variables: { '--primary': 'blue' } },
+      communication: {
+        legalName: 'Org',
+        address: 'Addr',
+        website: 'web',
+        email: { footerText: 'footer' },
+      },
+    };
+    vi.spyOn(whiteLabelingService, 'getEventSettings').mockResolvedValue(mockSettings as any);
+
     const data = {
+      eventSlug: 'test-event',
       donorName: 'John Doe',
       amount: 50,
       date: '2023-01-01',

@@ -1,6 +1,7 @@
 import { Injectable, Logger, StreamableFile } from '@nestjs/common';
 import archiver from 'archiver';
 import { PrismaService } from '../../database/prisma.service';
+import { Prisma } from '@prisma/client';
 import { PdfService } from '../pdf/pdf.service';
 import { Readable } from 'stream';
 
@@ -11,7 +12,7 @@ export class ExportService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly pdfService: PdfService,
-  ) {}
+  ) { }
 
   async exportReceipts(eventId?: string): Promise<StreamableFile> {
     this.logger.log(
@@ -22,7 +23,7 @@ export class ExportService {
       zlib: { level: 9 }, // Best compression
     });
 
-    const where: any = { status: 'COMPLETED' };
+    const where: Prisma.DonationWhereInput = { status: 'COMPLETED' };
     if (eventId) where.eventId = eventId;
 
     const donations = await this.prisma.donation.findMany({
@@ -43,13 +44,8 @@ export class ExportService {
     // A better approach for HUGE datasets would be a dedicated worker.
     for (const donation of donations) {
       try {
-        // Determine donor name (anonymous check or fallback)
+        // For tax receipts, we always use the real name, even if the donation is anonymous publicly.
         const donorName = donation.donorName || 'Supporter';
-        if (donation.isAnonymous) {
-          // Keep real name for internal tax records? Or anonymize?
-          // Usually for TAX RECEIPTS you need the REAL name even if anonymous publicly.
-          // Assuming 'donorName' field holds the real name entered in form.
-        }
 
         if (!donation.event?.slug) {
           this.logger.warn(

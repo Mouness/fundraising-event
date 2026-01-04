@@ -49,26 +49,22 @@ export class PdfService {
     // Resolve Config
     const eventConfig =
       await this.whiteLabelingService.getEventSettings(eventSlug);
-    // Fallback for null config handled by checking required fields or using defaults if needed
-    // But WhiteLabelingService.getEventSettings returns null if event not found.
+
     if (!eventConfig) {
       throw new Error(`Event config not found for slug: ${eventSlug}`);
     }
 
-    const settings = (eventConfig as any).settings || {};
-    const commConfig =
-      settings.communication || (eventConfig as any).communication || {};
+    const { communication: commConfig, theme } = eventConfig;
 
     if (!commConfig?.pdf?.enabled) {
       this.logger.warn('Receipt generation requested but disabled in config');
     }
 
-    const themeVars = (eventConfig.theme as any)?.variables || {};
-    const primaryColor = themeVars['--primary'] || '#000000';
+    const primaryColor = theme?.variables?.['--primary'] || '#000000';
 
     let logoImage: string | Buffer | null = null;
     try {
-      const logoPath = (eventConfig.theme as any)?.assets?.logo;
+      const logoPath = theme?.assets?.logo;
       if (logoPath) {
         logoImage = await this.fetchImage(logoPath);
       }

@@ -4,13 +4,38 @@ import { PrismaService } from '@/database/prisma.service';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { CreateDonationParams } from '@/features/donation/interfaces/donation-service.interface';
 
+import { PaymentService } from '@/features/donation/services/payment.service';
+import { GatewayGateway } from '@/features/gateway/gateway.gateway';
+import { EmailProducer } from '@/features/queue/producers/email.producer';
+import { EventsService } from '@/features/events/events.service';
+
 const mockPrismaService = {
   event: {
     findFirst: vi.fn(),
   },
   donation: {
+    findUnique: vi.fn(),
     create: vi.fn(),
+    update: vi.fn(),
+    findMany: vi.fn(),
+    count: vi.fn(),
   },
+};
+
+const mockPaymentService = {
+  refundDonation: vi.fn(),
+};
+
+const mockGateway = {
+  emitDonation: vi.fn(),
+};
+
+const mockEmailProducer = {
+  sendReceipt: vi.fn(),
+};
+
+const mockEventsService = {
+  findOne: vi.fn(),
 };
 
 describe('DonationService', () => {
@@ -21,6 +46,10 @@ describe('DonationService', () => {
       providers: [
         DonationService,
         { provide: PrismaService, useValue: mockPrismaService },
+        { provide: PaymentService, useValue: mockPaymentService },
+        { provide: GatewayGateway, useValue: mockGateway },
+        { provide: EmailProducer, useValue: mockEmailProducer },
+        { provide: EventsService, useValue: mockEventsService },
       ],
     }).compile();
 

@@ -12,8 +12,9 @@ import { GeneralForm } from '../components/event-settings/GeneralForm';
 import { BrandingForm } from '../components/event-settings/BrandingForm';
 import { useEvent } from '../context/EventContext';
 import { useAppConfig } from '@/providers/AppConfigProvider';
+import { type TFunction } from 'i18next';
 
-const getCombinedSchema = (t: any) => z.object({
+const getCombinedSchema = (t: TFunction) => z.object({
     // General
     name: z.string().min(1, t('validation.required')),
     goalAmount: z.coerce.number().min(1, t('validation.min_value', { count: 1 })),
@@ -116,7 +117,7 @@ export const EventSettingsPage = () => {
             name: event.name,
             goalAmount: Number(event.goalAmount),
             slug: event.slug,
-            status: (event.status as any) || 'draft',
+            status: (event.status as "active" | "draft" | "closed") || 'draft',
             date: event.date ? new Date(event.date).toISOString().split('T')[0] : '',
             formConfig: {
                 phone: { enabled: donationForm?.phone?.enabled ?? false, required: false },
@@ -144,7 +145,7 @@ export const EventSettingsPage = () => {
     }, [event, eventSettings, form]);
 
     const mutation = useMutation({
-        mutationFn: async (values: any) => {
+        mutationFn: async (values: z.infer<ReturnType<typeof getCombinedSchema>>) => {
             if (!event?.id) throw new Error('No active event ID');
 
             // 1. Save General Settings
@@ -163,7 +164,7 @@ export const EventSettingsPage = () => {
                 await api.delete(`/events/${event.id}/branding`);
             } else {
                 // Transform variables array back to object
-                const variablesMap = (values.themeVariables || []).reduce((acc: any, curr: any) => {
+                const variablesMap = (values.themeVariables || []).reduce((acc: Record<string, string>, curr: { key: string; value: string }) => {
                     if (curr.key && curr.value) acc[curr.key] = curr.value;
                     return acc;
                 }, {});
@@ -189,10 +190,11 @@ export const EventSettingsPage = () => {
             queryClient.invalidateQueries({ queryKey: ['event-settings', event?.slug] });
             queryClient.invalidateQueries({ queryKey: ['events'] });
             refreshConfig();
-            toast.success(t('common.saved_successfully', 'Settings saved successfully'));
+            toast.success(t('common.saved_successfully'));
         },
-        onError: (error: any) => {
-            toast.error(error?.response?.data?.message || t('common.error_saving', 'Failed to save settings'));
+        onError: (error: unknown) => {
+            const msg = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
+            toast.error(msg || t('common.error_saving'));
         }
     });
 

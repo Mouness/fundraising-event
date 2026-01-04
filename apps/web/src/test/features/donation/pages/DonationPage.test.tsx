@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { DonationPage } from '@/features/donation/pages/DonationPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 
 // Mock dependencies
 
@@ -28,10 +29,19 @@ vi.mock('@/features/donation/components/CheckoutForm', () => ({
 describe('DonationPage', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.stubGlobal('localStorage', {
+            getItem: vi.fn(),
+            setItem: vi.fn(),
+            removeItem: vi.fn(),
+        });
     });
 
     it('should render event title and logo', () => {
-        render(<DonationPage />);
+        render(
+            <MemoryRouter>
+                <DonationPage />
+            </MemoryRouter>
+        );
         expect(screen.getByText('Test Event')).toBeDefined();
         expect(screen.getByAltText('Logo')).toBeDefined();
         expect(screen.getByTestId('checkout-form')).toBeDefined();

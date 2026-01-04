@@ -9,7 +9,7 @@ export class EventsService {
   constructor(
     private prisma: PrismaService,
     private whiteLabelingService: WhiteLabelingService,
-  ) {}
+  ) { }
 
   private readonly defaultSelect = {
     id: true,
@@ -85,7 +85,7 @@ export class EventsService {
 
   async update(id: string, updateEventDto: UpdateEventDto) {
     // Check for formConfig in the payload (extra field from frontend)
-    const formConfig = (updateEventDto as any).formConfig;
+    const formConfig = updateEventDto.formConfig;
     if (formConfig) {
       await this.whiteLabelingService.updateEventSettings(id, { formConfig });
     }

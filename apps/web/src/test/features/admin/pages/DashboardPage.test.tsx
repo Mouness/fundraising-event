@@ -1,36 +1,42 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { DashboardPage } from '@/features/admin/pages/DashboardPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { api } from '@/lib/api';
+import { MemoryRouter } from 'react-router-dom';
 
 // Mock dependencies
 vi.mock('@/lib/api');
 
-vi.mock('@/features/admin/components/DashboardStats', () => ({
-    DashboardStats: () => <div data-testid="dashboard-stats">Stats</div>,
+// Mock hooks
+vi.mock('@/features/events/hooks/useEvents', () => ({
+    useEvents: () => ({
+        events: [
+            { id: '1', name: 'Gala', status: 'ACTIVE', raised: 1000, goalAmount: 5000, donorCount: 10, slug: 'gala' }
+        ],
+        isLoading: false
+    })
 }));
-vi.mock('@/components/ui/card', () => ({
-    Card: ({ children, className }: any) => <div className={className}>{children}</div>,
-    CardHeader: ({ children }: any) => <div>{children}</div>,
-    CardTitle: ({ children }: any) => <div>{children}</div>,
-    CardContent: ({ children, className }: any) => <div className={className}>{children}</div>,
-    CardDescription: ({ children }: any) => <div>{children}</div>,
+
+vi.mock('@/hooks/useCurrencyFormatter', () => ({
+    useCurrencyFormatter: () => ({
+        formatCurrency: (val: number) => `$${val}`
+    })
 }));
-vi.mock('@/components/ui/button', () => ({
-    Button: ({ children, onClick, disabled }: any) => (
-        <button onClick={onClick} disabled={disabled}>
-            {children}
-        </button>
-    ),
-}));
+
+// Mock UI components (Keep standard mocks or use library)
+// Since we are unit testing, shallow rendering or mocking complex UI is fine, 
+// but sticking to real UI components if possible is better if they are simple.
+// However, Card, etc are shadcn components, usually fine to render.
+// But valid existing mocks were:
 vi.mock('lucide-react', () => ({
     Loader2: () => <span>Loading...</span>,
     Download: () => <span>Download</span>,
+    TrendingUp: () => <span>Icon</span>,
+    Users: () => <span>Icon</span>,
+    Calendar: () => <span>Icon</span>,
+    ArrowRight: () => <span>Icon</span>,
 }));
 
-// Mock window.URL
-window.URL.createObjectURL = vi.fn();
-window.URL.revokeObjectURL = vi.fn();
+
 
 describe('DashboardPage', () => {
     beforeEach(() => {
@@ -38,20 +44,18 @@ describe('DashboardPage', () => {
     });
 
     it('should render dashboard components', () => {
-        render(<DashboardPage />);
+        render(
+            <MemoryRouter>
+                <DashboardPage />
+            </MemoryRouter>
+        );
         expect(screen.getByText('dashboard.title')).toBeDefined();
-        expect(screen.getByTestId('dashboard-stats')).toBeDefined();
-        expect(screen.getByText('Export Receipts (ZIP)')).toBeDefined();
+        // Stats
+        expect(screen.getByText('dashboard.stats.revenue')).toBeDefined();
+        expect(screen.getAllByText('$1000').length).toBeGreaterThan(0);
+        // Campaigns
+        expect(screen.getByText('Gala')).toBeDefined();
     });
 
-    it('should handle export action', async () => {
-        (api.get as any).mockResolvedValue({ data: new Blob(['data']) });
 
-        render(<DashboardPage />);
-
-        const exportBtn = screen.getByText('Export Receipts (ZIP)');
-        fireEvent.click(exportBtn);
-
-        expect(api.get).toHaveBeenCalledWith('/export/receipts/zip', expect.objectContaining({ responseType: 'blob' }));
-    });
 });

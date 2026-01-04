@@ -60,8 +60,9 @@ const EditDonationDialogInner = ({ donation, open, onOpenChange }: EditDonationD
             toast.success(t('admin_events.donation_modal.success_update'));
             onOpenChange(false);
         },
-        onError: (error: any) => {
-            toast.error(error?.response?.data?.message || t('admin_events.donation_modal.error_update'));
+        onError: (error: unknown) => {
+            const msg = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
+            toast.error(msg || t('admin_events.donation_modal.error_update'));
         },
     });
 

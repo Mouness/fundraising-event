@@ -37,8 +37,9 @@ export const CreateEventPage = () => {
             await api.post('/events', values);
             toast.success(t('admin_events.create_success', 'Event created successfully'));
             navigate('/admin/events');
-        } catch (error: any) {
-            toast.error(error?.response?.data?.message || t('admin_events.create_error', 'Failed to create event'));
+        } catch (error: unknown) {
+            const msg = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
+            toast.error(msg || t('admin_events.create_error', 'Failed to create event'));
         }
     };
 

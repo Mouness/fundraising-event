@@ -7,6 +7,7 @@ import { api } from '@/lib/api';
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
+    useParams: () => ({ slug: 'test-event' }),
 }));
 vi.mock('@/providers/AppConfigProvider', () => ({
     useAppConfig: () => ({
@@ -108,7 +109,7 @@ describe('CheckoutForm', () => {
 
         fireEvent.click(screen.getByText('Pay Success'));
 
-        expect(mockNavigate).toHaveBeenCalledWith('/thank-you', expect.objectContaining({
+        expect(mockNavigate).toHaveBeenCalledWith('/test-event/thank-you', expect.objectContaining({
             state: expect.objectContaining({ transactionId: 'sess1' })
         }));
     });

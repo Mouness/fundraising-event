@@ -39,8 +39,9 @@ export const CancelDonationDialog = ({ donation, open, onOpenChange }: CancelDon
             onOpenChange(false);
             setShouldRefund(false);
         },
-        onError: (error: any) => {
-            toast.error(error?.response?.data?.message || t('admin_events.donation_modal.error_cancel'));
+        onError: (error: unknown) => {
+            const msg = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
+            toast.error(msg || t('admin_events.donation_modal.error_cancel'));
         },
     });
 

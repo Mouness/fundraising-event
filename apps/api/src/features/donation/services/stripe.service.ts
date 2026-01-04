@@ -74,7 +74,9 @@ export class StripeService implements PaymentProvider {
     }
 
     const signature =
-      typeof headers === 'string' ? headers : headers['stripe-signature'];
+      typeof headers === 'string'
+        ? headers
+        : headers?.['stripe-signature'];
     if (!signature) {
       throw new Error('Missing stripe-signature header');
     }

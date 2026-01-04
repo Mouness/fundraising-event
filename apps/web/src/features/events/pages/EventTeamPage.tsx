@@ -46,7 +46,7 @@ export const EventTeamPage = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['event-staff', event?.id] });
         },
-        onError: (err: any) => {
+        onError: (err: unknown) => {
             console.error('Failed to assign staff', err);
             toast.error(t('admin_team.error_assignment'));
         }
@@ -61,9 +61,10 @@ export const EventTeamPage = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['event-staff', event?.id] });
         },
-        onError: (err: any) => {
+        onError: (err: unknown) => {
             console.error('Failed to unassign staff', err);
-            const msg = err.response?.data?.message || err.message || 'Unknown error';
+            const typedErr = err as { response?: { data?: { message?: string } }; message?: string };
+            const msg = typedErr.response?.data?.message || typedErr.message || 'Unknown error';
             toast.error(`${t('admin_team.error_revocation')} (${msg})`);
         }
     });
@@ -75,7 +76,8 @@ export const EventTeamPage = () => {
 
     if (!event) return null;
 
-    const availableStaff = globalStaff.filter((gs: any) => !staff.some((s: any) => s.id === gs.id));
+    interface StaffMember { id: string; name: string; email?: string; }
+    const availableStaff = globalStaff.filter((gs: StaffMember) => !staff.some((s: StaffMember) => s.id === gs.id));
 
     return (
         <div className="space-y-6">
@@ -105,7 +107,7 @@ export const EventTeamPage = () => {
                                     {t('admin_team.pool_empty')}
                                 </p>
                             ) : (
-                                availableStaff.map((member: any) => (
+                                availableStaff.map((member: StaffMember) => (
                                     <div
                                         key={member.id}
                                         className="flex items-center justify-between p-3 rounded-lg border bg-muted/30 hover:bg-muted transition-colors cursor-pointer group"
@@ -140,7 +142,7 @@ export const EventTeamPage = () => {
                                     {t('admin_team.assigned_empty')}
                                 </p>
                             ) : (
-                                staff.map((member: any) => (
+                                staff.map((member: StaffMember) => (
                                     <div
                                         key={member.id}
                                         className="flex items-center justify-between p-3 rounded-lg border bg-primary/5 hover:border-destructive group transition-all"

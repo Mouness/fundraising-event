@@ -1,13 +1,32 @@
-import { IsString, IsOptional, IsNumber, IsObject } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsObject, Matches } from 'class-validator';
 
 export class CreateEventDto {
+    @IsString()
+    @Matches(/^[a-z0-9-]+$/, { message: 'Slug must be lowercase alphanumeric with dashes' })
     slug!: string;
+
+    @IsString()
     name!: string;
+
+    @IsNumber()
     goalAmount!: number;
+
+    @IsObject()
     themeConfig!: Record<string, any>;
+
+    @IsOptional()
     date?: string | Date;
+
+    @IsOptional()
+    @IsString()
     description?: string;
+
+    @IsOptional()
+    @IsString()
     status?: string;
+
+    @IsOptional()
+    @IsObject()
     formConfig?: Record<string, any>;
 }
 

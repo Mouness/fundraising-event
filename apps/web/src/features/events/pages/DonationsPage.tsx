@@ -49,8 +49,6 @@ export const DonationsPage = () => {
     const { t } = useTranslation('common');
     const { formatCurrency } = useCurrencyFormatter();
 
-    if (!event) return null;
-
     const [editingDonation, setEditingDonation] = useState<DonationTableData | null>(null);
     const [cancellingDonation, setCancellingDonation] = useState<DonationTableData | null>(null);
 
@@ -65,7 +63,9 @@ export const DonationsPage = () => {
         setSearch,
         status,
         setStatus
-    } = useDonationsTable(event.id);
+    } = useDonationsTable(event?.id || '');
+
+    if (!event) return null;
 
     const handleExport = async () => {
         try {

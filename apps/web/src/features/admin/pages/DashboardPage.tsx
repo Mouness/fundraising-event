@@ -42,7 +42,7 @@ export const DashboardPage = () => {
             </div>
 
             {/* Global Stats */}
-            <div className="grid gap-4 md:grid-cols-3">
+            < div className="grid gap-4 md:grid-cols-3" >
                 <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">{t('dashboard.stats.revenue')}</CardTitle>
@@ -87,58 +87,60 @@ export const DashboardPage = () => {
                         </p>
                     </CardContent>
                 </Card>
-            </div>
+            </div >
 
             {/* Active Events Grid */}
-            <div className="space-y-4">
+            < div className="space-y-4" >
                 <h3 className="text-xl font-semibold tracking-tight">{t('dashboard.campaigns.title')}</h3>
-                {activeEvents.length === 0 ? (
-                    <div className="p-8 border border-dashed rounded-lg text-center text-muted-foreground">
-                        {t('dashboard.campaigns.empty')} <Link to="/admin/events" className="underline hover:text-primary">{t('dashboard.campaigns.view_all')}</Link>
-                    </div>
-                ) : (
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {activeEvents.map((event) => (
-                            <Card key={event.id} className="flex flex-col hover:shadow-md transition-shadow" style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
-                                <CardHeader>
-                                    <div className="flex justify-between items-start">
-                                        <CardTitle className="line-clamp-1 text-lg">{event.name}</CardTitle>
-                                        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-100 text-green-800">
-                                            {t('dashboard.campaigns.active')}
-                                        </span>
-                                    </div>
-                                    <CardDescription>{event.status}</CardDescription>
-                                </CardHeader>
-                                <CardContent className="flex-1 space-y-4">
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between text-sm">
-                                            <span className="text-muted-foreground">{t('dashboard.campaigns.raised')}</span>
-                                            <span className="font-medium">{formatCurrency(event.raised || 0)}</span>
+                {
+                    activeEvents.length === 0 ? (
+                        <div className="p-8 border border-dashed rounded-lg text-center text-muted-foreground">
+                            {t('dashboard.campaigns.empty')} <Link to="/admin/events" className="underline hover:text-primary">{t('dashboard.campaigns.view_all')}</Link>
+                        </div>
+                    ) : (
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                            {activeEvents.map((event) => (
+                                <Card key={event.id} className="flex flex-col hover:shadow-md transition-shadow" style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+                                    <CardHeader>
+                                        <div className="flex justify-between items-start">
+                                            <CardTitle className="line-clamp-1 text-lg">{event.name}</CardTitle>
+                                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-100 text-green-800">
+                                                {t('dashboard.campaigns.active')}
+                                            </span>
                                         </div>
-                                        <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full bg-primary"
-                                                style={{ width: `${Math.min(100, ((event.raised || 0) / (event.goalAmount || 1)) * 100)}%` }}
-                                            />
+                                        <CardDescription>{event.status}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="flex-1 space-y-4">
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between text-sm">
+                                                <span className="text-muted-foreground">{t('dashboard.campaigns.raised')}</span>
+                                                <span className="font-medium">{formatCurrency(event.raised || 0)}</span>
+                                            </div>
+                                            <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
+                                                <div
+                                                    className="h-full bg-primary"
+                                                    style={{ width: `${Math.min(100, ((event.raised || 0) / (event.goalAmount || 1)) * 100)}%` }}
+                                                />
+                                            </div>
+                                            <div className="flex justify-between text-xs text-muted-foreground">
+                                                <span>{Math.round(((event.raised || 0) / (event.goalAmount || 1)) * 100)}%</span>
+                                                <span>{t('dashboard.campaigns.goal', { amount: formatCurrency(event.goalAmount) })}</span>
+                                            </div>
                                         </div>
-                                        <div className="flex justify-between text-xs text-muted-foreground">
-                                            <span>{Math.round(((event.raised || 0) / (event.goalAmount || 1)) * 100)}%</span>
-                                            <span>{t('dashboard.campaigns.goal', { amount: formatCurrency(event.goalAmount) })}</span>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                                <CardFooter>
-                                    <Button asChild className="w-full" variant="outline">
-                                        <Link to={`/admin/events/${event.slug}`}>
-                                            {t('dashboard.campaigns.manage')} <ArrowRight className="ml-2 h-4 w-4" />
-                                        </Link>
-                                    </Button>
-                                </CardFooter>
-                            </Card>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </div>
+                                    </CardContent>
+                                    <CardFooter>
+                                        <Button asChild className="w-full" variant="outline">
+                                            <Link to={`/admin/events/${event.slug}`}>
+                                                {t('dashboard.campaigns.manage')} <ArrowRight className="ml-2 h-4 w-4" />
+                                            </Link>
+                                        </Button>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                        </div>
+                    )
+                }
+            </div >
+        </div >
     );
 };

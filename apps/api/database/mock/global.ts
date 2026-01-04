@@ -63,7 +63,7 @@ export const GLOBAL_SETTINGS = {
     },
     locales: {
         default: 'fr',
-        supported: ['fr', 'de', 'en', 'it'] // Swiss locales
+        supported: ['fr', 'de', 'en', 'it']
     },
     socialNetwork: {
         facebook: 'https://www.facebook.com/',

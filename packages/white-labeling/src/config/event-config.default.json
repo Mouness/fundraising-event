@@ -1,7 +1,7 @@
 {
     "id": "evt_default",
     "content": {
-        "title": "Default Fundraising Event",
+        "title": "Fundraising Event",
         "totalLabel": "Total Raised",
         "goalAmount": 10000,
         "landing": {
@@ -53,33 +53,38 @@
         },
         "payment": {
             "provider": "stripe",
-            "currency": "USD",
+            "currency": "EUR",
             "config": {
                 "publishableKey": "pk_test_placeholder"
             }
         }
     },
     "communication": {
-        "legalName": "My Charity Organization",
-        "address": "123 Charity Lane, Philanthropy City",
-        "website": "https://charity.example.org",
-        "supportEmail": "support@charity.example.org",
+        "legalName": "Fundraising Event ONG",
+        "address": "Paris, France",
+        "website": "https://fundraising-event.org",
+        "supportEmail": "contact@fundraising-event.org",
+        "phone": "+33 6 99 99 99 99",
         "pdf": {
             "enabled": true,
-            "footerText": "Thank you for your generous support. This is a computer-generated receipt.",
+            "footerText": "Merci pour votre générosité. Votre don fait la différence.",
             "templateStyle": "formal"
         },
         "email": {
             "enabled": true,
-            "subjectLine": "Thank you for your donation",
-            "footerText": "You are receiving this email because you made a donation."
+            "senderName": "Fundraising Event Team",
+            "replyTo": "donations@fundraising-event.org",
+            "subjectLine": "Merci pour votre don",
+            "footerText": "Fundraising Event est une organisation de démonstration."
         }
     },
     "locales": {
-        "default": "en",
+        "default": "fr",
         "supported": [
+            "fr",
+            "de",
             "en",
-            "fr"
+            "it"
         ]
     }
 }

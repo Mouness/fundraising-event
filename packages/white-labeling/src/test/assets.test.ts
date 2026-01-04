@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { loadAssets } from '../assets';
 import { WhiteLabelStore } from '../store';
 
 describe('loadAssets', () => {
     beforeEach(() => {
         // Reset store
-        WhiteLabelStore.getInstance().setDbConfig({} as any);
+        WhiteLabelStore.getInstance().setEventConfig({ theme: { assets: {} } } as any);
     });
 
     it('should return default assets if no db config', () => {
@@ -14,15 +14,16 @@ describe('loadAssets', () => {
     });
 
     it('should merge db assets', () => {
-        WhiteLabelStore.getInstance().setDbConfig({
+        WhiteLabelStore.getInstance().setEventConfig({
+            // partial mock
             name: 'test',
             goalAmount: 100,
-            themeConfig: {
+            theme: {
                 assets: {
                     logo: 'custom-logo.png'
                 }
             }
-        });
+        } as any);
 
         const assets = loadAssets();
         expect(assets.logo).toBe('custom-logo.png');

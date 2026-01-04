@@ -22,7 +22,7 @@ export function loadConfigs(): EventConfig {
 
     // 3. Event Overrides
     if (eventConfig) {
-        let mappedEventConfig = { ...eventConfig } as any;
+        const mappedEventConfig = { ...eventConfig } as any;
 
         result = deepMerge(result, mappedEventConfig as DeepPartial<EventConfig>);
     }

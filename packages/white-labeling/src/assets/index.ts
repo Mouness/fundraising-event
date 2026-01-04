@@ -1,13 +1,17 @@
 import logo from './images/logo.svg';
+import favicon from './images/favicon.svg';
+import backgroundDonor from './images/background-donor.svg';
+import backgroundLive from './images/background-live.svg';
+import backgroundLanding from './images/background-landing.svg';
 import { getGlobalConfig, getEventConfig } from '../store';
 import { deepMerge } from '../utils/merge';
 
 const defaultAssets = {
     logo: logo,
-    favicon: '',
-    backgroundDonor: '',
-    backgroundLive: '',
-    backgroundLanding: '',
+    favicon: favicon,
+    backgroundDonor: backgroundDonor,
+    backgroundLive: backgroundLive,
+    backgroundLanding: backgroundLanding,
 };
 
 export type AssetRegistry = typeof defaultAssets;

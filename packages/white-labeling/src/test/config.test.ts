@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { loadConfigs } from '../config';
 import { WhiteLabelStore } from '../store';
 
 describe('loadConfigs', () => {
     beforeEach(() => {
-        WhiteLabelStore.getInstance().setDbConfig(null as any);
+        WhiteLabelStore.getInstance().setEventConfig(null as any);
     });
 
     it('should return default config if no db config', () => {
@@ -15,11 +15,13 @@ describe('loadConfigs', () => {
     });
 
     it('should merge db content into config', () => {
-        WhiteLabelStore.getInstance().setDbConfig({
-            name: 'Custom Event',
-            goalAmount: 5000,
-            themeConfig: {}
-        });
+        WhiteLabelStore.getInstance().setEventConfig({
+            id: '1',
+            content: {
+                title: 'Custom Event',
+                goalAmount: 5000
+            },
+        } as any);
 
         const config = loadConfigs();
         expect(config.content.title).toBe('Custom Event');

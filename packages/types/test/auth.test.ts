@@ -25,6 +25,7 @@ describe('StaffLoginDto', () => {
     it('should validate valid code', async () => {
         const dto = new StaffLoginDto();
         dto.code = '12345';
+        dto.eventId = 'event-123';
         const errors = await validate(dto);
         expect(errors.length).toBe(0);
     });
@@ -32,6 +33,7 @@ describe('StaffLoginDto', () => {
     it('should fail on short code', async () => {
         const dto = new StaffLoginDto();
         dto.code = '123';
+        dto.eventId = 'event-123';
         const errors = await validate(dto);
         expect(errors.length).toBeGreaterThan(0);
     });

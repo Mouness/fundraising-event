@@ -2,17 +2,17 @@
   /* ========================================
    * CORE VARIABLES (SHADCN/TAILWIND)
    * ======================================== */
-  --background: #f8fafc;
+  --background: #FFFFFF;
   /* Main background color of the app */
-  --foreground: #0f172a;
+  --foreground: #1A1A1A;
   /* Main text color */
-  --primary: #ec4899;
-  /* Primary brand color (Pink) */
+  --primary: #0062A7;
+  /* Primary brand color (Blue) */
   --primary-foreground: #ffffff;
   /* Text color on primary background */
-  --secondary: #4a94af;
-  /* Secondary brand color (Purple) */
-  --secondary-foreground: #ffffff;
+  --secondary: #EDEDED;
+  /* Secondary brand color (Light Gray) */
+  --secondary-foreground: #1A1A1A;
   /* Text color on secondary background */
   --muted: #f1f5f9;
   /* Muted background for cards/sections */
@@ -22,7 +22,7 @@
   /* Default border color */
   --input: #e2e8f0;
   /* Default input border color */
-  --ring: #ec4899;
+  --ring: #0062A7;
   /* Focus ring color */
   --radius: 0.5rem;
   /* Base border radius */
@@ -30,13 +30,13 @@
   /* Background of floating popovers like Select and Dropdown menus */
   --popover-foreground: #0f172a;
   /* Text color for popover content */
-  --accent: #f1f5f9;
+  --accent: #FDB913;
   /* Accent background for hovered items in selects and menus */
-  --accent-foreground: #0f172a;
+  --accent-foreground: #1A1A1A;
   /* Text color for accented elements */
-  --card: #ffffff;
+  --card: #FFFFFF;
   /* Background for standard cards */
-  --card-foreground: #0f172a;
+  --card-foreground: #1A1A1A;
   /* Text color within cards */
   --destructive: #ef4444;
   /* Color for destructive actions (e.g., delete) */

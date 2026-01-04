@@ -1,16 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { WhiteLabelStore, initWhiteLabeling, getDbConfig } from '../store';
+import { WhiteLabelStore, initWhiteLabeling, getGlobalConfig, getEventConfig } from '../store';
 
 // Mock global fetch
 global.fetch = vi.fn();
 
 describe('WhiteLabelStore', () => {
     beforeEach(() => {
-        // Reset Singleton State (Hack: accessing private instance if possible, or just re-setting via public method if we had clear)
-        // Since we can't easily reset a Singleton module-level instance without exposing a method, we might just assume sequential runs or add a reset method.
-        // For now, allow side-effects or add a method 'reset' for testing.
-        // Actually, we can just use the public API.
-        WhiteLabelStore.getInstance().setDbConfig({ name: 'Reset', goalAmount: 0, themeConfig: {} });
+        // Reset Singleton State
+        WhiteLabelStore.reset();
     });
 
     it('should be a singleton', () => {
@@ -21,32 +18,50 @@ describe('WhiteLabelStore', () => {
 
     it('should store and retrieve configuration', () => {
         const store = WhiteLabelStore.getInstance();
-        const mockConfig = { name: 'Event A', goalAmount: 100, themeConfig: { primary: 'red' } };
-        store.setDbConfig(mockConfig);
-        expect(store.getDbConfig()).toEqual(mockConfig);
-        expect(getDbConfig()).toEqual(mockConfig);
+        const mockConfig = { id: '1', content: { title: 'Test', totalLabel: 'Total', goalAmount: 100 } } as any;
+
+        store.setGlobalConfig(mockConfig);
+        expect(store.getGlobalConfig()).toEqual(mockConfig);
+        expect(getGlobalConfig()).toEqual(mockConfig);
+
+        store.setEventConfig(mockConfig);
+        expect(store.getEventConfig()).toEqual(mockConfig);
+        expect(getEventConfig()).toEqual(mockConfig);
     });
 });
 
 describe('initWhiteLabeling', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        WhiteLabelStore.reset();
     });
 
     it('should fetch configuration from API and update store', async () => {
-        const mockData = [{ name: 'API Event', goalAmount: 500, themeConfig: {} }];
-        (global.fetch as any).mockResolvedValue({
-            ok: true,
-            json: async () => mockData,
-        });
+        const mockGlobal = { id: 'global', content: { title: 'Global' } };
+        const mockEvent = { id: 'event-1', content: { title: 'Event' } };
 
-        await initWhiteLabeling('http://api.test');
+        (global.fetch as any)
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => mockGlobal,
+            })
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => mockEvent,
+            });
 
-        expect(global.fetch).toHaveBeenCalledWith('http://api.test/events', expect.objectContaining({
+        await initWhiteLabeling('http://api.test', 'event-slug');
+
+        expect(global.fetch).toHaveBeenCalledWith('http://api.test/settings/global', expect.objectContaining({
             headers: { 'Accept': 'application/json' }
         }));
 
-        expect(getDbConfig()).toEqual(mockData[0]);
+        expect(global.fetch).toHaveBeenCalledWith('http://api.test/events/event-slug/settings', expect.objectContaining({
+            headers: { 'Accept': 'application/json' }
+        }));
+
+        expect(getGlobalConfig()).toEqual(mockGlobal);
+        expect(getEventConfig()).toEqual(mockEvent);
     });
 
     it('should handle fetch errors gracefully', async () => {
@@ -56,5 +71,6 @@ describe('initWhiteLabeling', () => {
         await initWhiteLabeling('http://api.test');
 
         expect(consoleSpy).toHaveBeenCalled();
+        consoleSpy.mockRestore();
     });
 });

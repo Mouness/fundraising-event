@@ -26,9 +26,41 @@ The core `EventConfig` object drives the behavior of the application (feature fl
 ### React Integration (Recommended)
 Use the `AppConfigProvider` to wrap your application. This ensures strict type safety and loading states.
 
+```json
+{
+  "organization": "Fundraising Event",
+  "email": "contact@fundraising-event.org",
+  "phone": "+33 6 99 99 99 99",
+  "website": "https://fundraising-event.org",
+  "address": "Paris, France",
+  "communication": {
+    "footerText": "Fundraising Event est une organisation de démonstration.",
+    "emailConfig": {
+        "senderName": "Fundraising Event Team",
+        "replyTo": "donations@fundraising-event.org",
+        "subjectLine": "Merci pour votre don"
+    },
+    "pdf": {
+        "template": "formal",
+        "footer": "Merci pour votre générosité. Votre don fait la différence."
+    }
+  },
+  "payment": {
+    "currency": "EUR",
+    "provider": "stripe"
+  },
+  "locales": {
+    "default": "fr",
+    "supported": ["fr", "de", "en", "it"]
+  }
+}
+```
+
+### React Integration (Recommended)
+Use the `AppConfigProvider` to wrap your application. This ensures strict type safety and loading states.
+
 ```tsx
 import { AppConfigProvider } from './providers/AppConfigProvider';
-
 export const AppProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <AppConfigProvider>
@@ -61,205 +93,205 @@ The appearance is controlled by a comprehensive set of **CSS Variables** defined
 ### CSS Variable Reference
 
 #### Core Colors (Shadcn/Tailwind)
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `--background` | Main background color of the app | `#f8fafc` |
-| `--foreground` | Main text color | `#0f172a` |
-| `--primary` | Primary brand color (Pink) | `#ec4899` |
-| `--primary-foreground` | Text color on primary background | `#ffffff` |
-| `--secondary` | Secondary brand color (Purple) | `#8b5cf6` |
-| `--secondary-foreground` | Text color on secondary background | `#ffffff` |
-| `--muted` | Muted background for cards/sections | `#f1f5f9` |
-| `--muted-foreground` | Muted text color for subtitles | `#64748b` |
-| `--border` | Default border color | `#e2e8f0` |
-| `--input` | Default input border color | `#e2e8f0` |
-| `--ring` | Focus ring color | `#ec4899` |
-| `--radius` | Base border radius | `0.5rem` |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--background` | Main background color of the app | `#FFFFFF` | !['#FFFFFF'](https://placehold.co/15x15/FFFFFF/FFFFFF.png) |
+| `--foreground` | Main text color | `#1A1A1A` | !['#1A1A1A'](https://placehold.co/15x15/1A1A1A/1A1A1A.png) |
+| `--primary` | Primary brand color (Blue) | `#0062A7` | !['#0062A7'](https://placehold.co/15x15/0062A7/0062A7.png) |
+| `--primary-foreground` | Text color on primary background | `#FFFFFF` | !['#FFFFFF'](https://placehold.co/15x15/FFFFFF/FFFFFF.png) |
+| `--secondary` | Secondary brand color (Light Gray) | `#EDEDED` | !['#EDEDED'](https://placehold.co/15x15/EDEDED/EDEDED.png) |
+| `--secondary-foreground` | Text color on secondary background | `#1A1A1A` | !['#1A1A1A'](https://placehold.co/15x15/1A1A1A/1A1A1A.png) |
+| `--muted` | Muted background for cards/sections | `#f1f5f9` | !['#f1f5f9'](https://placehold.co/15x15/f1f5f9/f1f5f9.png) |
+| `--muted-foreground` | Muted text color for subtitles | `#64748b` | !['#64748b'](https://placehold.co/15x15/64748b/64748b.png) |
+| `--border` | Default border color | `#e2e8f0` | !['#e2e8f0'](https://placehold.co/15x15/e2e8f0/e2e8f0.png) |
+| `--input` | Default input border color | `#e2e8f0` | !['#e2e8f0'](https://placehold.co/15x15/e2e8f0/e2e8f0.png) |
+| `--ring` | Focus ring color | `#0062A7` | !['#0062A7'](https://placehold.co/15x15/0062A7/0062A7.png) |
+| `--radius` | Base border radius | `0.5rem` | |
 
 #### Global Variables
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `--global-link-color` | Color for hyperlinks | `var(--primary)` |
-| `--global-link-hover` | Hover state color for links | `var(--primary)` |
-| `--global-error-color` | Standard error red | `#ef4444` |
-| `--global-error-bg` | Background for error alerts | `#fef2f2` |
-| `--global-success-color` | Standard success green | `#16a34a` |
-| `--global-success-bg` | Background for success alerts | `rgba(220, 252, 231, 0.5)` |
-| `--global-radius` | Aliased base radius | `var(--radius)` |
-| `--global-radius-sm` | Small radius for inner elements | `calc(var(--radius) - 2px)` |
-| `--global-radius-lg` | Large radius for cards/modals | `calc(var(--radius) + 4px)` |
-| `--global-radius-full` | Pill/Circle radius | `9999px` |
-| `--global-shadow-sm` | Subtle shadow | `0 1px 2px rgba(0...` |
-| `--global-shadow` | Standard depth shadow | `0 4px 6px rgba(0...` |
-| `--global-shadow-lg` | Deep shadow for floating elements | `0 10px 15px rgba(0...` |
-| `--global-font-family` | Primary font stack | `'Inter', system-ui...` |
-| `--global-font-mono` | Monospace font stack | `'JetBrains Mono'...` |
-| `--global-transition-fast` | Fast transition for hovers | `150ms ease` |
-| `--global-transition` | Standard transition for state changes | `300ms ease` |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--global-link-color` | Color for hyperlinks | `var(--primary)` | |
+| `--global-link-hover` | Hover state color for links | `var(--primary)` | |
+| `--global-error-color` | Standard error red | `#ef4444` | !['#ef4444'](https://placehold.co/15x15/ef4444/ef4444.png) |
+| `--global-error-bg` | Background for error alerts | `#fef2f2` | !['#fef2f2'](https://placehold.co/15x15/fef2f2/fef2f2.png) |
+| `--global-success-color` | Standard success green | `#16a34a` | !['#16a34a'](https://placehold.co/15x15/16a34a/16a34a.png) |
+| `--global-success-bg` | Background for success alerts | `rgba(220, 252, 231, 0.5)` | |
+| `--global-radius` | Aliased base radius | `var(--radius)` | |
+| `--global-radius-sm` | Small radius for inner elements | `calc(var(--radius) - 2px)` | |
+| `--global-radius-lg` | Large radius for cards/modals | `calc(var(--radius) + 4px)` | |
+| `--global-radius-full` | Pill/Circle radius | `9999px` | |
+| `--global-shadow-sm` | Subtle shadow | `0 1px 2px rgba(0, 0, 0, 0.05)` | |
+| `--global-shadow` | Standard depth shadow | `0 4px 6px rgba(0, 0, 0, 0.1)` | |
+| `--global-shadow-lg` | Deep shadow for floating elements | `0 10px 15px rgba(0, 0, 0, 0.1)` | |
+| `--global-font-family` | Primary font stack | `'Inter', system-ui, sans-serif` | |
+| `--global-font-mono` | Monospace font stack | `'JetBrains Mono', monospace` | |
+| `--global-transition-fast` | Fast transition for hovers | `150ms ease` | |
+| `--global-transition` | Standard transition for state changes | `300ms ease` | |
 
 #### Glassmorphism
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `--glass-bg` | Translucent background | `rgba(255, 255, 255, 0.7)` |
-| `--glass-blur` | Blur strength | `12px` |
-| `--glass-opacity` | Opacity override | `1` |
-| `--glass-border` | Translucent border | `rgba(255, 255, 255, 0.3)` |
-| `--glass-shadow` | Soft shadow for glass effect | `0 8px 32px 0 rgba...` |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--glass-bg` | Translucent background | `rgba(255, 255, 255, 0.7)` | |
+| `--glass-blur` | Blur strength | `12px` | |
+| `--glass-opacity` | Opacity override | `1` | |
+| `--glass-border` | Translucent border | `rgba(255, 255, 255, 0.3)` | |
+| `--glass-shadow` | Soft shadow for glass effect | `0 8px 32px 0 rgba(0, 0, 0, 0.08)` | |
 
 #### App Header
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `--header-bg` | Header background color | `var(--background)` |
-| `--header-bg-dark` | Header background for dark variants | `var(--foreground)` |
-| `--header-border` | Header bottom border | `var(--border)` |
-| `--header-text` | Header text color | `var(--foreground)` |
-| `--header-accent` | Accent color in header | `var(--primary)` |
-| `--header-height` | Fixed height of the header | `4rem` |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--header-bg` | Header background color | `var(--background)` | |
+| `--header-bg-dark` | Header background for dark variants | `var(--foreground)` | |
+| `--header-border` | Header bottom border | `var(--border)` | |
+| `--header-text` | Header text color | `var(--foreground)` | |
+| `--header-accent` | Accent color in header | `var(--primary)` | |
+| `--header-height` | Fixed height of the header | `4rem` | |
 
 #### Feature: Auth
-| Variable | Description |
-| :--- | :--- |
-| `--auth-page-bg` | Background for login pages |
-| `--auth-input-bg` | Input field background |
-| `--auth-input-border` | Input field border |
-| `--auth-input-text` | Input text color |
-| `--auth-button-bg` | Login button background |
-| `--auth-button-text` | Login button text |
-| `--auth-title-color` | Title text color |
-| `--auth-subtitle-color` | Subtitle text color |
-| `--auth-label-color` | Form label color |
-| `--auth-link-color` | Links color in auth forms |
-| `--auth-card-shadow` | Shadow for auth card |
-| `--auth-card-radius` | Radius for auth card |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--auth-page-bg` | Background for login pages | `var(--muted)` | |
+| `--auth-input-bg` | Input field background | `var(--background)` | |
+| `--auth-input-border` | Input field border | `var(--border)` | |
+| `--auth-input-text` | Input text color | `var(--foreground)` | |
+| `--auth-button-bg` | Login button background | `var(--primary)` | |
+| `--auth-button-text` | Login button text | `var(--primary-foreground)` | |
+| `--auth-title-color` | Title text color | `var(--foreground)` | |
+| `--auth-subtitle-color` | Subtitle text color | `var(--muted-foreground)` | |
+| `--auth-label-color` | Form label color | `var(--foreground)` | |
+| `--auth-link-color` | Links color in auth forms | `var(--primary)` | |
+| `--auth-card-shadow` | Shadow for auth card | `var(--global-shadow)` | |
+| `--auth-card-radius` | Radius for auth card | `var(--global-radius-lg)` | |
 
 #### Feature: Admin
-| Variable | Description |
-| :--- | :--- |
-| `--admin-sidebar-bg` | Sidebar background (Dark) |
-| `--admin-sidebar-text` | Sidebar text (Light) |
-| `--admin-sidebar-hover` | Sidebar hover state |
-| `--admin-content-bg` | Main content area background |
-| `--admin-card-bg` | Card background in dashboard |
-| `--admin-card-text` | Card text color |
-| `--admin-border-color` | Border color for admin elements |
-| `--admin-heading-color` | Heading color |
-| `--admin-muted-text` | Secondary text in admin |
-| `--admin-sidebar-width` | Width of the sidebar |
-| `--admin-sidebar-padding` | Padding inside sidebar |
-| `--admin-content-padding` | Padding for content area |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--admin-sidebar-bg` | Sidebar background (Dark) | `var(--foreground)` | |
+| `--admin-sidebar-text` | Sidebar text (Light) | `var(--background)` | |
+| `--admin-sidebar-hover` | Sidebar hover state | `var(--muted-foreground)` | |
+| `--admin-content-bg` | Main content area background | `var(--muted)` | |
+| `--admin-card-bg` | Card background in dashboard | `var(--background)` | |
+| `--admin-card-text` | Card text color | `var(--foreground)` | |
+| `--admin-border-color` | Border color for admin elements | `var(--border)` | |
+| `--admin-heading-color` | Heading color | `var(--foreground)` | |
+| `--admin-muted-text` | Secondary text in admin | `var(--muted-foreground)` | |
+| `--admin-sidebar-width` | Width of the sidebar | `16rem` | |
+| `--admin-sidebar-padding` | Padding inside sidebar | `1rem` | |
+| `--admin-content-padding` | Padding for content area | `2rem` | |
 
 #### Feature: Donation
-| Variable | Description |
-| :--- | :--- |
-| `--donation-title-color` | Title color for donation flow |
-| `--donation-subtitle-color` | Subtitle color |
-| `--donation-card-radius` | Card radius |
-| `--donation-button-radius` | Button radius |
-| `--donation-amount-button-bg` | Amount button default bg |
-| `--donation-amount-button-text` | Amount button default text |
-| `--donation-amount-button-selected-bg` | Selected amount bg |
-| `--donation-amount-button-selected-text` | Selected amount text |
-| `--donation-next-button-bg` | Next step button bg |
-| `--donation-next-button-text` | Next step button text |
-| `--donation-input-bg` | Input background |
-| `--donation-input-text` | Input text |
-| `--donation-input-border` | Input border |
-| `--donation-label-color` | Input label |
-| `--donation-page-gradient` | Page background gradient |
-| `--donation-card-shadow` | Main card shadow |
-| `--donation-amount-gap` | Spacing between amount buttons |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--donation-title-color` | Title color for donation flow | `var(--foreground)` | |
+| `--donation-subtitle-color` | Subtitle color | `var(--muted-foreground)` | |
+| `--donation-card-radius` | Card radius | `var(--global-radius-lg)` | |
+| `--donation-button-radius` | Button radius | `var(--global-radius)` | |
+| `--donation-amount-button-bg` | Amount button default bg | `var(--background)` | |
+| `--donation-amount-button-text` | Amount button default text | `var(--foreground)` | |
+| `--donation-amount-button-selected-bg` | Selected amount bg | `var(--primary)` | |
+| `--donation-amount-button-selected-text` | Selected amount text | `var(--primary-foreground)` | |
+| `--donation-next-button-bg` | Next step button bg | `var(--primary)` | |
+| `--donation-next-button-text` | Next step button text | `var(--primary-foreground)` | |
+| `--donation-input-bg` | Input background | `var(--background)` | |
+| `--donation-input-text` | Input text | `var(--foreground)` | |
+| `--donation-input-border` | Input border | `var(--border)` | |
+| `--donation-label-color` | Input label | `var(--foreground)` | |
+| `--donation-page-gradient` | Page background gradient | `linear-gradient(...)` | |
+| `--donation-card-shadow` | Main card shadow | `var(--global-shadow-lg)` | |
+| `--donation-amount-gap` | Spacing between amount buttons | `0.75rem` | |
 
 #### Feature: Thank You
-| Variable | Description |
-| :--- | :--- |
-| `--thankyou-gradient-start` | Gradient start color |
-| `--thankyou-gradient-via` | Gradient middle color |
-| `--thankyou-gradient-end` | Gradient end color |
-| `--thankyou-card-bg` | Card background (semi-transparent) |
-| `--thankyou-card-radius` | Card radius |
-| `--thankyou-card-shadow` | Card elevation |
-| `--thankyou-card-border` | Card border |
-| `--thankyou-title-color` | Title text color |
-| `--thankyou-message-color` | Message text color |
-| `--thankyou-icon-color` | Success icon color |
-| `--thankyou-icon-bg` | Success icon background |
-| `--thankyou-receipt-bg` | Receipt section background |
-| `--thankyou-receipt-label` | Receipt label color |
-| `--thankyou-receipt-text` | Receipt value color |
-| `--thankyou-share-label` | Share section label |
-| `--thankyou-share-twitter` | Twitter brand color |
-| `--thankyou-share-facebook` | Facebook brand color |
-| `--thankyou-share-linkedin` | LinkedIn brand color |
-| `--thankyou-button-bg` | Action button background |
-| `--thankyou-button-text` | Action button text |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--thankyou-gradient-start` | Gradient start color | `var(--secondary)` | |
+| `--thankyou-gradient-via` | Gradient middle color | `var(--primary)` | |
+| `--thankyou-gradient-end` | Gradient end color | `var(--ring)` | |
+| `--thankyou-card-bg` | Card background (semi-transparent) | `rgba(255, 255, 255, 0.9)` | |
+| `--thankyou-card-radius` | Card radius | `var(--global-radius-lg)` | |
+| `--thankyou-card-shadow` | Card elevation | `0 25px 50px rgba(0, 0, 0, 0.25)` | |
+| `--thankyou-card-border` | Card border | `rgba(255, 255, 255, 0.2)` | |
+| `--thankyou-title-color` | Title text color | `var(--primary)` | |
+| `--thankyou-message-color` | Message text color | `var(--muted-foreground)` | |
+| `--thankyou-icon-color` | Success icon color | `var(--global-success-color)` | |
+| `--thankyou-icon-bg` | Success icon background | `var(--global-success-bg)` | |
+| `--thankyou-receipt-bg` | Receipt section background | `var(--muted)` | |
+| `--thankyou-receipt-label` | Receipt label color | `var(--muted-foreground)` | |
+| `--thankyou-receipt-text` | Receipt value color | `var(--foreground)` | |
+| `--thankyou-share-label` | Share section label | `var(--muted-foreground)` | |
+| `--thankyou-share-twitter` | Twitter brand color | `#0ea5e9` | !['#0ea5e9'](https://placehold.co/15x15/0ea5e9/0ea5e9.png) |
+| `--thankyou-share-facebook` | Facebook brand color | `#2563eb` | !['#2563eb'](https://placehold.co/15x15/2563eb/2563eb.png) |
+| `--thankyou-share-linkedin` | LinkedIn brand color | `#1d4ed8` | !['#1d4ed8'](https://placehold.co/15x15/1d4ed8/1d4ed8.png) |
+| `--thankyou-button-bg` | Action button background | `var(--primary)` | |
+| `--thankyou-button-text` | Action button text | `var(--primary-foreground)` | |
 
 #### Feature: Live Screen
-| Variable | Description |
-| :--- | :--- |
-| `--live-page-bg` | Live screen background |
-| `--live-header-text` | Header text color |
-| `--live-subtitle-text` | Subtitle text color |
-| `--live-label-text` | Label text color |
-| `--live-goal-text` | Goal label color |
-| `--live-status-indicator` | Online status dot |
-| `--live-bg-accent-1` | Background glowing orb 1 |
-| `--live-bg-accent-2` | Background glowing orb 2 |
-| `--live-bg-blur` | Blur amount for background orbs |
-| `--live-text-main` | Main text color |
-| `--live-title-color` | Title color |
-| `--live-highlight-color` | Highlighted text color |
-| `--live-text-secondary` | Secondary text color |
-| `--live-text-muted` | Muted text color |
-| `--live-amount-color` | Amount display color |
-| `--live-avatar-bg-start` | Avatar gradient start |
-| `--live-avatar-bg-end` | Avatar gradient end |
-| `--live-qr-bg` | QR Code container background |
-| `--live-qr-shadow` | QR Code glow/shadow |
-| `--live-gauge-track` | Gauge background track |
-| `--live-gauge-shadow` | Gauge glow |
-| `--live-feed-item-bg` | Feed item background |
-| `--live-feed-item-border` | Feed item border |
-| `--live-counter-gradient-from` | Counter gradient start |
-| `--live-counter-gradient-to` | Counter gradient end |
-| `--live-gauge-size` | Size of the main gauge |
-| `--live-gauge-stroke` | Stroke width of the gauge |
-| `--live-qr-size` | Size of the QR code |
-| `--live-counter-size` | Font size of the main counter |
-| `--live-counter-weight` | Font weight of the main counter |
-| `--live-qr-radius` | Border radius of QR container |
-| `--live-logo-radius` | Border radius of Logo |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--live-page-bg` | Live screen background | `var(--foreground)` | |
+| `--live-header-text` | Header text color | `var(--primary-foreground)` | |
+| `--live-subtitle-text` | Subtitle text color | `var(--muted-foreground)` | |
+| `--live-label-text` | Label text color | `var(--muted-foreground)` | |
+| `--live-goal-text` | Goal label color | `var(--muted-foreground)` | |
+| `--live-status-indicator` | Online status dot | `var(--global-success-color)` | |
+| `--live-bg-accent-1` | Background glowing orb 1 | `rgba(88, 28, 135, 0.4)` | |
+| `--live-bg-accent-2` | Background glowing orb 2 | `rgba(30, 58, 138, 0.4)` | |
+| `--live-bg-blur` | Blur amount for background orbs | `120px` | |
+| `--live-text-main` | Main text color | `var(--primary-foreground)` | |
+| `--live-title-color` | Title color | `var(--primary-foreground)` | |
+| `--live-highlight-color` | Highlighted text color | `var(--primary-foreground)` | |
+| `--live-text-secondary` | Secondary text color | `var(--muted-foreground)` | |
+| `--live-text-muted` | Muted text color | `var(--muted-foreground)` | |
+| `--live-amount-color` | Amount display color | `var(--global-success-color)` | |
+| `--live-avatar-bg-start` | Avatar gradient start | `var(--primary)` | |
+| `--live-avatar-bg-end` | Avatar gradient end | `var(--secondary)` | |
+| `--live-qr-bg` | QR Code container background | `var(--primary-foreground)` | |
+| `--live-qr-shadow` | QR Code glow/shadow | `rgba(168, 85, 247, 0.4)` | |
+| `--live-gauge-track` | Gauge background track | `rgba(255, 255, 255, 0.05)` | |
+| `--live-gauge-shadow` | Gauge glow | `rgba(168, 85, 247, 0.3)` | |
+| `--live-feed-item-bg` | Feed item background | `rgba(15, 23, 42, 0.6)` | |
+| `--live-feed-item-border` | Feed item border | `rgba(51, 65, 85, 0.5)` | |
+| `--live-counter-gradient-from` | Counter gradient start | `var(--primary-foreground)` | |
+| `--live-counter-gradient-to` | Counter gradient end | `var(--muted-foreground)` | |
+| `--live-gauge-size` | Size of the main gauge | `500px` | |
+| `--live-gauge-stroke` | Stroke width of the gauge | `12` | |
+| `--live-qr-size` | Size of the QR code | `120px` | |
+| `--live-counter-size` | Font size of the main counter | `6rem` | |
+| `--live-counter-weight` | Font weight of the main counter | `900` | |
+| `--live-qr-radius` | Border radius of QR container | `0.75rem` | |
+| `--live-logo-radius` | Border radius of Logo | `0.5rem` | |
 
 #### Feature: Staff
-| Variable | Description |
-| :--- | :--- |
-| `--staff-page-bg` | Staff page background |
-| `--staff-display-bg` | Amount display background |
-| `--staff-display-border` | Amount display border |
-| `--staff-keypad-bg` | Keypad area background |
-| `--staff-keypad-button-bg` | Keypad button background |
-| `--staff-keypad-button-text` | Keypad button text |
-| `--staff-input-bg` | Input background |
-| `--staff-input-text` | Input text |
-| `--staff-input-border` | Input border |
-| `--staff-input-placeholder` | Placeholder text color |
-| `--staff-keypad-shadow` | Key button shadow |
-| `--staff-keypad-delete-bg` | Delete button background |
-| `--staff-keypad-delete-hover` | Delete button hover state |
-| `--staff-keypad-button-height` | Height of keypad buttons |
-| `--staff-amount-size` | Font size of the amount type display |
-| `--staff-keypad-gap` | Gap between keys |
-| `--staff-display-radius` | Radius of amount display |
-| `--staff-keypad-radius` | Radius of keypad container |
-| `--staff-label-color` | Label text color |
-| `--staff-amount-color` | Amount text color |
-| `--staff-amount-placeholder-color` | Amount placeholder color |
-| `--staff-type-button-bg` | Donation type button bg |
-| `--staff-type-button-text` | Donation type button text |
-| `--staff-type-button-border` | Type button border |
-| `--staff-type-button-icon-color` | Type button icon color |
-| `--staff-type-button-selected-bg` | Selected type background |
-| `--staff-type-button-selected-text` | Selected type text |
-| `--staff-type-button-selected-icon` | Selected type icon |
+| Variable | Description | Default Value | Preview |
+| :--- | :--- | :--- | :--- |
+| `--staff-page-bg` | Staff page background | `var(--muted)` | |
+| `--staff-display-bg` | Amount display background | `var(--background)` | |
+| `--staff-display-border` | Amount display border | `var(--border)` | |
+| `--staff-keypad-bg` | Keypad area background | `var(--background)` | |
+| `--staff-keypad-button-bg` | Keypad button background | `var(--secondary)` | |
+| `--staff-keypad-button-text` | Keypad button text | `var(--secondary-foreground)` | |
+| `--staff-input-bg` | Input background | `var(--background)` | |
+| `--staff-input-text` | Input text | `var(--foreground)` | |
+| `--staff-input-border` | Input border | `var(--border)` | |
+| `--staff-input-placeholder` | Placeholder text color | `var(--muted-foreground)` | |
+| `--staff-keypad-shadow` | Key button shadow | `rgba(0, 0, 0, 0.05)` | |
+| `--staff-keypad-delete-bg` | Delete button background | `var(--global-error-color)` | |
+| `--staff-keypad-delete-hover` | Delete button hover state | `#dc2626` | !['#dc2626'](https://placehold.co/15x15/dc2626/dc2626.png) |
+| `--staff-keypad-button-height` | Height of keypad buttons | `4rem` | |
+| `--staff-amount-size` | Font size of the amount type display | `3rem` | |
+| `--staff-keypad-gap` | Gap between keys | `0.75rem` | |
+| `--staff-display-radius` | Radius of amount display | `var(--global-radius)` | |
+| `--staff-keypad-radius` | Radius of keypad container | `var(--global-radius-lg)` | |
+| `--staff-label-color` | Label text color | `var(--foreground)` | |
+| `--staff-amount-color` | Amount text color | `var(--foreground)` | |
+| `--staff-amount-placeholder-color` | Amount placeholder color | `var(--muted-foreground)` | |
+| `--staff-type-button-bg` | Donation type button bg | `var(--staff-keypad-button-bg)` | |
+| `--staff-type-button-text` | Donation type button text | `var(--foreground)` | |
+| `--staff-type-button-border` | Type button border | `var(--staff-display-border)` | |
+| `--staff-type-button-icon-color` | Type button icon color | `var(--foreground)` | |
+| `--staff-type-button-selected-bg` | Selected type background | `var(--primary)` | |
+| `--staff-type-button-selected-text` | Selected type text | `var(--primary-foreground)` | |
+| `--staff-type-button-selected-icon` | Selected type icon | `var(--primary-foreground)` | |
 
 ---
 
@@ -305,18 +337,21 @@ const resources = mergeLocales('en', {
 ### Supported Assets
 | key | Description |
 | :--- | :--- |
-| `logoUrl` | Main application logo (Header/PDF) |
+| `logo` | Main application logo (Header/PDF) |
+| `favicon` | Browser tab icon |
 | `backgroundDonor` | Background image for Donation Page |
 | `backgroundLive` | Background image for Live Screen |
-| `faviconUrl` | Browser tab icon |
+| `backgroundLanding` | Background image for Landing Page |
 
 ### Usage
 ```json
 // In event-config.json
 {
   "theme": {
-    "logoUrl": "https://mysite.com/my-logo.png",
-    "backgroundLive": "https://mysite.com/gala-bg.jpg"
+    "assets": {
+      "logo": "https://mysite.com/my-logo.png",
+      "backgroundLive": "https://mysite.com/gala-bg.jpg"
+    }
   }
 }
 ```

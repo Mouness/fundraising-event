@@ -1,7 +1,7 @@
 import type { EventConfig } from './types';
 
 export class WhiteLabelStore {
-    private static instance: WhiteLabelStore;
+    private static instance: WhiteLabelStore | null = null;
     private globalConfig: EventConfig | null = null;
     private eventConfig: EventConfig | null = null;
 
@@ -15,7 +15,7 @@ export class WhiteLabelStore {
     }
 
     public static reset(): void {
-        // @ts-ignore
+        // Resetting singleton for testing
         WhiteLabelStore.instance = null;
     }
 

@@ -60,6 +60,35 @@ export class EventsService {
     });
   }
 
+  async findPublic() {
+    const events = await this.prisma.event.findMany({
+      where: {
+        status: { in: ['active', 'ACTIVE'] }, // Handle case sensitivity if needed, though status is usually lowercase in Schema? Schema says String.
+      },
+      select: this.defaultSelect,
+    });
+
+    // Aggregate donations for public events
+    const aggregations = await this.prisma.donation.groupBy({
+      by: ['eventId'],
+      _sum: { amount: true },
+      _count: { id: true },
+      where: {
+        status: 'SUCCEEDED',
+        eventId: { in: events.map((e) => e.id) },
+      },
+    });
+
+    return events.map((event) => {
+      const stats = aggregations.find((a) => a.eventId === event.id);
+      return {
+        ...event,
+        raised: (stats?._sum.amount?.toNumber() || 0) / 100,
+        donorCount: stats?._count.id || 0,
+      };
+    });
+  }
+
   async findOne(slugOrId: string) {
     const event = await this.prisma.event.findFirst({
       where: {

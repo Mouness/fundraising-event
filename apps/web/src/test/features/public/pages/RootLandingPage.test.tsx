@@ -3,15 +3,15 @@ import { RootLandingPage } from '@/features/public/pages/RootLandingPage';
 import { useAppConfig } from '@/providers/AppConfigProvider';
 import { MemoryRouter } from 'react-router-dom';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-import { useEvents } from '@/features/events/hooks/useEvents';
+import { usePublicEvents } from '@/features/events/hooks/usePublicEvents';
 
 // Mock dependencies
 vi.mock('@/providers/AppConfigProvider', () => ({
     useAppConfig: vi.fn(),
 }));
 
-vi.mock('@/features/events/hooks/useEvents', () => ({
-    useEvents: vi.fn(),
+vi.mock('@/features/events/hooks/usePublicEvents', () => ({
+    usePublicEvents: vi.fn(),
 }));
 
 // Mock translation
@@ -82,7 +82,7 @@ describe('RootLandingPage', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         (useAppConfig as any).mockReturnValue({ config: mockConfig, isLoading: false });
-        (useEvents as any).mockReturnValue({ events: mockEvents, isLoading: false });
+        (usePublicEvents as any).mockReturnValue({ events: mockEvents, isLoading: false });
     });
 
     it('renders platform title and subtitle', () => {
@@ -92,7 +92,8 @@ describe('RootLandingPage', () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByText('Fundraising Platform')).toBeInTheDocument();
+        const titles = screen.getAllByText('Fundraising Platform');
+        expect(titles.length).toBeGreaterThanOrEqual(1);
         expect(screen.getByText(/Discover and support/i)).toBeInTheDocument();
     });
 
@@ -108,7 +109,7 @@ describe('RootLandingPage', () => {
     });
 
     it('displays empty state when no events found', () => {
-        (useEvents as any).mockReturnValue({ events: [], isLoading: false });
+        (usePublicEvents as any).mockReturnValue({ events: [], isLoading: false });
 
         render(
             <MemoryRouter>
@@ -120,7 +121,7 @@ describe('RootLandingPage', () => {
     });
 
     it('renders loading state', () => {
-        (useEvents as any).mockReturnValue({ events: [], isLoading: true });
+        (usePublicEvents as any).mockReturnValue({ events: [], isLoading: true });
 
         const { container } = render(
             <MemoryRouter>

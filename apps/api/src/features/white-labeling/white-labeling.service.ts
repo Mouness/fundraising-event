@@ -7,7 +7,39 @@ import { EventConfig } from '@fundraising/white-labeling';
 export class WhiteLabelingService {
   constructor(private prisma: PrismaService) { }
 
-  // ... (private getConfig methods unchanged)
+  async getGlobalSettings(): Promise<EventConfig> {
+    const config = await this.getConfig(ConfigScope.GLOBAL);
+    return this.mapConfigToEventConfig(config || ({} as Configuration));
+  }
+
+  async updateGlobalSettings(data: any) {
+    // Determine entityId - default to 'GLOBAL' if creating new
+    const entityId = 'GLOBAL';
+    const payload = this.mapToDbPayload(entityId, data);
+
+    // Ensure scope is correct
+    payload.scope = ConfigScope.GLOBAL;
+
+    return this.prisma.configuration.upsert({
+      where: {
+        scope_entityId: {
+          scope: ConfigScope.GLOBAL,
+          entityId: entityId,
+        },
+      },
+      create: payload,
+      update: payload,
+    });
+  }
+
+  private async getConfig(scope: ConfigScope, entityId?: string) {
+    return this.prisma.configuration.findFirst({
+      where: {
+        scope,
+        entityId,
+      },
+    });
+  }
 
   /**
    * Retrieves event-specific configuration, merged with global defaults.
@@ -99,21 +131,17 @@ export class WhiteLabelingService {
     const socialConfig = data.donation?.sharing;
 
     // 2. Remove non-column objects from data
-
     const {
       id,
-      // @ts-expect-error - dynamic destructuring props not in type
       updatedAt,
-      // @ts-expect-error - dynamic destructuring props not in type
       scope,
-      // @ts-expect-error - dynamic destructuring props not in type
       entityId,
       theme,
       content,
       donation,
       formConfig: fc,
       ...cleanData
-    } = data;
+    } = data as any;
 
     // 3. Construct and return final payload
     return {
@@ -170,7 +198,7 @@ export class WhiteLabelingService {
 
       theme: {
         assets: {
-          logo: config.logo || undefined,
+          logo: config.logo || '',
           ...assets,
         },
         variables: themeVariables,

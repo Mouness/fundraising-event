@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@/test/utils';
 import { AdminLayout } from '@/features/admin/layouts/AdminLayout';
 import { vi, describe, it, expect } from 'vitest';
 import { TestWrapper } from '@/test/utils';

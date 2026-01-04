@@ -16,7 +16,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('events')
 export class EventsController {
-  constructor(private readonly eventsService: EventsService) {}
+  constructor(private readonly eventsService: EventsService) { }
 
   @Post()
   @UseGuards(AuthGuard('jwt'), RolesGuard)
@@ -25,7 +25,14 @@ export class EventsController {
     return this.eventsService.create(createEventDto);
   }
 
+  @Get('public')
+  findPublic() {
+    return this.eventsService.findPublic();
+  }
+
   @Get()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('ADMIN', 'STAFF')
   findAll() {
     return this.eventsService.findAll();
   }

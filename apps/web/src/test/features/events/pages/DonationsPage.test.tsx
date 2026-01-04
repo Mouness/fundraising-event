@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@/test/utils';
 import { DonationsPage } from '@/features/events/pages/DonationsPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -28,12 +28,12 @@ vi.mock('@/features/events/context/EventContext', () => ({
 
 vi.mock('@/hooks/useCurrencyFormatter', () => ({
     useCurrencyFormatter: () => ({
-        formatCurrency: (amount: number) => `$${amount}`,
+        formatCurrency: (amount: number) => `$${amount} `,
     }),
 }));
 
 vi.mock('@/features/events/hooks/useDonationsTable', () => ({
-    useDonationsTable: (eventId: string) => ({
+    useDonationsTable: () => ({
         donations: [
             { id: 'don_1', donorName: 'John Doe', amount: 5000, currency: 'USD', status: 'COMPLETED', createdAt: new Date().toISOString() },
         ],

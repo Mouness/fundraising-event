@@ -45,6 +45,10 @@ const getCombinedSchema = (t: TFunction) => z.object({
         senderName: z.string().optional(),
         replyTo: z.string().email().optional().or(z.literal('')),
         subjectLine: z.string().optional(),
+        supportEmail: z.string().email().optional().or(z.literal('')),
+        phone: z.string().optional(),
+        website: z.string().url().optional().or(z.literal('')),
+        address: z.string().optional(),
     }).optional(),
 });
 
@@ -73,7 +77,16 @@ export const EventSettingsPage = () => {
             organization: '',
             assets: { logo: '', backgroundLanding: '', backgroundLive: '' },
             themeVariables: [],
-            communication: { enabled: false, senderName: '', replyTo: '', subjectLine: '' },
+            communication: {
+                enabled: false,
+                senderName: '',
+                replyTo: '',
+                subjectLine: '',
+                supportEmail: '',
+                phone: '',
+                website: '',
+                address: ''
+            },
         }
     });
 
@@ -175,11 +188,15 @@ export const EventSettingsPage = () => {
                         assets: values.assets,
                         variables: variablesMap,
                     },
-                    communication: values.communication.enabled ? {
+                    supportEmail: values.communication?.supportEmail,
+                    phone: values.communication?.phone,
+                    website: values.communication?.website,
+                    address: values.communication?.address,
+                    communication: values.communication?.enabled ? {
                         email: {
-                            senderName: values.communication.senderName,
-                            replyTo: values.communication.replyTo,
-                            subjectLine: values.communication.subjectLine,
+                            senderName: values.communication?.senderName,
+                            replyTo: values.communication?.replyTo,
+                            subjectLine: values.communication?.subjectLine,
                         }
                     } : null
                 });

@@ -9,6 +9,12 @@ vi.mock('@/providers/AppConfigProvider', () => ({
     useAppConfig: vi.fn(),
 }));
 
+vi.mock('@/hooks/useCurrencyFormatter', () => ({
+    useCurrencyFormatter: () => ({
+        formatCurrency: (amount: number) => `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    }),
+}));
+
 vi.mock('react-i18next', () => ({
     useTranslation: () => ({
         t: (key: string, options?: any) => {

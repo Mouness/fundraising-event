@@ -12,11 +12,12 @@ import { AuthService } from './auth.service';
 import { LoginDto, StaffLoginDto } from '@fundraising/types';
 import { GoogleAuthUser } from './providers/auth-provider.interface';
 import { AuthGuard } from '@nestjs/passport';
+import { Throttle } from '@nestjs/throttler';
 import type { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
@@ -31,6 +32,7 @@ export class AuthController {
   }
 
   @Post('staff/login')
+  @Throttle({ default: { limit: 10, ttl: 60000 } })
   async staffLogin(@Body() staffLoginDto: StaffLoginDto) {
     const staff = await this.authService.validateStaff(
       staffLoginDto.code,

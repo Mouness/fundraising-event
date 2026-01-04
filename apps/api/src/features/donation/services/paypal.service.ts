@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { IncomingHttpHeaders } from 'http';
 import { ConfigService } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 import {
   PaymentProvider,
   CreatePaymentIntentResult,
@@ -13,7 +15,10 @@ export class PayPalService implements PaymentProvider {
   private clientId: string;
   private clientSecret: string;
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private readonly httpService: HttpService,
+  ) {
     const sandbox = this.configService.get<string>('PAYPAL_SANDBOX') === 'true';
     this.baseUrl = sandbox
       ? 'https://api-m.sandbox.paypal.com'
@@ -33,22 +38,18 @@ export class PayPalService implements PaymentProvider {
       'base64',
     );
     try {
-      const response = await fetch(`${this.baseUrl}/v1/oauth2/token`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Basic ${auth}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'grant_type=client_credentials',
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to get PayPal access token: ${response.statusText}`,
-        );
-      }
-
-      const data = await response.json();
+      const { data } = await firstValueFrom(
+        this.httpService.post(
+          `${this.baseUrl}/v1/oauth2/token`,
+          'grant_type=client_credentials',
+          {
+            headers: {
+              Authorization: `Basic ${auth}`,
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          },
+        ),
+      );
       return data.access_token;
     } catch (error) {
       this.logger.error(`Error getting access token: ${error.message}`);
@@ -84,21 +85,14 @@ export class PayPalService implements PaymentProvider {
         ],
       };
 
-      const response = await fetch(`${this.baseUrl}/v2/checkout/orders`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const err = await response.text();
-        throw new Error(`Failed to create PayPal order: ${err}`);
-      }
-
-      const data = await response.json();
+      const { data } = await firstValueFrom(
+        this.httpService.post(`${this.baseUrl}/v2/checkout/orders`, payload, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        }),
+      );
 
       return {
         id: data.id,
@@ -140,25 +134,19 @@ export class PayPalService implements PaymentProvider {
     };
 
     try {
-      const response = await fetch(
-        `${this.baseUrl}/v1/notifications/verify-webhook-signature`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
+      const { data: result } = await firstValueFrom(
+        this.httpService.post(
+          `${this.baseUrl}/v1/notifications/verify-webhook-signature`,
+          verificationBody,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
           },
-          body: JSON.stringify(verificationBody),
-        },
+        ),
       );
 
-      if (!response.ok) {
-        throw new Error(
-          `PayPal verification API failed: ${response.statusText}`,
-        );
-      }
-
-      const result = await response.json();
       if (result.verification_status !== 'SUCCESS') {
         throw new Error(
           'PayPal webhook verification failed: Invalid Signature',
@@ -176,15 +164,14 @@ export class PayPalService implements PaymentProvider {
     try {
       const accessToken = await this.getAccessToken();
       // Look up the capture ID associated with this Order ID
-      const orderRes = await fetch(
-        `${this.baseUrl}/v2/checkout/orders/${paymentId}`,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        },
+      const { data: orderData } = await firstValueFrom(
+        this.httpService.get(
+          `${this.baseUrl}/v2/checkout/orders/${paymentId}`,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          },
+        ),
       );
-
-      if (!orderRes.ok) throw new Error('Order not found');
-      const orderData = await orderRes.json();
 
       // Find capture ID from purchase units
       const captureId =
@@ -194,19 +181,20 @@ export class PayPalService implements PaymentProvider {
           'No capture found for this order. Has it been captured?',
         );
 
-      const response = await fetch(
-        `${this.baseUrl}/v2/payments/captures/${captureId}/refund`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
+      const { data } = await firstValueFrom(
+        this.httpService.post(
+          `${this.baseUrl}/v2/payments/captures/${captureId}/refund`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
           },
-        },
+        ),
       );
 
-      if (!response.ok) throw new Error('Refund failed');
-      return await response.json();
+      return data;
     } catch (error) {
       this.logger.error(`Error refunding PayPal donation: ${error.message}`);
       throw error;

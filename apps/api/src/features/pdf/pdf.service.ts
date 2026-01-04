@@ -2,6 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import PdfPrinter from 'pdfmake';
 import * as path from 'path';
 import { WhiteLabelingService } from '../white-labeling/white-labeling.service';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 import { ConfigService } from '@nestjs/config';
 
@@ -13,6 +15,7 @@ export class PdfService {
   constructor(
     private readonly whiteLabelingService: WhiteLabelingService,
     private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
   ) {
     // Resolve fonts ensuring correct path whether running from root or apps/api
     // But commonly pnpm -r runs in package CWD.
@@ -83,11 +86,11 @@ export class PdfService {
       content: [
         logoImage
           ? {
-              image: logoImage,
-              width: 100,
-              alignment: 'center',
-              margin: [0, 0, 0, 10],
-            }
+            image: logoImage,
+            width: 100,
+            alignment: 'center',
+            margin: [0, 0, 0, 10],
+          }
           : {},
         {
           text: eventConfig.content.title.toUpperCase(),
@@ -239,12 +242,10 @@ export class PdfService {
     }
 
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch image: ${response.statusText}`);
-      }
-      const arrayBuffer = await response.arrayBuffer();
-      return Buffer.from(arrayBuffer);
+      const { data } = await firstValueFrom(
+        this.httpService.get(url, { responseType: 'arraybuffer' }),
+      );
+      return Buffer.from(data);
     } catch (error) {
       this.logger.error(`Error loading image from ${url}: ${error.message}`);
       throw error;

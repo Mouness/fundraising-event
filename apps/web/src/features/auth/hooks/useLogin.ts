@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { api } from '@/lib/api';
-import { isAxiosError } from 'axios';
+import { api, getApiErrorMessage } from '@/lib/api';
 
 interface LoginCredentials {
     email: string;
@@ -29,9 +28,6 @@ export const useLogin = () => {
             localStorage.setItem('token', data.accessToken);
             localStorage.setItem('user', JSON.stringify(data.user));
             navigate('/admin');
-        },
-        onError: (err) => {
-            console.error(err);
         }
     });
 
@@ -40,19 +36,15 @@ export const useLogin = () => {
             await mutation.mutateAsync(credentials);
             return { success: true };
         } catch (err) {
-            let errorMessage = 'Login failed';
-            if (isAxiosError(err)) {
-                errorMessage = err.response?.data?.message || errorMessage;
-            } else if (err instanceof Error) {
-                errorMessage = err.message;
-            }
-            return { success: false, error: errorMessage };
+            return { success: false, error: getApiErrorMessage(err, 'Login failed') };
         }
     };
 
     return {
         login,
-        error: mutation.error instanceof Error ? mutation.error.message : null,
+        error: mutation.error ? getApiErrorMessage(mutation.error, 'Login failed') : null,
         isLoading: mutation.isPending
     };
 };
+
+

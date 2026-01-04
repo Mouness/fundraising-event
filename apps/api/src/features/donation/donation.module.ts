@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { DonationController } from './donation.controller';
 import { StripeService } from './services/stripe.service';
 import { ConfigModule } from '@nestjs/config';
@@ -21,9 +22,10 @@ import { PaymentService } from './services/payment.service';
     DatabaseModule,
     EventsModule,
     WhiteLabelingModule,
+    HttpModule,
   ],
   controllers: [DonationController],
   providers: [StripeService, PayPalService, PaymentService, DonationService],
   exports: [PaymentService, DonationService],
 })
-export class DonationModule {}
+export class DonationModule { }

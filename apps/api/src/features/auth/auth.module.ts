@@ -5,6 +5,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
+import { HttpModule } from '@nestjs/axios';
 
 import { GoogleStrategy } from './google.strategy';
 
@@ -22,6 +23,7 @@ import { Auth0Provider } from './providers/auth0.provider';
       }),
       inject: [ConfigService],
     }),
+    HttpModule,
   ],
   controllers: [AuthController],
   providers: [
@@ -47,4 +49,4 @@ import { Auth0Provider } from './providers/auth0.provider';
     },
   ],
 })
-export class AuthModule {}
+export class AuthModule { }

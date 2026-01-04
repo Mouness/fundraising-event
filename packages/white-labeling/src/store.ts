@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { EventConfig } from './types';
 
 export class WhiteLabelStore {
@@ -43,21 +44,16 @@ export const getGlobalConfig = () => WhiteLabelStore.getInstance().getGlobalConf
 export const getEventConfig = () => WhiteLabelStore.getInstance().getEventConfig();
 
 /**
- * Initializes the white-labeling library by fetching configuration from the backend.
- * This function now expects specific endpoints for global and event settings.
- */
-/**
  * Fetches global configuration and updates the store.
  */
 export async function fetchGlobalConfig(apiUrl: string): Promise<EventConfig | null> {
     try {
         const store = WhiteLabelStore.getInstance();
-        const res = await fetch(`${apiUrl}/settings/global`, { headers: { 'Accept': 'application/json' } });
-        if (res.ok) {
-            const data = await res.json();
-            store.setGlobalConfig(data);
-            return data;
-        }
+        const { data } = await axios.get(`${apiUrl}/settings/global`, {
+            headers: { 'Accept': 'application/json' }
+        });
+        store.setGlobalConfig(data);
+        return data;
     } catch (error) {
         console.error('Failed to fetch global config:', error);
     }
@@ -70,17 +66,18 @@ export async function fetchGlobalConfig(apiUrl: string): Promise<EventConfig | n
 export async function fetchEventConfig(apiUrl: string, slug: string): Promise<EventConfig | null> {
     try {
         const store = WhiteLabelStore.getInstance();
-        const res = await fetch(`${apiUrl}/events/${slug}/settings`, { headers: { 'Accept': 'application/json' } });
-        if (res.ok) {
-            const data = await res.json();
-            store.setEventConfig(data);
-            return data;
-        } else {
-            console.warn(`Event config for "${slug}" not found.`);
-            store.setEventConfig(null);
-        }
+        const { data } = await axios.get(`${apiUrl}/events/${slug}/settings`, {
+            headers: { 'Accept': 'application/json' }
+        });
+        store.setEventConfig(data);
+        return data;
     } catch (error) {
-        console.error('Failed to fetch event config:', error);
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+            console.warn(`Event config for "${slug}" not found.`);
+            WhiteLabelStore.getInstance().setEventConfig(null);
+        } else {
+            console.error('Failed to fetch event config:', error);
+        }
     }
     return null;
 }

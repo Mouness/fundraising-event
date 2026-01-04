@@ -22,11 +22,13 @@
     "db:generate": "prisma generate --schema=./database/schema.prisma",
     "db:migrate": "prisma migrate dev --schema=./database/schema.prisma --config=./database/prisma.config.ts",
     "db:studio": "prisma studio --schema=./database/schema.prisma",
-    "db:seed": "ts-node database/mock/seed.ts"
+    "db:seed": "ts-node database/mock/seed.ts",
+    "set-admin-password": "ts-node scripts/set-admin-password.ts"
   },
   "dependencies": {
     "@fundraising/types": "workspace:*",
     "@fundraising/white-labeling": "workspace:*",
+    "@nestjs/axios": "^4.0.1",
     "@nestjs/bullmq": "^10.2.3",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
@@ -46,6 +48,7 @@
     "@types/passport-local": "^1.0.38",
     "@types/pg": "^8.16.0",
     "archiver": "^7.0.1",
+    "axios": "^1.13.2",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.66.2",
     "passport": "^0.7.0",

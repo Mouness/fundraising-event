@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { api } from '@/lib/api';
-import { isAxiosError } from 'axios';
+import { api, getApiErrorMessage } from '@/lib/api';
 
 interface StaffLoginCredentials {
     code: string;
@@ -47,13 +46,7 @@ export const useStaffAuth = () => {
             await mutation.mutateAsync({ code, eventId });
             return { success: true };
         } catch (err) {
-            let errorMessage = 'Login failed';
-            if (isAxiosError(err)) {
-                errorMessage = err.response?.data?.message || errorMessage;
-            } else if (err instanceof Error) {
-                errorMessage = err.message;
-            }
-            return { success: false, error: errorMessage };
+            return { success: false, error: getApiErrorMessage(err, 'Login failed') };
         }
     };
 
@@ -81,7 +74,7 @@ export const useStaffAuth = () => {
         logout,
         getStaffUser,
         isStaffAuthenticated,
-        error: mutation.error instanceof Error ? mutation.error.message : null,
+        error: mutation.error ? getApiErrorMessage(mutation.error, 'Login failed') : null,
         isLoading: mutation.isPending
     };
 };

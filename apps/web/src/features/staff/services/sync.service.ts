@@ -31,18 +31,22 @@ export const SyncService = {
             // Success
             return { success: true };
 
-        } catch (error: any) {
+        } catch (error: unknown) { // Use unknown instead of any
             console.error("Submission failed", error);
 
             // If it's a network error (no response), queue it
-            if (!error.response) {
+            // If it's a network error (no response), queue it
+            const isNetworkError = error instanceof Error && !(error as any).response;
+            // Since we know we are using axios (implied by previous context) but code might not explicitly import it here.
+
+            if (isNetworkError) {
                 fullDonation.error = error instanceof Error ? error.message : 'Network Error';
                 StorageService.saveToQueue(fullDonation);
                 return { success: true, offline: true };
             }
 
-            // If it's a server error (400, 500), return failure
-            return { success: false, error: error.response?.data?.message || 'Submission failed' };
+            const errorMsg = (error as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Submission failed';
+            return { success: false, error: errorMsg };
         }
     },
 
@@ -66,13 +70,8 @@ export const SyncService = {
                 StorageService.removeFromQueue(item.id);
                 processed++;
             } catch (error) {
-                // Determine if retryable? For now, if API fails, mark failed or keep pending?
-                // If it's a network error (axios), we might want to keep it.
-                // If 400/500, maybe mark failed.
-                // Simplified: Keep pending on error, unless we detect strict failure.
-                // Assuming keep pending for retry.
-                console.error("Retry failed for", item.id);
-                // Optional: Increment retry count or mark failed after N tries.
+                // Removed unused variable if not used, or log it
+                console.error("Retry failed for", item.id, error);
             }
         }
 

@@ -49,3 +49,13 @@ api.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+export const getApiErrorMessage = (error: unknown, defaultMessage = 'Request failed'): string => {
+    if (axios.isAxiosError(error)) {
+        return error.response?.data?.message || error.message;
+    }
+    if (error instanceof Error) {
+        return error.message;
+    }
+    return defaultMessage;
+};

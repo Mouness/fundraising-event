@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 import { AuthProvider, AuthUser, Auth0UserProfile } from './auth-provider.interface';
 
 @Injectable()
@@ -8,7 +10,10 @@ export class Auth0Provider implements AuthProvider {
     private clientId: string;
     private clientSecret: string;
 
-    constructor(private configService: ConfigService) {
+    constructor(
+        private configService: ConfigService,
+        private readonly httpService: HttpService,
+    ) {
         this.domain = this.configService.get<string>('AUTH0_DOMAIN') || '';
         this.clientId = this.configService.get<string>('AUTH0_CLIENT_ID') || '';
         this.clientSecret =
@@ -33,10 +38,8 @@ export class Auth0Provider implements AuthProvider {
         // Warning: correct configuration in Auth0 (Grant Types) is required.
         if (credentials.email && credentials.password) {
             try {
-                const response = await fetch(`https://${this.domain}/oauth/token`, {
-                    method: 'POST',
-                    headers: { 'content-type': 'application/json' },
-                    body: JSON.stringify({
+                const { data } = await firstValueFrom(
+                    this.httpService.post(`https://${this.domain}/oauth/token`, {
                         grant_type: 'password',
                         username: credentials.email,
                         password: credentials.password,
@@ -44,14 +47,11 @@ export class Auth0Provider implements AuthProvider {
                         client_id: this.clientId,
                         client_secret: this.clientSecret,
                         scope: 'openid profile email',
-                    }),
-                });
+                    }, {
+                        headers: { 'content-type': 'application/json' },
+                    })
+                );
 
-                if (!response.ok) {
-                    throw new Error(`Auth0 Token Error: ${response.statusText}`);
-                }
-
-                const data = await response.json();
                 const { access_token } = data;
 
                 // Optionally fetch user profile with the token
@@ -74,14 +74,17 @@ export class Auth0Provider implements AuthProvider {
     }
 
     private async getUserProfile(accessToken: string): Promise<Auth0UserProfile> {
-        const response = await fetch(`https://${this.domain}/userinfo`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        if (!response.ok) {
+        try {
+            const { data } = await firstValueFrom(
+                this.httpService.get(`https://${this.domain}/userinfo`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                })
+            );
+            return data;
+        } catch (error) {
             throw new Error('Failed to fetch user profile');
         }
-        return response.json();
     }
 }

@@ -42,6 +42,22 @@ The frontend (`apps/web`) uses:
 
 ## Configuration
 
+### Setting Admin Password
+
+The application requires the `ADMIN_PASSWORD` in the `.env` file to be a **Bcrypt hash** for security reasons.
+To easily set or update your admin password, run the following command:
+
+```bash
+# Usage: pnpm --filter api set-admin-password <your-password>
+$ pnpm --filter api set-admin-password mysecretpassword
+```
+
+This script will:
+1. Generate a secure Bcrypt hash of your password.
+2. Automatically update your `.env` file with the hash.
+3. You must **restart the API server** for the changes to take effect.
+
+
 Required Environment Variables:
 - `JWT_SECRET`
 - `ADMIN_EMAIL`

@@ -1,12 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PdfService } from '@/features/pdf/pdf.service';
-import { EventConfigService } from '@/features/event/configuration/event-config.service';
+import { WhiteLabelingService } from '@/features/white-labeling/white-labeling.service';
+import { ConfigService } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Buffer } from 'buffer';
 
 // Mock dependencies
-const mockEventConfigService = {
-  getConfig: vi.fn(),
+const mockWhiteLabelingService = {
+  getEventSettings: vi.fn(),
+};
+
+const mockConfigService = {
+  get: vi.fn(),
+};
+
+const mockHttpService = {
+  get: vi.fn(),
+  post: vi.fn(),
 };
 
 // Mock PdfMake
@@ -33,7 +44,9 @@ describe('PdfService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PdfService,
-        { provide: EventConfigService, useValue: mockEventConfigService },
+        { provide: WhiteLabelingService, useValue: mockWhiteLabelingService },
+        { provide: ConfigService, useValue: mockConfigService },
+        { provide: HttpService, useValue: mockHttpService },
       ],
     }).compile();
 
@@ -48,7 +61,9 @@ describe('PdfService', () => {
   describe('generateReceipt', () => {
     it('should generate PDF buffer', async () => {
       // Mock Config
-      mockEventConfigService.getConfig.mockReturnValue({
+      mockWhiteLabelingService.getEventSettings.mockResolvedValue({
+        id: 'evt_1', // Added required fields
+        slug: 'slug',
         communication: {
           legalName: 'Org',
           address: '123 Test St',
@@ -70,7 +85,7 @@ describe('PdfService', () => {
       };
       mockCreatePdfKitDocument.mockReturnValue(mockStream);
 
-      const buffer = await service.generateReceipt({
+      const buffer = await service.generateReceipt('slug', {
         amount: 1000,
         donorName: 'John',
         date: new Date(),
@@ -82,3 +97,4 @@ describe('PdfService', () => {
     });
   });
 });
+

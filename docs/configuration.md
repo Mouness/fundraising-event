@@ -13,6 +13,10 @@ This project handles configuration through Environment Variables and Static Asse
 | `JWT_SECRET` | Secret key for signing JWTs | `secret` |
 | `STRIPE_SECRET_KEY` | Stripe Secret Key (Server-side) | `sk_test_...` |
 | `STRIPE_WEBHOOK_SECRET` | Stripe Webhook Secret | `whsec_...` |
+| `PAYPAL_CLIENT_ID` | PayPal Client ID | `...` |
+| `PAYPAL_CLIENT_SECRET` | PayPal Client Secret | `...` |
+| `PAYPAL_WEBHOOK_ID` | PayPal Webhook ID | `...` |
+| `PAYPAL_SANDBOX` | Enable PayPal Sandbox | `true` |
 
 ### Frontend (`apps/web/.env`)
 

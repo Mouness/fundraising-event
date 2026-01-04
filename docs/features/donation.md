@@ -14,6 +14,7 @@ The donation flow allows users to make payments using Stripe. It consists of a R
 - **Controller**: `DonationController`
   - `POST /donations/stripe/intent`: Returns `clientSecret`.
   - `POST /donations/stripe/webhook`: Listens for `payment_intent.succeeded`.
+  - `POST /donations/paypal/webhook`: Listens for `CHECKOUT.ORDER.COMPLETED`.
   - `POST /donations`: Handles offline/cash donations (Staff).
 
 ### Frontend (`apps/web`)
@@ -60,6 +61,13 @@ Required Environment Variables:
 - **Frontend**:
   - `VITE_STRIPE_PUBLIC_KEY`: Public API key.
 
+### PayPal Configuration
+- **Backend**:
+  - `PAYPAL_CLIENT_ID`: Client ID.
+  - `PAYPAL_CLIENT_SECRET`: Client Secret.
+  - `PAYPAL_WEBHOOK_ID`: Webhook ID for signature verification.
+  - `PAYPAL_SANDBOX`: `true` or `false`.
+
 ## Usage
 1. User visits `/donate`.
 2. Selects amount and fills details.
@@ -100,3 +108,10 @@ To test webhooks locally, use the Stripe CLI.
   stripe trigger payment_intent.succeeded
   ```
 - Check API logs for "PaymentIntent was successful!".
+
+### 4. PayPal Setup (Sandbox)
+1.  Log in to [PayPal Developer Dashboard](https://developer.paypal.com/).
+2.  Create a strict "App" and get generic Credentials.
+3.  Add `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` to `apps/api/.env`.
+4.  Add `PAYPAL_WEBHOOK_ID` to `apps/api/.env` (Create a webhook for `CHECKOUT.ORDER.COMPLETED`).
+    - Local development requires a tunnel (e.g. ngrok) to receive PayPal webhooks.

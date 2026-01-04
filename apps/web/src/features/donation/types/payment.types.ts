@@ -1,9 +1,9 @@
 export interface PaymentProviderProps {
-    sessionData: any; // Flexible payload (e.g., clientSecret for Stripe, orderID for PayPal)
+    sessionData: { id?: string; clientSecret?: string; orderID?: string;[key: string]: unknown };
     onSuccess: () => void;
     onBack?: () => void;
     onError?: (message: string) => void;
     amount: number;
     currency: string;
-    config?: Record<string, any>; // Static config from event-config.json
+    config?: Record<string, unknown>; // Static config from event-config.json
 }

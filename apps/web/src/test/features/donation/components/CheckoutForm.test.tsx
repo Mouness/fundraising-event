@@ -59,6 +59,19 @@ vi.mock('framer-motion', () => ({
     AnimatePresence: ({ children }: any) => <div>{children}</div>,
 }));
 
+vi.mock('react-i18next', () => ({
+    useTranslation: () => ({
+        t: (key: string) => key,
+        i18n: {
+            changeLanguage: () => new Promise(() => { }),
+        },
+    }),
+    initReactI18next: {
+        type: '3rdParty',
+        init: () => { },
+    }
+}));
+
 describe('CheckoutForm', () => {
     beforeEach(() => {
         vi.clearAllMocks();
@@ -112,5 +125,22 @@ describe('CheckoutForm', () => {
         expect(mockNavigate).toHaveBeenCalledWith('/test-event/thank-you', expect.objectContaining({
             state: expect.objectContaining({ transactionId: 'sess1' })
         }));
+    });
+    it('should show validation errors for invalid input', async () => {
+        const { container } = render(<CheckoutForm />);
+
+        const emailInput = screen.getByTestId('email');
+        fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+
+        const form = container.querySelector('form');
+        if (form) fireEvent.submit(form);
+
+        await waitFor(() => {
+            // Check for validation messages
+            expect(screen.getByText('validation.invalid_email')).toBeDefined();
+            expect(screen.getByText('validation.min_chars')).toBeDefined();
+        });
+
+        expect(api.post).not.toHaveBeenCalled();
     });
 });

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, type Stripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import type { PaymentProviderProps } from '../../types/payment.types';
 // In a real app config.publishableKey would come from prop, but loadStripe runs once.
 // We can use a singleton lazily initialized if key changes.
 // Singleton promise to prevent multiple Stripe element initializations
-let stripePromise: Promise<any> | null = null;
+let stripePromise: Promise<Stripe | null> | null = null;
 
 // Lazily load Stripe only when needed, reusing the promise
 const getStripePromise = (key: string) => {
@@ -80,20 +80,21 @@ const StripeFormContent = ({ onSuccess, onBack, onError }: { onSuccess: () => vo
 }
 
 export const StripePaymentForm = (props: PaymentProviderProps) => {
+    const { t } = useTranslation('common');
     const { sessionData, config } = props;
     const clientSecret = sessionData?.clientSecret;
-    const configKey = config?.publishableKey;
+    const configKey = config?.publishableKey as string | undefined;
     // If config has placeholder, fallback to ENV.
     const publishableKey = (configKey && !configKey.includes('placeholder') ? configKey : undefined)
         || import.meta.env.VITE_STRIPE_PUBLIC_KEY
         || 'pk_test_placeholder';
 
     if (!clientSecret) {
-        return <div className="text-red-500">Error: Missing client secret for Stripe payment.</div>;
+        return <div className="text-red-500">{t('payment.error_generic')}</div>;
     }
 
     if (!publishableKey || publishableKey.includes('placeholder')) {
-        return <div className="text-red-500">Configuration Error: Stripe Publishable Key is missing or invalid.</div>;
+        return <div className="text-red-500">{t('payment.error_missing_config')}</div>;
     }
 
     return (

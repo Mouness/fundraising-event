@@ -519,5 +519,11 @@
             "save_changes": "Save Changes",
             "subtitle": "Configure event branding and appearance."
         }
+    },
+    "payment": {
+        "error_missing_config": "Payment configuration is missing. Please contact support.",
+        "error_processing": "There was an error processing your payment. Please try again.",
+        "error_generic": "Payment failed. Please check your details and try again.",
+        "unknown_provider": "Unknown payment provider: {{providerId}}"
     }
 }

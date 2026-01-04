@@ -519,5 +519,11 @@
             "override_warning": "La marque personnalisée de l'événement remplace l'apparence standard de l'organisation pour cet événement spécifique.",
             "apply_overrides": "Appliquer les Surcharges de Thème"
         }
+    },
+    "payment": {
+        "error_missing_config": "La configuration de paiement est manquante. Veuillez contacter le support.",
+        "error_processing": "Une erreur est survenue lors du traitement de votre paiement. Veuillez réessayer.",
+        "error_generic": "Le paiement a échoué. Veuillez vérifier vos informations et réessayer.",
+        "unknown_provider": "Fournisseur de paiement inconnu : {{providerId}}"
     }
 }

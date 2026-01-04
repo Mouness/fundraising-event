@@ -70,3 +70,14 @@ graph TD
         Clients --> Feed[Feed Component]
     end
 ```
+
+## Security & Configuration
+
+### Configuration
+- **`VITE_API_URL`**: The frontend connects to this URL. Ensure it matches the backend URL where the WebSocket gateway is running.
+
+### Security
+- **CORS**: The WebSocket gateway uses `CORS_ORIGIN` environment variable to restrict connection origins.
+  - Development: defaults to `*` if not set (or typically `localhost`).
+  - Production: MUST be set to the frontend's domain (e.g., `https://my-event.com`) to prevent unauthorized cross-site connections.
+

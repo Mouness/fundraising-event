@@ -37,7 +37,7 @@ export const LiveEmbedPage = () => {
 
             setDonations((prev) => [newDonation, ...prev].slice(0, 8));
         }
-    }, [lastEvent]);
+    }, [lastEvent, event?.goalAmount]);
 
     // Initial load sync (You might want to fetch initial donations here if API supports it, 
     // but for now we rely on socket or initial state if provided by API/EventContext)
@@ -53,8 +53,6 @@ export const LiveEmbedPage = () => {
     }, [event]);
 
 
-
-    if (isLoading || !event) return <div className="flex h-screen items-center justify-center text-white/50">Loading...</div>;
 
     // Use query param ?layout=gauge|feed|full & ?bg=transparent|green
     const searchParams = new URLSearchParams(window.location.search);
@@ -72,6 +70,9 @@ export const LiveEmbedPage = () => {
             document.body.style.backgroundColor = '';
         }
     }, [bgMode]);
+
+    if (isLoading || !event) return <div className="flex h-screen items-center justify-center text-white/50">{t('common.loading')}</div>;
+
     const renderGauge = () => (
         <DonationGauge
             totalRaisedCents={totalRaisedCents}

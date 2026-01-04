@@ -4,7 +4,29 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mocks
 
-
+vi.mock('react-i18next', () => ({
+    useTranslation: () => ({
+        t: (key: string) => {
+            if (key === 'live.give_at') return 'Give at <1>{{url}}</1>';
+            if (key === 'live.title') return 'Test event';
+            return key;
+        },
+        i18n: {
+            changeLanguage: () => new Promise(() => { }),
+        },
+    }),
+    Trans: ({ i18nKey, values, components }: any) => {
+        if (i18nKey === 'live.give_at') {
+            return (
+                <>
+                    Give at {components[1]}
+                    {values.url}
+                </>
+            );
+        }
+        return null;
+    },
+}));
 vi.mock('@/providers/AppConfigProvider', () => ({
     useAppConfig: () => ({
         config: {
@@ -50,7 +72,7 @@ describe('LivePage', () => {
     it('should show donor link correctly', async () => {
         render(<LivePage />);
         await waitFor(() => {
-            expect(screen.getByText(/localhost:5173\/donate/i)).toBeDefined();
+            expect(screen.getByText(/localhost:3000\/default\/donate/i)).toBeDefined();
         });
     });
 });

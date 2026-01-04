@@ -44,7 +44,7 @@ export const LivePage = () => {
 
             setDonations((prev) => [newDonation, ...prev].slice(0, 8));
         }
-    }, [lastEvent]);
+    }, [lastEvent, config.content.goalAmount]);
 
     const bgImage = config.theme?.assets?.backgroundLive;
 

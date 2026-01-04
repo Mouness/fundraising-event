@@ -12,7 +12,7 @@ import { DonationEventPayload } from './interfaces/donation-event.payload';
 
 @WebSocketGateway({
   cors: {
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
     credentials: true,
   },
 })
@@ -35,7 +35,7 @@ export class GatewayGateway
     @MessageBody() eventId: string,
     @ConnectedSocket() client: Socket,
   ) {
-    client.join(eventId);
+    void client.join(eventId);
     console.log(`Client ${client.id} joined event: ${eventId}`);
     return { event: 'joined', eventId };
   }

@@ -1,9 +1,28 @@
 export interface AuthUser {
   id: string;
-  email: string;
-  role: 'ADMIN' | 'USER';
+  email?: string;
   name?: string;
+  role: 'ADMIN' | 'USER' | 'STAFF';
   picture?: string;
+  eventId?: string; // For STAFF
+}
+
+export interface GoogleAuthUser {
+  email: string;
+  firstName: string;
+  lastName: string;
+  picture: string;
+  accessToken: string;
+}
+
+export interface Auth0UserProfile {
+  sub: string;
+  name: string;
+  email: string;
+  picture: string;
+  email_verified?: boolean;
+  nickname?: string;
+  [key: string]: any; // Allow custom claims
 }
 
 export interface AuthProvider {

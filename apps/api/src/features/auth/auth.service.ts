@@ -1,25 +1,26 @@
-import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../../database/prisma.service';
-import { LoginDto, StaffLoginDto } from '@fundraising/types';
-import * as bcrypt from 'bcrypt';
-import type { AuthProvider } from './providers/auth-provider.interface';
+import type {
+  AuthProvider,
+  AuthUser,
+} from './providers/auth-provider.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private configService: ConfigService,
+    private configService: ConfigService, // Keeping if needed for future
     private prisma: PrismaService,
     @Inject('AUTH_PROVIDER') private authProvider: AuthProvider,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validateUser(email: string, pass: string): Promise<AuthUser | null> {
     return this.authProvider.verify({ email, password: pass });
   }
 
-  async validateStaff(code: string, eventId: string): Promise<any> {
+  async validateStaff(code: string, eventId: string): Promise<AuthUser | null> {
     const staff = await this.prisma.staffMember.findUnique({
       where: { code },
       include: {
@@ -42,34 +43,32 @@ export class AuthService {
     return null;
   }
 
-  async login(user: { id: string; email: string; role: string }) {
-    const payload = { sub: user.id, email: user.email, role: 'ADMIN' };
-    return {
-      accessToken: this.jwtService.sign(payload),
-      user: { id: user.id, email: user.email, role: 'ADMIN' as const },
-    };
-  }
-
-  async loginStaff(staff: {
-    id: string;
-    name: string;
-    role: string;
-    eventId: string;
-  }) {
+  login(user: AuthUser) {
     const payload = {
-      sub: staff.id,
-      name: staff.name,
-      role: 'STAFF',
-      eventId: staff.eventId,
+      sub: user.id,
+      email: user.email,
+      role: user.role, // Use generic role
     };
     return {
       accessToken: this.jwtService.sign(payload),
       user: {
-        id: staff.id,
-        name: staff.name,
-        role: 'STAFF' as const,
-        eventId: staff.eventId,
+        id: user.id,
+        email: user.email,
+        role: user.role,
       },
+    };
+  }
+
+  loginStaff(staff: AuthUser) {
+    const payload = {
+      sub: staff.id,
+      name: staff.name,
+      role: staff.role,
+      eventId: staff.eventId,
+    };
+    return {
+      accessToken: this.jwtService.sign(payload),
+      user: staff,
     };
   }
 

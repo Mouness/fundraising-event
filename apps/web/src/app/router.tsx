@@ -20,6 +20,7 @@ const DonationsPage = lazy(() => import('../features/events/pages/DonationsPage'
 const EventSettingsPage = lazy(() => import('../features/events/pages/EventSettingsPage').then(module => ({ default: module.EventSettingsPage })));
 const GlobalSettingsPage = lazy(() => import('../features/admin/pages/GlobalSettingsPage').then(module => ({ default: module.GlobalSettingsPage })));
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage').then(module => ({ default: module.LoginPage })));
+const AuthSuccessPage = lazy(() => import('../features/auth/pages/AuthSuccessPage').then(module => ({ default: module.AuthSuccessPage })));
 const LivePage = lazy(() => import('../features/live/pages/LivePage').then(module => ({ default: module.LivePage })));
 const LiveEmbedPage = lazy(() => import('../features/live/pages/LiveEmbedPage').then(module => ({ default: module.LiveEmbedPage })));
 const DonationPage = lazy(() => import('../features/donation/pages/DonationPage').then(module => ({ default: module.DonationPage })));
@@ -35,6 +36,7 @@ const LandingPage = lazy(() => import('../features/public/pages/LandingPage').th
 const RootLandingPage = lazy(() => import('../features/public/pages/RootLandingPage').then(module => ({ default: module.RootLandingPage })));
 const EventTeamPage = lazy(() => import('../features/events/pages/EventTeamPage').then(module => ({ default: module.EventTeamPage })));
 const StaffManagementPage = lazy(() => import('../features/admin/pages/StaffManagementPage').then(module => ({ default: module.StaffManagementPage })));
+const NotFoundPage = lazy(() => import('../features/public/pages/NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 
 // Wrapper to provide event context based on URL slug
 const EventContextWrapper = () => {
@@ -135,6 +137,14 @@ export const router = createBrowserRouter([
         ),
     },
     {
+        path: '/auth/success',
+        element: (
+            <AppConfigProvider>
+                {Loadable(AuthSuccessPage)}
+            </AppConfigProvider>
+        ),
+    },
+    {
         path: '/admin',
         element: <GlobalAdminWrapper />,
         children: [
@@ -202,7 +212,7 @@ export const router = createBrowserRouter([
         path: '*',
         element: (
             <AppConfigProvider>
-                <div>404 Not Found</div>
+                {Loadable(NotFoundPage)}
             </AppConfigProvider>
         )
     }

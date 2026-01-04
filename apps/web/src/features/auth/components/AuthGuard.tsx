@@ -9,16 +9,17 @@ export const AuthGuard = () => {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
+    let isValid = false;
     try {
         const user = userStr ? JSON.parse(userStr) : null;
-        if (!user || (user.role !== 'ADMIN' && user.role !== 'STAFF')) {
-            // If user is authenticated but doesn't have the right role, 
-            // clear session and redirect to login
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            return <Navigate to="/login" replace />;
+        if (user && (user.role === 'ADMIN' || user.role === 'STAFF')) {
+            isValid = true;
         }
-    } catch (e) {
+    } catch {
+        // invalid json
+    }
+
+    if (!isValid) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         return <Navigate to="/login" replace />;

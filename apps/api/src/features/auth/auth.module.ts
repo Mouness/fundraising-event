@@ -9,13 +9,14 @@ import { JwtStrategy } from './jwt.strategy';
 import { GoogleStrategy } from './google.strategy';
 
 import { LocalAuthProvider } from './providers/local.provider';
+import { Auth0Provider } from './providers/auth0.provider';
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET') || 'dev_secret',
         signOptions: { expiresIn: '1d' },
       }),
@@ -28,17 +29,21 @@ import { LocalAuthProvider } from './providers/local.provider';
     JwtStrategy,
     GoogleStrategy,
     LocalAuthProvider,
+    Auth0Provider,
     {
       provide: 'AUTH_PROVIDER',
       useFactory: (
         configService: ConfigService,
         localProvider: LocalAuthProvider,
+        auth0Provider: Auth0Provider,
       ) => {
-        // Future: switch based on configService.get('AUTH_STRATEGY')
-        // For now, default to local
+        const type = configService.get<string>('AUTH_PROVIDER_TYPE');
+        if (type === 'auth0') {
+          return auth0Provider;
+        }
         return localProvider;
       },
-      inject: [ConfigService, LocalAuthProvider],
+      inject: [ConfigService, LocalAuthProvider, Auth0Provider],
     },
   ],
 })

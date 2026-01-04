@@ -49,4 +49,4 @@ import { WhiteLabelingModule } from './features/white-labeling/white-labeling.mo
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

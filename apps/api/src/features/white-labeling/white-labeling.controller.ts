@@ -15,7 +15,7 @@ import { WhiteLabelingService } from './white-labeling.service';
 
 @Controller()
 export class WhiteLabelingController {
-  constructor(private readonly service: WhiteLabelingService) { }
+  constructor(private readonly service: WhiteLabelingService) {}
 
   @Get('settings/global')
   async getGlobalSettings() {

@@ -5,6 +5,7 @@
         "email": "Email",
         "password": "Mot de passe",
         "submit": "Se connecter",
+        "logging_in": "Connexion en cours...",
         "google": "Continuer avec Google",
         "loading": "Connexion...",
         "email_placeholder": "admin@exemple.com"
@@ -332,6 +333,11 @@
         "subtitle": "Quelque chose s'est mal passé",
         "message": "Nous nous excusons pour le désagrément. L'application a rencontré une erreur inattendue.",
         "reload": "Recharger l'application"
+    },
+    "not_found": {
+        "title": "Page non trouvée",
+        "message": "La page que vous recherchez n'existe pas ou a été déplacée.",
+        "button": "Retour à l'accueil"
     },
     "validation": {
         "required": "Ce champ est requis",

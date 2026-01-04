@@ -17,7 +17,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 export class ExportController {
   private readonly logger = new Logger(ExportController.name);
 
-  constructor(private readonly exportService: ExportService) { }
+  constructor(private readonly exportService: ExportService) {}
 
   @Get('receipts/zip')
   @UseGuards(AuthGuard('jwt'), RolesGuard)

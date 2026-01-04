@@ -13,7 +13,7 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "baseUrl": "./",
     "paths": {
       "@/*": [
@@ -30,14 +30,13 @@
     "noFallthroughCasesInSwitch": false
   },
   "exclude": [
-    "vitest.config.ts",
-    "test",
-    "**/*.spec.ts",
     "dist",
     "node_modules",
     "database/prisma.config.ts"
   ],
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*",
+    "vitest.config.ts"
   ]
 }

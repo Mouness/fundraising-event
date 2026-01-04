@@ -7,6 +7,7 @@
         "submit": "Sign In",
         "google": "Sign in with Google",
         "loading": "Signing in...",
+        "logging_in": "Logging you in...",
         "email_placeholder": "admin@example.com"
     },
     "nav": {
@@ -332,6 +333,11 @@
         "subtitle": "Something went wrong",
         "message": "We apologize for the inconvenience. The application encountered an unexpected error.",
         "reload": "Reload Application"
+    },
+    "not_found": {
+        "title": "Page Not Found",
+        "message": "The page you are looking for doesn't exist or has been moved.",
+        "button": "Go Back Home"
     },
     "validation": {
         "required": "This field is required",

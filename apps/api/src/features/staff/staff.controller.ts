@@ -16,7 +16,7 @@ import { StaffService } from './staff.service';
 @Controller('staff')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class StaffController {
-  constructor(private readonly staffService: StaffService) { }
+  constructor(private readonly staffService: StaffService) {}
 
   @Get()
   findAll() {

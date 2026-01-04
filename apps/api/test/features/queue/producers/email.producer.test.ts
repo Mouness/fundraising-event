@@ -4,38 +4,38 @@ import { getQueueToken } from '@nestjs/bullmq';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const mockQueue = {
-    add: vi.fn(),
+  add: vi.fn(),
 };
 
 describe('EmailProducer', () => {
-    let producer: EmailProducer;
+  let producer: EmailProducer;
 
-    beforeEach(async () => {
-        const module: TestingModule = await Test.createTestingModule({
-            providers: [
-                EmailProducer,
-                { provide: getQueueToken('email'), useValue: mockQueue },
-            ],
-        }).compile();
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        EmailProducer,
+        { provide: getQueueToken('email'), useValue: mockQueue },
+      ],
+    }).compile();
 
-        producer = module.get<EmailProducer>(EmailProducer);
-        vi.clearAllMocks();
-    });
+    producer = module.get<EmailProducer>(EmailProducer);
+    vi.clearAllMocks();
+  });
 
-    it('should be defined', () => {
-        expect(producer).toBeDefined();
-    });
+  it('should be defined', () => {
+    expect(producer).toBeDefined();
+  });
 
-    it('should add send-receipt job', async () => {
-        await producer.sendReceipt('test@example.com', 100, 'tx_123');
-        expect(mockQueue.add).toHaveBeenCalledWith(
-            'send-receipt',
-            expect.objectContaining({
-                email: 'test@example.com',
-                amount: 100,
-                transactionId: 'tx_123',
-            }),
-            expect.any(Object)
-        );
-    });
+  it('should add send-receipt job', async () => {
+    await producer.sendReceipt('test@example.com', 100, 'tx_123');
+    expect(mockQueue.add).toHaveBeenCalledWith(
+      'send-receipt',
+      expect.objectContaining({
+        email: 'test@example.com',
+        amount: 100,
+        transactionId: 'tx_123',
+      }),
+      expect.any(Object),
+    );
+  });
 });

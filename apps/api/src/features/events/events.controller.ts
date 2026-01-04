@@ -16,7 +16,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('events')
 export class EventsController {
-  constructor(private readonly eventsService: EventsService) { }
+  constructor(private readonly eventsService: EventsService) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'), RolesGuard)

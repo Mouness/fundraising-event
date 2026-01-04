@@ -30,7 +30,7 @@ export class DonationController {
   constructor(
     private readonly paymentService: PaymentService,
     private readonly donationService: DonationService,
-  ) { }
+  ) {}
 
   @Get()
   async findAll(

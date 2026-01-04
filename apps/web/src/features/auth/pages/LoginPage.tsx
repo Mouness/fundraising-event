@@ -10,7 +10,9 @@ import { useLogin } from '../hooks/useLogin';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const getLoginSchema = (t: any) => z.object({
+import type { TFunction } from 'i18next';
+
+const getLoginSchema = (t: TFunction) => z.object({
     email: z.string().email({ message: t('validation.invalid_email') }),
     password: z.string().min(1, { message: t('validation.required') }),
 });
@@ -31,7 +33,7 @@ export const LoginPage = () => {
                 if (user.role === 'ADMIN' || user.role === 'STAFF') {
                     navigate('/admin');
                 }
-            } catch (e) {
+            } catch {
                 // Ignore parse error
             }
         }

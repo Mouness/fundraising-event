@@ -19,7 +19,7 @@ export const PaymentForm = () => {
     return (
         <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
             <CardHeader>
-                <CardTitle>{t('admin_branding.modules.payment_title', 'Payment Configuration')}</CardTitle>
+                <CardTitle>{t('admin_branding.modules.payment_title')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -38,8 +38,10 @@ import {
 } from '@/components/ui/dialog';
 
 
+import { type TFunction } from 'i18next';
+
 // Schema for staff creation
-const getStaffSchema = (t: any) => z.object({
+const getStaffSchema = (t: TFunction) => z.object({
     name: z.string().min(2, t('validation.min_chars', { count: 2 })),
     code: z.string()
         .min(4, t('validation.min_chars', { count: 4 }))
@@ -52,7 +54,8 @@ export const StaffManagementPage = () => {
     const { t } = useTranslation(['common', 'white-labeling']);
     const queryClient = useQueryClient();
     const [isAddOpen, setIsAddOpen] = useState(false);
-    const [editingStaff, setEditingStaff] = useState<any>(null);
+    interface StaffMember { id: string; name: string; code: string; _count?: { events: number } }
+    const [editingStaff, setEditingStaff] = useState<StaffMember | null>(null);
     const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const { data: staff = [], isLoading } = useQuery({
@@ -87,9 +90,9 @@ export const StaffManagementPage = () => {
             form.reset();
             toast.success(editingStaff ? t('admin_team.member_updated') : t('admin_team.member_created'));
         },
-        onError: (err: any) => {
+        onError: (err: unknown) => {
             console.error('Failed to save staff', err);
-            const message = err.response?.data?.message || t('donation.error');
+            const message = (err as { response?: { data?: { message?: string } } })?.response?.data?.message || t('donation.error');
             toast.error(message);
         }
     });
@@ -112,7 +115,7 @@ export const StaffManagementPage = () => {
         createMutation.mutate(values);
     };
 
-    const handleEdit = (member: any) => {
+    const handleEdit = (member: StaffMember) => {
         setEditingStaff(member);
         form.reset({
             name: member.name,
@@ -123,6 +126,72 @@ export const StaffManagementPage = () => {
 
     const handleDelete = (id: string) => {
         setDeleteId(id);
+    };
+
+    const renderTableContent = () => {
+        if (isLoading) {
+            return (
+                <TableRow>
+                    <TableCell colSpan={4} className="h-24 text-center">
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin inline" />
+                        {t('admin_team.loading_staff')}
+                    </TableCell>
+                </TableRow>
+            );
+        }
+
+        if (staff.length === 0) {
+            return (
+                <TableRow>
+                    <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
+                        {t('admin_team.no_staff_found')}
+                    </TableCell>
+                </TableRow>
+            );
+        }
+
+        return staff.map((member: StaffMember) => (
+            <TableRow key={member.id}>
+                <TableCell>
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Users className="h-4 w-4 text-primary" />
+                        </div>
+                        <span className="font-medium">{member.name}</span>
+                    </div>
+                </TableCell>
+                <TableCell>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <Key className="h-3 w-3" />
+                        <span className="font-mono">{member.code}</span>
+                    </div>
+                </TableCell>
+                <TableCell>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">
+                        {t('admin_team.events_count', { count: member._count?.events || 0 })}
+                    </span>
+                </TableCell>
+                <TableCell className="text-right">
+                    <div className="flex justify-end gap-2">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(member)}
+                        >
+                            <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                            onClick={() => handleDelete(member.id)}
+                        >
+                            <Trash2 className="h-4 w-4" />
+                        </Button>
+                    </div>
+                </TableCell>
+            </TableRow>
+        ));
     };
 
     return (
@@ -210,63 +279,7 @@ export const StaffManagementPage = () => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {isLoading ? (
-                                    <TableRow>
-                                        <TableCell colSpan={4} className="h-24 text-center">
-                                            <Loader2 className="mr-2 h-4 w-4 animate-spin inline" />
-                                            {t('admin_team.loading_staff')}
-                                        </TableCell>
-                                    </TableRow>
-                                ) : staff.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
-                                            {t('admin_team.no_staff_found')}
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                    staff.map((member: any) => (
-                                        <TableRow key={member.id}>
-                                            <TableCell>
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                                        <Users className="h-4 w-4 text-primary" />
-                                                    </div>
-                                                    <span className="font-medium">{member.name}</span>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className="flex items-center gap-2 text-muted-foreground">
-                                                    <Key className="h-3 w-3" />
-                                                    <span className="font-mono">{member.code}</span>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">
-                                                    {t('admin_team.events_count', { count: member._count?.events || 0 })}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell className="text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        onClick={() => handleEdit(member)}
-                                                    >
-                                                        <Edit className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                                                        onClick={() => handleDelete(member.id)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                )}
+                                {renderTableContent()}
                             </TableBody>
                         </Table>
                     </div>

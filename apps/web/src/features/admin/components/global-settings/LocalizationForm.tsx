@@ -15,7 +15,7 @@ const CLIENT_LOCALE_GROUPS = {
 
 interface LocalizationFormProps {
     localeOverrides: { key: string, value: string, locale: string }[];
-    setLocaleOverrides: (val: any) => void;
+    setLocaleOverrides: (val: { key: string, value: string, locale: string }[]) => void;
 }
 
 export const LocalizationForm = ({ localeOverrides, setLocaleOverrides }: LocalizationFormProps) => {

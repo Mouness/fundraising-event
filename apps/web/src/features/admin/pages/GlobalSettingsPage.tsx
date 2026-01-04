@@ -18,6 +18,31 @@ import { useTranslation } from 'react-i18next';
 
 
 
+const COMMON_KEYS_MAP: Record<string, string> = {
+    primary: '--primary',
+    background: '--background',
+    foreground: '--foreground',
+    muted: '--muted',
+    mutedForeground: '--muted-foreground',
+    card: '--card',
+    cardForeground: '--card-foreground',
+    popover: '--popover',
+    popoverForeground: '--popover-foreground',
+    primaryForeground: '--primary-foreground',
+    border: '--border',
+    input: '--input',
+    ring: '--ring',
+    radius: '--radius',
+    radiusSm: '--radius-sm',
+    radiusLg: '--radius-lg',
+    secondary: '--secondary',
+    secondaryForeground: '--secondary-foreground',
+    accent: '--accent',
+    accentForeground: '--accent-foreground',
+    destructive: '--destructive',
+    destructiveForeground: '--destructive-foreground'
+};
+
 export const GlobalSettingsPage = () => {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
@@ -34,7 +59,7 @@ export const GlobalSettingsPage = () => {
     });
 
     const mutation = useMutation({
-        mutationFn: (payload: any) => api.patch('/settings/global', payload),
+        mutationFn: (payload: unknown) => api.patch('/settings/global', payload),
         onSuccess: () => {
             toast.success(t('admin_branding.success_save'));
             queryClient.invalidateQueries({ queryKey: ['global-settings'] });
@@ -60,7 +85,7 @@ export const GlobalSettingsPage = () => {
             website: defaultConfig.communication?.website || '',
             themeVariables: [],
             // Helper object for common vars
-            commonVariables: {} as any,
+            commonVariables: {} as GlobalSettingsForm['commonVariables'],
             event: { totalLabel: defaultConfig.content?.totalLabel },
             payment: {
                 currency: defaultConfig.donation?.payment?.currency,
@@ -82,7 +107,7 @@ export const GlobalSettingsPage = () => {
             pdfReceipt: {
                 enabled: defaultConfig.communication?.pdf?.enabled ?? true,
                 footerText: defaultConfig.communication?.pdf?.footerText,
-                templateStyle: (defaultConfig.communication?.pdf?.templateStyle as any)
+                templateStyle: (defaultConfig.communication?.pdf?.templateStyle as 'minimal' | 'formal')
             },
 
             assets: { favicon: '', backgroundDonor: '', backgroundLive: '', backgroundLanding: '' }
@@ -93,30 +118,7 @@ export const GlobalSettingsPage = () => {
 
     const [localeOverrides, setLocaleOverrides] = useState<{ key: string, value: string, locale: string }[]>([]);
 
-    const COMMON_KEYS_MAP: Record<string, string> = {
-        primary: '--primary',
-        background: '--background',
-        foreground: '--foreground',
-        muted: '--muted',
-        mutedForeground: '--muted-foreground',
-        card: '--card',
-        cardForeground: '--card-foreground',
-        popover: '--popover',
-        popoverForeground: '--popover-foreground',
-        primaryForeground: '--primary-foreground',
-        border: '--border',
-        input: '--input',
-        ring: '--ring',
-        radius: '--radius',
-        radiusSm: '--radius-sm',
-        radiusLg: '--radius-lg',
-        secondary: '--secondary',
-        secondaryForeground: '--secondary-foreground',
-        accent: '--accent',
-        accentForeground: '--accent-foreground',
-        destructive: '--destructive',
-        destructiveForeground: '--destructive-foreground'
-    };
+    // Moved outside component (see top of file or below imports)
 
     // Load Data & Defaults
     useEffect(() => {
@@ -146,7 +148,7 @@ export const GlobalSettingsPage = () => {
             website: data.communication?.website || defaultConfig.communication?.website || '',
 
             themeVariables: customVariablesArray,
-            commonVariables: commonVars as any,
+            commonVariables: commonVars as GlobalSettingsForm['commonVariables'],
 
             event: { totalLabel: data.content?.totalLabel || defaultConfig.content?.totalLabel },
             payment: data.donation?.payment || defaultConfig.donation?.payment,
@@ -161,7 +163,7 @@ export const GlobalSettingsPage = () => {
             pdfReceipt: data.communication?.pdf || {
                 enabled: defaultConfig.communication?.pdf?.enabled ?? true,
                 footerText: defaultConfig.communication?.pdf?.footerText,
-                templateStyle: (defaultConfig.communication?.pdf?.templateStyle as any)
+                templateStyle: (defaultConfig.communication?.pdf?.templateStyle as 'minimal' | 'formal')
             },
             assets: data.theme?.assets || { favicon: '', backgroundDonor: '', backgroundLive: '', backgroundLanding: '' }
         });
@@ -173,7 +175,7 @@ export const GlobalSettingsPage = () => {
     const mapThemeVariables = (formData: GlobalSettingsForm) => {
         const vars: Record<string, string> = {};
         Object.entries(COMMON_KEYS_MAP).forEach(([formKey, cssKey]) => {
-            const val = (formData.commonVariables as any)[formKey];
+            const val = formData.commonVariables[formKey as keyof typeof formData.commonVariables];
             if (val) vars[cssKey] = val;
         });
         formData.themeVariables.forEach(v => {
@@ -183,10 +185,19 @@ export const GlobalSettingsPage = () => {
     };
 
     const mapLocalesWithOverrides = (formData: GlobalSettingsForm) => {
-        const localesPayload: any = { ...formData.locales };
+        type LocalesPayload = {
+            default: string;
+            supported: string[];
+            [key: string]: string | string[] | Record<string, string>;
+        };
+
+        const localesPayload: LocalesPayload = { ...formData.locales };
         localeOverrides.forEach(({ locale, key, value }) => {
-            if (!localesPayload[locale]) localesPayload[locale] = {};
-            localesPayload[locale][key] = value;
+            if (!localesPayload[locale]) {
+                localesPayload[locale] = {};
+            }
+            const localeObj = localesPayload[locale] as Record<string, string>;
+            localeObj[key] = value;
         });
 
         const overriddenLocales = Array.from(new Set(localeOverrides.map(l => l.locale)));

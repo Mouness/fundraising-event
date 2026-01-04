@@ -40,7 +40,7 @@ export interface GlobalSettingsForm {
 
     // Modules
     event: { totalLabel: string };
-    payment: { currency: string, provider: string, config?: any };
+    payment: { currency: string, provider: string, config?: Record<string, unknown> };
     locales: { default: string, supported: string[] };
 
     // Communication Details

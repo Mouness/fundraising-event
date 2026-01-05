@@ -1,11 +1,11 @@
 import { useFormContext, useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
+import { Checkbox } from '@core/components/ui/checkbox';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@core/components/ui/card';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@core/components/ui/button';
 import { AlertCircle as AlertIcon, Palette, Image as ImageIcon, Mail, Plus, Trash2 } from 'lucide-react';
 
 export const BrandingForm = () => {
@@ -54,8 +54,11 @@ export const BrandingForm = () => {
                                 <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground mb-4">Identity & Assets</h3>
                                 <div className="grid gap-4">
                                     <div className="grid gap-2">
-                                        <Label htmlFor="organization">{t('event_settings.branding.display_name')}</Label>
-                                        <Input id="organization" placeholder="Event Display Name Override" {...register('organization')} />
+                                        <Label htmlFor="organization">{t('event_settings.branding.display_name') || 'Event Display Title (Override)'}</Label>
+                                        <Input id="organization" placeholder="e.g. Annual Charity Gala" {...register('organization')} />
+                                        <p className="text-xs text-muted-foreground">
+                                            {t('event_settings.branding.display_name_desc') || 'Leave empty to use the Event Name.'}
+                                        </p>
                                     </div>
                                 </div>
 

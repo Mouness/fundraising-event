@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GatewayGateway } from '@/features/gateway/gateway.gateway';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Socket, Server } from 'socket.io';
 
 const mockServer = {
   emit: vi.fn(),

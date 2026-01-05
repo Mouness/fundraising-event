@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { PageLoader } from '@/components/ui/page-loader';
-import { AppHeader } from '@/components/AppHeader';
+import { PageLoader } from '@core/components/ui/page-loader';
+import { AppHeader } from '@core/components/AppHeader';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Layers, Users, Settings } from 'lucide-react';
 

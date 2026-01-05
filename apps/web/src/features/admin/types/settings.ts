@@ -46,6 +46,7 @@ export interface GlobalSettingsForm {
     // Communication Details
     emailReceipt: { enabled: boolean, senderName: string, replyTo: string, subjectLine: string, footerText: string };
     pdfReceipt: { enabled: boolean, footerText: string, templateStyle: 'minimal' | 'formal' };
+    sharing: { enabled: boolean, networks: ('facebook' | 'twitter' | 'linkedin')[] };
 
     assets: {
         favicon: string;

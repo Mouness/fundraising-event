@@ -17,7 +17,7 @@ import { CreateStaffDto, UpdateStaffDto } from '@fundraising/types';
 @Controller('staff')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class StaffController {
-  constructor(private readonly staffService: StaffService) { }
+  constructor(private readonly staffService: StaffService) {}
 
   /**
    * Get all staff members.

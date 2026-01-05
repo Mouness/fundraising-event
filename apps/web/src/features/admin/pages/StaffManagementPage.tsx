@@ -3,15 +3,13 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Plus, Trash2, Loader2, Key, Edit, Users } from 'lucide-react';
 import { toast } from 'sonner';
-import { ConfirmationDialog } from '@/components/ConfirmationDialog';
+import { ConfirmationDialog } from '@core/components/ConfirmationDialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-
-import { api } from '@/lib/api';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { api } from '@core/lib/api';
+import { Button } from '@core/components/ui/button';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
 import {
     Table,
     TableBody,
@@ -19,14 +17,14 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table';
+} from '@core/components/ui/table';
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from '@/components/ui/card';
+} from '@core/components/ui/card';
 import {
     Dialog,
     DialogContent,
@@ -35,20 +33,8 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from '@/components/ui/dialog';
-
-
-import { type TFunction } from 'i18next';
-
-// Schema for staff creation
-const getStaffSchema = (t: TFunction) => z.object({
-    name: z.string().min(2, t('validation.min_chars', { count: 2 })),
-    code: z.string()
-        .min(4, t('validation.min_chars', { count: 4 }))
-        .max(6, t('validation.max_chars', { count: 6 })),
-});
-
-type StaffFormValues = z.infer<ReturnType<typeof getStaffSchema>>;
+} from '@core/components/ui/dialog';
+import { staffSchema, type StaffFormValues } from '../schemas/staff.schema';
 
 export const StaffManagementPage = () => {
     const { t } = useTranslation(['common', 'white-labeling']);
@@ -66,7 +52,6 @@ export const StaffManagementPage = () => {
         },
     });
 
-    const staffSchema = getStaffSchema(t);
     const form = useForm<StaffFormValues>({
         resolver: zodResolver(staffSchema),
         defaultValues: {

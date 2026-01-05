@@ -3,12 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card';
 import type { DonationFormValues } from '../schemas/donation.schema';
-import { getDonationSchema } from '../schemas/donation.schema';
-import { useAppConfig } from '@/providers/AppConfigProvider';
-import { api } from '@/lib/api';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { donationSchema } from '../schemas/donation.schema';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { api } from '@core/lib/api';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 import { PaymentFormFactory } from './payment/PaymentFormFactory';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CreditCard } from 'lucide-react';
@@ -35,7 +35,7 @@ export const CheckoutForm = () => {
     const activeSlug = slug || config.slug;
 
     const { register, handleSubmit, setValue, watch, getValues, formState: { errors } } = useForm<DonationFormValues>({
-        resolver: zodResolver(getDonationSchema(t)),
+        resolver: zodResolver(donationSchema),
         defaultValues: {
             amount: 20,
             isAnonymous: false,

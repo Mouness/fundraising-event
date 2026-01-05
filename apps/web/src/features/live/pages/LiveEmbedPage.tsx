@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEvent } from '@/features/events/context/EventContext';
-import { useLiveSocket } from '@/features/live/hooks/useLiveSocket';
+import { useEvent } from '@features/events/context/EventContext';
+import { useLiveSocket } from '@features/live/hooks/useLiveSocket';
 import { DonationGauge } from '../components/DonationGauge';
 import { DonationFeed, type Donation } from '../components/DonationFeed';
 
@@ -30,7 +30,7 @@ export const LiveEmbedPage = () => {
                 // Trigger Goal Celebration
                 const goalCents = Number(event?.goalAmount || 0) * 100;
                 if (prev < goalCents && newTotal >= goalCents) {
-                    import('@/lib/confetti').then(mod => mod.fireGoalCelebration());
+                    import('@core/lib/confetti').then(mod => mod.fireGoalCelebration());
                 }
                 return newTotal;
             });

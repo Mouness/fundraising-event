@@ -1,4 +1,4 @@
-import { api } from "@/lib/api";
+import { api } from "@core/lib/api";
 import { StorageService } from "./storage.service";
 import type { PendingDonation } from "../types";
 

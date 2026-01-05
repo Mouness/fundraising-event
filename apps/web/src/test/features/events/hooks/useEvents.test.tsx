@@ -1,11 +1,11 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useEvents } from '@/features/events/hooks/useEvents';
+import { useEvents } from '@features/events/hooks/useEvents';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock dependencies
-vi.mock('@/lib/api', async (importOriginal) => {
-    const actual = await importOriginal<typeof import('@/lib/api')>();
+vi.mock('@core/lib/api', async (importOriginal) => {
+    const actual = await importOriginal<typeof import('@core/lib/api')>();
     return {
         ...actual,
         api: {
@@ -14,7 +14,7 @@ vi.mock('@/lib/api', async (importOriginal) => {
     };
 });
 
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 
 const createWrapper = () => {
     const queryClient = new QueryClient({

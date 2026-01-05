@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { IncomingHttpHeaders } from 'http';
 import { StripeService } from './stripe.service';
 import { PayPalService } from './paypal.service';
@@ -15,7 +15,7 @@ export class PaymentService {
     private readonly whiteLabelingService: WhiteLabelingService,
   ) {}
 
-  async getProvider(eventId?: string): Promise<PaymentProvider> {
+  async getProvider(_eventId?: string): Promise<PaymentProvider> {
     // 1. Check Global Settings first
     const globalConfig = await this.prisma.configuration.findFirst({
       where: { scope: 'GLOBAL' },

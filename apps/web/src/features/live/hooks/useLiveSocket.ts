@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { API_URL } from '@/lib/api';
+import { API_URL } from '@core/lib/api';
 
 export interface DonationEvent {
     amount: number;

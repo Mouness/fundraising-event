@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import { RootLandingPage } from '@/features/public/pages/RootLandingPage';
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { RootLandingPage } from '@features/public/pages/RootLandingPage';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 import { MemoryRouter } from 'react-router-dom';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-import { usePublicEvents } from '@/features/events/hooks/usePublicEvents';
+import { usePublicEvents } from '@features/events/hooks/usePublicEvents';
 
 // Mock dependencies
-vi.mock('@/providers/AppConfigProvider', () => ({
+vi.mock('@core/providers/AppConfigProvider', () => ({
     useAppConfig: vi.fn(),
 }));
 
-vi.mock('@/features/events/hooks/usePublicEvents', () => ({
+vi.mock('@features/events/hooks/usePublicEvents', () => ({
     usePublicEvents: vi.fn(),
 }));
 

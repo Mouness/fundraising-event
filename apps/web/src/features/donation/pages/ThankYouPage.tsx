@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useLocation, Link, Navigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@core/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@core/components/ui/card';
 import { CheckCircle, Share2 } from 'lucide-react';
-import { useAppConfig } from '@/providers/AppConfigProvider';
-import { fireConfetti } from '@/lib/confetti';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { fireConfetti } from '@core/lib/confetti';
 
 export const ThankYouPage = () => {
     const { t } = useTranslation('common');

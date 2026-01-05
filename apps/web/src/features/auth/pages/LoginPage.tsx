@@ -1,23 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import { Button } from '@core/components/ui/button';
+import { Input } from '@core/components/ui/input';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@core/components/ui/card';
+import { Label } from '@core/components/ui/label';
 import { useTranslation } from 'react-i18next';
 import { useLogin } from '../hooks/useLogin';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import type { TFunction } from 'i18next';
-
-const getLoginSchema = (t: TFunction) => z.object({
-    email: z.string().email({ message: t('validation.invalid_email') }),
-    password: z.string().min(1, { message: t('validation.required') }),
-});
-
-type LoginForm = z.infer<ReturnType<typeof getLoginSchema>>;
+import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
 
 export const LoginPage = () => {
     const { t } = useTranslation('common');
@@ -38,12 +29,11 @@ export const LoginPage = () => {
             }
         }
     }, [navigate]);
-    const loginSchema = getLoginSchema(t);
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
     });
 
-    const onSubmit = async (data: LoginForm) => {
+    const onSubmit = async (data: LoginFormValues) => {
         await login(data);
     };
 

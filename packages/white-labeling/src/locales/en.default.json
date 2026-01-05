@@ -144,7 +144,7 @@
         "from": "From",
         "anonymous": "Anonymous",
         "waiting": "Waiting for donations...",
-        "scan_to_donate": "Scan to Donate",
+        "scan_to_donate": "SCAN TO DONATE",
         "total_raised": "Total Raised",
         "goal": "Goal",
         "give_at": "Give at <1>{{url}}</1>"
@@ -337,19 +337,49 @@
     "not_found": {
         "title": "Page Not Found",
         "message": "The page you are looking for doesn't exist or has been moved.",
-        "button": "Go Back Home"
+        "button": "Go Back Home",
+        "event_not_found": "Event not found",
+        "back_to_home": "Back to Home",
+        "back_to_event": "Back to Event",
+        "back_to_events": "Back to Events"
     },
     "validation": {
         "required": "This field is required",
-        "min_chars": "Must be at least {{count}} characters",
-        "max_chars": "Must be at most {{count}} characters",
-        "invalid_email": "Invalid email address",
-        "invalid_url": "Invalid URL",
-        "invalid_hex": "Invalid hex color",
-        "min_value": "Must be at least {{count}}"
+        "invalid_type": "Expected {{expected}}, received {{received}}",
+        "too_small": {
+            "string": "Must be at least {{count}} characters",
+            "number": "Must be greater than or equal to {{count}}",
+            "array": "Must contain at least {{count}} items",
+            "set": "Must contain at least {{count}} items",
+            "date": "Date must be greater than or equal to {{count}}"
+        },
+        "too_big": {
+            "string": "Must be at most {{count}} characters",
+            "number": "Must be less than or equal to {{count}}",
+            "array": "Must contain at most {{count}} items",
+            "set": "Must contain at most {{count}} items",
+            "date": "Date must be less than or equal to {{count}}"
+        },
+        "invalid_string": {
+            "email": "Invalid email address",
+            "url": "Invalid URL",
+            "uuid": "Invalid UUID",
+            "emoji": "Invalid emoji",
+            "datetime": "Invalid datetime",
+            "cuid": "Invalid CUID",
+            "ulid": "Invalid ULID",
+            "ip": "Invalid IP address",
+            "regex": "Invalid format"
+        },
+        "invalid_enum_value": "Invalid value. Expected: {{options}}",
+        "invalid_date": "Invalid date",
+        "invalid_union": "Invalid input",
+        "not_multiple_of": "Must be a multiple of {{multipleOf}}",
+        "not_finite": "Must be finite",
+        "custom": "Invalid input"
     },
     "admin_branding": {
-        "title": "Global Branding Center",
+        "title": "Customization",
         "subtitle": "Manage your organization's identity, theme, and core settings.",
         "save": "Save Changes",
         "saving": "Saving...",
@@ -396,6 +426,15 @@
                 "reply_to": "Reply-To Email",
                 "subject": "Subject Line",
                 "footer": "Email Footer"
+            },
+            "sharing": {
+                "title": "Social Sharing",
+                "description": "Configure social sharing options for donation pages.",
+                "enable": "Enable Social Sharing",
+                "networks": "Enabled Networks",
+                "facebook": "Facebook",
+                "twitter": "X (Twitter)",
+                "linkedin": "LinkedIn"
             },
             "pdf": {
                 "title": "PDF Receipts",
@@ -457,7 +496,7 @@
             "live": "Live Screen Background"
         },
         "localization": {
-            "title": "Interface Localization",
+            "title": "Localization",
             "description": "Manage supported languages and text overrides.",
             "supported_languages": "Supported Languages",
             "label_overrides": "Label Overrides",
@@ -468,7 +507,9 @@
             "translation": "Translation..."
         },
         "modules": {
+            "payment_nav": "Payment",
             "payment_title": "Payment Configuration",
+            "payment_description": "Provide the information needed to receive payments.",
             "currency": "Currency",
             "provider": "Provider"
         }
@@ -484,6 +525,7 @@
             "basic_details_title": "Basic Details",
             "basic_details_desc": "Main information about your fundraising event.",
             "event_name": "Event Name",
+            "description": "Description",
             "url_slug": "URL Slug",
             "status": "Status",
             "status_placeholder": "Select status",
@@ -509,8 +551,9 @@
             "use_global_desc": "Inherit logo, colors, and organization info from the Global Branding Center.",
             "preview_title": "Previewing Organization Identity",
             "org_default": "Organization Default",
-            "display_name": "Event Display Name (Override)",
-            "display_name_placeholder": "Custom Event Title",
+            "display_name": "Event Display Title (Override)",
+            "display_name_desc": "Leave empty to use the Event Name.",
+            "display_name_placeholder": "e.g. Annual Charity Gala",
             "logo_url": "Event Logo URL",
             "accent_color": "Event Accent Color",
             "override_warning": "Custom event branding overrides the organization's standard look for this specific event.",
@@ -525,5 +568,14 @@
         "error_processing": "There was an error processing your payment. Please try again.",
         "error_generic": "Payment failed. Please check your details and try again.",
         "unknown_provider": "Unknown payment provider: {{providerId}}"
+    },
+    "date": {
+        "years_ago": "{{count}} years ago",
+        "months_ago": "{{count}} months ago",
+        "days_ago": "{{count}} days ago",
+        "hours_ago": "{{count}} hours ago",
+        "minutes_ago": "{{count}} minutes ago",
+        "seconds_ago": "{{count}} seconds ago",
+        "just_now": "just now"
     }
 }

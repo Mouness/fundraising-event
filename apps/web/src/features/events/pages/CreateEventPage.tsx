@@ -2,22 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { api } from '@/lib/api';
+import { Button } from '@core/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
+import { api } from '@core/lib/api';
 import { toast } from 'sonner';
 import { Loader2, ArrowLeft } from 'lucide-react';
-
-const createEventSchema = z.object({
-    name: z.string().min(3, 'Name must be at least 3 characters'),
-    slug: z.string().min(3, 'Slug must be at least 3 characters').regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with dashes'),
-    goalAmount: z.coerce.number().min(1, 'Goal must be at least 1'),
-});
-
-type CreateEventFormValues = z.infer<typeof createEventSchema>;
+import { createEventSchema, type CreateEventFormValues } from '../schemas/create-event.schema';
 
 export const CreateEventPage = () => {
     const { t } = useTranslation();

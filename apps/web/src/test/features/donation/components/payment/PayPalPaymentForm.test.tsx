@@ -1,13 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { PayPalPaymentForm } from '@/features/donation/components/payment/PayPalPaymentForm';
+import { render, screen, waitFor } from '@test/utils';
+import { PayPalPaymentForm } from '@features/donation/components/payment/PayPalPaymentForm';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock react-i18next
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({
-        t: (key: string) => key,
-    }),
-}));
 
 // Mock PayPal SDK
 vi.mock('@paypal/react-paypal-js', () => ({
@@ -15,7 +9,7 @@ vi.mock('@paypal/react-paypal-js', () => ({
     PayPalButtons: ({ createOrder, onApprove }: any) => (
         <div>
             <button onClick={() => createOrder({}, { order: { create: vi.fn() } })}>Mock Create Order</button>
-            <button onClick={() => onApprove({}, {})}>Mock Approve</button>
+            <button onClick={() => onApprove({}, { order: { capture: vi.fn().mockResolvedValue({ id: 'tr_123' }) } })}>Mock Approve</button>
         </div>
     ),
 }));
@@ -34,21 +28,21 @@ describe('PayPalPaymentForm', () => {
         vi.clearAllMocks();
     });
 
-    it('should render PayPal buttons when clientId is present', () => {
+    it('should render PayPal buttons when clientId is present', async () => {
         render(<PayPalPaymentForm {...defaultProps} />);
-        expect(screen.getByText('Mock Create Order')).toBeDefined();
+        expect(await screen.findByText('Mock Create Order')).toBeDefined();
     });
 
-    it('should show error if clientId is missing', () => {
+    it('should show error if clientId is missing', async () => {
         const props = { ...defaultProps, config: {} };
         render(<PayPalPaymentForm {...props} />);
-        expect(screen.getByText('payment.error_missing_config')).toBeDefined();
+        expect(await screen.findByText('payment.error_missing_config')).toBeDefined();
     });
 
     it('should call onSuccess when approved', async () => {
         render(<PayPalPaymentForm {...defaultProps} />);
 
-        const approveBtn = screen.getByText('Mock Approve');
+        const approveBtn = await screen.findByText('Mock Approve');
         approveBtn.click();
 
         await waitFor(() => {

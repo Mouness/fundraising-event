@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { LandingPage } from '@/features/public/pages/LandingPage';
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { LandingPage } from '@features/public/pages/LandingPage';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
 // Mock dependencies
-vi.mock('@/providers/AppConfigProvider', () => ({
+vi.mock('@core/providers/AppConfigProvider', () => ({
     useAppConfig: vi.fn(),
 }));
 
-vi.mock('@/hooks/useCurrencyFormatter', () => ({
+vi.mock('@core/hooks/useCurrencyFormatter', () => ({
     useCurrencyFormatter: () => ({
         formatCurrency: (amount: number) => `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
     }),
@@ -30,7 +30,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock LanguageSwitcher since it might use complex logic/icons
-vi.mock('@/components/LanguageSwitcher', () => ({
+vi.mock('@core/components/LanguageSwitcher', () => ({
     LanguageSwitcher: () => <div data-testid="language-switcher">LangSwitcher</div>
 }));
 

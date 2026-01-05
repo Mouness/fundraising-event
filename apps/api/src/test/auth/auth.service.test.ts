@@ -8,7 +8,6 @@ import { vi, describe, beforeEach, it, expect } from 'vitest';
 describe('AuthService', () => {
   let service: AuthService;
   let jwtService: JwtService;
-  let configService: ConfigService;
   let prismaService: PrismaService;
 
   beforeEach(async () => {
@@ -27,6 +26,7 @@ describe('AuthService', () => {
             get: vi.fn((key) => {
               if (key === 'ADMIN_EMAIL') return 'admin@example.com';
               if (key === 'ADMIN_PASSWORD') return 'password';
+              if (key === 'JWT_SECRET') return 'secret';
               return null;
             }),
           },
@@ -34,7 +34,7 @@ describe('AuthService', () => {
         {
           provide: PrismaService,
           useValue: {
-            staffCode: {
+            staffMember: {
               findUnique: vi.fn(),
             },
           },
@@ -76,7 +76,6 @@ describe('AuthService', () => {
 
     service = module.get<AuthService>(AuthService);
     jwtService = module.get<JwtService>(JwtService);
-    configService = module.get<ConfigService>(ConfigService);
     prismaService = module.get<PrismaService>(PrismaService);
   });
 
@@ -109,13 +108,15 @@ describe('AuthService', () => {
         id: '1',
         name: 'John',
         code: '1234',
-        eventId: 'evt_1',
+        events: [{ id: 'evt_1' }],
       };
       // Note: vitest uses vi.mocked or similar, but with useValue we can just cast or access mock
       // However, typical jest.Mock usage is:
-      (prismaService.staffCode.findUnique as any).mockResolvedValue(mockStaff);
+      (prismaService.staffMember.findUnique as any).mockResolvedValue(
+        mockStaff,
+      );
 
-      const result = await service.validateStaff('1234');
+      const result = await service.validateStaff('1234', 'evt_1');
       expect(result).toEqual({
         id: '1',
         name: 'John',
@@ -125,8 +126,8 @@ describe('AuthService', () => {
     });
 
     it('should return null if code invalid', async () => {
-      (prismaService.staffCode.findUnique as any).mockResolvedValue(null);
-      const result = await service.validateStaff('0000');
+      (prismaService.staffMember.findUnique as any).mockResolvedValue(null);
+      const result = await service.validateStaff('0000', 'evt_1');
       expect(result).toBeNull();
     });
   });
@@ -159,9 +160,13 @@ describe('AuthService', () => {
   });
 
   describe('login', () => {
-    it('should return access token', async () => {
-      const user = { id: 'admin', email: 'admin@example.com', role: 'ADMIN' };
-      const result = await service.login(user);
+    it('should return access token', () => {
+      const user = {
+        id: 'admin',
+        email: 'admin@example.com',
+        role: 'ADMIN' as const,
+      };
+      const result = service.login(user);
       expect(result).toEqual({
         accessToken: 'test_token',
         user: { id: 'admin', email: 'admin@example.com', role: 'ADMIN' },

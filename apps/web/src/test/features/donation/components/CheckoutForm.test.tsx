@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import { CheckoutForm } from '@/features/donation/components/CheckoutForm';
+import { CheckoutForm } from '@features/donation/components/CheckoutForm';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 
 // Mocks
 const mockNavigate = vi.fn();
@@ -9,7 +9,7 @@ vi.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
     useParams: () => ({ slug: 'test-event' }),
 }));
-vi.mock('@/providers/AppConfigProvider', () => ({
+vi.mock('@core/providers/AppConfigProvider', () => ({
     useAppConfig: () => ({
         config: {
             donation: {
@@ -20,13 +20,13 @@ vi.mock('@/providers/AppConfigProvider', () => ({
     }),
 }));
 
-vi.mock('@/lib/api', () => ({
+vi.mock('@core/lib/api', () => ({
     api: {
         post: vi.fn(),
     },
 }));
 
-vi.mock('@/features/donation/components/payment/PaymentFormFactory', () => ({
+vi.mock('@features/donation/components/payment/PaymentFormFactory', () => ({
     PaymentFormFactory: ({ onSuccess, onError }: any) => (
         <div>
             <button onClick={onSuccess}>Pay Success</button>
@@ -35,16 +35,16 @@ vi.mock('@/features/donation/components/payment/PaymentFormFactory', () => ({
     ),
 }));
 // Mock UI components
-vi.mock('@/components/ui/button', () => ({
+vi.mock('@core/components/ui/button', () => ({
     Button: ({ children, onClick, ...props }: any) => <button onClick={onClick} {...props}>{children}</button>,
 }));
-vi.mock('@/components/ui/input', () => ({
+vi.mock('@core/components/ui/input', () => ({
     Input: ({ id, ...props }: any) => <input id={id} data-testid={id} {...props} />,
 }));
-vi.mock('@/components/ui/label', () => ({
+vi.mock('@core/components/ui/label', () => ({
     Label: ({ htmlFor, children }: any) => <label htmlFor={htmlFor}>{children}</label>,
 }));
-vi.mock('@/components/ui/card', () => {
+vi.mock('@core/components/ui/card', () => {
     const MockDiv = ({ children }: any) => <div>{children}</div>;
     return {
         Card: MockDiv,
@@ -137,8 +137,8 @@ describe('CheckoutForm', () => {
 
         await waitFor(() => {
             // Check for validation messages
-            expect(screen.getByText('validation.invalid_email')).toBeDefined();
-            expect(screen.getByText('validation.min_chars')).toBeDefined();
+            expect(screen.getByText('validation.invalid_string.email')).toBeDefined();
+            expect(screen.getByText('validation.too_small.string 2')).toBeDefined();
         });
 
         expect(api.post).not.toHaveBeenCalled();

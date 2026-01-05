@@ -7,6 +7,12 @@ export interface EventConfig {
     /** URL slug for the event */
     slug?: string;
 
+    /** Name of the event (System/DB) */
+    name: string;
+
+    /** Description of the event (System/DB) */
+    description?: string;
+
     /** Visual theme configuration */
     theme?: {
         /** Generic assets map (e.g. logo, background) */
@@ -17,7 +23,7 @@ export interface EventConfig {
 
     /** Text content configuration */
     content: {
-        /** Main title of the event */
+        /** Main title of the event (Display Override) - defaults to event.name */
         title: string;
         /** Label for the total raised amount (e.g. "Total Raised") */
         totalLabel: string;

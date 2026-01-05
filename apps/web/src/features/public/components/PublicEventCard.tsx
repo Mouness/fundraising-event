@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@core/components/ui/card';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 import type { EventResponseDto } from '@fundraising/types';
 
 interface PublicEventCardProps {

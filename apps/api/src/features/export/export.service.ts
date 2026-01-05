@@ -3,7 +3,6 @@ import archiver from 'archiver';
 import { PrismaService } from '../../database/prisma.service';
 import { Prisma } from '@prisma/client';
 import { PdfService } from '../pdf/pdf.service';
-import { Readable } from 'stream';
 
 @Injectable()
 export class ExportService {
@@ -12,7 +11,7 @@ export class ExportService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly pdfService: PdfService,
-  ) { }
+  ) {}
 
   async exportReceipts(eventId?: string): Promise<StreamableFile> {
     this.logger.log(

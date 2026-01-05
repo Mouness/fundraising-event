@@ -37,12 +37,17 @@ Built with **NestJS**, following a modular architecture:
 
 ## Frontend (`apps/web`)
 
-Built with **React 19** and **Vite**:
+Built with **React 19** and **Vite**, organized following a **Core vs Features** architecture to ensure scalability and maintainability:
 
-- **State Management**: React Hooks & Context.
-- **Styling**: Tailwind CSS v4 & Shadcn/UI for components.
-- **Internationalization**: `react-i18next` for English/French support.
-- **Forms**: `react-hook-form` + `zod` validation.
+- **Directory Structure**:
+    - `src/core`: Houses universal infrastructure (API client, routing, global providers, shared UI components like `AppHeader` and `ui/` library).
+    - `src/features`: Domain-specific logic organized by feature (e.g., `donation`, `admin`, `live`).
+    - `src/test`: Global test utilities and integration tests.
+- **Architectural Patterns**:
+    - **Alias Standardization**: Uses `@core/*`, `@features/*`, and `@test/*` for clear dependency mapping.
+    - **Context-First State**: Reusable global state managed via React Context providers (e.g., `AppConfigProvider`).
+    - **Styling**: Tailwind CSS v4 & Shadcn/UI.
+    - **Internationalization**: Full RTL/LTR support via `react-i18next`.
 
 ### Key Pages
 1.  **Donation Page**: Public-facing form for donors.

@@ -32,6 +32,15 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@features/*": [
+        "./src/features/*"
+      ],
+      "@test/*": [
+        "./src/test/*"
       ]
     }
   },

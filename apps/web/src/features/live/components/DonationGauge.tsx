@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 
 interface DonationGaugeProps {
     totalRaisedCents: number;

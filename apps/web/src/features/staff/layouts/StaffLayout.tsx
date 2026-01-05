@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { AppHeader } from "@/components/AppHeader";
+import { AppHeader } from "@core/components/AppHeader";
 
 export const StaffLayout = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);

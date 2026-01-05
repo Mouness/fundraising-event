@@ -9,7 +9,7 @@ import { EmailProcessor } from './processors/email.processor';
   imports: [
     BullModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         connection: {
           host: configService.get('REDIS_HOST') || 'localhost',
           port: parseInt(configService.get('REDIS_PORT') || '6379'),

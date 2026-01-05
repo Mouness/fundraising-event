@@ -33,7 +33,6 @@ describe('DonationController', () => {
   let controller: DonationController;
 
   beforeEach(async () => {
-
     // ...
 
     const module: TestingModule = await Test.createTestingModule({
@@ -92,7 +91,9 @@ describe('DonationController', () => {
       const req = { rawBody: Buffer.from('raw'), headers: {} } as any;
       await controller.handleStripeWebhook(req);
 
-      expect(mockDonationService.processSuccessfulDonation).toHaveBeenCalledWith(
+      expect(
+        mockDonationService.processSuccessfulDonation,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
           transactionId: 'pi_123',
           donorName: 'John',
@@ -107,7 +108,9 @@ describe('DonationController', () => {
         event_type: 'CHECKOUT.ORDER.COMPLETED',
         resource: {
           id: 'ord_123',
-          purchase_units: [{ amount: { value: '10.00', currency_code: 'USD' } }],
+          purchase_units: [
+            { amount: { value: '10.00', currency_code: 'USD' } },
+          ],
           payer: { email_address: 'john@example.com' },
         },
       });
@@ -115,7 +118,9 @@ describe('DonationController', () => {
       const req = { rawBody: Buffer.from('raw'), headers: {} } as any;
       await controller.handlePayPalWebhook(req);
 
-      expect(mockDonationService.processSuccessfulDonation).toHaveBeenCalledWith(
+      expect(
+        mockDonationService.processSuccessfulDonation,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
           transactionId: 'ord_123',
           amount: 1000,
@@ -139,7 +144,9 @@ describe('DonationController', () => {
 
       await controller.createOfflineDonation(dto, req);
 
-      expect(mockDonationService.processSuccessfulDonation).toHaveBeenCalledWith(
+      expect(
+        mockDonationService.processSuccessfulDonation,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
           amount: 500,
           paymentMethod: 'cash',

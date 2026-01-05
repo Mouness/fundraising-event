@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { GlobalSettingsPage } from '@/features/admin/pages/GlobalSettingsPage';
+import { GlobalSettingsPage } from '@features/admin/pages/GlobalSettingsPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useQuery } from '@tanstack/react-query';
 import { fetchGlobalConfig } from '@fundraising/white-labeling';
@@ -9,7 +9,7 @@ vi.mock('react-i18next', () => ({
     useTranslation: () => ({ t: (key: string) => key }),
 }));
 
-vi.mock('@/lib/api', () => ({
+vi.mock('@core/lib/api', () => ({
     api: { patch: vi.fn(), get: vi.fn() },
     API_URL: 'http://localhost:3000'
 }));
@@ -40,12 +40,12 @@ vi.mock('@tanstack/react-query', () => ({
 }));
 
 // Mock Sub-components
-vi.mock('@/features/admin/components/global-settings/IdentityForm', () => ({ IdentityForm: () => <div data-testid="identity-form">Identity Form</div> }));
-vi.mock('@/features/admin/components/global-settings/AssetsForm', () => ({ AssetsForm: () => <div data-testid="assets-form">Assets Form</div> }));
-vi.mock('@/features/admin/components/global-settings/CommunicationForm', () => ({ CommunicationForm: () => <div data-testid="communication-form">Communication Form</div> }));
-vi.mock('@/features/admin/components/global-settings/BrandDesignForm', () => ({ BrandDesignForm: () => <div data-testid="brand-form">Brand Form</div> }));
-vi.mock('@/features/admin/components/global-settings/LocalizationForm', () => ({ LocalizationForm: () => <div data-testid="localization-form">Localization Form</div> }));
-vi.mock('@/features/admin/components/global-settings/PaymentForm', () => ({ PaymentForm: () => <div data-testid="payment-form">Payment Form</div> }));
+vi.mock('@features/admin/components/global-settings/IdentityForm', () => ({ IdentityForm: () => <div data-testid="identity-form">Identity Form</div> }));
+vi.mock('@features/admin/components/global-settings/AssetsForm', () => ({ AssetsForm: () => <div data-testid="assets-form">Assets Form</div> }));
+vi.mock('@features/admin/components/global-settings/CommunicationForm', () => ({ CommunicationForm: () => <div data-testid="communication-form">Communication Form</div> }));
+vi.mock('@features/admin/components/global-settings/BrandDesignForm', () => ({ BrandDesignForm: () => <div data-testid="brand-form">Brand Form</div> }));
+vi.mock('@features/admin/components/global-settings/LocalizationForm', () => ({ LocalizationForm: () => <div data-testid="localization-form">Localization Form</div> }));
+vi.mock('@features/admin/components/global-settings/PaymentForm', () => ({ PaymentForm: () => <div data-testid="payment-form">Payment Form</div> }));
 
 
 describe('GlobalSettingsPage', () => {

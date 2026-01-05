@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import type { EventResponseDto } from '@fundraising/types';
 
 export const useEvents = () => {

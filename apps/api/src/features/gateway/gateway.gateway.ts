@@ -7,7 +7,7 @@ import {
   OnGatewayDisconnect,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import type { Server, Socket } from 'socket.io';
 import { DonationEventPayload } from './interfaces/donation-event.payload';
 
 @WebSocketGateway({

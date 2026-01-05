@@ -39,7 +39,7 @@ describe('AuthController', () => {
       const user = { id: 'admin', email: 'admin@test.com' };
 
       (authService.validateUser as any).mockResolvedValue(user);
-      (authService.login as any).mockResolvedValue({
+      (authService.login as any).mockReturnValue({
         accessToken: 'token',
         user,
       });
@@ -56,36 +56,39 @@ describe('AuthController', () => {
 
   describe('staffLogin', () => {
     it('should call validateStaff and loginStaff', async () => {
-      const dto: StaffLoginDto = { code: '1234' };
+      const dto: StaffLoginDto = { code: '1234', eventId: 'evt_1' };
       const staff = { id: '1', name: 'John' };
 
       (authService.validateStaff as any).mockResolvedValue(staff);
-      (authService.loginStaff as any).mockResolvedValue({
+      (authService.loginStaff as any).mockReturnValue({
         accessToken: 'token',
         user: staff,
       });
 
       const result = await controller.staffLogin(dto);
 
-      expect(authService.validateStaff).toHaveBeenCalledWith('1234');
+      expect(authService.validateStaff).toHaveBeenCalledWith('1234', 'evt_1');
       expect(result).toEqual({ accessToken: 'token', user: staff });
     });
   });
 
   describe('googleAuthRedirect', () => {
-    it('should validate google user and login', async () => {
+    it('should validate google user and redirect', async () => {
       const user = { id: 'admin', email: 'admin@test.com' };
       const req = { user: { email: 'admin@test.com' } };
+      const res = { redirect: vi.fn() };
 
       (authService.validateGoogleUser as any).mockResolvedValue(user);
-      (authService.login as any).mockResolvedValue({
+      (authService.login as any).mockReturnValue({
         accessToken: 'token',
         user,
       });
 
-      const result = await controller.googleAuthRedirect(req);
+      await controller.googleAuthRedirect(req as any, res as any);
       expect(authService.validateGoogleUser).toHaveBeenCalledWith(req.user);
-      expect(result).toEqual({ accessToken: 'token', user });
+      expect(res.redirect).toHaveBeenCalledWith(
+        expect.stringContaining('auth/success?token=token'),
+      );
     });
   });
 });

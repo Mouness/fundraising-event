@@ -5,7 +5,6 @@ import { PdfService } from '@/features/pdf/pdf.service';
 import { ConfigService } from '@nestjs/config';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as fs from 'fs/promises';
-import * as path from 'path';
 
 // Mock fs
 vi.mock('fs/promises');
@@ -59,7 +58,8 @@ describe('MailService', () => {
     }).compile();
 
     service = module.get<MailService>(MailService);
-    whiteLabelingService = module.get<WhiteLabelingService>(WhiteLabelingService);
+    whiteLabelingService =
+      module.get<WhiteLabelingService>(WhiteLabelingService);
   });
 
   it('should be defined', () => {
@@ -69,13 +69,29 @@ describe('MailService', () => {
   it('should send receipt with branding', async () => {
     const mockSettings = {
       content: { title: 'Test Event', goalAmount: 1000 },
-      theme: { assets: { logo: '/logo.png' }, variables: { '--primary': '#fff' } },
+      theme: {
+        assets: { logo: '/logo.png' },
+        variables: { '--primary': '#fff' },
+      },
       communication: { email: { subjectLine: 'Test Subject' } },
+      donation: {
+        payment: { provider: 'stripe', currency: 'USD' },
+        form: {
+          phone: { enabled: false, required: false },
+          address: { enabled: false, required: false },
+          company: { enabled: false, required: false },
+          message: { enabled: false, required: false },
+          anonymous: { enabled: true, required: false },
+        },
+        sharing: { enabled: false, networks: [] },
+      },
     };
 
-    vi.spyOn(whiteLabelingService, 'getEventSettings').mockResolvedValue(mockSettings as any);
+    vi.spyOn(whiteLabelingService, 'getEventSettings').mockResolvedValue(
+      mockSettings as any,
+    );
     // Mock private renderTemplate if needed, or rely on it failing gracefully/working if template exists
-    // Since renderTemplate is private and reads from FS, integration test might be better, 
+    // Since renderTemplate is private and reads from FS, integration test might be better,
     // or we mock fs. But for now let's assume it logs warning if template missing.
     // Actually, renderTemplate is private. We can spy on 'send'
 
@@ -86,7 +102,9 @@ describe('MailService', () => {
       transactionId: '123',
     });
 
-    expect(whiteLabelingService.getEventSettings).toHaveBeenCalledWith('test-event');
+    expect(whiteLabelingService.getEventSettings).toHaveBeenCalledWith(
+      'test-event',
+    );
     expect(mailProviderMock.send).toHaveBeenCalled();
   });
 
@@ -96,15 +114,31 @@ describe('MailService', () => {
 
     const mockSettings = {
       content: { title: 'Test Event' },
-      theme: { assets: { logo: 'logo.png' }, variables: { '--primary': 'blue' } },
+      theme: {
+        assets: { logo: 'logo.png' },
+        variables: { '--primary': 'blue' },
+      },
       communication: {
         legalName: 'Org',
         address: 'Addr',
         website: 'web',
         email: { footerText: 'footer' },
       },
+      donation: {
+        payment: { provider: 'stripe', currency: 'USD' },
+        form: {
+          phone: { enabled: false, required: false },
+          address: { enabled: false, required: false },
+          company: { enabled: false, required: false },
+          message: { enabled: false, required: false },
+          anonymous: { enabled: true, required: false },
+        },
+        sharing: { enabled: false, networks: [] },
+      },
     };
-    vi.spyOn(whiteLabelingService, 'getEventSettings').mockResolvedValue(mockSettings as any);
+    vi.spyOn(whiteLabelingService, 'getEventSettings').mockResolvedValue(
+      mockSettings as any,
+    );
 
     const data = {
       eventSlug: 'test-event',
@@ -123,7 +157,7 @@ describe('MailService', () => {
     // Verify MailProvider called
     expect(mailProviderMock.send).toHaveBeenCalledTimes(1);
 
-    const [to, subject, html, context] = mailProviderMock.send.mock.calls[0];
+    const [to, subject, html] = mailProviderMock.send.mock.calls[0];
 
     expect(to).toBe('john@example.com');
     expect(subject).toContain('$50');

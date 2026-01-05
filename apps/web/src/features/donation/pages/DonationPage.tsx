@@ -1,6 +1,6 @@
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 import { CheckoutForm } from '../components/CheckoutForm';
-import { AppHeader } from '@/components/AppHeader';
+import { AppHeader } from '@core/components/AppHeader';
 
 export const DonationPage = () => {
     const { config } = useAppConfig();

@@ -1,10 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
 import { Target, Users, TrendingUp, Calendar, ExternalLink, Settings, Smartphone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@core/components/ui/button';
 import { Link, useParams } from 'react-router-dom';
 import { RecentDonationsList } from '../components/RecentDonationsList';
-import { useEvents } from '@/features/events/hooks/useEvents';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useEvents } from '@features/events/hooks/useEvents';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 import { useTranslation } from 'react-i18next';
 
 export const EventDashboardPage = () => {

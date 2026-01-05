@@ -5,7 +5,6 @@ import {
   Headers,
   Req,
   BadRequestException,
-  Inject,
   Get,
   Query,
   Res,
@@ -94,7 +93,7 @@ export class DonationController {
 
       // Handle the event
       switch (event.type) {
-        case 'payment_intent.succeeded':
+        case 'payment_intent.succeeded': {
           const paymentIntent = event.data.object;
           console.log('PaymentIntent was successful!', paymentIntent);
 
@@ -111,6 +110,7 @@ export class DonationController {
             eventId: paymentIntent.metadata?.eventId,
           });
           break;
+        }
         default:
           console.log(`Unhandled event type ${event.type}`);
       }

@@ -9,7 +9,7 @@ export class EventsService {
   constructor(
     private prisma: PrismaService,
     private whiteLabelingService: WhiteLabelingService,
-  ) { }
+  ) {}
 
   private readonly defaultSelect = {
     id: true,

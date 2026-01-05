@@ -168,15 +168,14 @@
             "connected": "Connecté",
             "connecting": "Connexion..."
         },
-        "new_donation": "Nouveau Don!",
         "amount": "Montant",
         "from": "De",
         "anonymous": "Anonyme",
         "waiting": "En attente de dons...",
-        "scan_to_donate": "Scannez pour donner",
+        "scan_to_donate": "SCANNEZ POUR DONNER",
         "total_raised": "Total récolté",
         "goal": "Objectif",
-        "give_at": "Donnez sur <1>{{url}}</1>"
+        "give_at": "Faites un don sur <1>{{url}}</1>"
     },
     "donation": {
         "title": "Faire un don",
@@ -337,19 +336,49 @@
     "not_found": {
         "title": "Page non trouvée",
         "message": "La page que vous recherchez n'existe pas ou a été déplacée.",
-        "button": "Retour à l'accueil"
+        "button": "Retour à l'accueil",
+        "event_not_found": "Événement introuvable",
+        "back_to_home": "Retour à l'accueil",
+        "back_to_event": "Retour à l'événement",
+        "back_to_events": "Retour aux événements"
     },
     "validation": {
         "required": "Ce champ est requis",
-        "min_chars": "Au moins {{count}} caractères requis",
-        "max_chars": "Au plus {{count}} caractères autorisés",
-        "invalid_email": "Adresse email invalide",
-        "invalid_url": "URL invalide",
-        "invalid_hex": "Format de couleur invalide (#HEX)",
-        "min_value": "Doit être au moins {{count}}"
+        "invalid_type": "Attendu {{expected}}, reçu {{received}}",
+        "too_small": {
+            "string": "Doit contenir au moins {{count}} caractères",
+            "number": "Doit être supérieur ou égal à {{count}}",
+            "array": "Doit contenir au moins {{count}} éléments",
+            "set": "Doit contenir au moins {{count}} éléments",
+            "date": "La date doit être supérieure ou égale à {{count}}"
+        },
+        "too_big": {
+            "string": "Doit contenir au plus {{count}} caractères",
+            "number": "Doit être inférieur ou égal à {{count}}",
+            "array": "Doit contenir au plus {{count}} éléments",
+            "set": "Doit contenir au plus {{count}} éléments",
+            "date": "La date doit être inférieure ou égale à {{count}}"
+        },
+        "invalid_string": {
+            "email": "Adresse email invalide",
+            "url": "URL invalide",
+            "uuid": "UUID invalide",
+            "emoji": "Emoji invalide",
+            "datetime": "Datetime invalide",
+            "cuid": "CUID invalide",
+            "ulid": "ULID invalide",
+            "ip": "Adresse IP invalide",
+            "regex": "Format invalide"
+        },
+        "invalid_enum_value": "Valeur invalide. Attendu : {{options}}",
+        "invalid_date": "Date invalide",
+        "invalid_union": "Entrée invalide",
+        "not_multiple_of": "Doit être un multiple de {{multipleOf}}",
+        "not_finite": "Doit être fini",
+        "custom": "Entrée invalide"
     },
     "admin_branding": {
-        "title": "Centre de Personnalisation Graphique",
+        "title": "Personnalisation",
         "subtitle": "Gérez l'identité, le thème et les paramètres de base de votre organisation.",
         "save": "Enregistrer les modifications",
         "saving": "Enregistrement...",
@@ -396,6 +425,15 @@
                 "reply_to": "Email de réponse",
                 "subject": "Objet de l'e-mail",
                 "footer": "Pied de page de l'e-mail"
+            },
+            "sharing": {
+                "title": "Partage Social",
+                "description": "Configurez les options de partage social pour les pages de dons.",
+                "enable": "Activer le Partage Social",
+                "networks": "Réseaux Activés",
+                "facebook": "Facebook",
+                "twitter": "X (Twitter)",
+                "linkedin": "LinkedIn"
             },
             "pdf": {
                 "title": "Reçus PDF",
@@ -457,7 +495,7 @@
             "live": "Fond d'Écran en Direct"
         },
         "localization": {
-            "title": "Localisation de l'Interface",
+            "title": "Localisation",
             "description": "Gérez les langues supportées et les surcharges de texte.",
             "supported_languages": "Langues Supportées",
             "label_overrides": "Surcharges de Libellés",
@@ -468,7 +506,9 @@
             "translation": "Traduction..."
         },
         "modules": {
+            "payment_nav": "Paiement",
             "payment_title": "Configuration du Paiement",
+            "payment_description": "Renseignez les informations nécessaires à la réception des paiements.",
             "currency": "Devise",
             "provider": "Prestataire"
         }
@@ -484,6 +524,7 @@
             "basic_details_title": "Détails de Base",
             "basic_details_desc": "Informations principales concernant votre événement de collecte.",
             "event_name": "Nom de l'événement",
+            "description": "Description",
             "url_slug": "Slug URL",
             "status": "Statut",
             "status_placeholder": "Sélectionner un statut",
@@ -512,8 +553,9 @@
             "use_global_desc": "Hériter du logo, des couleurs et des infos de l'organisation depuis le Centre de Marque Global.",
             "preview_title": "Aperçu de l'Identité de l'Organisation",
             "org_default": "Défaut Organisation",
-            "display_name": "Nom d'Affichage de l'Événement (Surcharge)",
-            "display_name_placeholder": "Titre Personnalisé de l'Événement",
+            "display_name": "Titre d'Affichage de l'Événement (Surcharge)",
+            "display_name_desc": "Laisser vide pour utiliser le nom de l'événement.",
+            "display_name_placeholder": "Ex: Gala de Charité Annuel",
             "logo_url": "URL du Logo de l'Événement",
             "accent_color": "Couleur d'Accent de l'Événement",
             "override_warning": "La marque personnalisée de l'événement remplace l'apparence standard de l'organisation pour cet événement spécifique.",
@@ -525,5 +567,14 @@
         "error_processing": "Une erreur est survenue lors du traitement de votre paiement. Veuillez réessayer.",
         "error_generic": "Le paiement a échoué. Veuillez vérifier vos informations et réessayer.",
         "unknown_provider": "Fournisseur de paiement inconnu : {{providerId}}"
+    },
+    "date": {
+        "years_ago": "il y a {{count}} ans",
+        "months_ago": "il y a {{count}} mois",
+        "days_ago": "il y a {{count}} jours",
+        "hours_ago": "il y a {{count}} heures",
+        "minutes_ago": "il y a {{count}} minutes",
+        "seconds_ago": "il y a {{count}} secondes",
+        "just_now": "à l'instant"
     }
 }

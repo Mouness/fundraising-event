@@ -1,7 +1,7 @@
 import { PayPalScriptProvider, PayPalButtons, type PayPalButtonsComponentProps } from '@paypal/react-paypal-js';
 import { useTranslation } from 'react-i18next';
-import { CardContent, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { CardContent, CardFooter } from '@core/components/ui/card';
+import { Button } from '@core/components/ui/button';
 import type { PaymentProviderProps } from '../../types/payment.types';
 
 export const PayPalPaymentForm = (props: PaymentProviderProps) => {

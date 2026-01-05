@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppConfig } from '@/providers/AppConfigProvider';
-import { Button } from '@/components/ui/button';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { Button } from '@core/components/ui/button';
 import { Heart, UserCog } from 'lucide-react';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { LanguageSwitcher } from '@core/components/LanguageSwitcher';
 
 export const PublicHeader = () => {
     const { config } = useAppConfig();

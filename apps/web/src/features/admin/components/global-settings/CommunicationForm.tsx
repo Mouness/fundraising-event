@@ -1,8 +1,8 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
+import { Textarea } from '@core/components/ui/textarea';
+import { Checkbox } from '@core/components/ui/checkbox';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +11,8 @@ export const CommunicationForm = () => {
     const { register, control, setValue } = useFormContext();
     const emailEnabled = useWatch({ control, name: 'emailReceipt.enabled' });
     const pdfEnabled = useWatch({ control, name: 'pdfReceipt.enabled' });
+    const sharingEnabled = useWatch({ control, name: 'sharing.enabled' });
+    const networks = useWatch({ control, name: 'sharing.networks' }) || [];
 
     return (
         <div className="space-y-6">
@@ -109,6 +111,46 @@ export const CommunicationForm = () => {
                         <div className="grid gap-2">
                             <Label>{t('admin_branding.communication.pdf.footer')}</Label>
                             <Textarea {...register('pdfReceipt.footerText')} className="font-mono text-xs" rows={2} />
+                        </div>
+                    </CardContent>
+                )}
+            </Card>
+
+            {/* Social Sharing Configuration */}
+            <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+                <CardHeader>
+                    <div className="flex items-center justify-between">
+                        <CardTitle>{t('admin_branding.communication.sharing.title')}</CardTitle>
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id="sharingEnabled"
+                                checked={sharingEnabled}
+                                onCheckedChange={(checked) => setValue('sharing.enabled', checked === true)}
+                            />
+                            <label htmlFor="sharingEnabled" className="text-sm font-medium">{t('admin_branding.communication.sharing.enable')}</label>
+                        </div>
+                    </div>
+                    <CardDescription>{t('admin_branding.communication.sharing.description')}</CardDescription>
+                </CardHeader>
+                {sharingEnabled && (
+                    <CardContent className="space-y-4">
+                        <Label>{t('admin_branding.communication.sharing.networks')}</Label>
+                        <div className="flex flex-col gap-2">
+                            {['facebook', 'twitter', 'linkedin'].map((network) => (
+                                <div key={network} className="flex items-center space-x-2">
+                                    <Checkbox
+                                        id={`network-${network}`}
+                                        checked={networks.includes(network)}
+                                        onCheckedChange={(checked) => {
+                                            const newNetworks = checked
+                                                ? [...networks, network]
+                                                : networks.filter((n: string) => n !== network);
+                                            setValue('sharing.networks', newNetworks);
+                                        }}
+                                    />
+                                    <Label htmlFor={`network-${network}`}>{t(`admin_branding.communication.sharing.${network}`)}</Label>
+                                </div>
+                            ))}
                         </div>
                     </CardContent>
                 )}

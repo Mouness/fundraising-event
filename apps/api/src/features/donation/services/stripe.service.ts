@@ -61,7 +61,7 @@ export class StripeService implements PaymentProvider {
     }
   }
 
-  async constructEventFromPayload(
+  constructEventFromPayload(
     headers: IncomingHttpHeaders | string,
     payload: Buffer,
   ) {
@@ -74,17 +74,13 @@ export class StripeService implements PaymentProvider {
     }
 
     const signature =
-      typeof headers === 'string'
-        ? headers
-        : headers?.['stripe-signature'];
+      typeof headers === 'string' ? headers : headers?.['stripe-signature'];
     if (!signature) {
-      throw new Error('Missing stripe-signature header');
+      return Promise.reject(new Error('Missing stripe-signature header'));
     }
 
-    return this.stripe.webhooks.constructEvent(
-      payload,
-      signature,
-      webhookSecret,
+    return Promise.resolve(
+      this.stripe.webhooks.constructEvent(payload, signature, webhookSecret),
     );
   }
 

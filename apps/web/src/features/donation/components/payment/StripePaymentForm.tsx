@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { loadStripe, type Stripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
-import { CardContent, CardFooter } from '@/components/ui/card';
+import { Button } from '@core/components/ui/button';
+import { CardContent, CardFooter } from '@core/components/ui/card';
 import type { PaymentProviderProps } from '../../types/payment.types';
 
 // Initialize Stripe outside to avoid recreation

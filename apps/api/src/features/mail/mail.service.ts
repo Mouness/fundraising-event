@@ -16,7 +16,7 @@ export class MailService {
     private readonly whiteLabelingService: WhiteLabelingService,
     private readonly configService: ConfigService,
     private readonly pdfService: PdfService,
-  ) { }
+  ) {}
 
   async sendReceipt(to: string, data: any) {
     // data MUST contain eventSlug. If not, we can't label correctly.

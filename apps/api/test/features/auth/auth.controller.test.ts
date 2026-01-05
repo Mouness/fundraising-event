@@ -96,10 +96,9 @@ describe('AuthController', () => {
       const req = { user: { email: 'fails' } };
       const res = { redirect: vi.fn() };
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      await expect(controller.googleAuthRedirect(req as any, res as any)).rejects.toThrow(
-        UnauthorizedException,
-      );
+      await expect(
+        controller.googleAuthRedirect(req as any, res as any),
+      ).rejects.toThrow(UnauthorizedException);
     });
   });
 });

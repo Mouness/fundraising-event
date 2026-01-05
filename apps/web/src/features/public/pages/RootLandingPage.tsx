@@ -1,12 +1,12 @@
 
 import { Target, Sparkles, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
-import { PublicLayout } from '@/features/public/layouts/PublicLayout';
-import { PublicEventCard } from '@/features/public/components/PublicEventCard';
-import { usePublicEvents } from '@/features/events/hooks/usePublicEvents';
-import { PageLoader } from '@/components/ui/page-loader';
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { Button } from '@core/components/ui/button';
+import { PublicLayout } from '@features/public/layouts/PublicLayout';
+import { PublicEventCard } from '@features/public/components/PublicEventCard';
+import { usePublicEvents } from '@features/events/hooks/usePublicEvents';
+import { PageLoader } from '@core/components/ui/page-loader';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 export const RootLandingPage = () => {

@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 
 export const PublicFooter = () => {
     const { config } = useAppConfig();

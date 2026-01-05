@@ -1,9 +1,11 @@
 import { createContext, useContext, type ReactNode, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import type { EventResponseDto } from '@fundraising/types';
 import { Loader2 } from 'lucide-react';
+import { Button } from '@core/components/ui/button';
+import { useTranslation } from 'react-i18next';
 
 interface EventContextType {
     event: EventResponseDto | null;
@@ -17,6 +19,7 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const location = useLocation();
+    const { t } = useTranslation('common');
 
     const { data: event, isLoading, error } = useQuery({
         queryKey: ['event', slug],
@@ -52,15 +55,24 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
 
     if (error || !event) {
         const isAdmin = location.pathname.startsWith('/admin');
-        const backLink = isAdmin ? '/admin/events' : `/${slug || ''}`;
-        const backText = isAdmin ? 'Back to Events' : 'Back to Event';
 
         return (
             <div className="flex flex-col items-center justify-center h-screen gap-4">
-                <h2 className="text-xl font-semibold">Event not found</h2>
-                <button onClick={() => navigate(backLink)} className="text-primary hover:underline">
-                    {backText}
-                </button>
+                <h2 className="text-xl font-semibold">{t('not_found.event_not_found')}</h2>
+                <div className="flex gap-4">
+                    <Button onClick={() => navigate('/')} variant="outline">
+                        {t('not_found.back_to_home')}
+                    </Button>
+                    {isAdmin ? (
+                        <Button onClick={() => navigate('/admin/events')}>
+                            {t('not_found.back_to_events')}
+                        </Button>
+                    ) : (
+                        <Button onClick={() => navigate(`/${slug || ''}`)} disabled={!slug}>
+                            {t('not_found.back_to_event')}
+                        </Button>
+                    )}
+                </div>
             </div>
         );
     }

@@ -13,7 +13,7 @@ export class StaffService {
    * Initialize StaffService.
    * @param prisma - PrismaService instance
    */
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   /**
    * Retrieve all staff members with event counts.

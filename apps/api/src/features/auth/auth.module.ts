@@ -49,4 +49,4 @@ import { Auth0Provider } from './providers/auth0.provider';
     },
   ],
 })
-export class AuthModule { }
+export class AuthModule {}

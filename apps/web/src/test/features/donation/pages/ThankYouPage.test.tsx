@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react';
-import { ThankYouPage } from '@/features/donation/pages/ThankYouPage';
+import { ThankYouPage } from '@features/donation/pages/ThankYouPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as router from 'react-router-dom';
 
 // Mocks
-vi.mock('@/providers/AppConfigProvider', () => ({
+vi.mock('@core/providers/AppConfigProvider', () => ({
     useAppConfig: () => ({
         config: {
             donation: { sharing: { enabled: true, networks: ['twitter'] } }
         }
     }),
 }));
-vi.mock('@/lib/confetti', () => ({
+vi.mock('@core/lib/confetti', () => ({
     fireConfetti: vi.fn(),
 }));
 vi.mock('react-router-dom', async () => {
@@ -24,7 +24,7 @@ vi.mock('react-router-dom', async () => {
     };
 });
 // Simple mock for UI components
-vi.mock('@/components/ui/card', () => ({
+vi.mock('@core/components/ui/card', () => ({
     Card: ({ children }: any) => <div>{children}</div>,
     CardHeader: ({ children }: any) => <div>{children}</div>,
     CardTitle: ({ children }: any) => <div>{children}</div>,

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import { Button } from '@core/components/ui/button';
+import { Input } from '@core/components/ui/input';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@core/components/ui/card';
+import { Label } from '@core/components/ui/label';
 import { useStaffAuth } from '../hooks/useStaffAuth';
-import { useEvent } from '@/features/events/context/EventContext';
+import { useEvent } from '@features/events/context/EventContext';
 
 export const StaffLoginPage = () => {
     const { t } = useTranslation('common');

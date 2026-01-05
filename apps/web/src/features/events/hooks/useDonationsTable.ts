@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import { useQuery } from '@tanstack/react-query';
-import { useDebounce } from '@/hooks/use-debounce';
+import { useDebounce } from '@core/hooks/use-debounce';
 
 export interface DonationTableData {
     id: string;

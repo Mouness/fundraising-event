@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { PageLoader } from '@/components/ui/page-loader';
-import { EventProvider, useEvent } from '@/features/events/context/EventContext';
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { PageLoader } from '@core/components/ui/page-loader';
+import { EventProvider, useEvent } from '@features/events/context/EventContext';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 import { LayoutDashboard, Settings, DollarSign, ArrowLeft, ExternalLink, Users } from 'lucide-react';
-import { AppHeader } from '@/components/AppHeader';
+import { AppHeader } from '@core/components/AppHeader';
 import { useTranslation } from 'react-i18next';
 
 const EventSidebar = () => {

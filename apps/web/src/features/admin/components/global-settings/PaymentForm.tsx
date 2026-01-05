@@ -1,10 +1,10 @@
 import { useFormContext } from 'react-hook-form';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card';
+import { Label } from '@core/components/ui/label';
+import { Input } from '@core/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@core/components/ui/select';
 import { useTranslation } from 'react-i18next';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Checkbox } from '@core/components/ui/checkbox';
 
 export const PaymentForm = () => {
     const { t } = useTranslation();
@@ -20,6 +20,7 @@ export const PaymentForm = () => {
         <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
             <CardHeader>
                 <CardTitle>{t('admin_branding.modules.payment_title')}</CardTitle>
+                <p className="text-sm text-muted-foreground">{t('admin_branding.modules.payment_description')}</p>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

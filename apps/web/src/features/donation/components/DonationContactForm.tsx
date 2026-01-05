@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '@core/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@core/components/ui/card';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight } from 'lucide-react';
 import type { UseFormRegister, FieldErrors } from 'react-hook-form';
 import type { DonationFormValues } from '../schemas/donation.schema';
-import { useAppConfig } from '@/providers/AppConfigProvider';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 
 interface DonationContactFormProps {
     register: UseFormRegister<DonationFormValues>;

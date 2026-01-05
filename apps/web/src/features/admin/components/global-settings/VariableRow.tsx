@@ -1,5 +1,5 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
 import { useFormContext } from 'react-hook-form';
 
 interface VariableRowProps {

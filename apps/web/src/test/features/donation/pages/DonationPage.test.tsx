@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { DonationPage } from '@/features/donation/pages/DonationPage';
+import { DonationPage } from '@features/donation/pages/DonationPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 
 // Mock dependencies
 
-vi.mock('@/providers/AppConfigProvider', () => ({
+vi.mock('@core/providers/AppConfigProvider', () => ({
     useAppConfig: () => ({
         config: {
             theme: { assets: { logo: 'logo.png' } },
@@ -22,7 +22,7 @@ vi.mock('@/providers/AppConfigProvider', () => ({
         }
     }),
 }));
-vi.mock('@/features/donation/components/CheckoutForm', () => ({
+vi.mock('@features/donation/components/CheckoutForm', () => ({
     CheckoutForm: () => <div data-testid="checkout-form">Checkout Form</div>,
 }));
 

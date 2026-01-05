@@ -1,6 +1,6 @@
 
 
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 
 export const LandingBackground = () => {
     const { config } = useAppConfig();

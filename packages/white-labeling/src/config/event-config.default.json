@@ -1,5 +1,8 @@
 {
     "id": "evt_default",
+    "name": "Default Event",
+    "description": "Default Description",
+    "slug": "default",
     "content": {
         "title": "Fundraising Event",
         "totalLabel": "Total Raised",

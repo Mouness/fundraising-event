@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { EventSettingsPage } from '@/features/events/pages/EventSettingsPage';
+import { EventSettingsPage } from '@features/events/pages/EventSettingsPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock API
-vi.mock('@/lib/api', () => ({
+vi.mock('@core/lib/api', () => ({
     api: {
         get: vi.fn(),
         patch: vi.fn(),
@@ -21,7 +21,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock Event Context
-vi.mock('@/features/events/context/EventContext', () => ({
+vi.mock('@features/events/context/EventContext', () => ({
     useEvent: () => ({
         event: { id: 'evt_1', name: 'My Event', slug: 'my-event', goalAmount: 1000 },
         isLoading: false,
@@ -29,18 +29,18 @@ vi.mock('@/features/events/context/EventContext', () => ({
 }));
 
 // Mock App Config
-vi.mock('@/providers/AppConfigProvider', () => ({
+vi.mock('@core/providers/AppConfigProvider', () => ({
     useAppConfig: () => ({
         refreshConfig: vi.fn(),
     }),
 }));
 
 // Mock sub-components
-vi.mock('@/features/events/components/event-settings/GeneralForm', () => ({
+vi.mock('@features/events/components/event-settings/GeneralForm', () => ({
     GeneralForm: () => <div data-testid="general-form">General Form</div>
 }));
 
-vi.mock('@/features/events/components/event-settings/BrandingForm', () => ({
+vi.mock('@features/events/components/event-settings/BrandingForm', () => ({
     BrandingForm: () => <div data-testid="branding-form">Branding Form</div>
 }));
 

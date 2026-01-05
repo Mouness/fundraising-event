@@ -8,4 +8,4 @@ import { WhiteLabelingModule } from '../white-labeling/white-labeling.module';
   providers: [PdfService],
   exports: [PdfService],
 })
-export class PdfModule { }
+export class PdfModule {}

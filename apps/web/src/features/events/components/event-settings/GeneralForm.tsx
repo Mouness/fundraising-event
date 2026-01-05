@@ -1,10 +1,10 @@
 import { useFormContext, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@core/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@core/components/ui/select";
+import { Checkbox } from "@core/components/ui/checkbox";
 
 export const GeneralForm = () => {
     const { t } = useTranslation('common');
@@ -22,6 +22,16 @@ export const GeneralForm = () => {
                         <Label htmlFor="name">{t('event_settings.general.event_name', 'Event Name')}</Label>
                         <Input id="name" {...register('name')} />
                         {errors.name && <p className="text-sm text-red-500">{errors.name.message as string}</p>}
+                    </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="description">{t('event_settings.general.description', 'Description')}</Label>
+                        <textarea
+                            id="description"
+                            className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            {...register('description')}
+                        />
+                        {errors.description && <p className="text-sm text-red-500">{errors.description.message as string}</p>}
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">

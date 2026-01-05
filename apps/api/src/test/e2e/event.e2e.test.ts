@@ -3,11 +3,12 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { PrismaService } from '@/database/prisma.service';
-import { EventConfigService } from '@/features/events/configuration/event-config.service';
+import { WhiteLabelingService } from '@/features/white-labeling/white-labeling.service';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { vi, describe, beforeEach, afterAll, it, expect } from 'vitest';
 
 // Mock white-labeling package to avoid FS/ESM issues during E2E
-vi.mock('@fundraising/white-labeling', async () => {
+vi.mock('@fundraising/white-labeling', () => {
   return {
     loadConfigs: () => ({
       id: 'e2e-config',
@@ -22,7 +23,6 @@ vi.mock('@fundraising/white-labeling', async () => {
 
 describe('EventController (e2e)', () => {
   let app: INestApplication;
-  let prismaService: PrismaService;
 
   const mockEvent = {
     id: 'evt_1',
@@ -45,29 +45,44 @@ describe('EventController (e2e)', () => {
           findFirst: vi.fn().mockResolvedValue(mockEvent),
           create: vi.fn().mockResolvedValue(mockEvent),
         },
-        staffCode: {
+        donation: {
+          groupBy: vi.fn().mockResolvedValue([]),
+          aggregate: vi
+            .fn()
+            .mockResolvedValue({ _sum: { amount: null }, _count: { id: 0 } }),
+        },
+        staffMember: {
           findUnique: vi.fn(),
         },
       })
-      .overrideProvider(EventConfigService)
+      .overrideProvider(WhiteLabelingService)
       .useValue({
-        getConfig: () => ({ id: 'mock-e2e', theme: { primaryColor: 'blue' } }),
-        onModuleInit: vi.fn(),
+        getEventSettings: vi.fn().mockResolvedValue({
+          id: 'mock-e2e',
+          content: { title: 'Mock Event' },
+          theme: { primaryColor: 'blue' },
+        }),
+      })
+      .overrideProvider(ThrottlerStorageRedisService)
+      .useValue({
+        getRecord: vi.fn().mockResolvedValue([]),
+        increment: vi
+          .fn()
+          .mockResolvedValue({ totalHits: 1, timeToExpire: 60 }),
       })
       .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
-    prismaService = moduleFixture.get<PrismaService>(PrismaService);
   });
 
   afterAll(async () => {
     await app.close();
   });
 
-  it('/events (GET)', () => {
+  it('/events/public (GET)', () => {
     return request(app.getHttpServer())
-      .get('/events')
+      .get('/events/public')
       .expect(200)
       .expect((res) => {
         expect(res.body).toHaveLength(1);

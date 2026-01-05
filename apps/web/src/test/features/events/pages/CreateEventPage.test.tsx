@@ -1,11 +1,11 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { CreateEventPage } from '@/features/events/pages/CreateEventPage';
+import { CreateEventPage } from '@features/events/pages/CreateEventPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import { MemoryRouter } from 'react-router-dom';
 
 // Mock api
-vi.mock('@/lib/api', () => ({
+vi.mock('@core/lib/api', () => ({
     api: {
         post: vi.fn(),
     },
@@ -56,8 +56,8 @@ describe('CreateEventPage', () => {
         fireEvent.click(submitButton);
 
         await waitFor(() => {
-            expect(screen.getByText('Name must be at least 3 characters')).toBeInTheDocument();
-            expect(screen.getByText('Slug must be at least 3 characters')).toBeInTheDocument();
+            expect(screen.getAllByText('validation.too_small.string 3')[0]).toBeInTheDocument();
+            expect(screen.getAllByText('validation.too_small.string 3')[1]).toBeInTheDocument();
         });
     });
 

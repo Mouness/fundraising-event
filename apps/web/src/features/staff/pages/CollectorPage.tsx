@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { SyncService } from "../services/sync.service";
+import { SyncService } from "@features/staff/services/sync.service";
 import { useStaffAuth } from "../hooks/useStaffAuth";
 
 import { Keypad } from "../components/Keypad";
 import { DonationTypeSelector } from "../components/DonationTypeSelector";
 import type { DonationType } from "../types";
 import { DonorInfoForm } from "../components/DonorInfoForm";
-import { Button } from "@/components/ui/button";
+import { Button } from "@core/components/ui/button";
 import { Check, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { useCurrencyFormatter } from "@/hooks/useCurrencyFormatter";
+import { useCurrencyFormatter } from "@core/hooks/useCurrencyFormatter";
 
 export const CollectorPage = () => {
     const { t } = useTranslation('common');

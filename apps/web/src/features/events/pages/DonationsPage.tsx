@@ -1,5 +1,5 @@
-import { useEvent } from '@/features/events/context/EventContext';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useEvent } from '@features/events/context/EventContext';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 import { useDonationsTable, type DonationTableData } from '../hooks/useDonationsTable';
 import { useState } from 'react';
 import { EditDonationDialog } from '../components/EditDonationDialog';
@@ -11,25 +11,25 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table';
-import { api } from '@/lib/api';
+} from '@core/components/ui/table';
+import { api } from '@core/lib/api';
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+} from '@core/components/ui/select';
+import { Input } from '@core/components/ui/input';
 import {
     Pagination,
     PaginationContent,
     PaginationItem,
     PaginationNext,
     PaginationPrevious,
-} from '@/components/ui/pagination';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+} from '@core/components/ui/pagination';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
+import { Button } from '@core/components/ui/button';
 
 import { Loader2, Download, FileText, MoreVertical, Edit, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -40,9 +40,9 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@core/components/ui/dropdown-menu";
 import { useTranslation } from 'react-i18next';
-import { timeAgo } from '@/lib/date';
+import { timeAgo } from '@core/lib/date';
 
 export const DonationsPage = () => {
     const { event } = useEvent();

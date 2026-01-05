@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { Keypad } from "@/features/staff/components/Keypad";
+import { Keypad } from "@features/staff/components/Keypad";
 
 describe("Keypad", () => {
     const defaultProps = {

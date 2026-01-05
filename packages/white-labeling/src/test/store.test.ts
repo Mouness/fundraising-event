@@ -1,13 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { WhiteLabelStore, initWhiteLabeling, getGlobalConfig, getEventConfig } from '../store';
+import axios from 'axios';
 
-// Mock global fetch
-global.fetch = vi.fn();
+// Mock axios
+vi.mock('axios');
 
 describe('WhiteLabelStore', () => {
     beforeEach(() => {
         // Reset Singleton State
         WhiteLabelStore.reset();
+        vi.clearAllMocks();
     });
 
     it('should be a singleton', () => {
@@ -40,23 +42,21 @@ describe('initWhiteLabeling', () => {
         const mockGlobal = { id: 'global', content: { title: 'Global' } };
         const mockEvent = { id: 'event-1', content: { title: 'Event' } };
 
-        (global.fetch as any)
+        (axios.get as any)
             .mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockGlobal,
+                data: mockGlobal,
             })
             .mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockEvent,
+                data: mockEvent,
             });
 
         await initWhiteLabeling('http://api.test', 'event-slug');
 
-        expect(global.fetch).toHaveBeenCalledWith('http://api.test/settings/global', expect.objectContaining({
+        expect(axios.get).toHaveBeenCalledWith('http://api.test/settings/global', expect.objectContaining({
             headers: { 'Accept': 'application/json' }
         }));
 
-        expect(global.fetch).toHaveBeenCalledWith('http://api.test/events/event-slug/settings', expect.objectContaining({
+        expect(axios.get).toHaveBeenCalledWith('http://api.test/events/event-slug/settings', expect.objectContaining({
             headers: { 'Accept': 'application/json' }
         }));
 
@@ -65,7 +65,7 @@ describe('initWhiteLabeling', () => {
     });
 
     it('should handle fetch errors gracefully', async () => {
-        (global.fetch as any).mockRejectedValue(new Error('Network Error'));
+        (axios.get as any).mockRejectedValue(new Error('Network Error'));
         const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
         await initWhiteLabeling('http://api.test');

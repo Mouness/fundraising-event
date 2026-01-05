@@ -28,4 +28,4 @@ import { PaymentService } from './services/payment.service';
   providers: [StripeService, PayPalService, PaymentService, DonationService],
   exports: [PaymentService, DonationService],
 })
-export class DonationModule { }
+export class DonationModule {}

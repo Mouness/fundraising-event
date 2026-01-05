@@ -1,10 +1,10 @@
-import { PublicLayout } from '@/features/public/layouts/PublicLayout';
-import { FeatureCard } from '@/features/public/components/FeatureCard';
-import { Button } from '@/components/ui/button';
+import { PublicLayout } from '@features/public/layouts/PublicLayout';
+import { FeatureCard } from '@features/public/components/FeatureCard';
+import { Button } from '@core/components/ui/button';
 import { Globe, Heart, Tv } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAppConfig } from '@/providers/AppConfigProvider';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 import { Link, useParams } from 'react-router-dom';
 
 export const LandingPage = () => {

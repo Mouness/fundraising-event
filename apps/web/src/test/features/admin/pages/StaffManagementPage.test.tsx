@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { StaffManagementPage } from '@/features/admin/pages/StaffManagementPage';
+import { StaffManagementPage } from '@features/admin/pages/StaffManagementPage';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-import { TestWrapper } from '@/test/utils';
+import { TestWrapper } from '@test/utils';
 
 const { mockApi } = vi.hoisted(() => {
     return {
@@ -14,7 +14,7 @@ const { mockApi } = vi.hoisted(() => {
     }
 });
 
-vi.mock('@/lib/api', () => ({
+vi.mock('@core/lib/api', () => ({
     api: mockApi,
 }));
 
@@ -73,7 +73,7 @@ describe('StaffManagementPage', () => {
             </TestWrapper>
         );
 
-        const addButton = screen.getByText('admin_team.add_member');
+        const addButton = await screen.findByText('admin_team.add_member');
         fireEvent.click(addButton);
 
         await waitFor(() => {
@@ -89,9 +89,10 @@ describe('StaffManagementPage', () => {
             </TestWrapper>
         );
 
-        fireEvent.click(screen.getByText('admin_team.add_member'));
+        const addButton = await screen.findByText('admin_team.add_member');
+        fireEvent.click(addButton);
 
-        const submitButton = screen.getByText('admin_team.add_member', { selector: 'button[type="submit"]' });
+        const submitButton = await screen.findByText('admin_team.add_member', { selector: 'button[type="submit"]' });
         fireEvent.click(submitButton);
 
         await waitFor(() => {

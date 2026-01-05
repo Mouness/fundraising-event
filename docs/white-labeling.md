@@ -60,7 +60,7 @@ Use the `AppConfigProvider` to wrap your application. This ensures strict type s
 Use the `AppConfigProvider` to wrap your application. This ensures strict type safety and loading states.
 
 ```tsx
-import { AppConfigProvider } from './providers/AppConfigProvider';
+import { AppConfigProvider } from '@core/providers/AppConfigProvider';
 export const AppProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <AppConfigProvider>
@@ -72,7 +72,7 @@ export const AppProviders = ({ children }: { children: React.ReactNode }) => {
 
 Access config in components:
 ```tsx
-import { useAppConfig } from '@/providers/AppConfigProvider';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 
 const MyComponent = () => {
   const { config } = useAppConfig();

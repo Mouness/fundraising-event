@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { api, API_URL } from '@/lib/api';
+import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card';
+import { Button } from '@core/components/ui/button';
+import { api, API_URL } from '@core/lib/api';
 import { toast } from 'sonner';
 import { Loader2, Globe, Palette, Mail, Save, CreditCard, Image as ImageIcon } from 'lucide-react';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -15,6 +15,7 @@ import { defaultConfig, fetchGlobalConfig, loadTheme, type EventConfig } from '@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { type GlobalSettingsForm } from '../types/settings';
 import { useTranslation } from 'react-i18next';
+import { syncLocales } from '@core/lib/i18n';
 
 
 
@@ -66,7 +67,9 @@ export const GlobalSettingsPage = () => {
             // Refresh store and themes without page reload
             fetchGlobalConfig(API_URL).then(() => {
                 loadTheme(true);
+                syncLocales();
             });
+            syncLocales();
             setSaving(false);
         },
         onError: () => {
@@ -108,6 +111,10 @@ export const GlobalSettingsPage = () => {
                 enabled: defaultConfig.communication?.pdf?.enabled ?? true,
                 footerText: defaultConfig.communication?.pdf?.footerText,
                 templateStyle: (defaultConfig.communication?.pdf?.templateStyle as 'minimal' | 'formal')
+            },
+            sharing: {
+                enabled: defaultConfig.donation?.sharing?.enabled ?? true,
+                networks: (defaultConfig.donation?.sharing?.networks || ['facebook', 'twitter', 'linkedin']) as ('facebook' | 'twitter' | 'linkedin')[]
             },
 
             assets: { favicon: '', backgroundDonor: '', backgroundLive: '', backgroundLanding: '' }
@@ -165,10 +172,28 @@ export const GlobalSettingsPage = () => {
                 footerText: defaultConfig.communication?.pdf?.footerText,
                 templateStyle: (defaultConfig.communication?.pdf?.templateStyle as 'minimal' | 'formal')
             },
+            sharing: data.donation?.sharing || {
+                enabled: defaultConfig.donation?.sharing?.enabled ?? true,
+                networks: (defaultConfig.donation?.sharing?.networks || ['facebook', 'twitter', 'linkedin']) as ('facebook' | 'twitter' | 'linkedin')[]
+            },
             assets: data.theme?.assets || { favicon: '', backgroundDonor: '', backgroundLive: '', backgroundLanding: '' }
         });
 
-        setLocaleOverrides([]);
+        // Parse existing overrides
+        const parsedOverrides: { key: string, value: string, locale: string }[] = [];
+        if (data.locales?.overrides) {
+            Object.entries(data.locales.overrides).forEach(([localeKey, localeData]) => {
+                if (typeof localeData === 'object' && localeData !== null) {
+                    Object.entries(localeData).forEach(([k, v]) => {
+                        if (typeof v === 'string') {
+                            parsedOverrides.push({ key: k, value: v, locale: localeKey });
+                        }
+                    });
+                }
+            });
+        }
+        setLocaleOverrides(parsedOverrides);
+
     }, [globalConfigData, reset]);
 
 
@@ -188,16 +213,19 @@ export const GlobalSettingsPage = () => {
         type LocalesPayload = {
             default: string;
             supported: string[];
-            [key: string]: string | string[] | Record<string, string>;
+            overrides: Record<string, Record<string, string>>;
         };
 
-        const localesPayload: LocalesPayload = { ...formData.locales };
+        const localesPayload: LocalesPayload = {
+            ...formData.locales,
+            overrides: {}
+        };
+
         localeOverrides.forEach(({ locale, key, value }) => {
-            if (!localesPayload[locale]) {
-                localesPayload[locale] = {};
+            if (!localesPayload.overrides[locale]) {
+                localesPayload.overrides[locale] = {};
             }
-            const localeObj = localesPayload[locale] as Record<string, string>;
-            localeObj[key] = value;
+            localesPayload.overrides[locale][key] = value;
         });
 
         const overriddenLocales = Array.from(new Set(localeOverrides.map(l => l.locale)));
@@ -226,6 +254,9 @@ export const GlobalSettingsPage = () => {
             pdf: formData.pdfReceipt
         },
         payment: formData.payment,
+        donation: {
+            sharing: formData.sharing
+        },
         locales: mapLocalesWithOverrides(formData),
         assets: formData.assets
     });
@@ -242,12 +273,8 @@ export const GlobalSettingsPage = () => {
             case 'communication': return <CommunicationForm />;
             case 'theme': return <BrandDesignForm />;
             case 'assets': return <AssetsForm />;
-            case 'modules': return (
-                <div className="space-y-6">
-                    <PaymentForm />
-                    <LocalizationForm localeOverrides={localeOverrides} setLocaleOverrides={setLocaleOverrides} />
-                </div>
-            );
+            case 'payment': return <PaymentForm />;
+            case 'localization': return <LocalizationForm localeOverrides={localeOverrides} setLocaleOverrides={setLocaleOverrides} />;
             default: return null;
         }
     };
@@ -259,7 +286,8 @@ export const GlobalSettingsPage = () => {
         { id: 'communication', label: t('admin_branding.nav.communication'), icon: Mail },
         { id: 'theme', label: t('admin_branding.nav.theme'), icon: Palette },
         { id: 'assets', label: t('admin_branding.nav.assets'), icon: ImageIcon },
-        { id: 'modules', label: t('admin_branding.nav.modules'), icon: CreditCard },
+        { id: 'payment', label: t('admin_branding.modules.payment_nav'), icon: CreditCard },
+        { id: 'localization', label: t('admin_branding.localization.title'), icon: Globe },
     ];
 
     return (

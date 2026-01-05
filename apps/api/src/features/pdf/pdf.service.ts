@@ -82,11 +82,11 @@ export class PdfService {
       content: [
         logoImage
           ? {
-            image: logoImage,
-            width: 100,
-            alignment: 'center',
-            margin: [0, 0, 0, 10],
-          }
+              image: logoImage,
+              width: 100,
+              alignment: 'center',
+              margin: [0, 0, 0, 10],
+            }
           : {},
         {
           text: eventConfig.content.title.toUpperCase(),
@@ -221,10 +221,12 @@ export class PdfService {
         const chunks: Buffer[] = [];
         pdfDoc.on('data', (chunk) => chunks.push(chunk));
         pdfDoc.on('end', () => resolve(Buffer.concat(chunks)));
-        pdfDoc.on('error', (err) => reject(err));
+        pdfDoc.on('error', (err) =>
+          reject(err instanceof Error ? err : new Error(String(err))),
+        );
         pdfDoc.end();
       } catch (err) {
-        reject(err);
+        reject(err instanceof Error ? err : new Error(String(err)));
       }
     });
   }

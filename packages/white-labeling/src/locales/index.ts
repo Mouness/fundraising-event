@@ -24,26 +24,12 @@ export function loadLocales(): typeof defaultLocales {
 
     // 2. Global Overrides (Nested Structure + Flat Map)
     if (globalConfig?.locales?.overrides) {
-        // First, deep merge to handle nested objects (e.g. { en: { ... } })
-        result = deepMerge(result, globalConfig.locales.overrides);
-
-        // Then, scan for dot-notation keys to handle flat overrides
-        Object.keys(globalConfig.locales.overrides).forEach(key => {
-            if (key.includes('.')) {
-                applyFlatOverride(result, key, String(globalConfig.locales!.overrides![key]));
-            }
-        });
+        result = processOverrides(result, globalConfig.locales.overrides);
     }
 
     // 3. Event Overrides (Nested Structure + Flat Map)
     if (eventConfig?.locales?.overrides) {
-        result = deepMerge(result, eventConfig.locales.overrides);
-
-        Object.keys(eventConfig.locales.overrides).forEach(key => {
-            if (key.includes('.')) {
-                applyFlatOverride(result, key, String(eventConfig.locales!.overrides![key]));
-            }
-        });
+        result = processOverrides(result, eventConfig.locales.overrides);
     }
 
     return result;
@@ -63,4 +49,30 @@ function applyFlatOverride(target: any, path: string, value: string) {
     }, target);
 
     leaf[key] = value;
+}
+
+/**
+ * Merges overrides and applies flat dot-notation keys.
+ */
+function processOverrides(base: any, overrides: any) {
+    // 1. Deep merge to handle nested objects
+    const result = deepMerge(base, overrides);
+
+    // 2. Scan for dot-notation keys
+    Object.keys(overrides).forEach(key => {
+        if (key.includes('.')) {
+            // Top-level flat override (e.g. "en.auth.title")
+            applyFlatOverride(result, key, String(overrides[key]));
+        } else if (typeof overrides[key] === 'object') {
+            // Nested flat override (e.g. en: { "auth.title": "..." })
+            const nested = overrides[key] as Record<string, string>;
+            Object.keys(nested).forEach(nestedKey => {
+                if (nestedKey.includes('.')) {
+                    applyFlatOverride(result, `${key}.${nestedKey}`, String(nested[nestedKey]));
+                }
+            });
+        }
+    });
+
+    return result;
 }

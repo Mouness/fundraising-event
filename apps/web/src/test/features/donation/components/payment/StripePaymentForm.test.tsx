@@ -1,13 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { StripePaymentForm } from '@/features/donation/components/payment/StripePaymentForm';
+import { StripePaymentForm } from '@features/donation/components/payment/StripePaymentForm';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock react-i18next
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({
-        t: (key: string) => key,
-    }),
-}));
 
 // Mock Stripe
 vi.mock('@stripe/react-stripe-js', () => ({
@@ -45,11 +39,11 @@ describe('StripePaymentForm', () => {
         });
     });
 
-    it('should render error if publishable key is missing and env is empty', () => {
+    it('should render error if publishable key is missing and env is empty', async () => {
         vi.stubEnv('VITE_STRIPE_PUBLIC_KEY', '');
         const props = { ...defaultProps, config: {}, sessionData: { clientSecret: 'pi_test' } };
         render(<StripePaymentForm {...props} />);
-        expect(screen.getByText('payment.error_missing_config')).toBeDefined();
+        expect(await screen.findByText('payment.error_missing_config')).toBeDefined();
         vi.unstubAllEnvs();
     });
 
@@ -57,6 +51,6 @@ describe('StripePaymentForm', () => {
         const props = { ...defaultProps, sessionData: { clientSecret: 'pi_test_secret' } };
         render(<StripePaymentForm {...props} />);
 
-        expect(screen.getByTestId('payment-element')).toBeDefined();
+        expect(await screen.findByTestId('payment-element')).toBeDefined();
     });
 });

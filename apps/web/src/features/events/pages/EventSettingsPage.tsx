@@ -4,53 +4,15 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { Button } from '@core/components/ui/button';
 import { Settings, Palette, Save, Loader2 } from 'lucide-react';
 import { GeneralForm } from '../components/event-settings/GeneralForm';
 import { BrandingForm } from '../components/event-settings/BrandingForm';
 import { useEvent } from '../context/EventContext';
-import { useAppConfig } from '@/providers/AppConfigProvider';
-import { type TFunction } from 'i18next';
-
-const getCombinedSchema = (t: TFunction) => z.object({
-    // General
-    name: z.string().min(1, t('validation.required')),
-    goalAmount: z.coerce.number().min(1, t('validation.min_value', { count: 1 })),
-    slug: z.string().min(1, t('validation.required')),
-    status: z.enum(['active', 'draft', 'closed']),
-    date: z.string().optional(),
-    formConfig: z.object({
-        phone: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
-        address: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
-        company: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
-        message: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
-        anonymous: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
-    }),
-    // Branding Overrides
-    useGlobalBranding: z.boolean(),
-    organization: z.string().optional(),
-    assets: z.object({
-        logo: z.string().url().optional().or(z.literal('')),
-        backgroundLanding: z.string().url().optional().or(z.literal('')),
-        backgroundLive: z.string().url().optional().or(z.literal('')),
-    }).optional(),
-    themeVariables: z.array(z.object({
-        key: z.string(),
-        value: z.string()
-    })).optional(),
-    communication: z.object({
-        enabled: z.boolean().default(false),
-        senderName: z.string().optional(),
-        replyTo: z.string().email().optional().or(z.literal('')),
-        subjectLine: z.string().optional(),
-        supportEmail: z.string().email().optional().or(z.literal('')),
-        phone: z.string().optional(),
-        website: z.string().url().optional().or(z.literal('')),
-        address: z.string().optional(),
-    }).optional(),
-});
+import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { eventSettingsSchema } from '../schemas/event-settings.schema';
 
 export const EventSettingsPage = () => {
     const { t } = useTranslation('common');
@@ -60,10 +22,10 @@ export const EventSettingsPage = () => {
     const [activeSection, setActiveSection] = useState('general');
 
     const form = useForm({
-        resolver: zodResolver(getCombinedSchema(t)),
+        resolver: zodResolver(eventSettingsSchema),
         defaultValues: {
             // General Defaults
-            name: '', goalAmount: 0, slug: '', status: 'draft', date: '',
+            name: '', goalAmount: 0, slug: '', status: 'draft', date: '', description: '',
             formConfig: {
                 phone: { enabled: false, required: false },
                 address: { enabled: false, required: false },
@@ -130,6 +92,7 @@ export const EventSettingsPage = () => {
             name: event.name,
             goalAmount: Number(event.goalAmount),
             slug: event.slug,
+            description: event.description || '',
             status: (event.status as "active" | "draft" | "closed") || 'draft',
             date: event.date ? new Date(event.date).toISOString().split('T')[0] : '',
             formConfig: {
@@ -158,7 +121,7 @@ export const EventSettingsPage = () => {
     }, [event, eventSettings, form]);
 
     const mutation = useMutation({
-        mutationFn: async (values: z.infer<ReturnType<typeof getCombinedSchema>>) => {
+        mutationFn: async (values: z.infer<typeof eventSettingsSchema>) => {
             if (!event?.id) throw new Error('No active event ID');
 
             // 1. Save General Settings
@@ -167,6 +130,7 @@ export const EventSettingsPage = () => {
                 goalAmount: values.goalAmount,
                 slug: values.slug,
                 status: values.status,
+                description: values.description,
                 date: values.date ? new Date(values.date).toISOString() : undefined,
                 formConfig: values.formConfig,
             });

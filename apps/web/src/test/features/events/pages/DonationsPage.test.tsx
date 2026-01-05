@@ -1,38 +1,34 @@
-import { render, screen } from '@/test/utils';
-import { DonationsPage } from '@/features/events/pages/DonationsPage';
+import { screen, rtlRender, TestWrapperNoRouter } from '@test/utils';
+import { DonationsPage } from '@features/events/pages/DonationsPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
+import { AppConfigProvider } from '@core/providers/AppConfigProvider';
 
 // Mock dependencies
-vi.mock('@/lib/api', () => ({
+vi.mock('@core/lib/api', () => ({
     api: {
         get: vi.fn(),
     },
 }));
 
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({
-        t: (key: string) => key,
-    }),
-}));
 
 const mockEvent = { id: 'evt_1', name: 'Test Event', slug: 'test-event', currency: 'USD' };
 
 // Mock hooks
-vi.mock('@/features/events/context/EventContext', () => ({
+vi.mock('@features/events/context/EventContext', () => ({
     useEvent: () => ({
         event: mockEvent,
         isLoading: false,
     }),
 }));
 
-vi.mock('@/hooks/useCurrencyFormatter', () => ({
+vi.mock('@core/hooks/useCurrencyFormatter', () => ({
     useCurrencyFormatter: () => ({
         formatCurrency: (amount: number) => `$${amount} `,
     }),
 }));
 
-vi.mock('@/features/events/hooks/useDonationsTable', () => ({
+vi.mock('@features/events/hooks/useDonationsTable', () => ({
     useDonationsTable: () => ({
         donations: [
             { id: 'don_1', donorName: 'John Doe', amount: 5000, currency: 'USD', status: 'COMPLETED', createdAt: new Date().toISOString() },
@@ -50,11 +46,11 @@ vi.mock('@/features/events/hooks/useDonationsTable', () => ({
 }));
 
 // Mock child components to avoid context issues
-vi.mock('@/features/events/components/EditDonationDialog', () => ({
+vi.mock('@features/events/components/EditDonationDialog', () => ({
     EditDonationDialog: () => <div data-testid="edit-donation-dialog">Edit Dialog</div>
 }));
 
-vi.mock('@/features/events/components/CancelDonationDialog', () => ({
+vi.mock('@features/events/components/CancelDonationDialog', () => ({
     CancelDonationDialog: () => <div data-testid="cancel-donation-dialog">Cancel Dialog</div>
 }));
 
@@ -63,14 +59,17 @@ describe('DonationsPage', () => {
         vi.clearAllMocks();
     });
 
-    it('renders the donations table', () => {
-        render(
+    it('renders the donations table', async () => {
+        rtlRender(
             <MemoryRouter>
-                <DonationsPage />
-            </MemoryRouter>
+                <AppConfigProvider>
+                    <DonationsPage />
+                </AppConfigProvider>
+            </MemoryRouter>,
+            { wrapper: TestWrapperNoRouter }
         );
 
-        expect(screen.getByText('admin_events.donations')).toBeInTheDocument();
+        expect(await screen.findByText('admin_events.donations')).toBeInTheDocument();
         expect(screen.getByText('John Doe')).toBeInTheDocument();
         expect(screen.getByText('$50')).toBeInTheDocument();
         expect(screen.getByText('COMPLETED')).toBeInTheDocument();

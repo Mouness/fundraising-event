@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { AppConfigProvider, useAppConfig } from '@/providers/AppConfigProvider';
+import { AppConfigProvider, useAppConfig } from '@core/providers/AppConfigProvider';
 import { MemoryRouter, Route, Routes, useParams } from 'react-router-dom';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { resetWhiteLabelStore } from '@fundraising/white-labeling';

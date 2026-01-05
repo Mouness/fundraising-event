@@ -29,7 +29,7 @@ The Staff feature is designed for on-site volunteers and staff members to collec
 
 #### Services
 - **`SyncService.ts`**:
-  - Handles `POST /donations` via the centralized `@/lib/api` client.
+  - Handles `POST /donations` via the centralized `@core/lib/api` client.
   - Catches network errors and delegates to `StorageService` for queuing.
   - `processQueue()`: Retries pending items when back online.
 - **`StorageService.ts`**:

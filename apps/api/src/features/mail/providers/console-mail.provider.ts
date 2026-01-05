@@ -24,5 +24,6 @@ export class ConsoleMailProvider implements MailProvider {
     }
     this.logger.log(`CONTEXT: ${JSON.stringify(context, null, 2)}`);
     this.logger.log(`==================================================`);
+    await Promise.resolve();
   }
 }

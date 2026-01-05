@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { LivePage } from '@/features/live/pages/LivePage';
+import { LivePage } from '@features/live/pages/LivePage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mocks
@@ -27,7 +27,7 @@ vi.mock('react-i18next', () => ({
         return null;
     },
 }));
-vi.mock('@/providers/AppConfigProvider', () => ({
+vi.mock('@core/providers/AppConfigProvider', () => ({
     useAppConfig: () => ({
         config: {
             id: 'evt_123',
@@ -41,15 +41,15 @@ vi.mock('@/providers/AppConfigProvider', () => ({
     }),
 }));
 
-vi.mock('@/features/live/components/DonationFeed', () => ({
+vi.mock('@features/live/components/DonationFeed', () => ({
     DonationFeed: () => <div data-testid="feed">Feed</div>,
 }));
 
-vi.mock('@/features/live/components/DonationGauge', () => ({
+vi.mock('@features/live/components/DonationGauge', () => ({
     DonationGauge: () => <div data-testid="gauge">Gauge</div>,
 }));
 
-vi.mock('@/features/live/hooks/useLiveSocket', () => ({
+vi.mock('@features/live/hooks/useLiveSocket', () => ({
     useLiveSocket: () => ({ lastEvent: null }),
 }));
 

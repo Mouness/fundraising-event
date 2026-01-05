@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { DashboardPage } from '@/features/admin/pages/DashboardPage';
+import { DashboardPage } from '@features/admin/pages/DashboardPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 
 // Mock dependencies
-vi.mock('@/lib/api');
+vi.mock('@core/lib/api');
 
 // Mock hooks
-vi.mock('@/features/events/hooks/useEvents', () => ({
+vi.mock('@features/events/hooks/useEvents', () => ({
     useEvents: () => ({
         events: [
             { id: '1', name: 'Gala', status: 'ACTIVE', raised: 1000, goalAmount: 5000, donorCount: 10, slug: 'gala' }
@@ -16,7 +16,7 @@ vi.mock('@/features/events/hooks/useEvents', () => ({
     })
 }));
 
-vi.mock('@/hooks/useCurrencyFormatter', () => ({
+vi.mock('@core/hooks/useCurrencyFormatter', () => ({
     useCurrencyFormatter: () => ({
         formatCurrency: (val: number) => `$${val}`
     })

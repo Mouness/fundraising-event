@@ -1,11 +1,11 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
+import { Button } from '@core/components/ui/button';
 import { Plus, Trash2 } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@core/components/ui/select';
 import { useTranslation } from 'react-i18next';
 
 const CLIENT_LOCALE_GROUPS = {

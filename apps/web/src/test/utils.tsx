@@ -13,19 +13,31 @@ const createTestQueryClient = () => new QueryClient({
     },
 });
 
-export const TestWrapper = ({ children }: { children: ReactNode }) => {
+import { AppConfigProvider } from '@core/providers/AppConfigProvider';
+
+export const TestWrapperNoRouter = ({ children }: { children: ReactNode }) => {
     const queryClient = createTestQueryClient();
     return (
         <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-                {children}
-            </MemoryRouter>
+            {children}
         </QueryClientProvider>
+    );
+};
+
+export const TestWrapper = ({ children }: { children: ReactNode }) => {
+    return (
+        <TestWrapperNoRouter>
+            <MemoryRouter>
+                <AppConfigProvider>
+                    {children}
+                </AppConfigProvider>
+            </MemoryRouter>
+        </TestWrapperNoRouter>
     );
 };
 
 const customRender = (ui: ReactNode, options?: Omit<RenderOptions, 'wrapper'>) =>
     rtlRender(ui, { wrapper: TestWrapper, ...options });
 
-export { customRender as render };
+export { customRender as render, rtlRender };
 

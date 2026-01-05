@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { DonationGauge } from '@/features/live/components/DonationGauge';
+import { DonationGauge } from '@features/live/components/DonationGauge';
 
 describe('DonationGauge', () => {
     it('should render correct percentage and amounts', () => {

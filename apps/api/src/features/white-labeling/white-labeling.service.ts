@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { ConfigScope, Configuration } from '@prisma/client';
-import { EventConfig } from '@fundraising/white-labeling';
+import { EventConfig, deepMerge } from '@fundraising/white-labeling';
 
 @Injectable()
 export class WhiteLabelingService {
@@ -55,15 +55,17 @@ export class WhiteLabelingService {
     const eventConfig = await this.getConfig(ConfigScope.EVENT, event.id);
 
     // Merge logic: Event overrides Global
-    const merged = this.mergeConfigs(globalConfig || {}, eventConfig || {});
+    const merged = deepMerge(globalConfig || {}, eventConfig || {});
 
-    const mapped = this.mapConfigToEventConfig(merged);
+    const mapped = this.mapConfigToEventConfig(merged as Configuration);
 
     // Casting to EventConfig as mapped structure matches, plus we ensure id/slug
     return {
       ...mapped,
       id: event.id,
       slug: event.slug,
+      name: event.name,
+      description: event.description || undefined,
       // isOverride is not part of EventConfig, so we omit strict typing for it if not needed downstream
       // or we can intersection type it if really needed. For now, matching EventConfig.
       content: {
@@ -71,27 +73,10 @@ export class WhiteLabelingService {
         // Ensure goalAmount is number
         goalAmount: Number(event.goalAmount),
         // Ensure description is present inside content if expected
-        description: event.description,
         totalLabel: mapped.content.totalLabel || 'Total Raised',
-        title: mapped.content.title || event.description || 'Event',
+        title: mapped.content.title || '', // Strictly returning empty if no override
       },
     } as EventConfig;
-  }
-
-  /**
-   * Merges two configuration records, with local overriding global.
-   */
-  private mergeConfigs(global: any, local: any) {
-    const merged = { ...global };
-
-    for (const key in local) {
-      if (local[key] !== null && local[key] !== undefined) {
-        // For JSON blocks, we might want deeper merging, but for now, top-level replacement is safer for branding overrides
-        merged[key] = local[key];
-      }
-    }
-
-    return merged;
   }
 
   /**
@@ -120,7 +105,10 @@ export class WhiteLabelingService {
 
   private mapToDbPayload(
     eventId: string,
-    data: Partial<EventConfig> & { assets?: { logo?: string }; formConfig?: any },
+    data: Partial<EventConfig> & {
+      assets?: { logo?: string };
+      formConfig?: any;
+    },
   ) {
     // 1. Extract specific nested fields
     const themeVariables = data.theme?.variables;
@@ -132,14 +120,14 @@ export class WhiteLabelingService {
 
     // 2. Remove non-column objects from data
     const {
-      id,
-      updatedAt,
-      scope,
-      entityId,
-      theme,
-      content,
-      donation,
-      formConfig: fc,
+      id: _id,
+      updatedAt: _updatedAt,
+      scope: _scope,
+      entityId: _entityId,
+      theme: _theme,
+      content: _content,
+      donation: _donation,
+      formConfig: _fc,
       ...cleanData
     } = data as any;
 
@@ -195,6 +183,8 @@ export class WhiteLabelingService {
     return {
       // These will be overridden by the caller for EventConfig
       id: '',
+      name: '',
+      description: '',
 
       theme: {
         assets: {
@@ -205,7 +195,7 @@ export class WhiteLabelingService {
       },
 
       content: {
-        title: config.organization || 'Platform',
+        title: config.organization || '',
         totalLabel: 'Total Raised',
         goalAmount: 0, // Placeholder, overridden by event data
         ...eventContent,
@@ -225,7 +215,7 @@ export class WhiteLabelingService {
         },
         payment: payment || {
           provider: 'stripe',
-          currency: 'USD',
+          currency: 'EUR',
         },
       },
 

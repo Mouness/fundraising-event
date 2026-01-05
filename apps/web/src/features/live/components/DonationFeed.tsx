@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 
 export interface Donation {
     amount: number; // in cents

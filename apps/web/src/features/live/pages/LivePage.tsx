@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 import QRCode from 'react-qr-code';
-import { useAppConfig } from '@/providers/AppConfigProvider';
-import { DonationFeed, type Donation } from '@/features/live/components/DonationFeed';
-import { DonationGauge } from '@/features/live/components/DonationGauge';
-import { useLiveSocket } from '@/features/live/hooks/useLiveSocket';
-import { fireConfetti } from '@/lib/confetti';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { DonationFeed, type Donation } from '@features/live/components/DonationFeed';
+import { DonationGauge } from '@features/live/components/DonationGauge';
+import { useLiveSocket } from '@features/live/hooks/useLiveSocket';
+import { fireConfetti } from '@core/lib/confetti';
 
 export const LivePage = () => {
     const { t } = useTranslation('common');
@@ -37,7 +37,7 @@ export const LivePage = () => {
                 }
                 // Trigger Goal Celebration
                 if (prev < (config.content.goalAmount * 100) && newTotal >= (config.content.goalAmount * 100)) {
-                    import('@/lib/confetti').then(mod => mod.fireGoalCelebration());
+                    import('@core/lib/confetti').then(mod => mod.fireGoalCelebration());
                 }
                 return newTotal;
             });
@@ -96,12 +96,21 @@ export const LivePage = () => {
                                 className="text-4xl font-black tracking-tight uppercase"
                                 style={{ color: 'var(--live-title-color)' }}
                             >
-                                {config.content.title || t('live.title')}
+                                {config.content.title || config.name || t('live.title')}
                             </motion.h1>
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 0.6 }}
                                 transition={{ delay: 0.5 }}
+                                className="text-lg mt-1"
+                                style={{ color: 'var(--live-subtitle-text)' }}
+                            >
+                                {config.description || t('live.subtitle')}
+                            </motion.p>
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 0.6 }}
+                                transition={{ delay: 0.7 }}
                                 className="text-lg mt-1"
                                 style={{ color: 'var(--live-subtitle-text)' }}
                             >

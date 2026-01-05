@@ -1,12 +1,12 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useLogin } from '@/features/auth/hooks/useLogin';
+import { useLogin } from '@features/auth/hooks/useLogin';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock dependencies
-vi.mock('@/lib/api', async (importOriginal) => {
-    const actual = await importOriginal<typeof import('@/lib/api')>();
+vi.mock('@core/lib/api', async (importOriginal) => {
+    const actual = await importOriginal<typeof import('@core/lib/api')>();
     return {
         ...actual,
         api: {

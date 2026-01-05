@@ -43,7 +43,8 @@ describe('EventsService', () => {
 
     service = module.get<EventsService>(EventsService);
     prismaService = module.get<PrismaService>(PrismaService);
-    whiteLabelingService = module.get<WhiteLabelingService>(WhiteLabelingService);
+    whiteLabelingService =
+      module.get<WhiteLabelingService>(WhiteLabelingService);
   });
 
   it('should be defined', () => {
@@ -75,7 +76,13 @@ describe('EventsService', () => {
   describe('findAll', () => {
     it('should return array of events with stats', async () => {
       const events = [{ id: '1', name: 'Gala' }];
-      const aggregations = [{ eventId: '1', _sum: { amount: { toNumber: () => 10000 } }, _count: { id: 5 } }];
+      const aggregations = [
+        {
+          eventId: '1',
+          _sum: { amount: { toNumber: () => 10000 } },
+          _count: { id: 5 },
+        },
+      ];
 
       (prismaService.event.findMany as any).mockResolvedValue(events);
       (prismaService.donation.groupBy as any).mockResolvedValue(aggregations);
@@ -86,7 +93,7 @@ describe('EventsService', () => {
         id: '1',
         name: 'Gala',
         raised: 100, // 10000 / 100
-        donorCount: 5
+        donorCount: 5,
       });
     });
   });
@@ -94,7 +101,10 @@ describe('EventsService', () => {
   describe('findOne', () => {
     it('should return event if found with stats', async () => {
       const event = { id: '1', name: 'Gala', slug: 'gala' };
-      const stats = { _sum: { amount: { toNumber: () => 5000 } }, _count: { id: 2 } };
+      const stats = {
+        _sum: { amount: { toNumber: () => 5000 } },
+        _count: { id: 2 },
+      };
 
       (prismaService.event.findFirst as any).mockResolvedValue(event);
       (prismaService.donation.aggregate as any).mockResolvedValue(stats);
@@ -103,7 +113,7 @@ describe('EventsService', () => {
       expect(result).toMatchObject({
         ...event,
         raised: 50,
-        donorCount: 2
+        donorCount: 2,
       });
     });
 
@@ -125,7 +135,10 @@ describe('EventsService', () => {
 
       const result = await service.update('1', dto);
       expect(result).toEqual(expected);
-      expect(whiteLabelingService.updateEventSettings).toHaveBeenCalledWith('1', { formConfig: dto.formConfig });
+      expect(whiteLabelingService.updateEventSettings).toHaveBeenCalledWith(
+        '1',
+        { formConfig: dto.formConfig },
+      );
     });
   });
 
@@ -142,7 +155,9 @@ describe('EventsService', () => {
   describe('staff', () => {
     it('should find staff', async () => {
       const expected = [{ id: 's1', name: 'John' }];
-      (prismaService.event.findUnique as any).mockResolvedValue({ staffMembers: expected });
+      (prismaService.event.findUnique as any).mockResolvedValue({
+        staffMembers: expected,
+      });
 
       const result = await service.findStaff('1');
       expect(result).toEqual(expected);
@@ -165,4 +180,3 @@ describe('EventsService', () => {
     });
   });
 });
-

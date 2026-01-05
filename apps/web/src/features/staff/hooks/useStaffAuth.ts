@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { api, getApiErrorMessage } from '@/lib/api';
+import { api, getApiErrorMessage } from '@core/lib/api';
 
 interface StaffLoginCredentials {
     code: string;

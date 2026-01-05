@@ -3,9 +3,10 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { PrismaService } from '@/database/prisma.service';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { vi, describe, beforeEach, afterAll, it, expect } from 'vitest';
 
-vi.mock('@fundraising/white-labeling', async () => ({
+vi.mock('@fundraising/white-labeling', () => ({
   loadConfigs: () => ({
     content: { title: 'Default' },
     theme: {},
@@ -18,9 +19,13 @@ vi.mock('@fundraising/white-labeling', async () => ({
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
-  let prismaService: PrismaService;
 
-  const mockStaff = { id: '1', name: 'John', code: '1234', eventId: 'evt_1' };
+  const mockStaff = {
+    id: '1',
+    name: 'John',
+    code: '1234',
+    events: [{ id: 'evt_1' }],
+  };
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -28,7 +33,7 @@ describe('AuthController (e2e)', () => {
     })
       .overrideProvider(PrismaService)
       .useValue({
-        staffCode: {
+        staffMember: {
           findUnique: vi.fn().mockImplementation(({ where }) => {
             if (where.code === '1234') return Promise.resolve(mockStaff);
             return Promise.resolve(null);
@@ -36,13 +41,20 @@ describe('AuthController (e2e)', () => {
         },
         event: {
           findFirst: vi.fn().mockResolvedValue(null),
+          findUnique: vi.fn().mockResolvedValue(null),
         },
+      })
+      .overrideProvider(ThrottlerStorageRedisService)
+      .useValue({
+        getRecord: vi.fn().mockResolvedValue([]),
+        increment: vi
+          .fn()
+          .mockResolvedValue({ totalHits: 1, timeToExpire: 60 }),
       })
       .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
-    prismaService = moduleFixture.get<PrismaService>(PrismaService);
   });
 
   afterAll(async () => {
@@ -69,7 +81,7 @@ describe('AuthController (e2e)', () => {
   it('/auth/staff/login (POST) - Success', () => {
     return request(app.getHttpServer())
       .post('/auth/staff/login')
-      .send({ code: '1234' })
+      .send({ code: '1234', eventId: 'evt_1' })
       .expect(201)
       .expect((res) => {
         expect(res.body.accessToken).toBeDefined();
@@ -80,7 +92,7 @@ describe('AuthController (e2e)', () => {
   it('/auth/staff/login (POST) - Fail', () => {
     return request(app.getHttpServer())
       .post('/auth/staff/login')
-      .send({ code: '0000' })
+      .send({ code: '0000', eventId: 'evt_1' })
       .expect(401);
   });
 });

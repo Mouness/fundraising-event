@@ -28,6 +28,7 @@
   "dependencies": {
     "@fundraising/types": "workspace:*",
     "@fundraising/white-labeling": "workspace:*",
+    "@nest-lab/throttler-storage-redis": "^1.1.0",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/bullmq": "^10.2.3",
     "@nestjs/common": "^11.0.1",
@@ -38,6 +39,7 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/platform-socket.io": "^11.1.9",
+    "@nestjs/terminus": "^11.0.0",
     "@nestjs/throttler": "^6.5.0",
     "@nestjs/websockets": "^11.1.9",
     "@prisma/adapter-pg": "^7.2.0",
@@ -51,6 +53,7 @@
     "axios": "^1.13.2",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.66.2",
+    "ioredis": "^5.8.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",

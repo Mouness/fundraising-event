@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
+import { Button } from '@core/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -8,11 +8,11 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
+} from '@core/components/ui/dialog';
+import { Checkbox } from '@core/components/ui/checkbox';
+import { Label } from '@core/components/ui/label';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import { toast } from 'sonner';
 import { Loader2, AlertTriangle } from 'lucide-react';
 import { type DonationTableData } from '../hooks/useDonationsTable';

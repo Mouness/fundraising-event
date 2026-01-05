@@ -1,10 +1,10 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { LoginPage } from '@/features/auth/pages/LoginPage';
+import { render, screen, fireEvent, waitFor } from '@test/utils';
+import { LoginPage } from '@features/auth/pages/LoginPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock dependencies
 const mockLogin = vi.fn();
-vi.mock('@/features/auth/hooks/useLogin', () => ({
+vi.mock('@features/auth/hooks/useLogin', () => ({
     useLogin: () => ({
         login: mockLogin,
         error: null,
@@ -14,13 +14,13 @@ vi.mock('@/features/auth/hooks/useLogin', () => ({
 
 
 
-vi.mock('@/components/ui/button', () => ({
+vi.mock('@core/components/ui/button', () => ({
     Button: ({ children, disabled, type, ...props }: any) => <button disabled={disabled} type={type} {...props}>{children}</button>,
 }));
-vi.mock('@/components/ui/input', () => ({
+vi.mock('@core/components/ui/input', () => ({
     Input: ({ id, ...props }: any) => <input id={id} data-testid={id} {...props} />,
 }));
-vi.mock('@/components/ui/card', () => {
+vi.mock('@core/components/ui/card', () => {
     const MockDiv = ({ children }: any) => <div>{children}</div>;
     return {
         Card: MockDiv,
@@ -31,7 +31,7 @@ vi.mock('@/components/ui/card', () => {
         CardFooter: MockDiv,
     };
 });
-vi.mock('@/components/ui/label', () => ({
+vi.mock('@core/components/ui/label', () => ({
     Label: ({ htmlFor, children }: any) => <label htmlFor={htmlFor}>{children}</label>,
 }));
 
@@ -40,9 +40,9 @@ describe('LoginPage', () => {
         vi.clearAllMocks();
     });
 
-    it('should render login form', () => {
+    it('should render login form', async () => {
         render(<LoginPage />);
-        expect(screen.getByText('login.title')).toBeDefined();
+        expect(await screen.findByText('login.title')).toBeDefined();
         expect(screen.getByLabelText('login.email')).toBeDefined();
         expect(screen.getByLabelText('login.password')).toBeDefined();
         expect(screen.getByText('login.submit')).toBeDefined();
@@ -50,8 +50,8 @@ describe('LoginPage', () => {
 
     it('should submit form with valid data', async () => {
         render(<LoginPage />);
-
-        fireEvent.change(screen.getByTestId('email'), { target: { value: 'test@example.com' } });
+        const emailInput = await screen.findByTestId('email');
+        fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
         fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
 
         fireEvent.click(screen.getByText('login.submit'));
@@ -66,12 +66,12 @@ describe('LoginPage', () => {
 
     it('should display validation errors', async () => {
         render(<LoginPage />);
-
-        fireEvent.click(screen.getByText('login.submit'));
+        const submitBtn = await screen.findByText('login.submit');
+        fireEvent.click(submitBtn);
 
         await waitFor(() => {
-            expect(screen.getByText('Invalid email address')).toBeDefined();
-            expect(screen.getByText('Password is required')).toBeDefined();
+            expect(screen.getByText('validation.invalid_string.email')).toBeDefined();
+            expect(screen.getByText('validation.too_small.string 1')).toBeDefined();
         });
         expect(mockLogin).not.toHaveBeenCalled();
     });

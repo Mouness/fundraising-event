@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Plus, Calendar, Target, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { useEvents } from '@/features/events/hooks/useEvents';
-import { PageLoader } from '@/components/ui/page-loader';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
+import { Button } from '@core/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@core/components/ui/card';
+import { useEvents } from '@features/events/hooks/useEvents';
+import { PageLoader } from '@core/components/ui/page-loader';
 
 export const EventListPage = () => {
     const { events, isLoading } = useEvents();

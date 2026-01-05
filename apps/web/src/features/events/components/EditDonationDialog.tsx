@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
+import { Button } from '@core/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -10,35 +9,27 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Textarea } from '@/components/ui/textarea';
+} from '@core/components/ui/dialog';
+import { Input } from '@core/components/ui/input';
+import { Label } from '@core/components/ui/label';
+import { Checkbox } from '@core/components/ui/checkbox';
+import { Textarea } from '@core/components/ui/textarea';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '@/lib/api';
+import { api } from '@core/lib/api';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { type DonationTableData } from '../hooks/useDonationsTable';
-
+import { editDonationSchema, type EditDonationFormValues } from '../schemas/edit-donation.schema';
 interface EditDonationDialogProps {
     donation: DonationTableData | null;
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }
 
+
 const EditDonationDialogInner = ({ donation, open, onOpenChange }: EditDonationDialogProps) => {
     const { t } = useTranslation('common');
     const queryClient = useQueryClient();
-
-    const editDonationSchema = z.object({
-        donorName: z.string().min(1, t('validation.required')),
-        donorEmail: z.string().email(t('validation.invalid_email')).optional().or(z.literal('')),
-        message: z.string().optional(),
-        isAnonymous: z.boolean(),
-    });
-
-    type EditDonationFormValues = z.infer<typeof editDonationSchema>;
 
     const form = useForm<EditDonationFormValues>({
         resolver: zodResolver(editDonationSchema),

@@ -3,16 +3,16 @@ import { toast } from 'sonner';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useEvent } from '@/features/events/context/EventContext';
-import { api } from '@/lib/api';
-import { Button } from '@/components/ui/button';
+import { useEvent } from '@features/events/context/EventContext';
+import { api } from '@core/lib/api';
+import { Button } from '@core/components/ui/button';
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from '@/components/ui/card';
+} from '@core/components/ui/card';
 
 
 export const EventTeamPage = () => {

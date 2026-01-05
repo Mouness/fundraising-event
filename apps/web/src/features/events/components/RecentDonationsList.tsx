@@ -1,8 +1,8 @@
-import { useDonations } from '@/features/donation/hooks/useDonations';
+import { useDonations } from '@features/donation/hooks/useDonations';
 import { Loader2, MessageSquare } from 'lucide-react';
-import { timeAgo } from '@/lib/date';
+import { timeAgo } from '@core/lib/date';
 import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 
 interface RecentDonationsListProps {
     eventId: string;

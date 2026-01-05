@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Button } from '@core/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card';
+import { Input } from '@core/components/ui/input';
 import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
 import type { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import type { DonationFormValues } from '../schemas/donation.schema';
 

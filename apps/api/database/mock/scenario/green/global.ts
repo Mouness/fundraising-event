@@ -4,7 +4,7 @@ export const globalSettings = {
     phone: '+41 22 999 00 00',
     website: 'https://terra-guardians.org',
     address: 'Zürich, Switzerland',
-    liveTheme: 'live-theme-modern',
+    liveTheme: 'modern',
     themeVariables: {
         '--primary': '#2E7D32',        // Forest Green
         '--primary-foreground': '#FFFFFF',
@@ -21,11 +21,9 @@ export const globalSettings = {
         '--radius': '0.75rem' // Soft organic feel
     },
     assets: {
-        logo: '/mock-assets/logo.png',
-        favicon: '/mock-assets/favicon.png',
-        backgroundLanding: '/mock-assets/landing_global.png',
-        backgroundDonor: '/mock-assets/donor_bg.png',
-        backgroundLive: '/mock-assets/live_global.png'
+        logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/logo.png',
+        favicon: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/favicon.png',
+        backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/landing_global.png'
     },
     communication: {
         footerText: 'TerraGuardians - Protecting our planet for future generations.',

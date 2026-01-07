@@ -9,9 +9,9 @@ export const events = [
         date: new Date('2025-04-22'),
         description: 'Join us for a night of action to protect the lungs of our planet.',
         config: {
-            liveTheme: 'live-theme-modern',
+            liveTheme: 'modern',
             assets: {
-                backgroundLanding: '/mock-assets/rainforest_landing.png'
+                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/rainforest_landing.png'
             },
             themeVariables: {
                 '--primary': '#1B5E20', // Darker Jungle Green
@@ -38,9 +38,9 @@ export const events = [
         date: new Date('2025-06-08'), // Ocean Day
         description: 'Removing 50 tons of plastic from the Pacific Garbage Patch.',
         config: {
-            liveTheme: 'live-theme-elegant',
+            liveTheme: 'elegant',
             assets: {
-                backgroundLive: '/mock-assets/ocean_live.png'
+                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/ocean_live.png'
             },
             themeVariables: {
                 '--primary': '#0288D1', // Ocean Blue
@@ -48,7 +48,8 @@ export const events = [
                 '--background': '#F0F9FF',
                 '--live-page-bg': '#083344', // Dark Cyan
                 '--live-elegant-gold': '#22D3EE', // Cyan instead of gold
-                '--live-elegant-amount-color': '#FFFFFF'
+                '--live-elegant-amount-color': '#FFFFFF',
+                '--live-text-main': '#F0F9FF' // High contrast light blue
             },
             locales: {
                 overrides: [
@@ -71,9 +72,9 @@ export const events = [
         date: new Date('2025-09-01'),
         description: 'Empowering the next generation with renewable energy independence.',
         config: {
-            liveTheme: 'live-theme-modern',
+            liveTheme: 'modern',
             assets: {
-                backgroundLive: '/mock-assets/solar_live.png'
+                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/solar_live.png'
             },
             themeVariables: {
                 '--primary': '#FACC15', // Yellow
@@ -102,7 +103,7 @@ export const events = [
         date: new Date('2025-10-04'), // Animal Day
         description: 'Building safe havens for the world\'s most vulnerable species.',
         config: {
-            liveTheme: 'live-theme-elegant',
+            liveTheme: 'elegant',
             themeVariables: {
                 '--primary': '#78350F', // Brown
                 '--primary-foreground': '#FFFFFF',
@@ -110,10 +111,11 @@ export const events = [
                 '--accent': '#F97316', // Orange
                 '--radius': '0.5rem',
                 '--live-page-bg': '#291206', // Dark Brown
-                '--live-elegant-gold': '#F97316' // Orange highlight
+                '--live-elegant-gold': '#F97316', // Orange highlight
+                '--live-text-main': '#FFEDD5' // High contrast light orange
             },
             assets: {
-                backgroundLanding: '/mock-assets/wildlife_landing.png'
+                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/wildlife_landing.png'
             }
         }
     },
@@ -127,9 +129,9 @@ export const events = [
         date: new Date('2025-05-15'),
         description: 'Transforming gray rooftops into green community spaces.',
         config: {
-            liveTheme: 'live-theme-modern',
+            liveTheme: 'modern',
             assets: {
-                backgroundLive: '/mock-assets/urban_live.png'
+                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/urban_live.png'
             },
             themeVariables: {
                 '--primary': '#86EFAC', // Pastel Green

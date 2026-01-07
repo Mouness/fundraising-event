@@ -4,7 +4,7 @@ export const globalSettings = {
     phone: '+41 22 555 01 23',
     website: 'https://ummah-care.org',
     address: 'Genève, Suisse',
-    liveTheme: 'live-theme-modern',
+    liveTheme: 'modern',
     themeVariables: {
         '--primary': '#0F5132',        // Deep Islamic Green
         '--primary-foreground': '#FFFFFF',
@@ -21,11 +21,11 @@ export const globalSettings = {
         '--radius': '0.3rem'
     },
     assets: {
-        logo: '/mock-assets/logo.png',
-        favicon: '/mock-assets/favicon.png',
-        backgroundLanding: '/mock-assets/landing_pattern.png',
-        backgroundDonor: '/mock-assets/cover_orphans.png',
-        backgroundLive: '/mock-assets/cover_gaza.png'
+        logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/logo.png',
+        favicon: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/favicon.png',
+        backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/landing_pattern.png',
+        backgroundDonor: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/landing_pattern.png',
+        backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png'
     },
     communication: {
         footerText: 'Ummah Care Foundation est une organisation à but non lucratif enregistrée.',

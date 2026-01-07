@@ -9,10 +9,10 @@ export const events = [
         date: new Date('2025-03-15'),
         description: 'Une soirée de partage et de générosité pour soutenir nos actions à travers le monde.',
         config: {
-            liveTheme: 'live-theme-modern',
+            liveTheme: 'modern',
             assets: {
-                backgroundLanding: '/mock-assets/landing_pattern.png',
-                backgroundLive: '/mock-assets/live_modern.png' // Custom Modern BG Use
+                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/landing_pattern.png',
+                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_modern.png' // Custom Modern BG Use
             },
             themeVariables: {
                 '--primary': '#14532D', // Darker Green
@@ -42,10 +42,10 @@ export const events = [
         date: new Date('2025-04-10'),
         description: 'Offrez un sourire à un orphelin ce jour de fête. Jouets, vêtements et friandises.',
         config: {
-            liveTheme: 'live-theme-elegant', // Elegant theme for festival
+            liveTheme: 'elegant', // Elegant theme for festival
             assets: {
-                backgroundLanding: '/mock-assets/live_elegant.png', // Using elegant bg for landing too
-                backgroundLive: '/mock-assets/live_elegant.png' // Custom Elegant BG Use
+                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png', // Using elegant bg for landing too
+                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png' // Custom Elegant BG Use
             },
             themeVariables: {
                 '--primary': '#DB2777', // Pink/Magenta
@@ -74,7 +74,7 @@ export const events = [
         date: new Date('2024-12-01'),
         description: 'Aide médicale et alimentaire d\'urgence. Situation critique. Agissez maintenant.',
         config: {
-            liveTheme: 'live-theme-modern',
+            liveTheme: 'modern',
             assets: {
                 backgroundLanding: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2680&auto=format&fit=crop' // Rubble/Hands
             },
@@ -111,14 +111,15 @@ export const events = [
         date: new Date('2025-06-01'),
         description: 'Une aumône perpétuelle. Participez à la construction de l\'avenir.',
         config: {
-            liveTheme: 'live-theme-elegant', // Elegant suits corporate
+            liveTheme: 'elegant', // Elegant suits corporate
             themeVariables: {
                 '--primary': '#1E293B', // Slate 800
                 '--primary-foreground': '#F8FAFC',
                 '--secondary': '#CBD5E1', // Slate 300
                 '--radius': '0.2rem', // Small radius
                 '--live-page-bg': '#0F172A', // Slate 900
-                '--live-elegant-gold': '#94A3B8' // Silver instead of gold
+                '--live-elegant-gold': '#94A3B8', // Silver instead of gold
+                '--live-text-main': '#F8FAFC' // High contrast white slate
             },
             communication: {
                 pdf: {
@@ -156,7 +157,8 @@ export const events = [
                 '--radius': '0.75rem',
                 '--live-page-bg': '#0C4A6E', // Dark Sky
                 '--live-gauge-from': '#38BDF8',
-                '--live-gauge-to': '#0284C7'
+                '--live-gauge-to': '#0284C7',
+                '--live-text-main': '#E0F2FE' // High contrast light blue
             },
             payment: {
                 currency: 'GBP' // UK base support

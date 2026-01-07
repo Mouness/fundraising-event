@@ -15,6 +15,9 @@ export const eventSettingsSchema = z.object({
         message: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
         anonymous: z.object({ enabled: z.boolean(), required: z.boolean().default(false) }),
     }),
+    live: z.object({
+        theme: z.enum(['classic', 'modern', 'elegant']).default('classic'),
+    }).optional(),
     // Branding Overrides
     useGlobalBranding: z.boolean(),
     organization: z.string().optional(),
@@ -22,6 +25,11 @@ export const eventSettingsSchema = z.object({
         logo: z.string().url().optional().or(z.literal('')),
         backgroundLanding: z.string().url().optional().or(z.literal('')),
         backgroundLive: z.string().url().optional().or(z.literal('')),
+    }).optional(),
+    landing: z.object({
+        impact: z.object({ url: z.string().url().optional().or(z.literal('')) }),
+        community: z.object({ url: z.string().url().optional().or(z.literal('')) }),
+        interactive: z.object({ url: z.string().url().optional().or(z.literal('')) }),
     }).optional(),
     themeVariables: z.array(z.object({
         key: z.string(),

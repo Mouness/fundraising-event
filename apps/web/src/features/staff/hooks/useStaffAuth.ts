@@ -65,8 +65,12 @@ export const useStaffAuth = () => {
         return user ? JSON.parse(user) : null;
     };
 
-    const isStaffAuthenticated = (): boolean => {
-        return !!localStorage.getItem('staff_token');
+    const isStaffAuthenticated = (eventId?: string): boolean => {
+        const token = localStorage.getItem('staff_token');
+        if (!token) return false;
+        if (!eventId) return true;
+        const user = getStaffUser();
+        return user?.eventId === eventId;
     };
 
     return {

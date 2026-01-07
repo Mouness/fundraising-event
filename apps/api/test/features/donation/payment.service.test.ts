@@ -105,4 +105,38 @@ describe('PaymentService', () => {
       expect(mockPayPalService.constructEventFromPayload).toHaveBeenCalled();
     });
   });
+
+  describe('createPaymentIntent', () => {
+    it('should call getProvider and delegate to it', async () => {
+      mockPrismaService.configuration.findFirst.mockResolvedValue({
+        payment: { provider: 'stripe' },
+      });
+      mockStripeService.createPaymentIntent.mockResolvedValue({ id: 'pi_1' });
+
+      const result = await service.createPaymentIntent(100, 'usd', {
+        eventId: 'evt_1',
+      });
+
+      expect(result).toEqual({ id: 'pi_1' });
+      expect(mockStripeService.createPaymentIntent).toHaveBeenCalledWith(
+        100,
+        'usd',
+        { eventId: 'evt_1' },
+      );
+    });
+  });
+
+  describe('refundDonation', () => {
+    it('should call getProvider and delegate refund', async () => {
+      mockPrismaService.configuration.findFirst.mockResolvedValue({
+        payment: { provider: 'paypal' },
+      });
+      mockPayPalService.refundDonation.mockResolvedValue({ status: 'refunded' });
+
+      const result = await service.refundDonation('evt_1', 'txn_1');
+
+      expect(result).toEqual({ status: 'refunded' });
+      expect(mockPayPalService.refundDonation).toHaveBeenCalledWith('txn_1');
+    });
+  });
 });

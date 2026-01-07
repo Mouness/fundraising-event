@@ -50,6 +50,7 @@ describe('EventController (e2e)', () => {
           aggregate: vi
             .fn()
             .mockResolvedValue({ _sum: { amount: null }, _count: { id: 0 } }),
+          findMany: vi.fn().mockResolvedValue([]),
         },
         staffMember: {
           findUnique: vi.fn(),

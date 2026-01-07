@@ -24,7 +24,7 @@ Ensure you have the following installed:
 
 3.  **Setup Environment Variables**:
     - Copy `.env.example` to `.env` in `apps/api` and `apps/web`.
-    - Update the variables (see [Configuration](configuration.md)).
+    - See [Configuration](configuration.md) for details on required variables.
 
 ## Running the App
 

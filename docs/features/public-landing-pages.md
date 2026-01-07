@@ -8,6 +8,7 @@ The public feature is located in `apps/web/src/features/public` and consists of 
 
 1.  **Landing Page** (`/` or `/:slug`): The specific campaign page.
 2.  **Root Landing Page** (`/`): The aggregate page listing all active campaigns (if enabled).
+3.  **Not Found Page** (`*`): Custom 404 error page.
 
 ### Components
 

@@ -22,3 +22,36 @@ theme:
     - navigation.top
     - toc.integrate
 
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Architecture: architecture.md
+  - Project Structure: project-structure.md
+  - Configuration: configuration.md
+  - API Reference: api-reference.md
+  - White-Labeling: white-labeling.md
+  - Features:
+    - Authentication: features/authentication.md
+    - Events Management: features/events.md
+    - Donation Flow: features/donation.md
+    - Live Event: features/live-event.md
+    - Staff Collector: features/staff.md
+    - Admin Dashboard: features/admin.md
+    - Global Settings: features/global-settings.md
+    - Public Landing Pages: features/public-landing-pages.md
+    - Communication & PDF: features/communication.md
+    - Backend PDF & Queue: features/backend-pdf.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html

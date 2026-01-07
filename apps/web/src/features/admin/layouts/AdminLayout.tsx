@@ -13,7 +13,7 @@ export const AdminLayout = () => {
 
     return (
         <div className="flex flex-col h-screen w-full overflow-hidden">
-            <AppHeader title="Admin" />
+            <AppHeader title={t('admin_layout.title', 'Admin')} />
             <div className="flex flex-1 overflow-hidden">
                 <aside
                     className="p-4 border-r flex flex-col"

@@ -12,10 +12,11 @@ import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { WhiteLabelingService } from './white-labeling.service';
+import { EventConfig } from '@fundraising/white-labeling';
 
 @Controller()
 export class WhiteLabelingController {
-  constructor(private readonly service: WhiteLabelingService) {}
+  constructor(private readonly service: WhiteLabelingService) { }
 
   @Get('settings/global')
   async getGlobalSettings() {
@@ -25,7 +26,7 @@ export class WhiteLabelingController {
   @Patch('settings/global')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
-  async updateGlobalSettings(@Body() config: any) {
+  async updateGlobalSettings(@Body() config: Partial<EventConfig>) {
     return this.service.updateGlobalSettings(config);
   }
 
@@ -41,7 +42,7 @@ export class WhiteLabelingController {
   @Patch('events/:id/branding')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
-  async updateEventSettings(@Param('id') eventId: string, @Body() config: any) {
+  async updateEventSettings(@Param('id') eventId: string, @Body() config: Partial<EventConfig>) {
     return this.service.updateEventSettings(eventId, config);
   }
 

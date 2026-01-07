@@ -1,10 +1,12 @@
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@core/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@core/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useEvents } from '@features/events/hooks/useEvents';
 import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
-import { Loader2, TrendingUp, Users, Calendar, ArrowRight } from 'lucide-react';
+import { Loader2, TrendingUp, Users, Calendar } from 'lucide-react';
+import { DonationChart } from '../components/DonationChart';
+import { RecentActivity } from '../components/RecentActivity';
+import { EventCard } from '@features/events/components/EventCard';
 
 export const DashboardPage = () => {
     const { t } = useTranslation('common');
@@ -22,7 +24,7 @@ export const DashboardPage = () => {
     // Aggregations
     const totalRaised = events.reduce((sum, e) => sum + (e.raised || 0), 0);
     const totalDonors = events.reduce((sum, e) => sum + (e.donorCount || 0), 0);
-    const activeEvents = events.filter(e => e.status === 'ACTIVE');
+    const activeEvents = events.filter(e => e.status?.toUpperCase() === 'ACTIVE');
     const activeEventsCount = activeEvents.length;
 
     return (
@@ -89,6 +91,15 @@ export const DashboardPage = () => {
                 </Card>
             </div >
 
+            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-7">
+                <div className="lg:col-span-4">
+                    <DonationChart />
+                </div>
+                <div className="lg:col-span-3">
+                    <RecentActivity />
+                </div>
+            </div>
+
             {/* Active Events Grid */}
             < div className="space-y-4" >
                 <h3 className="text-xl font-semibold tracking-tight">{t('dashboard.campaigns.title')}</h3>
@@ -100,42 +111,7 @@ export const DashboardPage = () => {
                     ) : (
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             {activeEvents.map((event) => (
-                                <Card key={event.id} className="flex flex-col hover:shadow-md transition-shadow" style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
-                                    <CardHeader>
-                                        <div className="flex justify-between items-start">
-                                            <CardTitle className="line-clamp-1 text-lg">{event.name}</CardTitle>
-                                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-100 text-green-800">
-                                                {t('dashboard.campaigns.active')}
-                                            </span>
-                                        </div>
-                                        <CardDescription>{event.status}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="flex-1 space-y-4">
-                                        <div className="space-y-2">
-                                            <div className="flex justify-between text-sm">
-                                                <span className="text-muted-foreground">{t('dashboard.campaigns.raised')}</span>
-                                                <span className="font-medium">{formatCurrency(event.raised || 0)}</span>
-                                            </div>
-                                            <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                                                <div
-                                                    className="h-full bg-primary"
-                                                    style={{ width: `${Math.min(100, ((event.raised || 0) / (event.goalAmount || 1)) * 100)}%` }}
-                                                />
-                                            </div>
-                                            <div className="flex justify-between text-xs text-muted-foreground">
-                                                <span>{Math.round(((event.raised || 0) / (event.goalAmount || 1)) * 100)}%</span>
-                                                <span>{t('dashboard.campaigns.goal', { amount: formatCurrency(event.goalAmount) })}</span>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <Button asChild className="w-full" variant="outline">
-                                            <Link to={`/admin/events/${event.slug}`}>
-                                                {t('dashboard.campaigns.manage')} <ArrowRight className="ml-2 h-4 w-4" />
-                                            </Link>
-                                        </Button>
-                                    </CardFooter>
-                                </Card>
+                                <EventCard key={event.id} event={event} variant="compact" />
                             ))}
                         </div>
                     )

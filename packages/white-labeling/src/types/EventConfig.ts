@@ -37,6 +37,12 @@ export interface EventConfig {
         };
     };
 
+    /** Live Page Configuration */
+    live?: {
+        /** Visual Theme Proposal */
+        theme: 'classic' | 'modern' | 'elegant';
+    };
+
     /** Donation flow configuration */
     donation: {
         /** Form field toggles */

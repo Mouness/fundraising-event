@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
-import { ConfigScope, Configuration } from '@prisma/client';
-import { EventConfig, deepMerge } from '@fundraising/white-labeling';
+import {
+  ConfigScope,
+  Configuration,
+  Prisma,
+} from '@prisma/client';
+import { EventConfig } from '@fundraising/white-labeling';
 
 @Injectable()
 export class WhiteLabelingService {
@@ -12,232 +16,186 @@ export class WhiteLabelingService {
     return this.mapConfigToEventConfig(config || ({} as Configuration));
   }
 
-  async updateGlobalSettings(data: any) {
-    // Determine entityId - default to 'GLOBAL' if creating new
-    const entityId = 'GLOBAL';
-    const payload = this.mapToDbPayload(entityId, data);
+  async getEventSettings(slug: string): Promise<(EventConfig & { isOverride: boolean }) | null> {
+    const event = await this.prisma.event.findUnique({ where: { slug } });
+    if (!event) return null;
 
-    // Ensure scope is correct
-    payload.scope = ConfigScope.GLOBAL;
+    const config = await this.getConfig(ConfigScope.EVENT, event.id);
+    const mapped = this.mapConfigToEventConfig(config || ({} as Configuration), event);
 
+    return {
+      ...mapped,
+      isOverride: !!config,
+    };
+  }
+
+  async updateGlobalSettings(data: Partial<EventConfig>) {
+    const payload = this.mapToDbPayload('GLOBAL', data);
     return this.prisma.configuration.upsert({
       where: {
-        scope_entityId: {
-          scope: ConfigScope.GLOBAL,
-          entityId: entityId,
-        },
+        scope_entityId: { scope: ConfigScope.GLOBAL, entityId: 'GLOBAL' },
       },
-      create: payload,
       update: payload,
+      create: { ...payload, scope: ConfigScope.GLOBAL, entityId: 'GLOBAL' } as any,
+    });
+  }
+
+  async updateEventSettings(eventId: string, data: Partial<EventConfig>) {
+    const payload = this.mapToDbPayload(eventId, data);
+    return this.prisma.configuration.upsert({
+      where: {
+        scope_entityId: { scope: ConfigScope.EVENT, entityId: eventId },
+      },
+      update: payload,
+      create: { ...payload, scope: ConfigScope.EVENT, entityId: eventId } as any,
+    });
+  }
+
+  async resetEventSettings(eventId: string) {
+    return this.prisma.configuration.updateMany({
+      where: { scope: ConfigScope.EVENT, entityId: eventId },
+      data: {
+        organization: null,
+        address: null,
+        phone: null,
+        logo: null,
+        email: null,
+        website: null,
+        themeVariables: Prisma.DbNull,
+        assets: Prisma.DbNull,
+        event: Prisma.DbNull,
+        communication: Prisma.DbNull,
+        form: Prisma.DbNull,
+        payment: Prisma.DbNull,
+        socialNetwork: Prisma.DbNull,
+        locales: Prisma.DbNull,
+      },
     });
   }
 
   private async getConfig(scope: ConfigScope, entityId?: string) {
     return this.prisma.configuration.findFirst({
-      where: {
-        scope,
-        entityId,
-      },
+      where: { scope, entityId },
     });
   }
 
   /**
-   * Retrieves event-specific configuration, merged with global defaults.
+   * Transforms EventConfig structure into Database Schema columns.
+   * NO LEGACY LOOKUPS. STRICTLY USES EventConfig PATHS.
    */
-  async getEventSettings(slug: string): Promise<EventConfig | null> {
-    const event = await this.prisma.event.findUnique({
-      where: { slug },
-    });
-
-    if (!event) return null;
-
-    const globalConfig = await this.getConfig(ConfigScope.GLOBAL);
-    const eventConfig = await this.getConfig(ConfigScope.EVENT, event.id);
-
-    // Merge logic: Event overrides Global
-    const merged = deepMerge(globalConfig || {}, eventConfig || {});
-
-    const mapped = this.mapConfigToEventConfig(merged as Configuration);
-
-    // Casting to EventConfig as mapped structure matches, plus we ensure id/slug
-    return {
-      ...mapped,
-      id: event.id,
-      slug: event.slug,
-      name: event.name,
-      description: event.description || undefined,
-      // isOverride is not part of EventConfig, so we omit strict typing for it if not needed downstream
-      // or we can intersection type it if really needed. For now, matching EventConfig.
-      content: {
-        ...mapped.content,
-        // Ensure goalAmount is number
-        goalAmount: Number(event.goalAmount),
-        // Ensure description is present inside content if expected
-        totalLabel: mapped.content.totalLabel || 'Total Raised',
-        title: mapped.content.title || '', // Strictly returning empty if no override
-      },
-    } as EventConfig;
-  }
-
-  /**
-   * Updates configuration for a specific event.
-   */
-  async updateEventSettings(
-    eventId: string,
-    data: Partial<EventConfig> & {
-      assets?: { logo?: string };
-      formConfig?: any;
-    },
-  ) {
-    const payload = this.mapToDbPayload(eventId, data);
-
-    return this.prisma.configuration.upsert({
-      where: {
-        scope_entityId: {
-          scope: ConfigScope.EVENT,
-          entityId: eventId,
-        },
-      },
-      create: payload,
-      update: payload,
-    });
-  }
-
-  private mapToDbPayload(
-    eventId: string,
-    data: Partial<EventConfig> & {
-      assets?: { logo?: string };
-      formConfig?: any;
-    },
-  ) {
-    // 1. Extract specific nested fields
-    const themeVariables = data.theme?.variables;
-    const logo = data.assets?.logo;
-    const eventContent = data.content as any;
-    const formConfig = data.formConfig || data.donation?.form;
-    const paymentConfig = data.donation?.payment;
-    const socialConfig = data.donation?.sharing;
-
-    // 2. Remove non-column objects from data
-    const {
-      id: _id,
-      updatedAt: _updatedAt,
-      scope: _scope,
-      entityId: _entityId,
-      theme: _theme,
-      content: _content,
-      donation: _donation,
-      formConfig: _fc,
-      ...cleanData
-    } = data as any;
-
-    // 3. Construct and return final payload
-    return {
-      ...cleanData,
-      ...(themeVariables && { themeVariables }),
-      ...(logo && { logo }),
-      ...(eventContent && { event: eventContent }),
-      ...(formConfig && { form: formConfig }),
-      ...(paymentConfig && { payment: paymentConfig }),
-      ...(socialConfig && { socialNetwork: socialConfig }),
-      scope: ConfigScope.EVENT,
-      entityId: eventId,
+  private mapToDbPayload(eventId: string, data: Partial<EventConfig>): Prisma.ConfigurationUpdateInput {
+    const payload: Prisma.ConfigurationUpdateInput = {
+      updatedAt: new Date(),
     };
+
+    // 1. Communication -> Root Columns & JSON
+    if (data.communication) {
+      const c = data.communication;
+      if (c.legalName !== undefined) payload.organization = c.legalName || null;
+      if (c.address !== undefined) payload.address = c.address || null;
+      if (c.phone !== undefined) payload.phone = c.phone || null;
+      if (c.supportEmail !== undefined) payload.email = c.supportEmail || null;
+      if (c.website !== undefined) payload.website = c.website || null;
+
+      payload.communication = this.cleanForPersistence(c) as Prisma.InputJsonValue;
+    }
+
+    // 2. Theme -> Assets (Logo) & Variables
+    if (data.theme !== undefined) {
+      if (data.theme?.assets !== undefined) {
+        if (data.theme.assets?.logo !== undefined) payload.logo = data.theme.assets.logo || null;
+        payload.assets = this.cleanForPersistence(data.theme.assets) as Prisma.InputJsonValue;
+      }
+      if (data.theme?.variables !== undefined) {
+        payload.themeVariables = this.cleanForPersistence(data.theme.variables) as Prisma.InputJsonValue;
+      }
+    }
+
+    // 3. Content -> event column
+    if (data.content !== undefined) {
+      // Logic: If user provides content.title and NOT communication.legalName, we sync to organization
+      if (data.content?.title !== undefined && (!data.communication || data.communication.legalName === undefined)) {
+        payload.organization = data.content.title || null;
+      }
+      payload.event = this.cleanForPersistence(data.content) as Prisma.InputJsonValue;
+    }
+
+    // 4. Donation -> form, payment, sharing
+    if (data.donation !== undefined) {
+      if (data.donation?.form !== undefined) payload.form = this.cleanForPersistence(data.donation.form) as Prisma.InputJsonValue;
+      if (data.donation?.payment !== undefined) payload.payment = this.cleanForPersistence(data.donation.payment) as Prisma.InputJsonValue;
+      if (data.donation?.sharing !== undefined) payload.socialNetwork = this.cleanForPersistence(data.donation.sharing) as Prisma.InputJsonValue;
+    }
+
+    // 5. Locales & Live Theme
+    if (data.locales) payload.locales = this.cleanForPersistence(data.locales) as Prisma.InputJsonValue;
+    if (data.live?.theme) payload.liveTheme = data.live.theme;
+
+    return payload;
   }
 
-  /**
-   * Deletes event-specific overrides, effectively reverting to global.
-   */
-  async resetEventSettings(eventId: string) {
-    return this.prisma.configuration.deleteMany({
-      where: {
-        scope: ConfigScope.EVENT,
-        entityId: eventId,
-      },
-    });
+  private cleanForPersistence(obj: any): any {
+    if (obj === null || obj === undefined) return Prisma.DbNull;
+    if (typeof obj !== 'object' || Array.isArray(obj)) return obj;
+
+    const cleaned = Object.entries(obj).reduce((acc: any, [key, value]) => {
+      if (value === '' || value === null || value === undefined) {
+        // Skip for inheritance
+      } else if (typeof value === 'object') {
+        const child = this.cleanForPersistence(value);
+        if (child !== Prisma.DbNull) acc[key] = child;
+      } else {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+
+    return Object.keys(cleaned).length > 0 ? cleaned : Prisma.DbNull;
   }
 
-  /**
-   * Maps the database Configuration record to the EventConfig structure expected by the frontend.
-   */
-  /**
-   * Maps the database Configuration record to the EventConfig structure expected by the frontend.
-   */
-  private mapConfigToEventConfig(config: Configuration): EventConfig {
-    const assets = (config.assets as Record<string, string>) || {};
-    const themeVariables =
-      (config.themeVariables as Record<string, string>) || {};
-
-    // Cast JSON fields to their expected partial types
-    const eventContent =
-      (config.event as Partial<EventConfig['content']>) || {};
-    const form = config.form as EventConfig['donation']['form'] | null;
-    const socialNetwork = config.socialNetwork as
-      | EventConfig['donation']['sharing']
-      | null;
-    const payment = config.payment as EventConfig['donation']['payment'] | null;
-    const communicationJson =
-      (config.communication as Partial<EventConfig['communication']>) || {};
-    const locales = config.locales as EventConfig['locales'] | null;
-
+  private mapConfigToEventConfig(config: Configuration, event?: any): EventConfig {
     return {
-      // These will be overridden by the caller for EventConfig
-      id: '',
-      name: '',
-      description: '',
-
+      id: config.entityId || event?.id || '',
+      name: event?.name || '',
+      description: event?.description || '',
       theme: {
         assets: {
           logo: config.logo || '',
-          ...assets,
+          ...(config.assets as any || {}),
         },
-        variables: themeVariables,
+        variables: (config.themeVariables as any) || {},
       },
-
       content: {
         title: config.organization || '',
         totalLabel: 'Total Raised',
-        goalAmount: 0, // Placeholder, overridden by event data
-        ...eventContent,
+        goalAmount: event?.goalAmount ? Number(event.goalAmount) : 0,
+        ...(config.event as any || {}),
       },
-
+      live: {
+        theme: (config.liveTheme as any) || 'classic',
+      },
       donation: {
-        form: form || {
+        form: (config.form as any) || {
           phone: { enabled: false, required: false },
           address: { enabled: false, required: false },
           company: { enabled: false, required: false },
-          message: { enabled: false, required: false },
+          message: { enabled: true, required: false },
           anonymous: { enabled: true, required: false },
         },
-        sharing: socialNetwork || {
-          enabled: false,
-          networks: [],
-        },
-        payment: payment || {
-          provider: 'stripe',
-          currency: 'EUR',
-        },
+        sharing: (config.socialNetwork as any) || { enabled: true, networks: [] },
+        payment: (config.payment as any) || { provider: 'stripe', currency: 'EUR' },
       },
-
       communication: {
         legalName: config.organization || '',
         address: config.address || '',
-        supportEmail: config.email || undefined,
-        phone: config.phone || undefined,
-        website: config.website || undefined,
-        email: communicationJson.email || {
-          enabled: true,
-        },
-        pdf: communicationJson.pdf || {
-          enabled: true,
-        },
-        ...communicationJson,
+        supportEmail: config.email || '',
+        phone: config.phone || '',
+        website: config.website || '',
+        pdf: { enabled: true },
+        email: { enabled: true },
+        ...(config.communication as any || {}),
       },
-
-      locales: locales || {
-        default: 'en',
-        supported: ['en'],
-      },
+      locales: (config.locales as any) || { default: 'en', supported: ['en'] },
     };
   }
 }

@@ -27,6 +27,7 @@ export const AssetsForm = () => {
                         <Input id="favicon" {...register('assets.favicon')} placeholder="https://..." />
                     </div>
 
+
                     <div className="border-t pt-4 mt-2">
                         <Label className="text-base font-semibold block mb-4">{t('admin_branding.assets.backgrounds')}</Label>
                         <div className="space-y-4">

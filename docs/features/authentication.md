@@ -15,7 +15,7 @@ Admins utilize a standard login flow to access the `DashboardPage`.
 
 ### 2. Staff Authentication
 Staff members use a simplified flow optimized for quick access on shared devices.
-- **Frontend**: Specialized PIN entry screen (future implementation).
+- **Frontend**: Specialized PIN entry screen (`apps/web/src/features/staff/pages/CollectorPage.tsx`).
 - **Backend**: `AuthService` matches the event-specific PIN code.
 - **Context**: Used primarily for connecting terminals or POS devices.
 

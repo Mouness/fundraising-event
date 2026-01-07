@@ -1,5 +1,6 @@
 export interface CreateDonationParams {
   amount: number; // in cents
+  currency?: string;
   transactionId: string;
   status: 'COMPLETED' | 'PENDING' | 'FAILED';
   paymentMethod: string;
@@ -9,4 +10,5 @@ export interface CreateDonationParams {
   isAnonymous?: boolean;
   metadata?: Record<string, any>;
   eventId?: string;
+  staffMemberId?: string;
 }

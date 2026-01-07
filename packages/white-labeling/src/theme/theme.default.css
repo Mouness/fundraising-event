@@ -288,71 +288,136 @@
   --thankyou-button-text: var(--primary-foreground);
   /* Action button text */
 
-  /* --- Live Screen (Specific Visuals) --- */
-  --live-page-bg: var(--foreground);
-  /* Live screen background */
-  --live-header-text: var(--primary-foreground);
-  /* Header text color */
-  --live-subtitle-text: var(--muted-foreground);
-  /* Subtitle text color */
-  --live-label-text: var(--muted-foreground);
-  /* Label text color */
-  --live-goal-text: var(--muted-foreground);
-  /* Goal label color */
+  /* --- Live Theme: Common / Shared --- */
+  /* --- Shared Component Variables (Used by Classic and as Defaults) --- */
   --live-status-indicator: var(--global-success-color);
   /* Online status dot */
-  --live-bg-accent-1: rgba(88, 28, 135, 0.4);
-  /* Background glowing orb 1 */
-  --live-bg-accent-2: rgba(30, 58, 138, 0.4);
-  /* Background glowing orb 2 */
-  --live-bg-blur: 120px;
-  /* Blur amount for background orbs */
-  --live-text-main: var(--primary-foreground);
-  /* Main text color */
-  --live-title-color: var(--primary-foreground);
-  /* Title color */
-  --live-highlight-color: var(--primary-foreground);
-  /* Highlighted text color */
-  --live-text-secondary: var(--muted-foreground);
-  /* Secondary text color */
-  --live-text-muted: var(--muted-foreground);
-  /* Muted text color */
   --live-amount-color: var(--global-success-color);
   /* Amount display color */
   --live-avatar-bg-start: var(--primary);
   /* Avatar gradient start */
   --live-avatar-bg-end: var(--secondary);
   /* Avatar gradient end */
-  --live-qr-bg: var(--primary-foreground);
-  /* QR Code container background */
-  --live-qr-shadow: rgba(168, 85, 247, 0.4);
-  /* QR Code glow/shadow */
-  --live-gauge-track: rgba(255, 255, 255, 0.05);
-  /* Gauge background track */
-  --live-gauge-shadow: rgba(168, 85, 247, 0.3);
-  /* Gauge glow */
   --live-feed-item-bg: rgba(15, 23, 42, 0.6);
-  /* Feed item background */
+  /* Background for donation feed items (Shared/Classic) */
   --live-feed-item-border: rgba(51, 65, 85, 0.5);
-  /* Feed item border */
-  --live-counter-gradient-from: var(--primary-foreground);
+  /* Border for donation feed items (Shared/Classic) */
+  --live-text-main: var(--primary-foreground);
+  /* Main text color for live page components (Shared/Classic) */
+  --live-text-title: var(--primary-foreground);
+  /* Color for primary titles/headings (Shared/Classic) */
+  --live-text-subtitle: var(--muted-foreground);
+  /* Color for subtitles and descriptions (Shared/Classic) */
+  --live-text-secondary: var(--muted-foreground);
+  /* Secondary text color (Shared/Classic) */
+  --live-text-muted: var(--muted-foreground);
+  /* Muted/faded text color (Shared/Classic) */
+  --live-gauge-shadow: rgba(168, 85, 247, 0.3);
+  /* Gauge glow/shadow effect (Shared/Classic) */
+  --live-gauge-track: rgba(255, 255, 255, 0.05);
+  /* Gauge background track color (Shared/Classic) */
+  --live-qr-bg: #ffffff;
+  /* Background color for QR codes */
+  --live-qr-fg: #000000;
+  /* Foreground/pattern color for QR codes */
+
+  /* --- Live Theme: Classic (Default) --- */
+  --live-classic-bg: var(--foreground);
+  /* Live screen background */
+  --live-classic-header-text: var(--primary-foreground);
+  /* Header text color */
+  --live-classic-label-text: var(--muted-foreground);
+  /* Label text color */
+  --live-classic-goal-text: var(--muted-foreground);
+  /* Goal label color */
+  --live-classic-bg-accent-1: rgba(88, 28, 135, 0.4);
+  /* Background glowing orb 1 */
+  --live-classic-bg-accent-2: rgba(30, 58, 138, 0.4);
+  /* Background glowing orb 2 */
+  --live-classic-bg-blur: 120px;
+  /* Blur amount for background orbs */
+  --live-classic-title-color: var(--primary-foreground);
+  /* Classic theme title color */
+  --live-classic-highlight-color: var(--primary-foreground);
+  /* Classic theme highlighted text color */
+  --live-classic-qr-bg: var(--primary-foreground);
+  /* Classic theme QR code container background */
+  --live-classic-qr-shadow: rgba(168, 85, 247, 0.4);
+  /* Classic theme QR code shadow/glow */
+  --live-classic-counter-gradient-from: var(--primary-foreground);
   /* Counter gradient start */
-  --live-counter-gradient-to: var(--muted-foreground);
+  --live-classic-counter-gradient-to: var(--muted-foreground);
   /* Counter gradient end */
-  --live-gauge-size: 500px;
+  --live-classic-gauge-size: 500px;
   /* Size of the main gauge */
-  --live-gauge-stroke: 12;
+  --live-classic-gauge-stroke: 12;
   /* Stroke width of the gauge */
-  --live-qr-size: 120px;
+  --live-classic-qr-size: 120px;
   /* Size of the QR code */
-  --live-counter-size: 6rem;
+  --live-classic-counter-size: 6rem;
   /* Font size of the main counter */
-  --live-counter-weight: 900;
+  --live-classic-counter-weight: 900;
   /* Font weight of the main counter */
-  --live-qr-radius: 0.75rem;
+  --live-classic-qr-radius: 0.75rem;
   /* Border radius of QR container */
-  --live-logo-radius: 0.5rem;
+  --live-classic-logo-radius: 0.5rem;
   /* Border radius of Logo */
+
+  /* --- Live Theme: Modern --- */
+  --live-modern-bg: #ffffff;
+  /* Modern theme background color */
+  --live-modern-text: #18181b;
+  /* Modern theme primary text color */
+  --live-modern-header-bg: rgba(255, 255, 255, 0.8);
+  /* Modern theme header background with transparency */
+  --live-modern-sidebar-bg: #18181b;
+  /* Modern theme sidebar background color */
+  --live-modern-sidebar-text: #ffffff;
+  /* Modern theme sidebar text color */
+  --live-modern-accent: var(--primary);
+  /* Modern theme accent color (Indigo 500) */
+  --live-modern-gauge-fill: #ffffff;
+  /* Modern theme gauge progress fill color */
+  --live-modern-gauge-track: #27272a;
+  /* Modern theme gauge background track color (Zinc 800) */
+  --live-modern-feed-bg: #ffffff;
+  /* Feed background color */
+  --live-modern-feed-border: transparent;
+  /* Feed container border */
+  --live-modern-feed-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+  /* Feed container shadow */
+  --live-modern-text-secondary: #71717a;
+  /* Secondary text color in feed */
+  --live-modern-qr-bg: #fafafa;
+  /* QR Code background color */
+  --live-modern-qr-fg: #000000;
+  /* QR Code foreground color */
+
+  /* --- Live Theme: Elegant --- */
+  --live-elegant-bg: #0f172a;
+  /* Elegant theme background color (Slate 900) */
+  --live-elegant-text: #f8fafc;
+  /* Elegant theme primary text color (Slate 50) */
+  --live-elegant-gold: #d4af37;
+  /* Elegant theme signature gold color */
+  --live-elegant-gold-light: #fcd34d;
+  /* Elegant theme highlight gold/yellow color */
+  --live-elegant-card-bg: rgba(30, 41, 59, 0.5);
+  /* Elegant theme card background with transparency (Slate 800/50) */
+  --live-elegant-feed-bg: rgba(30, 41, 59, 0.4);
+  /* Feed background color (Slate 800/40) */
+  --live-elegant-feed-border: rgba(212, 175, 55, 0.2);
+  /* Feed border color (Gold low opacity) */
+  --live-elegant-text-secondary: #94a3b8;
+  /* Secondary text color in feed */
+  --live-elegant-amount-color: #fbbf24;
+  /* Donation amount text color */
+  --live-elegant-glass-blur: 4px;
+  /* Blur amount for glass effect */
+  --live-elegant-qr-bg: #ffffff;
+  /* QR Code background color */
+  --live-elegant-qr-fg: #000000;
+  /* QR Code foreground color */
 
   /* --- Staff --- */
   --staff-page-bg: var(--muted);
@@ -410,7 +475,28 @@
   --staff-type-button-selected-text: var(--primary-foreground);
   /* Selected type text */
   --staff-type-button-selected-icon: var(--primary-foreground);
+
   /* Selected type icon */
+}
+
+/* --- Scope Live Themes --- */
+.live-theme-modern {
+  --live-feed-item-bg: var(--live-modern-feed-bg);
+  --live-feed-item-border: var(--live-modern-feed-border);
+  --live-feed-shadow: var(--live-modern-feed-shadow);
+  --live-text-main: var(--live-modern-text);
+  --live-text-secondary: var(--live-modern-text-secondary);
+  --live-amount-color: var(--live-modern-accent);
+}
+
+.live-theme-elegant {
+  --live-feed-item-bg: var(--live-elegant-feed-bg);
+  --live-feed-item-border: var(--live-elegant-feed-border);
+  --live-feed-shadow: none;
+  --live-text-main: var(--live-elegant-text);
+  --live-text-secondary: var(--live-elegant-text-secondary);
+  --live-amount-color: var(--live-elegant-amount-color);
+  --glass-blur: var(--live-elegant-glass-blur);
 }
 
 /* --- Background Blob Animations --- */
@@ -506,6 +592,17 @@
   --radius-full: var(--global-radius-full);
   --radius-global: var(--global-radius);
   --radius-global-lg: var(--global-radius-lg);
+  --radius-md: var(--global-radius);
+  /* Ensure rounded-md uses global radius */
+
+  /* --- Tailwind 4 Shadow Mappings --- */
+  --shadow-sm: var(--global-shadow-sm);
+  --shadow-DEFAULT: var(--global-shadow);
+  --shadow-lg: var(--global-shadow-lg);
+
+  /* --- Tailwind 4 Typography Mappings --- */
+  --font-sans: var(--global-font-family);
+  --font-mono: var(--global-font-mono);
 
   /* --- Animation --- */
   --animate-gradient-xy: gradient-xy 15s ease infinite;
@@ -534,4 +631,6 @@
       background-position: 0% 100%;
     }
   }
+
+  --animate-pulse-slow: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

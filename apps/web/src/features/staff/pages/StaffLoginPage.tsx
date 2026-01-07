@@ -18,10 +18,10 @@ export const StaffLoginPage = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (isStaffAuthenticated() && slug) {
+        if (event && isStaffAuthenticated(event.id) && slug) {
             navigate(`/${slug}/staff/collect`);
         }
-    }, [isStaffAuthenticated, navigate, slug]);
+    }, [event, isStaffAuthenticated, navigate, slug]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -44,8 +44,9 @@ export const StaffLoginPage = () => {
             <Card
                 className="w-full max-w-md backdrop-blur-md shadow-xl border-t rounded-3xl overflow-hidden"
                 style={{
-                    borderRadius: 'var(--panel-radius, 1.5rem)',
-                    borderColor: 'var(--auth-input-border)'
+                    borderRadius: 'var(--auth-card-radius)',
+                    borderColor: 'var(--auth-input-border)',
+                    boxShadow: 'var(--auth-card-shadow)'
                 }}
             >
                 <CardHeader>

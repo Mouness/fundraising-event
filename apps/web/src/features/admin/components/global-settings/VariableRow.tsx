@@ -1,42 +1,40 @@
 import { Input } from '@core/components/ui/input';
 import { Label } from '@core/components/ui/label';
 import { useFormContext } from 'react-hook-form';
+import { VariablePreview } from './VariablePreview';
+import type { VariableType } from '../../utils/theme-utils';
 
 interface VariableRowProps {
     label: string;
     name: string;
-    type?: 'color' | 'radius' | 'text';
+    type?: VariableType;
+    hideLabel?: boolean;
+    className?: string;
+    variableKey?: string;
 }
 
-export const VariableRow = ({ label, name, type = 'color' }: VariableRowProps) => {
+export const VariableRow = ({ label, name, type = 'color', hideLabel = false, className, variableKey }: VariableRowProps) => {
     const { register, watch } = useFormContext();
     const value = watch(name);
 
     return (
-        <div className="flex items-center gap-4 mb-2">
-            <Label className="w-40 shrink-0 text-right font-medium text-sm text-muted-foreground">{label}</Label>
-            <Input {...register(name)} className="flex-1 font-mono h-9 text-xs" />
+        <div data-testid="variable-row" className={`group flex items-center gap-4 mb-2 ${className || ''}`}>
+            {!hideLabel && (
+                <div className="w-40 shrink-0 text-right flex flex-col items-end justify-center">
+                    <Label className="font-medium text-sm text-muted-foreground leading-tight">{label}</Label>
+                    {variableKey && (
+                        <span className="text-[10px] text-muted-foreground/60 font-mono transition-all" title={variableKey}>
+                            {variableKey}
+                        </span>
+                    )}
+                </div>
+            )}
 
-            {/* Preview Box */}
-            <div className="w-9 h-9 shrink-0 border rounded-md overflow-hidden bg-muted/30 flex items-center justify-center relative shadow-sm">
-                <div className="absolute inset-0 bg-grid-slate-200/50 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
-
-                {/* Color Preview */}
-                {type === 'color' && (
-                    <div className="w-full h-full transition-colors" style={{ backgroundColor: value }} />
-                )}
-
-                {/* Radius Preview */}
-                {type === 'radius' && (
-                    <div className="w-6 h-6 border-2 border-foreground/80 bg-background shadow-sm"
-                        style={{ borderRadius: value || '0' }} />
-                )}
-
-                {/* Text/Font Preview */}
-                {type === 'text' && (
-                    <span className="text-foreground font-medium text-xs" style={{ fontSize: value }}>Aa</span>
-                )}
+            <div className="flex-1 relative group/input">
+                <Input {...register(name)} className="font-mono h-9 text-xs" title={variableKey} />
             </div>
+
+            <VariablePreview value={value} type={type} />
         </div>
     );
 };

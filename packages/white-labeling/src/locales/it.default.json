@@ -1,0 +1,624 @@
+{
+    "login": {
+        "title": "Bentornato",
+        "subtitle": "Accedi al tuo account",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Accedi",
+        "google": "Continua con Google",
+        "loading": "Accesso...",
+        "logging_in": "Accesso in corso...",
+        "email_placeholder": "admin@esempio.it"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "events": "Eventi",
+        "staff": "Staff",
+        "settings": "Impostazioni",
+        "logout": "Esci"
+    },
+    "admin_events": {
+        "title": "Eventi",
+        "subtitle": "Gestisci le tue campagne di raccolta fondi",
+        "create": "Crea Evento",
+        "goal": "Obiettivo",
+        "donors": "Donatori",
+        "progress": "Progresso",
+        "manage_event": "Gestisci Evento",
+        "create_title": "Crea Nuova Campagna",
+        "create_subtitle": "Lancia una nuova campagna di raccolta fondi",
+        "details": "Dettagli Evento",
+        "details_desc": "Informazioni base sulla tua campagna",
+        "name": "Nome Campagna",
+        "slug": "Slug URL",
+        "goal_amount": "Obiettivo Raccolta",
+        "create_action": "Crea Campagna",
+        "create_placeholder_slug": "mio-evento",
+        "create_placeholder_goal": "10000",
+        "layout": {
+            "title": "Gestione Evento"
+        },
+        "status": {
+            "active": "ATTIVO",
+            "draft": "BOZZA",
+            "closed": "CHIUSO"
+        },
+        "total_raised": "Totale Raccolto",
+        "event_date": "Data Evento",
+        "dashboard": {
+            "title": "Dashboard",
+            "overview": "Panoramica Dashboard",
+            "collector_app": "App Collettore",
+            "launch_live": "Lancia Live",
+            "latest_transactions_for": "Ultime transazioni per {{name}}",
+            "progress_of_goal": "{{progress}}% dell'obiettivo",
+            "unique_contributors": "Contributori unici",
+            "target_amount": "Importo target",
+            "manage_donations": "Gestisci e traccia le donazioni"
+        },
+        "donations": "Donazioni",
+        "settings": "Impostazioni",
+        "donations_list": "Tutte le Donazioni",
+        "showing_donations": "Mostrando {{count}} di {{total}} donazioni",
+        "search_placeholder": "Cerca per nome o email...",
+        "filter_status": "Stato",
+        "back_to_events": "Torna agli Eventi",
+        "event_console": "Console Evento",
+        "export": "Esporta CSV",
+        "export_pdf": "Esporta PDF (ZIP)",
+        "download_receipt": "Scarica Ricevuta",
+        "team": "Assegnazione",
+        "donation_modal": {
+            "edit_title": "Modifica Donazione",
+            "edit_description": "Aggiorna dettagli donatore.",
+            "cancel_title": "Annulla Donazione",
+            "cancel_description": "Sei sicuro? Questa azione non può essere annullata.",
+            "donor_name": "Nome Donatore",
+            "donor_email": "Email Donatore",
+            "hide_public": "Nascondi dal feed pubblico (Anonimo)",
+            "message": "Messaggio",
+            "message_placeholder": "Messaggio donazione...",
+            "save_changes": "Salva Modifiche",
+            "keep": "Mantieni Donazione",
+            "refund_stripe": "Rimborsa via Stripe",
+            "refund_desc": "Tenta rimborso automatico.",
+            "offline_refund_notice": "I pagamenti offline devono essere rimborsati manualmente.",
+            "refund_and_cancel": "Rimborsa & Annulla",
+            "cancel_only": "Annulla Donazione",
+            "summary": "Donazione di {{amount}} da {{donor}}",
+            "success_update": "Donazione aggiornata con successo",
+            "error_update": "Errore aggiornamento donazione",
+            "success_cancel": "Donazione annullata",
+            "success_refund": "Donazione rimborsata e annullata",
+            "error_cancel": "Errore annullamento donazione"
+        }
+    },
+    "admin_team": {
+        "title": "Pool Globale Staff",
+        "subtitle": "Gestisci tutti i volontari sulla piattaforma",
+        "title_assign": "Team Evento",
+        "subtitle_assign": "Assegna volontari a questo evento",
+        "assign_member": "Assegna Membro",
+        "assign_member_desc": "Seleziona un volontario dal pool.",
+        "pool_title": "Pool Volontari",
+        "pool_desc": "Clicca per aggiungere",
+        "assigned_title_short": "Team Assegnato",
+        "assigned_empty": "Nessuno ancora assegnato",
+        "pool_empty": "Nessun volontario disponibile",
+        "assigned_title": "Volontari Assegnati",
+        "assigned_desc": "Questi volontari sono autorizzati a raccogliere donazioni.",
+        "add_member": "Aggiungi al Pool",
+        "add_member_desc": "Aggiungi nuovo volontario al pool globale.",
+        "member_name": "Nome Membro",
+        "pin_code": "Codice PIN",
+        "pin_placeholder": "es. 1234",
+        "unassign": "Rimuovi dall'evento",
+        "confirm_unassign": "Sei sicuro di voler rimuovere questo membro?",
+        "success_created": "Membro aggiunto al pool.",
+        "success_assigned": "Membro assegnato.",
+        "success_revoked": "Membro rimosso.",
+        "error_creation": "Errore aggiunta.",
+        "error_assignment": "Errore assegnazione.",
+        "error_revocation": "Errore rimozione.",
+        "confirm_delete_permanent": "ATTENZIONE: Questo eliminerà definitivamente il volontario.",
+        "manage_title": "Gestione Staff",
+        "manage_subtitle": "Gestisci il pool globale e i PIN.",
+        "edit_member": "Modifica Membro",
+        "edit_member_desc": "Aggiorna dettagli.",
+        "create_member_desc": "Crea nuovo membro staff.",
+        "member_placeholder": "es. Mario Rossi",
+        "save_changes": "Salva Modifiche",
+        "pool_description": "Tutti i volontari registrati.",
+        "table_member": "Membro",
+        "table_pin": "Codice PIN",
+        "table_assignments": "Assegnazioni",
+        "loading_staff": "Caricamento staff...",
+        "no_staff_found": "Nessun membro trovato.",
+        "events_count": "{{count}} eventi",
+        "confirm_delete_title": "Elimina membro staff",
+        "member_updated": "Membro aggiornato con successo"
+    },
+    "live": {
+        "title": "Schermo Live",
+        "status": {
+            "connected": "Connesso",
+            "connecting": "Connessione..."
+        },
+        "new_donation": "Nuova Donazione!",
+        "waiting": "In attesa di donazioni...",
+        "scan_to_donate": "SCANSIONA PER DONARE",
+        "total_raised": "Totale Raccolto",
+        "goal": "Obiettivo",
+        "give_at": "Dona su <1>{{url}}</1>",
+        "progress": "Progresso",
+        "scan_to_contribute": "Scansiona per contribuire",
+        "recent_gifts": "Doni Recenti",
+        "target": "Target",
+        "join_the_impact": "Unisciti all'impatto",
+        "live_feed": "Feed Live"
+    },
+    "donation": {
+        "title": "Fai una Donazione",
+        "subtitle": "Supporta la nostra causa",
+        "select_amount": "Seleziona Importo",
+        "custom_amount": "Importo Personalizzato",
+        "contact_info": "Informazioni Contatto",
+        "payment": "Dettagli Pagamento",
+        "name": "Nome Completo",
+        "email": "Email",
+        "message": "Messaggio (Opzionale)",
+        "phone": "Numero di Telefono",
+        "phone_required": "Telefono richiesto",
+        "address": "Indirizzo",
+        "company": "Azienda / Organizzazione",
+        "anonymous": "Rendi donazione anonima",
+        "submit": "Dona {{amount}}",
+        "processing": "Elaborazione...",
+        "success": "Grazie per la tua donazione!",
+        "success_detail": "La tua donazione di {{amount}} è stata ricevuta.",
+        "make_another": "Fai un'altra donazione",
+        "error": "Qualcosa è andato storto. Riprova.",
+        "error_init": "Errore inizializzazione.",
+        "error_invalid_event": "Configurazione evento non valida.",
+        "pay_now": "Paga Ora",
+        "date": "Data",
+        "donor": "Donatore",
+        "amount": "Importo",
+        "status": "Stato",
+        "export_failed": "Esportazione fallita.",
+        "receipt_failed": "Download ricevuta fallito."
+    },
+    "common": {
+        "logo": "Logo",
+        "back": "Indietro",
+        "actions": "Azioni",
+        "loading": "Caricamento dati...",
+        "no_results": "Nessun risultato.",
+        "all": "Tutti",
+        "edit": "Modifica",
+        "cancel": "Annulla",
+        "delete": "Elimina",
+        "logout": "Esci",
+        "save_changes": "Salva Modifiche",
+        "saving": "Salvataggio...",
+        "saved_successfully": "Salvato con successo",
+        "amount": "Importo",
+        "anonymous": "Anonimo",
+        "app_name": "Piattaforma Fundraising"
+    },
+    "status": {
+        "completed": "Completato",
+        "pending": "In attesa",
+        "failed": "Fallito",
+        "cancelled": "Annullato",
+        "refunded": "Rimborsato"
+    },
+    "admin": {
+        "header": "Admin Fundraising"
+    },
+    "app_header": {
+        "title": "Evento Fundraising",
+        "home": "Home",
+        "online": "Online",
+        "offline": "Offline"
+    },
+    "staff": {
+        "collector_title": "App Collettore",
+        "enter_amount": "Inserisci Importo",
+        "submit_error": "Errore invio.",
+        "success_offline": "OFFLINE: Salvato! \nImporto: {{amount}}",
+        "success_online": "SUCCESSO: Raccolto! \nImporto: {{amount}}",
+        "back_online": "Online: Sincronizzati {{count}} donazioni!",
+        "collect_button": "Raccogli Donazione",
+        "donor": {
+            "name_label": "Nome (Opzionale)",
+            "name_placeholder": "Mario Rossi",
+            "email_label": "Email (Opzionale)",
+            "email_placeholder": "mario@esempio.it"
+        },
+        "keypad": {
+            "clear": "Cancella"
+        },
+        "type": {
+            "cash": "Contanti",
+            "check": "Assegno",
+            "pledge": "Promessa",
+            "other": "Altro"
+        },
+        "login": {
+            "title": "Accesso Staff",
+            "subtitle": "Inserisci PIN",
+            "pin_label": "Codice PIN",
+            "loading": "Connessione...",
+            "submit": "Connetti"
+        }
+    },
+    "thankyou": {
+        "receipt": {
+            "transaction_id": "ID Transazione",
+            "date": "Data",
+            "from": "Da",
+            "share_label": "Condividi"
+        },
+        "share_text": "Ho appena donato! Unisciti a me su {{url}}"
+    },
+    "root_landing": {
+        "hero": {
+            "subtitle": "Scopri e supporta le nostre campagne.",
+            "badge": "Piattaforma Impact",
+            "explore": "Esplora Eventi"
+        },
+        "events": {
+            "title": "Campagne Attive",
+            "subtitle": "Fai la differenza.",
+            "showing_count": "Mostrando {{count}} eventi"
+        },
+        "event_card": {
+            "raised": "Raccolto",
+            "view": "Vedi",
+            "upcoming": "In arrivo",
+            "active": "Attivo",
+            "goal_of": "su {{amount}} obiettivo"
+        },
+        "empty": "Nessuna campagna attiva.",
+        "footer": {}
+    },
+    "landing": {
+        "hero": {
+            "welcome": "Benvenuto a",
+            "description": "La tua donazione ci aiuta a raggiungere il nostro obiettivo di {{goal}}."
+        },
+        "cta": {
+            "donate": "Dona Ora",
+            "live": "Guarda Live"
+        },
+        "features": {
+            "impact": {
+                "title": "Impatto",
+                "description": "Ogni donazione aiuta direttamente."
+            },
+            "community": {
+                "title": "Comunità",
+                "description": "Unisciti a centinaia di altri donatori."
+            },
+            "interactive": {
+                "title": "Interattivo",
+                "description": "Vedi il tuo nome sullo schermo."
+            }
+        },
+        "footer": {
+            "website": "Sito Web",
+            "support": "Supporto",
+            "rights": "Tutti i diritti riservati.",
+            "staff": "Login Staff"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "overview": "Panoramica",
+        "platform_overview": "Panoramica Piattaforma",
+        "recent_donations": "Donazioni Recenti",
+        "chart_placeholder": "Grafico",
+        "export_receipts": "Esporta Ricevute (ZIP)",
+        "export_failed": "Export fallito.",
+        "stats": {
+            "revenue": "Ricavi Totali",
+            "events_count": "Su {{count}} eventi",
+            "active_events": "Eventi Attivi",
+            "currently_live": "Ora Live",
+            "total_donors": "Totale Donatori",
+            "donors_description": "Donatori unici",
+            "total_revenue": "Ricavi Totali",
+            "donations": "Donazioni",
+            "staff_members": "Membri Staff",
+            "revenue_trend": "Trend Ricavi"
+        },
+        "campaigns": {
+            "title": "Campagne Attive",
+            "empty": "Nessun evento attivo.",
+            "view_all": "Vedi tutti"
+        },
+        "activity": {
+            "title": "Attività Recente",
+            "empty": "Nessuna attività"
+        }
+    },
+    "error": {
+        "title": "Ops!",
+        "subtitle": "Qualcosa è andato storto",
+        "message": "Errore inaspettato.",
+        "reload": "Ricarica"
+    },
+    "not_found": {
+        "title": "Pagina Non Trovata",
+        "message": "La pagina cercata non esiste.",
+        "button": "Torna alla Home",
+        "event_not_found": "Evento non trovato",
+        "back_to_home": "Torna alla Home",
+        "back_to_event": "Torna all'Evento",
+        "back_to_events": "Torna agli Eventi"
+    },
+    "validation": {
+        "required": "Campo obbligatorio",
+        "invalid_type": "Atteso {{expected}}, ricevuto {{received}}",
+        "too_small": {
+            "string": "Almeno {{count}} caratteri",
+            "number": "Maggiore o uguale a {{count}}",
+            "array": "Almeno {{count}} elementi",
+            "set": "Almeno {{count}} elementi",
+            "date": "Data maggiore o uguale a {{count}}"
+        },
+        "too_big": {
+            "string": "Massimo {{count}} caratteri",
+            "number": "Minore o uguale a {{count}}",
+            "array": "Massimo {{count}} elementi",
+            "set": "Massimo {{count}} elementi",
+            "date": "Data minore o uguale a {{count}}"
+        },
+        "invalid_string": {
+            "email": "Email non valida",
+            "url": "URL non valido",
+            "uuid": "UUID non valido",
+            "regex": "Formato non valido"
+        },
+        "invalid_enum_value": "Valore non valido.",
+        "invalid_date": "Data non valida",
+        "not_multiple_of": "Multiplo di {{multipleOf}}",
+        "not_finite": "Deve essere finito",
+        "custom": "Input non valido"
+    },
+    "admin_branding": {
+        "title": "Personalizzazione",
+        "subtitle": "Gestisci identità e tema.",
+        "save": "Salva Modifiche",
+        "saving": "Salvataggio...",
+        "success_save": "Salvato con successo",
+        "error_save": "Errore salvataggio",
+        "nav": {
+            "identity": "Identità",
+            "communication": "Comunicazione",
+            "theme": "Design",
+            "assets": "Assets",
+            "modules": "Moduli & Localizzazione"
+        },
+        "preview": {
+            "title": "Anteprima Live",
+            "organization_placeholder": "Nome Organizzazione",
+            "charity_placeholder": "Ente Benefico",
+            "email_placeholder": "contatto@esempio.it",
+            "theme_colors": "Colori Tema"
+        },
+        "identity": {
+            "title": "Dettagli Identità",
+            "description": "Informazioni base.",
+            "org_name": "Nome Organizzazione",
+            "org_placeholder": "es. Charity Gala Inc.",
+            "org_hint": "Appare nel footer.",
+            "website": "Sito Web",
+            "website_placeholder": "https://..."
+        },
+        "communication": {
+            "contact": {
+                "title": "Contatti",
+                "description": "Info pubbliche.",
+                "email": "Email Supporto",
+                "email_placeholder": "supporto@...",
+                "phone": "Telefono",
+                "phone_placeholder": "+39...",
+                "address": "Indirizzo"
+            },
+            "email": {
+                "title": "Ricevute Email",
+                "description": "Configura ricevute automatiche.",
+                "enable": "Abilita",
+                "sender": "Nome Mittente",
+                "reply_to": "Rispondi a",
+                "subject": "Oggetto",
+                "footer": "Footer Email"
+            },
+            "sharing": {
+                "title": "Social Sharing",
+                "description": "Opzioni condivisione.",
+                "enable": "Abilita",
+                "networks": "Network",
+                "facebook": "Facebook",
+                "twitter": "X (Twitter)",
+                "linkedin": "LinkedIn"
+            },
+            "pdf": {
+                "title": "Ricevute PDF",
+                "description": "Ricevute scaricabili.",
+                "enable": "Abilita",
+                "template": "Modello",
+                "formal": "Formale",
+                "minimal": "Minimale",
+                "footer": "Testo Footer"
+            }
+        },
+        "theme": {
+            "colors": {
+                "title": "Colori",
+                "description": "Palette principale.",
+                "primary": "Primario",
+                "primary_fg": "Testo Primario",
+                "background": "Sfondo",
+                "foreground": "Primo Piano",
+                "card": "Sfondo Carta",
+                "card_fg": "Testo Carta",
+                "muted": "Smorzato",
+                "muted_fg": "Testo Smorzato"
+            },
+            "elements": {
+                "title": "Elementi UI",
+                "border": "Bordo",
+                "input": "Sfondo Input",
+                "ring": "Anello Focus",
+                "radius": "Raggio"
+            },
+            "secondary_colors": {
+                "title": "Colori Secondari",
+                "secondary": "Secondario",
+                "secondary_fg": "Testo Secondario",
+                "accent": "Accento",
+                "accent_fg": "Testo Accento",
+                "destructive": "Distuttivo",
+                "destructive_fg": "Testo Distuttivo"
+            },
+            "custom": {
+                "title": "Variabili CSS",
+                "description": "Override avanzati.",
+                "add": "Aggiungi Variabile",
+                "name": "Nome",
+                "value": "Valore",
+                "empty": "Nessuna variabile"
+            }
+        },
+        "assets": {
+            "title": "Assets Digitali",
+            "description": "Loghi e immagini.",
+            "logo": "URL Logo",
+            "logo_hint": "PNG Trasparente consigliato.",
+            "favicon": "URL Favicon",
+            "backgrounds": "Immagini Sfondo",
+            "landing": "Landing Page",
+            "donor": "Donatore/Auth",
+            "live": "Schermo Live",
+            "links_title": "Link Interni",
+            "links_desc": "URL destinazione card.",
+            "impact_url": "URL Impatto",
+            "community_url": "URL Comunità",
+            "interactive_url": "URL Interattivo"
+        },
+        "localization": {
+            "title": "Localizzazione",
+            "description": "Lingue e override.",
+            "supported_languages": "Lingue Supportate",
+            "label_overrides": "Override Etichette",
+            "language": "Lingua",
+            "key": "Chiave",
+            "key_placeholder": "es. auth.login",
+            "no_overrides": "Nessun override per {{locale}}",
+            "translation": "Traduzione..."
+        },
+        "modules": {
+            "admin_layout": {
+                "title": "Admin"
+            },
+            "payment_nav": "Pagamento",
+            "payment_title": "Impostazioni Pagamento",
+            "payment_description": "Configura fornitori.",
+            "currency": "Valuta",
+            "provider": "Fornitore",
+            "stripe": {
+                "title": "Impostazioni Stripe",
+                "publishable_key": "Chiave Pubblica",
+                "secret_key": "Chiave Segreta"
+            },
+            "paypal": {
+                "title": "Impostazioni PayPal",
+                "client_id": "Client ID",
+                "secret": "Secret",
+                "sandbox": "Modalità Sandbox"
+            }
+        }
+    },
+    "event_settings": {
+        "title": "Impostazioni Evento",
+        "subtitle": "Configura dettagli e aspetto.",
+        "nav": {
+            "general": "Generale",
+            "branding": "Design & Branding"
+        },
+        "general": {
+            "basic_details_title": "Dettagli Base",
+            "basic_details_desc": "Informazioni principali.",
+            "event_name": "Nome Evento",
+            "description": "Descrizione",
+            "url_slug": "Slug URL",
+            "status": "Stato",
+            "status_placeholder": "Seleziona stato",
+            "goal_amount": "Obiettivo",
+            "event_date": "Data",
+            "form_config_title": "Configurazione Modulo",
+            "form_config_desc": "Campi aggiuntivi.",
+            "collect_phone": "Raccogli telefono",
+            "collect_address": "Raccogli indirizzo",
+            "collect_company": "Raccogli azienda",
+            "collect_message": "Raccogli messaggio",
+            "allow_anonymous": "Consenti anonimo",
+            "success_save": "Salvato con successo!",
+            "error_save": "Errore salvataggio",
+            "no_event": "Nessun evento trovato."
+        },
+        "branding": {
+            "success_save": "Design aggiornato",
+            "error_save": "Errore salvataggio",
+            "strategy_title": "Strategia Brand",
+            "strategy_desc": "Globale o personalizzata.",
+            "use_global": "Usa Brand Globale (Consigliato)",
+            "use_global_desc": "Eredita logo e colori.",
+            "preview_title": "Anteprima",
+            "org_default": "Default",
+            "display_name": "Titolo Visualizzato (Override)",
+            "display_name_desc": "Lascia vuoto per default.",
+            "display_name_placeholder": "es. Gala Annuale",
+            "logo_url": "URL Logo Evento",
+            "accent_color": "Colore Accento",
+            "override_warning": "Override del design standard.",
+            "apply_overrides": "Applica Override",
+            "saved_successfully": "Salvato con successo",
+            "save_changes": "Salva",
+            "subtitle": "Configura branding.",
+            "live_page_title": "Tema Live Page",
+            "live_page_desc": "Aspetto display live.",
+            "landing_links_title": "Link Landing Page",
+            "landing_links_desc": "Configura link esterni.",
+            "theme_overrides": "Override Tema (CSS)",
+            "theme_overrides_desc": "Nessun override."
+        }
+    },
+    "payment": {
+        "error_missing_config": "Configurazione mancante.",
+        "error_processing": "Errore elaborazione.",
+        "error_generic": "Pagamento fallito.",
+        "unknown_provider": "Provider sconosciuto: {{providerId}}"
+    },
+    "date": {
+        "years_ago": "{{count}} anni fa",
+        "months_ago": "{{count}} mesi fa",
+        "days_ago": "{{count}} giorni fa",
+        "hours_ago": "{{count}} ore fa",
+        "minutes_ago": "{{count}} minuti fa",
+        "seconds_ago": "{{count}} secondi fa",
+        "just_now": "proprio ora"
+    },
+    "pagination": {
+        "previous": "Precedente",
+        "next": "Successivo",
+        "more": "Più pagine"
+    },
+    "confirmation": {
+        "title": "Sei sicuro?",
+        "description": "Questa azione è irreversibile."
+    }
+}

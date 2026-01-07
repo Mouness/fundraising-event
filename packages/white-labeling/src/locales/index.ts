@@ -1,5 +1,7 @@
 import enDefault from './en.default.json';
 import frDefault from './fr.default.json';
+import deDefault from './de.default.json';
+import itDefault from './it.default.json';
 import { getGlobalConfig, getEventConfig } from '../store';
 import { deepMerge } from '../utils/merge';
 
@@ -7,7 +9,9 @@ import { SupportedLocale } from '../types/locales';
 
 const defaultLocales: Record<SupportedLocale, any> = {
     en: enDefault,
-    fr: frDefault
+    fr: frDefault,
+    de: deDefault,
+    it: itDefault
 };
 
 

@@ -4,6 +4,16 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock dependencies
 const mockLogin = vi.fn();
+const mockNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => {
+    const actual = await vi.importActual('react-router-dom');
+    return {
+        ...actual,
+        useNavigate: () => mockNavigate,
+    };
+});
+
 vi.mock('@features/auth/hooks/useLogin', () => ({
     useLogin: () => ({
         login: mockLogin,
@@ -38,6 +48,7 @@ vi.mock('@core/components/ui/label', () => ({
 describe('LoginPage', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        localStorage.clear();
     });
 
     it('should render login form', async () => {
@@ -75,4 +86,38 @@ describe('LoginPage', () => {
         });
         expect(mockLogin).not.toHaveBeenCalled();
     });
+
+    it('should redirect to admin if already logged in as ADMIN', async () => {
+        const user = { role: 'ADMIN' };
+        localStorage.setItem('token', 'fake-token');
+        localStorage.setItem('user', JSON.stringify(user));
+
+        render(<LoginPage />);
+
+        await waitFor(() => {
+            expect(mockNavigate).toHaveBeenCalledWith('/admin');
+        });
+    });
+
+    it('should redirect to admin if already logged in as STAFF', async () => {
+        const user = { role: 'STAFF' };
+        localStorage.setItem('token', 'fake-token');
+        localStorage.setItem('user', JSON.stringify(user));
+
+        render(<LoginPage />);
+
+        await waitFor(() => {
+            expect(mockNavigate).toHaveBeenCalledWith('/admin');
+        });
+    });
+
+    it('should not redirect if user parsing fails', () => {
+        localStorage.setItem('token', 'fake-token');
+        localStorage.setItem('user', 'invalid-json');
+
+        render(<LoginPage />);
+
+        expect(mockNavigate).not.toHaveBeenCalled();
+    });
 });
+

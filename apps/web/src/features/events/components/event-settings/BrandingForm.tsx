@@ -4,6 +4,7 @@ import { Input } from '@core/components/ui/input';
 import { Label } from '@core/components/ui/label';
 import { Checkbox } from '@core/components/ui/checkbox';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@core/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@core/components/ui/select';
 
 import { Button } from '@core/components/ui/button';
 import { AlertCircle as AlertIcon, Palette, Image as ImageIcon, Mail, Plus, Trash2 } from 'lucide-react';
@@ -46,12 +47,56 @@ export const BrandingForm = () => {
                         </div>
                     </div>
 
+                    {/* Always visible Landing Page Links */}
+                    <div className="space-y-4 pt-6 border-t">
+                        <Label className="text-base font-semibold block mb-2">{t('admin_branding.assets.links_title', 'Landing Page External Links')}</Label>
+                        <p className="text-sm text-muted-foreground mb-4">{t('admin_branding.assets.links_desc', 'Configure the destination URLs for the landing page feature boxes.')}</p>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid gap-2">
+                                <Label htmlFor="landingImpact" className="text-xs font-semibold">{t('admin_branding.assets.impact_url', 'Impact URL')}</Label>
+                                <Input id="landingImpact" placeholder="https://..." {...register('landing.impact.url')} />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="landingCommunity" className="text-xs font-semibold">{t('admin_branding.assets.community_url', 'Community URL')}</Label>
+                                <Input id="landingCommunity" placeholder="https://..." {...register('landing.community.url')} />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="landingInteractive" className="text-xs font-semibold">{t('admin_branding.assets.interactive_url', 'Interactive URL')}</Label>
+                                <Input id="landingInteractive" placeholder="https://..." {...register('landing.interactive.url')} />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Live Page Customization - Always Visible */}
+                    <div className="space-y-4 pt-6 border-t">
+                        <Label className="text-base font-semibold block mb-2">{t('event_settings.branding.live_page_title', 'Live Page Theme')}</Label>
+                        <p className="text-sm text-muted-foreground mb-4">{t('event_settings.branding.live_page_desc', 'Customize the appearance of the real-time donation display.')}</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid gap-2">
+                                <Label>Theme Selection</Label>
+                                <Select
+                                    onValueChange={(value) => setValue('live.theme', value)}
+                                    value={watch('live.theme') || 'classic'}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a theme" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="classic">Classic (Default)</SelectItem>
+                                        <SelectItem value="modern">Modern (Bold)</SelectItem>
+                                        <SelectItem value="elegant">Elegant (Gold & Serif)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Custom Branding Fields - Only show if NOT using global */}
                     {!useGlobalBranding && (
                         <div className="space-y-8 pt-6 border-t animate-in fade-in slide-in-from-top-2">
                             {/* Basic Identity */}
                             <div className="space-y-4">
-                                <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground mb-4">Identity & Assets</h3>
+                                <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground mb-4">{t('event_settings.branding.identity_assets', 'Identity & Assets')}</h3>
                                 <div className="grid gap-4">
                                     <div className="grid gap-2">
                                         <Label htmlFor="organization">{t('event_settings.branding.display_name') || 'Event Display Title (Override)'}</Label>
@@ -71,17 +116,19 @@ export const BrandingForm = () => {
                                     </div>
                                     <div className="grid gap-2">
                                         <Label htmlFor="bgLanding" className="flex items-center gap-2">
-                                            <ImageIcon className="h-3 w-3" /> Landing Background
+                                            <ImageIcon className="h-3 w-3" /> {t('event_settings.branding.background_landing', 'Landing Background')}
                                         </Label>
                                         <Input id="bgLanding" placeholder="https://..." {...register('assets.backgroundLanding')} />
                                     </div>
                                     <div className="grid gap-2">
                                         <Label htmlFor="bgLive" className="flex items-center gap-2">
-                                            <ImageIcon className="h-3 w-3" /> Live Screen Background
+                                            <ImageIcon className="h-3 w-3" /> {t('event_settings.branding.background_live', 'Live Screen Background')}
                                         </Label>
                                         <Input id="bgLive" placeholder="https://..." {...register('assets.backgroundLive')} />
                                     </div>
                                 </div>
+
+
                             </div>
 
                             <div className="h-px bg-border" />
@@ -89,20 +136,20 @@ export const BrandingForm = () => {
                             {/* CSS Variables */}
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">Theme Overrides (CSS Variables)</h3>
+                                    <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{t('event_settings.branding.theme_overrides', 'Theme Overrides (CSS Variables)')}</h3>
                                     <Button
                                         type="button"
                                         variant="outline"
                                         size="sm"
                                         onClick={() => append({ key: '--primary', value: '#000000' })}
                                     >
-                                        <Plus className="h-3 w-3 mr-2" /> Add Variable
+                                        <Plus className="h-3 w-3 mr-2" /> {t('common.add_variable', 'Add Variable')}
                                     </Button>
                                 </div>
 
                                 <div className="space-y-3">
                                     {fields.length === 0 && (
-                                        <p className="text-sm text-muted-foreground italic">No overrides. Click "Add Variable" to customize theme.</p>
+                                        <p className="text-sm text-muted-foreground italic">{t('event_settings.branding.no_overrides', 'No overrides. Click "Add Variable" to customize theme.')}</p>
                                     )}
                                     {fields.map((field, index) => (
                                         <div key={field.id} className="flex gap-2 items-start">
@@ -120,12 +167,10 @@ export const BrandingForm = () => {
                                 </div>
                             </div>
 
-                            <div className="h-px bg-border" />
-
                             {/* Communication Overrides */}
                             <div className="space-y-4">
                                 <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                                    <Mail className="h-4 w-4" /> Communication Overrides
+                                    <Mail className="h-4 w-4" /> {t('event_settings.branding.communication.title', 'Communication Overrides')}
                                 </h3>
 
                                 <div className="flex items-center space-x-2 mb-4">
@@ -134,24 +179,24 @@ export const BrandingForm = () => {
                                         checked={communicationEnabled}
                                         onCheckedChange={(checked) => setValue('communication.enabled', checked as boolean)}
                                     />
-                                    <Label htmlFor="commEnabled">Override default communication settings</Label>
+                                    <Label htmlFor="commEnabled">{t('event_settings.branding.communication.override_label', 'Override default communication settings')}</Label>
                                 </div>
 
                                 {communicationEnabled && (
                                     <div className="grid gap-4 pl-6 border-l-2 border-muted animate-in fade-in">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div className="grid gap-2">
-                                                <Label>Sender Name</Label>
-                                                <Input {...register('communication.senderName')} placeholder="e.g. Gala Team" />
+                                                <Label>{t('admin_branding.communication.sender_name', 'Sender Name')}</Label>
+                                                <Input {...register('communication.senderName')} placeholder={t('admin_branding.communication.sender_name_placeholder', 'e.g. Gala Team')} />
                                             </div>
                                             <div className="grid gap-2">
-                                                <Label>Reply-To Email</Label>
+                                                <Label>{t('admin_branding.communication.reply_to', 'Reply-To Email')}</Label>
                                                 <Input {...register('communication.replyTo')} placeholder="gala@example.com" />
                                             </div>
                                         </div>
                                         <div className="grid gap-2">
-                                            <Label>Subject Line Prefix</Label>
-                                            <Input {...register('communication.subjectLine')} placeholder="Thanks for attending the Gala!" />
+                                            <Label>{t('admin_branding.communication.subject_line', 'Subject Line Prefix')}</Label>
+                                            <Input {...register('communication.subjectLine')} placeholder={t('admin_branding.communication.subject_line_placeholder', 'Thanks for attending the Gala!')} />
                                         </div>
                                     </div>
                                 )}

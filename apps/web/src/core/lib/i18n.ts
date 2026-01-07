@@ -11,12 +11,14 @@ i18n
     .init({
         resources: {
             en: { common: locales.en },
-            fr: { common: locales.fr }
+            fr: { common: locales.fr },
+            de: { common: locales.de },
+            it: { common: locales.it }
         },
         fallbackLng: 'en',
         defaultNS: 'common',
         ns: ['common'],
-        debug: import.meta.env.DEV,
+        debug: false, // import.meta.env.DEV
 
         interpolation: {
             escapeValue: false,

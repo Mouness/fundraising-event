@@ -12,7 +12,28 @@ import { GeneralForm } from '../components/event-settings/GeneralForm';
 import { BrandingForm } from '../components/event-settings/BrandingForm';
 import { useEvent } from '../context/EventContext';
 import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { type EventConfig } from '@fundraising/white-labeling';
 import { eventSettingsSchema } from '../schemas/event-settings.schema';
+import type { EventSettingsFormValues } from '../schemas/event-settings.schema';
+
+// Helper to persist event-specific settings that should remain even when Global Branding is enabled.
+const persistFunctionalSettings = async (eventId: string, values: EventSettingsFormValues) => {
+    const payload: any = {};
+    // Persist Live Theme
+    if (values.live) {
+        payload.live = values.live;
+    }
+    // Persist Landing Page Links
+    if (values.landing) {
+        payload.content = {
+            landing: values.landing
+        };
+    }
+    // Only fire request if there's something to save
+    if (Object.keys(payload).length > 0) {
+        await api.patch(`/events/${eventId}/branding`, payload);
+    }
+};
 
 export const EventSettingsPage = () => {
     const { t } = useTranslation('common');
@@ -110,12 +131,20 @@ export const EventSettingsPage = () => {
                 backgroundLanding: data.theme?.assets?.backgroundLanding || '',
                 backgroundLive: data.theme?.assets?.backgroundLive || '',
             },
+            landing: {
+                impact: { url: data.content?.landing?.impact?.url || '' },
+                community: { url: data.content?.landing?.community?.url || '' },
+                interactive: { url: data.content?.landing?.interactive?.url || '' },
+            },
             themeVariables: variableArray,
             communication: {
                 enabled: data.overrides?.communication ?? !!data.communication?.email?.senderName,
                 senderName: data.communication?.email?.senderName || '',
                 replyTo: data.communication?.email?.replyTo || '',
                 subjectLine: data.communication?.email?.subjectLine || '',
+            },
+            live: {
+                theme: data.live?.theme || 'classic'
             }
         });
     }, [event, eventSettings, form]);
@@ -139,6 +168,10 @@ export const EventSettingsPage = () => {
             if (values.useGlobalBranding) {
                 // Delete event-specific branding overrides (reset to global)
                 await api.delete(`/events/${event.id}/branding`);
+
+                // CRITICAL: We must explicitly save settings that are event-specific 
+                // but technically part of the "branding" structure (Live Theme, Landing Links).
+                await persistFunctionalSettings(event.id, values);
             } else {
                 // Transform variables array back to object
                 const variablesMap = (values.themeVariables || []).reduce((acc: Record<string, string>, curr: { key: string; value: string }) => {
@@ -147,23 +180,23 @@ export const EventSettingsPage = () => {
                 }, {});
 
                 await api.patch(`/events/${event.id}/branding`, {
-                    organization: values.organization || null,
+                    communication: {
+                        legalName: values.organization || undefined,
+                        ...(values.communication?.enabled ? {
+                            senderName: values.communication?.senderName,
+                            replyTo: values.communication?.replyTo,
+                            subjectLine: values.communication?.subjectLine,
+                        } : {})
+                    },
                     theme: {
                         assets: values.assets,
                         variables: variablesMap,
                     },
-                    supportEmail: values.communication?.supportEmail,
-                    phone: values.communication?.phone,
-                    website: values.communication?.website,
-                    address: values.communication?.address,
-                    communication: values.communication?.enabled ? {
-                        email: {
-                            senderName: values.communication?.senderName,
-                            replyTo: values.communication?.replyTo,
-                            subjectLine: values.communication?.subjectLine,
-                        }
-                    } : null
-                });
+                    content: {
+                        landing: values.landing
+                    },
+                    live: values.live
+                } as any as Partial<EventConfig>);
             }
         },
         onSuccess: () => {

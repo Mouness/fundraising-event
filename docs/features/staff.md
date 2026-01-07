@@ -1,6 +1,7 @@
 # Staff Offline Mode (Collector App)
 
 ## Overview
+
 The Staff feature is designed for on-site volunteers and staff members to collect donations physically (cash, check, or assisted card entry). It prioritizes reliability, allowing operation in unstable network conditions via an Offline Queue.
 
 ## Feature Breakdown
@@ -15,37 +16,93 @@ The Staff feature is designed for on-site volunteers and staff members to collec
 - **Sync**: When connectivity is restored, the `SyncService` pushes queued items to the API.
 - **Feedback**: UI indicators show online/offline status and sync progress.
 
+### 3. Staff Management
+- **Global PIN Codes**: Staff members have unique PIN codes that work across all events.
+- **Multi-Event Support**: Staff can be assigned to multiple events.
+- **Performance Tracking**: Donations are linked to the staff member who collected them.
+
+---
+
+## Data Model
+
+```prisma
+model StaffMember {
+  id        String   @id @default(uuid())
+  code      String   @unique // PIN code (global)
+  name      String   // Name of the volunteer
+  events    Event[]  // Many-to-many with Events
+  donations Donation[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Donation {
+  // ... other fields
+  staffMemberId String?
+  staffMember   StaffMember? @relation(fields: [staffMemberId], references: [id])
+}
+```
+
 ---
 
 ## Implementation Details
 
 ### Frontend (`apps/web`)
 
-#### Page
+#### Pages
+
 - **`CollectorPage`** (`apps/web/src/features/staff/pages/CollectorPage.tsx`):
   - Main controller for the collector UI.
   - Handles keypad input state.
   - Integrates `SyncService` for submission.
 
+- **`EventTeamPage`** (`apps/web/src/features/staff/pages/EventTeamPage.tsx`):
+  - Displays staff members assigned to the event.
+  - Shows per-collector statistics.
+
 #### Services
-- **`SyncService.ts`**:
+
+- **`sync.service.ts`**:
   - Handles `POST /donations` via the centralized `@core/lib/api` client.
   - Catches network errors and delegates to `StorageService` for queuing.
   - `processQueue()`: Retries pending items when back online.
-- **`StorageService.ts`**:
+
+- **`storage.service.ts`**:
   - Wrapper around `localStorage` using "staff_donation_queue" key.
   - Methods: `saveToQueue`, `getQueue`, `removeFromQueue`.
 
 #### Components
+
 - **`Keypad`**: Reusable numeric input grid.
 - **`DonationTypeSelector`**: Toggle buttons for payment method.
 
 ### Backend (`apps/api`)
 
 #### Endpoints
-- **`POST /donations`**:
-  - Accepts `isOfflineCollected` flag.
-  - Allows `collectedAt` timestamp override (to reflect actual collection time, not sync time).
+
+| Method | Endpoint | Description | Auth |
+|:---|:---|:---|:---|
+| `POST` | `/auth/staff/login` | Staff PIN login | Public |
+| `GET` | `/staff` | List all staff members | Admin |
+| `POST` | `/staff` | Create new staff member | Admin |
+| `PUT` | `/staff/:id` | Update staff details | Admin |
+| `DELETE` | `/staff/:id` | Remove staff member | Admin |
+| `GET` | `/staff/:id/stats` | Get collector statistics | Admin |
+| `POST` | `/donations` | Record donation (with staffMemberId) | Staff |
+
+#### Service (`StaffService`)
+
+```typescript
+// Key methods
+async findAll(): Promise<StaffMember[]>
+async findByCode(code: string): Promise<StaffMember>
+async create(data: CreateStaffDto): Promise<StaffMember>
+async update(id: string, data: UpdateStaffDto): Promise<StaffMember>
+async delete(id: string): Promise<void>
+async getStats(id: string): Promise<StaffStats>
+```
+
+---
 
 ## Data Flow (Offline)
 
@@ -73,3 +130,35 @@ sequenceDiagram
     SyncService-->>CollectorPage: Success (Offline or Online)
     CollectorPage->>Staff: Shows Success Message
 ```
+
+---
+
+## Authentication Flow
+
+```mermaid
+sequenceDiagram
+    participant Staff
+    participant LoginPage
+    participant API
+    participant Database
+
+    Staff->>LoginPage: Enter PIN Code
+    LoginPage->>API: POST /auth/staff/login { code: "1234" }
+    API->>Database: Find StaffMember by code
+    Database-->>API: StaffMember record
+    API-->>LoginPage: { accessToken, user: { role: "STAFF" } }
+    LoginPage->>Staff: Redirect to CollectorPage
+```
+
+---
+
+## Collector Statistics
+
+Staff performance is tracked for each staff member:
+
+| Metric | Description |
+|:---|:---|
+| Total Collected | Sum of all donations by this staff member |
+| Donation Count | Number of donations collected |
+| Average Amount | Average donation amount |
+| Last Donation | Timestamp of most recent collection |

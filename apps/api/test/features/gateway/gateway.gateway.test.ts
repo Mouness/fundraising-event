@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const mockServer = {
   emit: vi.fn(),
+  to: vi.fn().mockReturnThis(),
 };
 
 const mockClient = {
@@ -42,8 +43,10 @@ describe('GatewayGateway', () => {
         currency: 'usd',
         donorName: 'Test',
         isAnonymous: false,
+        eventId: 'evt_1',
       };
-      gateway.emitDonation(payload);
+      gateway.emitDonation(payload as any);
+      expect(mockServer.to).toHaveBeenCalledWith('evt_1');
       expect(mockServer.emit).toHaveBeenCalledWith('donation.created', payload);
     });
   });

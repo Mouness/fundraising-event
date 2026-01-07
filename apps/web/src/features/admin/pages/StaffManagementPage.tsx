@@ -214,14 +214,14 @@ export const StaffManagementPage = () => {
                                 <Label htmlFor="name">{t('admin_team.member_name')}</Label>
                                 <Input id="name" {...form.register('name')} placeholder={t('admin_team.member_placeholder')} />
                                 {form.formState.errors.name && (
-                                    <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+                                    <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>
                                 )}
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="code">{t('admin_team.pin_code')}</Label>
                                 <Input id="code" {...form.register('code')} placeholder={t('admin_team.pin_placeholder')} />
                                 {form.formState.errors.code && (
-                                    <p className="text-sm text-red-500">{form.formState.errors.code.message}</p>
+                                    <p className="text-sm text-destructive">{form.formState.errors.code.message}</p>
                                 )}
                             </div>
                             <DialogFooter>

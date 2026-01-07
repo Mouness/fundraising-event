@@ -4,6 +4,7 @@ import { WhiteLabelingService } from '@/features/white-labeling/white-labeling.s
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { of } from 'rxjs';
 import { Buffer } from 'buffer';
 
 // Mock dependencies
@@ -94,6 +95,112 @@ describe('PdfService', () => {
 
       expect(buffer).toBeInstanceOf(Buffer);
       expect(mockCreatePdfKitDocument).toHaveBeenCalled();
+    });
+
+    it('should throw if event config not found', async () => {
+      mockWhiteLabelingService.getEventSettings.mockResolvedValue(null);
+      await expect(
+        service.generateReceipt('missing', {
+          amount: 1000,
+          donorName: 'John',
+          date: new Date(),
+          transactionId: 'tx1',
+        }),
+      ).rejects.toThrow('Event config not found');
+    });
+
+    it('should handle image fetching success', async () => {
+      mockWhiteLabelingService.getEventSettings.mockResolvedValue({
+        id: 'evt_1',
+        slug: 'slug',
+        communication: { pdf: { enabled: true } },
+        content: { title: 'Event' },
+        theme: { assets: { logo: 'http://example.com/logo.png' } },
+      });
+
+      mockHttpService.get.mockReturnValue(of({ data: Buffer.from('logo') }));
+      const mockStream = {
+        on: vi.fn((event, cb) => {
+          if (event === 'data') cb(Buffer.from('pdf'));
+          if (event === 'end') cb();
+          return mockStream;
+        }),
+        end: vi.fn(),
+      };
+      mockCreatePdfKitDocument.mockReturnValue(mockStream);
+
+      await service.generateReceipt('slug', {
+        amount: 1000,
+        donorName: 'John',
+        date: new Date(),
+        transactionId: 'tx1',
+      });
+
+      expect(mockHttpService.get).toHaveBeenCalledWith(
+        'http://example.com/logo.png',
+        expect.any(Object),
+      );
+    });
+
+    it('should handle image fetching failure', async () => {
+      mockWhiteLabelingService.getEventSettings.mockResolvedValue({
+        id: 'evt_1',
+        slug: 'slug',
+        communication: { pdf: { enabled: true } },
+        content: { title: 'Event' },
+        theme: { assets: { logo: '/logo.png' } },
+      });
+
+      mockConfigService.get.mockReturnValue('http://frontend.com');
+      mockHttpService.get.mockImplementation(() => {
+        throw new Error('Fetch Error');
+      });
+
+      const mockStream = {
+        on: vi.fn((event, cb) => {
+          if (event === 'data') cb(Buffer.from('pdf'));
+          if (event === 'end') cb();
+          return mockStream;
+        }),
+        end: vi.fn(),
+      };
+      mockCreatePdfKitDocument.mockReturnValue(mockStream);
+
+      await service.generateReceipt('slug', {
+        amount: 1000,
+        donorName: 'John',
+        date: new Date(),
+        transactionId: 'tx1',
+      });
+
+      // Should not throw, just log warn and continue
+    });
+
+    it('should handle PDF stream error', async () => {
+      mockWhiteLabelingService.getEventSettings.mockResolvedValue({
+        id: 'evt_1',
+        slug: 'slug',
+        communication: { pdf: { enabled: true } },
+        content: { title: 'Event' },
+      });
+
+      const mockStream = {
+        on: vi.fn((event, cb) => {
+          if (event === 'error') cb(new Error('Stream Error'));
+          return mockStream;
+        }),
+        end: vi.fn(),
+      };
+      mockCreatePdfKitDocument.mockReturnValue(mockStream);
+
+      await expect(
+        service.generateReceipt('slug', {
+          amount: 1000,
+          donorName: 'John',
+          date: new Date(),
+          transactionId: 'tx1',
+        }),
+      ).rejects.toThrow('Stream Error');
     });
   });
 });

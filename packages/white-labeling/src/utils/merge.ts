@@ -22,6 +22,12 @@ export function deepMerge<T extends object>(target: T, ...sources: DeepPartial<T
             const sourceValue = source[sourceKey];
             const targetValue = target[targetKey];
 
+            if (sourceValue === '' || sourceValue === null) {
+                // Skip empty strings and nulls to support inheritance 
+                // (source empty means fall back to target)
+                return;
+            }
+
             if (isObject(sourceValue)) {
                 if (!(sourceKey in target)) {
                     Object.assign(output, { [key]: sourceValue });

@@ -12,7 +12,7 @@ The donation flow allows users to make payments using Stripe. It consists of a R
   - `createPaymentIntent`: Creates an intent (default currency: USD).
   - `constructEventFromPayload`: Verifies webhook signatures.
 - **Controller**: `DonationController`
-  - `POST /donations/stripe/intent`: Returns `clientSecret`.
+  - `POST /donations/intent`: Returns `clientSecret`.
   - `POST /donations/stripe/webhook`: Listens for `payment_intent.succeeded`.
   - `POST /donations/paypal/webhook`: Listens for `CHECKOUT.ORDER.COMPLETED`.
   - `POST /donations`: Handles offline/cash donations (Staff).
@@ -21,7 +21,8 @@ The donation flow allows users to make payments using Stripe. It consists of a R
 - **Page**: `/donate` (`DonationPage.tsx`) maps to `CheckoutForm`.
 - **Component**: `CheckoutForm.tsx`
   - Uses `PaymentFormFactory` to abstract provider implementation (Stripe).
-  - Collects Amount, Name, Email, Anonymous flag.
+  - Collects Amount, Name, Email.
+  - **Optional Fields**: Phone, Address, Company, Message, Anonymous flag.
   - Submits to backend to get `clientSecret`.
   - **Refactor**: Strict typing for `sessionData` and `PaymentIntent` responses.
 - **Validation**: Zod schema (`donation.schema.ts`).
@@ -39,7 +40,7 @@ sequenceDiagram
 
     User->>Frontend: Fills Donation Form
     User->>Frontend: Clicks "Pay"
-    Frontend->>Backend: POST /donations/stripe/intent (amount)
+    Frontend->>Backend: POST /donations/intent (amount)
     Backend->>StripeAPI: Create PaymentIntent
     StripeAPI-->>Backend: clientSecret
     Backend-->>Frontend: clientSecret

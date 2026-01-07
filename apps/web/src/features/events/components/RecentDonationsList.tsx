@@ -54,7 +54,7 @@ export const RecentDonationsList = ({ eventId }: RecentDonationsListProps) => {
                             {formatCurrency(donation.amount / 100, { currency: donation.currency || 'USD' })}
                         </div>
                         <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
-                            {donation.status}
+                            {t(`status.${donation.status.toLowerCase()}`, donation.status)}
                         </p>
                     </div>
                 </div>

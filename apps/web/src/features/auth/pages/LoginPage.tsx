@@ -43,10 +43,11 @@ export const LoginPage = () => {
             style={{ backgroundColor: 'var(--auth-page-bg)' }}
         >
             <Card
-                className="w-full max-w-md backdrop-blur-md shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] border-t rounded-3xl overflow-hidden"
+                className="w-full max-w-md backdrop-blur-md border-t overflow-hidden"
                 style={{
-                    borderRadius: 'var(--panel-radius, 1.5rem)',
-                    borderColor: 'var(--auth-input-border)' // generic border color match
+                    boxShadow: 'var(--auth-card-shadow)',
+                    borderRadius: 'var(--auth-card-radius)',
+                    borderColor: 'var(--auth-input-border)'
                 }}
             >
                 <CardHeader>
@@ -112,6 +113,6 @@ export const LoginPage = () => {
                     </a>
                 </CardFooter>
             </Card>
-        </div>
+        </div >
     );
 }

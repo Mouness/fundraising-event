@@ -224,14 +224,17 @@ export const DonationsPage = () => {
                                                 <div className="font-medium">
                                                     {formatCurrency(donation.amount / 100, { currency: donation.currency })}
                                                 </div>
-                                                <span className="text-xs text-muted-foreground capitalize">{donation.paymentMethod}</span>
+                                                <span className="text-xs text-muted-foreground capitalize">
+                                                    {donation.paymentMethod}
+                                                    {donation.staffMember && <span style={{ color: 'var(--primary)' }}> • {donation.staffMember.name}</span>}
+                                                </span>
                                             </TableCell>
                                             <TableCell>
                                                 <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold 
-                                                    ${(donation.status === 'COMPLETED' || donation.status === 'SUCCEEDED') ? 'bg-green-100 text-green-800' :
+                                                    ${donation.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
                                                         donation.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
                                                             'bg-red-100 text-red-800'}`}>
-                                                    {donation.status}
+                                                    {t(`status.${donation.status.toLowerCase()}`, donation.status)}
                                                 </span>
                                             </TableCell>
                                             <TableCell className="text-right">
@@ -243,7 +246,7 @@ export const DonationsPage = () => {
                                                         </Button>
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent align="end">
-                                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                                        <DropdownMenuLabel>{t('common.actions')}</DropdownMenuLabel>
                                                         <DropdownMenuItem
                                                             onClick={() => setEditingDonation(donation)}
                                                         >

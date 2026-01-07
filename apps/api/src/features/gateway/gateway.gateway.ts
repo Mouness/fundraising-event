@@ -17,8 +17,7 @@ import { DonationEventPayload } from './interfaces/donation-event.payload';
   },
 })
 export class GatewayGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+  implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server!: Server;
 
@@ -41,7 +40,8 @@ export class GatewayGateway
   }
 
   emitDonation(donation: DonationEventPayload) {
-    // Broadcast to everyone for now, or specific room if we had eventId
-    this.server.emit('donation.created', donation);
+    if (donation.eventId) {
+      this.server.to(donation.eventId).emit('donation.created', donation);
+    }
   }
 }

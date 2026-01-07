@@ -44,16 +44,13 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
 
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center h-screen w-full bg-muted/30">
-                <div className="flex flex-col items-center gap-2">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    <p className="text-sm text-muted-foreground">Loading event...</p>
-                </div>
+            <div className="flex items-center justify-center min-h-screen">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
             </div>
         );
     }
 
-    if (error || !event) {
+    if (slug && (error || !event)) {
         const isAdmin = location.pathname.startsWith('/admin');
 
         return (
@@ -78,7 +75,7 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <EventContext.Provider value={{ event, isLoading, error }}>
+        <EventContext.Provider value={{ event: event ?? null, isLoading, error }}>
             {children}
         </EventContext.Provider>
     );

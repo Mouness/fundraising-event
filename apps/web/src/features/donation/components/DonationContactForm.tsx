@@ -26,18 +26,19 @@ export const DonationContactForm = ({
     const { config } = useAppConfig();
     const { formatCurrency } = useCurrencyFormatter();
 
-    const panelClass = "backdrop-blur-md shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] border-t rounded-3xl overflow-hidden mt-6";
+    const panelClass = "backdrop-blur-md border-t overflow-hidden mt-6";
     const panelStyle = {
         backgroundColor: 'var(--glass-bg)',
         borderColor: 'var(--glass-border)',
         backdropFilter: 'blur(var(--glass-blur))',
-        borderRadius: 'var(--panel-radius, 1.5rem)'
+        borderRadius: 'var(--donation-card-radius)',
+        boxShadow: 'var(--donation-card-shadow)'
     };
 
     return (
         <Card className={panelClass} style={panelStyle}>
             <CardHeader>
-                <CardTitle className="text-xl text-gray-800">{t('donation.contact_info')}</CardTitle>
+                <CardTitle className="text-xl" style={{ color: 'var(--donation-title-color)' }}>{t('donation.contact_info')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-2">

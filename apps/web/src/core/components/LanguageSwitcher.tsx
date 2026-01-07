@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
+import { LOCALE_LABELS } from '@fundraising/white-labeling';
 
 export const LanguageSwitcher = () => {
     const { i18n } = useTranslation();
@@ -16,8 +17,9 @@ export const LanguageSwitcher = () => {
                 className="h-9 w-[110px] appearance-none bg-transparent pl-9 pr-2 text-sm font-medium focus:outline-none cursor-pointer"
                 style={{ color: 'var(--header-text)' }}
             >
-                <option value="en">English</option>
-                <option value="fr">Français</option>
+                {Object.entries(LOCALE_LABELS).map(([code, name]) => (
+                    <option key={code} value={code}>{name}</option>
+                ))}
             </select>
         </div>
     );

@@ -11,11 +11,23 @@ import { Check, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { useCurrencyFormatter } from "@core/hooks/useCurrencyFormatter";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEvent } from "@features/events/context/EventContext";
 
 export const CollectorPage = () => {
     const { t } = useTranslation('common');
-    const { getStaffUser } = useStaffAuth();
+    const { slug } = useParams<{ slug: string }>();
+    const navigate = useNavigate();
+    const { event } = useEvent();
+    const { getStaffUser, isStaffAuthenticated } = useStaffAuth();
     const { formatCurrency } = useCurrencyFormatter();
+
+    useEffect(() => {
+        if (event && !isStaffAuthenticated(event.id)) {
+            navigate(`/${slug}/staff/login`);
+        }
+    }, [event, isStaffAuthenticated, navigate, slug]);
+
     const [amount, setAmount] = useState<string>("");
     const [type, setType] = useState<DonationType>("cash");
     const [name, setName] = useState<string>("");
@@ -63,7 +75,7 @@ export const CollectorPage = () => {
 
         const staffUser = getStaffUser();
         if (!staffUser?.eventId) {
-            toast.error("Session invalid. Please login again.");
+            toast.error(t('staff.session_invalid', "Session invalid. Please login again."));
             return;
         }
 
@@ -130,7 +142,8 @@ export const CollectorPage = () => {
                 style={{
                     backgroundColor: 'var(--staff-keypad-bg)',
                     borderColor: 'var(--staff-display-border)',
-                    borderRadius: 'var(--panel-radius, 1.5rem)'
+                    borderRadius: 'var(--staff-keypad-radius)',
+                    boxShadow: 'var(--staff-keypad-shadow)'
                 }}
             >
                 <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto my-3" />

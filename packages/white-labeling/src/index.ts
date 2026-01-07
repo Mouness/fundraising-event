@@ -1,5 +1,6 @@
 // Types
 export type { EventConfig } from './types';
+export { SUPPORTED_LOCALES, LOCALE_LABELS } from './types';
 
 export { initWhiteLabeling, getGlobalConfig, getEventConfig, fetchGlobalConfig, fetchEventConfig, resetWhiteLabelStore } from './store';
 

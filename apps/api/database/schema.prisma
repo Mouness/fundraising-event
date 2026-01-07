@@ -33,7 +33,9 @@ model Configuration {
   communication    Json?       
   payment          Json?       
   socialNetwork    Json?       
-  locales          Json?       
+  locales          Json?
+  liveTheme        String?
+
 
   updatedAt        DateTime    @updatedAt
   @@unique([scope, entityId])
@@ -58,6 +60,7 @@ model StaffMember {
   code      String   @unique // The pin code (global)
   name      String // Name of the volunteer
   events    Event[]
+  donations Donation[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -70,11 +73,13 @@ model Donation {
   donorEmail    String?
   message       String?  // Support message
   isAnonymous   Boolean  @default(false)
-  status        String   // PENDING, SUCCEEDED, FAILED, CANCELLED
+  status        String   // PENDING, COMPLETED, FAILED, CANCELLED, REFUNDED
   paymentMethod String   // STRIPE, CASH, CHECK, PLEDGE
   transactionId String? @unique
   eventId       String
   event         Event    @relation(fields: [eventId], references: [id])
+  staffMemberId String?
+  staffMember   StaffMember? @relation(fields: [staffMemberId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }

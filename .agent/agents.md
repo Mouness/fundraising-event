@@ -27,70 +27,116 @@ This document serves as the primary source of truth for all AI agents and develo
 
 ```bash
 fundraising-event/
-├── agent/                    # AI Context & Docs
-│   ├── agents.md             # Guidelines (This file)
-│   ├── specs.md              # Functional Specs
-│   └── AntiGravity.md        # Memory/Context
-│
-├── apps/
-│   ├── api/                  # NestJS Backend
-│   │   ├── database/         # Database Schema & Migrations
-│   │   ├── deploy/           # Deployment Config (Docker, etc.)
-│   │   ├── src/
-│   │   │   ├── database/     # NestJS Database Module
-│   │   │   ├── features/     # Feature-based modules
-│   │   │   │   ├── auth/     # Auth (JWT, Google OAuth)
-│   │   │   │   ├── donation/ # Payments & Stripe logic
-│   │   │   │   ├── event-config/ # Centralized Config Loader
-│   │   │   │   ├── event/    # Event management
-│   │   │   │   ├── gateway/  # WebSockets (Socket.io)
-│   │   │   │   ├── pdf/      # PDF Generation (PDFMake)
-│   │   │   │   └── queue/    # BullMQ (Email/PDF Jobs)
-│   │   │   ├── test/         # Unit & E2E Tests
-│   │   │   ├── mock/         # API Mock Data
-│   │   │   ├── app.module.ts
-│   │   │   └── main.ts
-│   │   └── package.json
+├── apps/                          # Application packages
+│   ├── api/                       # NestJS Backend
+│   │   ├── database/              # Prisma schema & migrations
+│   │   │   ├── migrations/        # Database migration files
+│   │   │   └── mock/              # Mock data for testing
+│   │   ├── scripts/               # Utility scripts (e.g., set-admin-password)
+│   │   └── src/
+│   │       ├── assets/            # Static assets (fonts, templates)
+│   │       ├── database/          # Prisma service
+│   │       ├── features/          # Feature modules
+│   │       │   ├── auth/          # Authentication (JWT, OAuth, Staff PIN)
+│   │       │   ├── donation/      # Payment processing (Stripe, PayPal)
+│   │       │   ├── events/        # Event CRUD operations
+│   │       │   ├── export/        # Receipt ZIP export
+│   │       │   ├── gateway/       # WebSocket real-time events
+│   │       │   ├── health/        # Health check endpoint
+│   │       │   ├── mail/          # Email service & templates
+│   │       │   ├── pdf/           # PDF receipt generation
+│   │       │   ├── queue/         # BullMQ job processing
+│   │       │   ├── staff/         # Staff code management
+│   │       │   └── white-labeling/# Config service integration
+│   │       └── test/              # Integration tests
 │   │
-│   └── web/                  # Vite + React Frontend
-│       ├── deploy/           # Deployment Config (Nginx, etc.)
-│       ├── public/           # Static Public Assets
-│       ├── src/
-│       │   ├── app/          # Core App Wrapper/Router
-│       │   ├── components/   # UI Primitives (@/components/ui)
-│       │   ├── providers/    # React Contexts & Providers
-│       │   ├── features/     # Feature-based components
-│       │   │   ├── admin/    # Dashboard & Event Config
-│       │   │   ├── auth/     # Authentication pages
-│       │   │   ├── donation/ # Public Donation Form
-│       │   │   ├── event/    # Event Logic & Hooks
-│       │   │   ├── live/     # Projection/Live Screen
-│       │   │   ├── public/   # Public Static pages
-│       │   │   └── staff/    # Producer/Collector Mode
-│       │   ├── hooks/        # Reusable React hooks
-│       │   ├── lib/          # Config & Utilities (api, i18n, utils)
-│       │   ├── stores/       # Global State (Jotai)
-│       │   ├── test/         # Frontend Tests
-│       │   ├── mock/         # Frontend Mock Data
-│       │   └── main.tsx
-│       ├── index.html
-│       └── package.json
+│   └── web/                       # React Frontend (Vite)
+│       ├── public/                # Static public assets
+│       │   └── config/            # Runtime configuration
+│       └── src/
+│           ├── core/              # Shared infrastructure
+│           │   ├── app/           # App entry & routing
+│           │   ├── components/    # Shared UI components
+│           │   │   ├── ui/        # Shadcn/UI primitives
+│           │   │   └── ...        # AppHeader, layouts, etc.
+│           │   ├── hooks/         # Global hooks
+│           │   ├── lib/           # Utilities (api, i18n, utils)
+│           │   ├── providers/     # Context providers
+│           │   └── stores/        # Global state (Jotai)
+│           │
+│           ├── features/          # Domain features
+│           │   ├── admin/         # Admin Dashboard
+│           │   │   ├── components/# Dashboard widgets, forms
+│           │   │   │   └── global-settings/
+│           │   │   ├── layouts/   # AdminLayout
+│           │   │   ├── pages/     # DashboardPage, GlobalSettingsPage
+│           │   │   ├── schemas/   # Zod validation schemas
+│           │   │   └── types/     # TypeScript interfaces
+│           │   │
+│           │   ├── auth/          # Authentication
+│           │   │   ├── components/# LoginForm, guards
+│           │   │   ├── hooks/     # useLogin, useAuth
+│           │   │   └── pages/     # LoginPage
+│           │   │
+│           │   ├── donation/      # Donation Flow
+│           │   │   ├── components/# CheckoutForm, PaymentForms
+│           │   │   ├── hooks/     # useDonation, usePayment
+│           │   │   ├── pages/     # DonationPage, ThankYouPage
+│           │   │   └── schemas/   # donation.schema.ts
+│           │   │
+│           │   ├── events/        # Event Management
+│           │   │   ├── components/# EventCard, forms
+│           │   │   ├── context/   # EventContext
+│           │   │   ├── hooks/     # useEvent, useEvents
+│           │   │   ├── layouts/   # EventLayout
+│           │   │   ├── pages/     # EventSettingsPage, CreateEventPage
+│           │   │   ├── schemas/   # event-settings.schema.ts
+│           │   │   └── types/     # Event types
+│           │   │
+│           │   ├── live/          # Live Projection Screen
+│           │   │   ├── components/
+│           │   │   │   ├── gauges/   # GaugeClassic, GaugeModern, GaugeElegant
+│           │   │   │   ├── themes/   # LiveClassic, LiveModern, LiveElegant
+│           │   │   │   └── DonationFeed.tsx
+│           │   │   ├── hooks/     # useLiveSocket
+│           │   │   ├── pages/     # LivePage
+│           │   │   └── types/     # Live screen types
+│           │   │
+│           │   ├── public/        # Public Landing Pages
+│           │   │   ├── components/# FeatureCard, PublicEventCard
+│           │   │   └── pages/     # LandingPage, RootLandingPage
+│           │   │
+│           │   └── staff/         # Staff Collector
+│           │       ├── components/# Keypad, DonationTypeSelector
+│           │       ├── hooks/     # useSync
+│           │       ├── pages/     # CollectorPage, EventTeamPage
+│           │       ├── schemas/   # staff.schema.ts
+│           │       └── services/  # SyncService, StorageService
+│           │
+│           └── test/              # Test utilities & integration tests
 │
-├── packages/                 # Shared libraries (Optional)
-│   ├── ts-config/
-│   ├── ui/                   # Potential shared UI lib
-│   ├── types/                # Shared DTOs/Interfaces
-│   └── white-labeling/       # White Labeling (Theme, Assets, Config)
-│       ├── src/
-│       │   ├── assets/       # Default SVGs
-│       │   ├── config/       # Default Configurations
-│       │   ├── theme/        # Default CSS Variables
-│       │   └── store.ts      # Config Store
+├── packages/                      # Shared packages
+│   ├── types/                     # Shared TypeScript types
+│   │   └── src/
+│   │       ├── dtos/              # Data Transfer Objects
+│   │       └── enums/             # Shared enumerations
+│   │
+│   └── white-labeling/            # White-labeling package
+│       └── src/
+│           ├── assets/            # Default logos & images
+│           ├── config/            # Default event-config.json
+│           ├── locales/           # Translation files (en, fr, de, it)
+│           ├── theme/             # Default CSS variables
+│           ├── types/             # EventConfig types
+│           └── utils/             # Merge utilities
 │
-├── docker-compose.yml        # Local dev orchestration
-├── package.json              # Root scripts
-├── pnpm-workspace.yaml
-└── README.md
+├── docs/                          # MkDocs documentation
+│   └── features/                  # Feature-specific docs
+│
+├── docker-compose.yml             # Local dev infrastructure
+├── mkdocs.yml                     # Documentation config
+├── pnpm-workspace.yaml            # Monorepo workspace config
+└── package.json                   # Root package.json
 ```
 
 ## 2. Coding Style

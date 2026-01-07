@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { API_URL } from '@core/lib/api';
+import { VITE_API_URL } from '@core/lib/api';
 
 export interface DonationEvent {
     amount: number;
@@ -21,8 +21,10 @@ export const useLiveSocket = (slug: string) => {
     useEffect(() => {
         if (!slug) return;
 
-        // Connect to the root namespace (GatewayGateway handles it)
-        const socket: Socket = io(API_URL);
+        // Determine socket URL: IfVITE_API_URL is relative (e.g. '/api'), use window origin to connect to root namespace via proxy.
+        // If absolute, use it directly.
+        const socketUrl = VITE_API_URL.startsWith('/') ? window.location.origin : VITE_API_URL;
+        const socket: Socket = io(socketUrl);
 
         socket.on('connect', () => {
             console.log('Connected to WebSocket');

@@ -1,59 +1,50 @@
 # Admin Dashboard
 
 ## Overview
-The Admin Dashboard is the control center for organizers. It provides high-level metrics, event management capabilities, and system oversight.
 
-## Feature Breakdown
+The Admin Dashboard is the central hub for organizers to manage fundraising events, configurations, and staff. It provides high-level analytics and control over the entire platform.
 
-### 1. Dashboard Overview
-A summary view displaying key performance indicators (KPIs) such as:
-- Total Revenue
-- Number of Active Events
-- Recent Donations Log
-- **Export**: Global ZIP export for receipt PDFs.
+## Key Features
 
-### 2. Event Management (CRUD)
-Allows admins to create, update, and delete fundraising events.
-- **Slug Management**: Define the public URL for events.
-- **Goal Setting**: Update financial targets.
+### 1. Dashboard & Analytics
+The main landing page provides a real-time snapshot of the platform's performance.
+- **Key Metrics**: Total revenue, active events count, and donor statistics.
+- **Visuals**: Donation trends over time.
+- **Activity Feed**: Live log of incoming donations.
+- **Quick Actions**: Create events or export global receipt data.
+
+### 2. Event Management
+Complete lifecycle management for fundraising campaigns.
+- Create, update, and archive events.
+- Configure goals, slugs, and public visibility.
+- **Documentation**: [View Events Management →](events.md)
+
+### 3. Global Settings
+Platform-wide configuration that applies defaults to all events.
+- **Identity**: Organization branding and contact info.
+- **Payment**: Stripe/PayPal API keys and currency settings.
+- **Theming**: Global CSS overrides.
+- **Localization**: Manage supported languages (`en`, `fr`, `de`, `it`).
+- **Documentation**: [View Global Settings →](global-settings.md)
+
+### 4. Staff Management
+Manage volunteer access for the offline collector app.
+- Issue and revoke global PIN codes.
+- Track performance per volunteer.
+- **Documentation**: [View Staff Management →](staff.md)
+
+### 5. Data & Exports
+- **Receipts**: Bulk download of PDF receipts as ZIP files.
+- **Format**: Organized by event and date.
 
 ---
 
-## Implementation Details
+## Technical Overview
 
-### Frontend (`apps/web`)
+The admin interface is built with a layout-first approach to ensure consistent navigation and security.
 
-#### Layout
-- **`AdminLayout`** (`apps/web/src/features/admin/layouts/AdminLayout.tsx`):
-  - Provides the persistent sidebar navigation and header.
-  - Ensures the user is authenticated before rendering children.
+- **Layout**: `AdminLayout` handles authentication guards and sidebar navigation.
+- **Security**: All admin routes are protected and require a valid JWT.
+- **State Management**: Uses React Query for data fetching with optimistic updates for better UX.
 
-#### Pages
-#### Pages
-- **`DashboardPage`**:
-  - Displays high-level stats (Revenue, Recent Activity).
-  - **Export Feature**: Triggers `GET /export/receipts/zip` to download all generated receipts.
-- **`EventSettingsPage`**:
-  - Manages Event Configuration (Name, Goal, Slug).
-  - **Theme Customization**: Live preview of Primary Color and Logo URL.
-  - **Validation**: Strict Zod schema ensures data integrity before `PATCH /events/:id`.
-
-### Components
-- **`DashboardStats`**:
-  - Reusable component for displaying metric cards with icons and trends.
-- **Refactoring & Quality**:
-  - Components heavily utilize strict TypeScript interfaces (e.g., `EventConfig['theme']`).
-  - `any` types have been systematically removed.
-
-### Backend (`apps/api`)
-
-#### Endpoints
-- **Protected Routes**: All admin routes are guarded by `AuthGuard`.
-- **Event Operations**:
-  - `POST /events`: Create new event.
-  - `PATCH /events/:id`: Update config.
-  - `DELETE /events/:id`: Archive event.
-
-## Future Improvements
-- **Real-time Admin**: Connect the dashboard to the WebSocket gateway to see donations live in the admin panel too.
-- **Export Data**: CSV export for accounting.
+For API endpoints regarding admin functions, see the [API Reference](../api-reference.md).

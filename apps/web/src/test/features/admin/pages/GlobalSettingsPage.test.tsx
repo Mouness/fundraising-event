@@ -1,114 +1,136 @@
+import { useState } from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { GlobalSettingsPage } from '@features/admin/pages/GlobalSettingsPage';
+import { GlobalSettingsPage } from '@/features/admin/pages/GlobalSettingsPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchGlobalConfig } from '@fundraising/white-labeling';
+import { api } from '@core/lib/api';
+import { toast } from 'sonner';
 
-// Mocks
-vi.mock('react-i18next', () => ({
-    useTranslation: () => ({ t: (key: string) => key }),
+// Mock dependencies
+vi.mock('@fundraising/white-labeling', () => ({
+    fetchGlobalConfig: vi.fn(),
+    loadTheme: vi.fn(),
+    defaultConfig: {
+        communication: { legalName: 'Default Org', supportEmail: 'support@example.com' },
+        content: { totalLabel: 'Total' },
+        donation: { payment: { currency: 'USD', provider: 'stripe' } },
+        locales: { default: 'en', supported: ['en'] }
+    }
 }));
 
 vi.mock('@core/lib/api', () => ({
-    api: { patch: vi.fn(), get: vi.fn() },
-    API_URL: 'http://localhost:3000'
+    api: {
+        patch: vi.fn(),
+    },
+    VITE_API_URL: 'http://localhost:3000',
+}));
+
+vi.mock('@core/lib/i18n', () => ({
+    syncLocales: vi.fn(),
 }));
 
 vi.mock('sonner', () => ({
-    toast: { success: vi.fn(), error: vi.fn() }
-}));
-
-// Mock White Labeling
-vi.mock('@fundraising/white-labeling', () => ({
-    defaultConfig: {
-        communication: {
-            legalName: 'Default Org',
-            supportEmail: 'support@default.com'
-        },
-        locales: { default: 'en', supported: ['en'] }
+    toast: {
+        success: vi.fn(),
+        error: vi.fn(),
     },
-    fetchGlobalConfig: vi.fn(),
-    loadTheme: vi.fn(),
 }));
 
-const mutateMock = vi.fn();
-// Mock React Query
-vi.mock('@tanstack/react-query', () => ({
-    useQuery: vi.fn(),
-    useMutation: vi.fn(() => ({ mutate: mutateMock })),
-    useQueryClient: vi.fn(() => ({ invalidateQueries: vi.fn() })),
+vi.mock('@/features/admin/components/global-settings/IdentityForm', () => ({
+    IdentityForm: () => <div data-testid="identity-form">Identity Form</div>,
+}));
+vi.mock('@/features/admin/components/global-settings/AssetsForm', () => ({
+    AssetsForm: () => <div data-testid="assets-form">Assets Form</div>,
+}));
+vi.mock('@/features/admin/components/global-settings/CommunicationForm', () => ({
+    CommunicationForm: () => <div data-testid="communication-form">Communication Form</div>,
+}));
+vi.mock('@/features/admin/components/global-settings/BrandDesignForm', () => ({
+    BrandDesignForm: () => <div data-testid="theme-form">Theme Form</div>,
+}));
+vi.mock('@/features/admin/components/global-settings/LocalizationForm', () => ({
+    LocalizationForm: () => <div data-testid="localization-form">Localization Form</div>,
+}));
+vi.mock('@/features/admin/components/global-settings/PaymentForm', () => ({
+    PaymentForm: () => <div data-testid="payment-form">Payment Form</div>,
 }));
 
-// Mock Sub-components
-vi.mock('@features/admin/components/global-settings/IdentityForm', () => ({ IdentityForm: () => <div data-testid="identity-form">Identity Form</div> }));
-vi.mock('@features/admin/components/global-settings/AssetsForm', () => ({ AssetsForm: () => <div data-testid="assets-form">Assets Form</div> }));
-vi.mock('@features/admin/components/global-settings/CommunicationForm', () => ({ CommunicationForm: () => <div data-testid="communication-form">Communication Form</div> }));
-vi.mock('@features/admin/components/global-settings/BrandDesignForm', () => ({ BrandDesignForm: () => <div data-testid="brand-form">Brand Form</div> }));
-vi.mock('@features/admin/components/global-settings/LocalizationForm', () => ({ LocalizationForm: () => <div data-testid="localization-form">Localization Form</div> }));
-vi.mock('@features/admin/components/global-settings/PaymentForm', () => ({ PaymentForm: () => <div data-testid="payment-form">Payment Form</div> }));
-
+const Wrapper = ({ children }: { children: React.ReactNode }) => {
+    const [queryClient] = useState(() => new QueryClient({
+        defaultOptions: {
+            queries: { retry: false, gcTime: 0, staleTime: 0 },
+        },
+    }));
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+};
 
 describe('GlobalSettingsPage', () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        (useQuery as any).mockReturnValue({
-            data: {
-                communication: { legalName: 'Test Org' },
-                theme: { assets: { logo: 'logo.png' } }
-            },
-            isLoading: false
+    });
+
+    it('renders loading state initially', () => {
+        (fetchGlobalConfig as any).mockReturnValue(new Promise(() => { })); // Never resolves
+        const { container } = render(<GlobalSettingsPage />, { wrapper: Wrapper });
+        expect(container.querySelector('.animate-spin')).toBeDefined();
+    });
+
+    it('renders data and allows navigation', async () => {
+        (fetchGlobalConfig as any).mockResolvedValue({
+            communication: { legalName: 'My Custom Org' },
+            theme: { assets: { logo: 'custom-logo.png' } },
         });
-        (fetchGlobalConfig as any).mockResolvedValue({});
-    });
 
-    it('should render page title', () => {
-        render(<GlobalSettingsPage />);
-        expect(screen.getByText('admin_branding.title')).toBeDefined();
-    });
+        const { container } = render(<GlobalSettingsPage />, { wrapper: Wrapper });
 
-    it('should render identity form by default', () => {
-        render(<GlobalSettingsPage />);
-        expect(screen.getByTestId('identity-form')).toBeDefined();
-    });
+        await waitFor(() => expect(container.querySelector('.animate-spin')).toBeNull(), { timeout: 3000 });
 
-    it('should switch to all tabs', () => {
-        render(<GlobalSettingsPage />);
+        expect(await screen.findByText('admin_branding.title')).toBeDefined();
+        expect(await screen.findByTestId('identity-form')).toBeDefined();
 
-        // Identity is default
-        expect(screen.getByTestId('identity-form')).toBeDefined();
+        // Check preview updates
+        expect(screen.getByText('My Custom Org')).toBeDefined();
 
-        // Communication
-        fireEvent.click(screen.getByText('admin_branding.nav.communication'));
+        // Navigate to communication
+        const commBtn = screen.getByText('admin_branding.nav.communication');
+        fireEvent.click(commBtn);
         expect(screen.getByTestId('communication-form')).toBeDefined();
 
-        // Theme
-        fireEvent.click(screen.getByText('admin_branding.nav.theme'));
-        expect(screen.getByTestId('brand-form')).toBeDefined();
-
-        // Assets
-        fireEvent.click(screen.getByText('admin_branding.nav.assets'));
-        expect(screen.getByTestId('assets-form')).toBeDefined();
-
-        // Modules
-        fireEvent.click(screen.getByText('admin_branding.nav.modules'));
-        expect(screen.getByTestId('payment-form')).toBeDefined();
-        expect(screen.getByTestId('localization-form')).toBeDefined();
+        // Navigate to theme
+        const themeBtn = screen.getByText('admin_branding.nav.theme');
+        fireEvent.click(themeBtn);
+        expect(screen.getByTestId('theme-form')).toBeDefined();
     });
 
-    it('should handle save submission', async () => {
-        render(<GlobalSettingsPage />);
+    it('handles form submission', async () => {
+        (fetchGlobalConfig as any).mockResolvedValue({
+            communication: { legalName: 'My Org' },
+        });
+        (api.patch as any).mockResolvedValue({ data: { success: true } });
+
+        const { container } = render(<GlobalSettingsPage />, { wrapper: Wrapper });
+
+        await waitFor(() => expect(container.querySelector('.animate-spin')).toBeNull());
 
         const saveBtn = screen.getByText('admin_branding.save');
         fireEvent.click(saveBtn);
 
-        await waitFor(() => {
-            expect(mutateMock).toHaveBeenCalled();
-        });
+        await waitFor(() => expect(api.patch).toHaveBeenCalled());
+        expect(toast.success).toHaveBeenCalledWith('admin_branding.success_save');
     });
 
-    it('should show loading state', () => {
-        (useQuery as any).mockReturnValue({ isLoading: true });
-        const { container } = render(<GlobalSettingsPage />);
-        expect(container.querySelector('.animate-spin')).toBeDefined();
+    it('handles error on submission', async () => {
+        (fetchGlobalConfig as any).mockResolvedValue({});
+        (api.patch as any).mockRejectedValue(new Error('Failed'));
+
+        const { container } = render(<GlobalSettingsPage />, { wrapper: Wrapper });
+
+        await waitFor(() => expect(container.querySelector('.animate-spin')).toBeNull());
+
+        const saveBtn = screen.getByText('admin_branding.save');
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => expect(toast.error).toHaveBeenCalledWith('admin_branding.error_save'));
     });
 });

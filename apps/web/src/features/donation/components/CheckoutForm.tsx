@@ -77,16 +77,17 @@ export const CheckoutForm = () => {
             setStep('payment');
         } catch (err) {
             console.error(err);
-            setSubmitError('Failed to initialize donation. Please try again.');
+            setSubmitError(t('donation.error_init', 'Failed to initialize donation. Please try again.'));
         }
     };
 
-    const panelClass = "backdrop-blur-md shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] border-t rounded-3xl overflow-hidden mt-6";
+    const panelClass = "backdrop-blur-md border-t overflow-hidden mt-6";
     const panelStyle = {
         backgroundColor: 'var(--glass-bg)',
         borderColor: 'var(--glass-border)',
         backdropFilter: 'blur(var(--glass-blur))',
-        borderRadius: 'var(--panel-radius, 1.5rem)'
+        borderRadius: 'var(--donation-card-radius)',
+        boxShadow: 'var(--donation-card-shadow)'
     };
 
     return (

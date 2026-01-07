@@ -32,4 +32,9 @@ describe('deepMerge', () => {
         // @ts-expect-error - Testing type mismatch
         expect(deepMerge(target, source)).toEqual({ a: 5 });
     });
+    it('should skip empty strings and nulls to support inheritance', () => {
+        const target = { a: 'target-a', b: 'target-b', c: { x: 1 } };
+        const source = { a: '', b: null, c: { x: '' } } as any;
+        expect(deepMerge(target, source)).toEqual({ a: 'target-a', b: 'target-b', c: { x: 1 } });
+    });
 });

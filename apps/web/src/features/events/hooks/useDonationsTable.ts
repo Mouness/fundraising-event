@@ -13,6 +13,11 @@ export interface DonationTableData {
     createdAt: string;
     paymentMethod: string;
     isAnonymous: boolean;
+    staffMember?: {
+        id: string;
+        name: string;
+        code: string;
+    };
 }
 
 interface DonationsResponse {

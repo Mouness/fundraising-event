@@ -16,7 +16,7 @@ export class DonationService {
     private readonly donationGateway: GatewayGateway,
     private readonly emailProducer: EmailProducer,
     private readonly eventsService: EventsService,
-  ) {}
+  ) { }
 
   /**
    * Unified processor for successful donations from any source (Stripe, PayPal, Offline)
@@ -32,10 +32,12 @@ export class DonationService {
     message?: string;
     metadata?: any;
     eventId: string;
+    staffMemberId?: string;
   }) {
     // 1. Persist to DB
     const donation = await this.create({
       amount: data.amount,
+      currency: data.currency,
       transactionId: data.transactionId,
       status: 'COMPLETED',
       paymentMethod: data.paymentMethod,
@@ -45,6 +47,7 @@ export class DonationService {
       message: data.message,
       metadata: data.metadata,
       eventId: data.eventId,
+      staffMemberId: data.staffMemberId,
     });
 
     // 2. Emit to Live Screen
@@ -54,6 +57,7 @@ export class DonationService {
       donorName: data.donorName || 'Anonymous',
       message: data.message,
       isAnonymous: data.isAnonymous,
+      eventId: data.eventId,
     });
 
     // 3. Send Email Receipt
@@ -79,6 +83,15 @@ export class DonationService {
   async create(data: CreateDonationParams) {
     let eventId = data.eventId;
 
+    // Validate if provided event exists
+    if (eventId) {
+      const exists = await this.prisma.event.count({ where: { id: eventId } });
+      if (exists === 0) {
+        console.warn(`Donation attempt with invalid eventId: ${eventId}. Falling back to default.`);
+        eventId = undefined;
+      }
+    }
+
     if (!eventId) {
       const defaultEvent = await this.prisma.event.findFirst({
         select: { id: true },
@@ -94,7 +107,7 @@ export class DonationService {
       return await this.prisma.donation.create({
         data: {
           amount: data.amount,
-          currency: 'USD',
+          currency: data.currency || 'EUR',
           donorName: data.donorName,
           donorEmail: data.donorEmail,
           message: data.message,
@@ -103,6 +116,7 @@ export class DonationService {
           paymentMethod: data.paymentMethod,
           transactionId: data.transactionId,
           eventId: eventId,
+          staffMemberId: data.staffMemberId,
         },
       });
     } catch (error) {
@@ -197,6 +211,11 @@ export class DonationService {
         orderBy: { createdAt: 'desc' },
         take: Number(limit),
         skip: Number(offset),
+        include: {
+          staffMember: {
+            select: { id: true, name: true, code: true },
+          },
+        },
       }),
       this.prisma.donation.count({ where }),
     ]);

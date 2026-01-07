@@ -62,6 +62,8 @@ vi.mock('i18next', () => ({
             use: function () { return this; }
         }),
         init: () => Promise.resolve(),
+        addResourceBundle: vi.fn(),
+        exists: vi.fn(() => true),
     },
 }));
 
@@ -76,6 +78,7 @@ vi.mock('react-i18next', () => {
             changeLanguage: () => Promise.resolve(),
             addResourceBundle: vi.fn(),
             language: 'en',
+            exists: vi.fn(() => true),
         },
     });
 
@@ -87,12 +90,20 @@ vi.mock('react-i18next', () => {
         },
         Trans: ({ children }: any) => children,
         Translation: ({ children }: any) => children({ t: (k: string) => k, i18n: {} } as any),
+        withTranslation: () => (Component: any) => {
+            Component.defaultProps = { ...Component.defaultProps, t: (k: string) => k };
+            return Component;
+        },
         default: {
             useTranslation,
             initReactI18next: {
                 type: '3rdParty',
                 init: vi.fn(),
-            }
+            },
+            withTranslation: () => (Component: any) => {
+                Component.defaultProps = { ...Component.defaultProps, t: (k: string) => k };
+                return Component;
+            },
         }
     };
 });

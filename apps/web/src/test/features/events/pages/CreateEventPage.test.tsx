@@ -8,7 +8,11 @@ import { MemoryRouter } from 'react-router-dom';
 vi.mock('@core/lib/api', () => ({
     api: {
         post: vi.fn(),
+        get: vi.fn(),
+        patch: vi.fn(),
     },
+    VITE_API_URL: '/api',
+    getApiErrorMessage: (_err: any, fallback: string) => fallback,
 }));
 
 // Mock react-i18next

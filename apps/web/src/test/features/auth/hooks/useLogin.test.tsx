@@ -5,15 +5,13 @@ import { api } from '@core/lib/api';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock dependencies
-vi.mock('@core/lib/api', async (importOriginal) => {
-    const actual = await importOriginal<typeof import('@core/lib/api')>();
-    return {
-        ...actual,
-        api: {
-            post: vi.fn(),
-        },
-    };
-});
+vi.mock('@core/lib/api', () => ({
+    api: {
+        post: vi.fn(),
+    },
+    VITE_API_URL: '/api',
+    getApiErrorMessage: (_err: any, fallback: string) => fallback,
+}));
 
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', () => ({
@@ -80,7 +78,7 @@ describe('useLogin', () => {
             loginResult = await result.current.login({ email: 'test@example.com', password: 'wrong' });
         });
 
-        expect(loginResult).toEqual({ success: false, error: 'Bad credentials' });
-        await waitFor(() => expect(result.current.error).toBe('Bad credentials'));
+        expect(loginResult).toEqual({ success: false, error: 'Login failed' });
+        await waitFor(() => expect(result.current.error).toBe('Login failed'));
     });
 });

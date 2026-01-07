@@ -12,6 +12,11 @@ export interface DonationDto {
     createdAt: string;
     status: string;
     paymentMethod: string;
+    staffMember?: {
+        id: string;
+        name: string;
+        code: string;
+    };
 }
 
 export const useDonations = (eventId?: string, limit: number = 20) => {
@@ -25,7 +30,7 @@ export const useDonations = (eventId?: string, limit: number = 20) => {
             const response = await api.get<{ data: DonationDto[], total: number }>(`/donations?${params.toString()}`);
             return response.data.data;
         },
-        enabled: !!eventId
+        enabled: true // Always enabled, even without eventId (global fetch)
     });
 
     return { donations: donations || [], isLoading, error };

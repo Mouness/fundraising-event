@@ -7,7 +7,7 @@ import {
     loadTheme,
     type EventConfig
 } from '@fundraising/white-labeling';
-import { API_URL } from '@core/lib/api';
+import { VITE_API_URL } from '@core/lib/api';
 import { syncLocales } from '@core/lib/i18n';
 import { Loader2 } from 'lucide-react';
 
@@ -40,11 +40,11 @@ export const AppConfigProvider = ({ children, slug }: PropsWithChildren<{ slug?:
     const [error, setError] = useState<Error | null>(null);
     const location = useLocation();
 
-    const loadConfig = async () => {
-        setIsLoading(true);
+    const loadConfig = async ({ isInitial = true } = {}) => {
+        if (isInitial) setIsLoading(true);
         try {
             // 1. Initialize DB Store (Async fetch from API)
-            await initWhiteLabeling(API_URL, slug);
+            await initWhiteLabeling(VITE_API_URL, slug);
 
             // 2. Load Domain Specific Configs (Sync read from store)
             const baseConfig = loadConfigs();
@@ -69,12 +69,12 @@ export const AppConfigProvider = ({ children, slug }: PropsWithChildren<{ slug?:
             console.error("Failed to initialize app config:", err);
             setError(err instanceof Error ? err : new Error('Unknown error'));
         } finally {
-            setIsLoading(false);
+            if (isInitial) setIsLoading(false);
         }
     };
 
     useEffect(() => {
-        loadConfig();
+        loadConfig({ isInitial: true });
     }, [slug, location.pathname]); // React to path changes to enforce correct config (event vs global)
 
     // Apply Favicon
@@ -97,7 +97,7 @@ export const AppConfigProvider = ({ children, slug }: PropsWithChildren<{ slug?:
 
 
     const refreshConfig = async () => {
-        await loadConfig();
+        await loadConfig({ isInitial: false });
     };
 
 

@@ -77,15 +77,14 @@ const EventSidebar = () => {
                 </Link>
 
                 <div className="mt-8 pt-4 border-t border-dashed border-gray-700">
-                    <a
-                        href={`/${event.slug}/live`}
+                    <Link
+                        to={`/${event.slug}/live`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="p-2 rounded flex items-center gap-3 text-sm text-muted-foreground hover:text-[var(--admin-sidebar-text)] transition-colors"
                     >
-                        <ExternalLink className="h-4 w-4" />
-                        Open Live Screen
-                    </a>
+                        {t('admin_events.dashboard.launch_live')} <ExternalLink className="h-4 w-4" />
+                    </Link>
                 </div>
             </nav>
         </aside>
@@ -93,10 +92,11 @@ const EventSidebar = () => {
 };
 
 export const EventLayout = () => {
+    const { t } = useTranslation('common');
     return (
         <EventProvider>
             <div className="flex flex-col h-screen w-full overflow-hidden">
-                <AppHeader title="Event Management" />
+                <AppHeader title={t('admin_events.layout.title', 'Event Management')} />
                 <div className="flex flex-1 overflow-hidden">
                     <EventSidebar />
                     <main

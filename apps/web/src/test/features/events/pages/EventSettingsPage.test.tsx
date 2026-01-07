@@ -1,8 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { EventSettingsPage } from '@features/events/pages/EventSettingsPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { api } from '@core/lib/api';
 
 // Mock API
 vi.mock('@core/lib/api', () => ({
@@ -11,6 +12,8 @@ vi.mock('@core/lib/api', () => ({
         patch: vi.fn(),
         delete: vi.fn(),
     },
+    VITE_API_URL: '/api',
+    getApiErrorMessage: (_err: any, fallback: string) => fallback,
 }));
 
 // Mock i18n
@@ -21,9 +24,11 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock Event Context
+// Mock Event Context
+const mockEvent = { id: 'evt_1', name: 'My Event', slug: 'my-event', goalAmount: 1000 };
 vi.mock('@features/events/context/EventContext', () => ({
     useEvent: () => ({
-        event: { id: 'evt_1', name: 'My Event', slug: 'my-event', goalAmount: 1000 },
+        event: mockEvent,
         isLoading: false,
     }),
 }));
@@ -36,55 +41,78 @@ vi.mock('@core/providers/AppConfigProvider', () => ({
 }));
 
 // Mock sub-components
-vi.mock('@features/events/components/event-settings/GeneralForm', () => ({
-    GeneralForm: () => <div data-testid="general-form">General Form</div>
-}));
+// vi.mock('@features/events/components/event-settings/GeneralForm', () => ({
+//     GeneralForm: () => {
+//         const { useFormContext } = require('react-hook-form');
+//         const context = useFormContext();
+//         const name = context ? context.watch('name') : 'NoContext';
+//         return <div data-testid="general-form">General Form: {name}</div>
+//     }
+// }));
 
 vi.mock('@features/events/components/event-settings/BrandingForm', () => ({
     BrandingForm: () => <div data-testid="branding-form">Branding Form</div>
 }));
 
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: { retry: false },
-    },
-});
 
 describe('EventSettingsPage', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.mocked(api.get).mockResolvedValue({ data: { name: 'My Event', slug: 'my-event', goalAmount: 1000, status: 'active', formConfig: { phone: { enabled: false, required: false }, address: { enabled: false, required: false }, company: { enabled: false, required: false }, message: { enabled: true, required: false }, anonymous: { enabled: true, required: false } } } });
     });
 
-    it('renders the settings page title', () => {
-        render(
-            <QueryClientProvider client={queryClient}>
+    const renderPage = () => {
+        const testQueryClient = new QueryClient({
+            defaultOptions: {
+                queries: { retry: false },
+            },
+        });
+        return render(
+            <QueryClientProvider client={testQueryClient}>
                 <MemoryRouter>
                     <EventSettingsPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
+    };
 
+    it('renders the settings page title', async () => {
+        renderPage();
         expect(screen.getByText('event_settings.title')).toBeInTheDocument();
     });
 
     it('navigates between sections', async () => {
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EventSettingsPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
+        renderPage();
 
         // Check default section
-        expect(screen.getByTestId('general-form')).toBeInTheDocument();
+        // Check default section
+        expect(screen.getByText('event_settings.general.event_name')).toBeInTheDocument();
 
         // Switch to Branding
         const brandingButton = screen.getByText('event_settings.nav.branding');
-        brandingButton.click();
+        fireEvent.click(brandingButton);
 
         await waitFor(() => {
             expect(screen.queryByTestId('branding-form')).toBeInTheDocument();
+        });
+    });
+
+    it('submits the form when save button is clicked', async () => {
+        renderPage();
+
+        // Wait for form to be populated
+        await waitFor(() => {
+            expect(screen.getByDisplayValue('My Event')).toBeInTheDocument();
+        });
+
+        const saveButton = screen.getByText('common.save_changes');
+
+        vi.mocked(api.patch).mockResolvedValue({ data: {} });
+
+        fireEvent.click(saveButton);
+
+        await waitFor(() => {
+            expect(api.patch).toHaveBeenCalled();
         });
     });
 });

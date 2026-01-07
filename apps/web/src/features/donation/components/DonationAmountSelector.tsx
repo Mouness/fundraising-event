@@ -23,13 +23,18 @@ export const DonationAmountSelector = ({
     const { t } = useTranslation('common');
     const { formatCurrency } = useCurrencyFormatter();
 
-    const glassCardClass = "backdrop-blur-md border shadow-xl overflow-hidden";
-    const glassCardStyle = { backgroundColor: 'var(--glass-bg)', borderColor: 'var(--glass-border)', backdropFilter: 'blur(var(--glass-blur))' };
+    const glassCardClass = "backdrop-blur-md border overflow-hidden";
+    const glassCardStyle = {
+        backgroundColor: 'var(--glass-bg)',
+        borderColor: 'var(--glass-border)',
+        backdropFilter: 'blur(var(--glass-blur))',
+        boxShadow: 'var(--glass-shadow)'
+    };
 
     return (
         <Card className={glassCardClass} style={glassCardStyle}>
             <CardHeader>
-                <CardTitle className="text-xl text-gray-800">{t('donation.amount')}</CardTitle>
+                <CardTitle className="text-xl" style={{ color: 'var(--donation-title-color)' }}>{t('donation.amount')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="grid grid-cols-3 gap-3">

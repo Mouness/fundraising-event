@@ -59,28 +59,28 @@ export const PaymentForm = () => {
 
                 {provider === 'stripe' && (
                     <div className="space-y-4 border-l-2 border-primary/20 pl-4 mt-4">
-                        <h4 className="text-sm font-medium text-muted-foreground">Stripe Settings</h4>
+                        <h4 className="text-sm font-medium text-muted-foreground">{t('admin_branding.modules.stripe.title', 'Stripe Settings')}</h4>
                         <div className="grid gap-2">
-                            <Label>Publishable Key</Label>
-                            <Input {...register('payment.config.stripe.publishableKey')} placeholder="pk_test_..." />
+                            <Label htmlFor="stripe-publishable-key">{t('admin_branding.modules.stripe.publishable_key', 'Publishable Key')}</Label>
+                            <Input id="stripe-publishable-key" {...register('payment.config.stripe.publishableKey')} placeholder="pk_test_..." />
                         </div>
                         <div className="grid gap-2">
-                            <Label>Secret Key</Label>
-                            <Input type="password" {...register('payment.config.stripe.secretKey')} placeholder="sk_test_..." />
+                            <Label htmlFor="stripe-secret-key">{t('admin_branding.modules.stripe.secret_key', 'Secret Key')}</Label>
+                            <Input id="stripe-secret-key" type="password" {...register('payment.config.stripe.secretKey')} placeholder="sk_test_..." />
                         </div>
                     </div>
                 )}
 
                 {provider === 'paypal' && (
                     <div className="space-y-4 border-l-2 border-primary/20 pl-4 mt-4">
-                        <h4 className="text-sm font-medium text-muted-foreground">PayPal Settings</h4>
+                        <h4 className="text-sm font-medium text-muted-foreground">{t('admin_branding.modules.paypal.title', 'PayPal Settings')}</h4>
                         <div className="grid gap-2">
-                            <Label>Client ID</Label>
-                            <Input {...register('payment.config.paypal.clientId')} placeholder="Client ID" />
+                            <Label htmlFor="paypal-client-id">{t('admin_branding.modules.paypal.client_id', 'Client ID')}</Label>
+                            <Input id="paypal-client-id" {...register('payment.config.paypal.clientId')} placeholder={t('admin_branding.modules.paypal.client_id', 'Client ID')} />
                         </div>
                         <div className="grid gap-2">
-                            <Label>Secret</Label>
-                            <Input type="password" {...register('payment.config.paypal.secret')} placeholder="Secret" />
+                            <Label htmlFor="paypal-secret">{t('admin_branding.modules.paypal.secret', 'Secret')}</Label>
+                            <Input id="paypal-secret" type="password" {...register('payment.config.paypal.secret')} placeholder={t('admin_branding.modules.paypal.secret', 'Secret')} />
                         </div>
                         <div className="flex items-center space-x-2">
                             <Checkbox
@@ -88,7 +88,7 @@ export const PaymentForm = () => {
                                 checked={watch('payment.config.paypal.sandbox')}
                                 onCheckedChange={(c: boolean) => setValue('payment.config.paypal.sandbox', c)}
                             />
-                            <Label htmlFor="paypal-sandbox">Sandbox Mode</Label>
+                            <Label htmlFor="paypal-sandbox">{t('admin_branding.modules.paypal.sandbox', 'Sandbox Mode')}</Label>
                         </div>
                     </div>
                 )}

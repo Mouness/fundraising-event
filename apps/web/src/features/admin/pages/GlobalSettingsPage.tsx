@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card';
 import { Button } from '@core/components/ui/button';
-import { api, API_URL } from '@core/lib/api';
+import { api, VITE_API_URL } from '@core/lib/api';
 import { toast } from 'sonner';
 import { Loader2, Globe, Palette, Mail, Save, CreditCard, Image as ImageIcon } from 'lucide-react';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -54,7 +54,7 @@ export const GlobalSettingsPage = () => {
     const { data: globalConfigData, isLoading } = useQuery({
         queryKey: ['global-settings'],
         queryFn: async () => {
-            const config = await fetchGlobalConfig(API_URL);
+            const config = await fetchGlobalConfig(VITE_API_URL);
             return config || ({} as EventConfig);
         }
     });
@@ -65,7 +65,7 @@ export const GlobalSettingsPage = () => {
             toast.success(t('admin_branding.success_save'));
             queryClient.invalidateQueries({ queryKey: ['global-settings'] });
             // Refresh store and themes without page reload
-            fetchGlobalConfig(API_URL).then(() => {
+            fetchGlobalConfig(VITE_API_URL).then(() => {
                 loadTheme(true);
                 syncLocales();
             });
@@ -235,31 +235,32 @@ export const GlobalSettingsPage = () => {
         return localesPayload;
     };
 
-    const mapFormToPayload = (formData: GlobalSettingsForm) => ({
-        organization: formData.organization,
-        logo: formData.logo,
-        email: formData.email,
-        address: formData.address,
-        phone: formData.phone,
-        website: formData.website,
-        themeVariables: mapThemeVariables(formData),
-        event: formData.event,
-        communication: {
-            legalName: formData.organization,
-            address: formData.address,
-            website: formData.website,
-            supportEmail: formData.email,
-            phone: formData.phone,
-            email: formData.emailReceipt,
-            pdf: formData.pdfReceipt
-        },
-        payment: formData.payment,
-        donation: {
-            sharing: formData.sharing
-        },
-        locales: mapLocalesWithOverrides(formData),
-        assets: formData.assets
-    });
+    const mapFormToPayload = (formData: GlobalSettingsForm): Partial<EventConfig> => {
+        return {
+            theme: {
+                assets: formData.assets,
+                variables: mapThemeVariables(formData),
+            },
+            content: {
+                ...formData.event,
+                title: formData.organization,
+            } as any,
+            communication: {
+                legalName: formData.organization,
+                address: formData.address,
+                website: formData.website,
+                supportEmail: formData.email,
+                phone: formData.phone,
+                email: formData.emailReceipt,
+                pdf: formData.pdfReceipt
+            },
+            donation: {
+                payment: formData.payment as any,
+                sharing: formData.sharing as any,
+            } as any,
+            locales: mapLocalesWithOverrides(formData) as any,
+        } as any;
+    };
 
     const onSubmit = (formData: GlobalSettingsForm) => {
         setSaving(true);

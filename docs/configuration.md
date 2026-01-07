@@ -22,7 +22,8 @@ This project handles configuration through Environment Variables and Static Asse
 
 | Variable | Description | Default/Example |
 | :--- | :--- | :--- |
-| `VITE_API_URL` | URL of the Backend API | `http://localhost:3000` |
+| `VITE_API_URL` | Base URL for API requests. In production, this points to your backend. | `/api` |
+| `VITE_API_TARGET` | **Development Only**: Proxy target for the Vite dev server. | `http://localhost:3000` |
 | `VITE_STRIPE_PUBLIC_KEY` | Stripe Publishable Key | `pk_test_...` |
 
 ## Event Configuration (Asset)
@@ -104,4 +105,4 @@ The application allows runtime configuration for event-specific branding and set
 | `communication.email.subjectLine` | `string` | Custom subject line for receipt emails. |
 | `communication.email.footerText` | `string` | Custom footer text for emails. |
 | `settings` | `Record` | Generic feature flags (e.g. `enableLiveConfetti`). |
-| `locales` | `Record<string, string>` | Flat-map of translation key overrides (e.g. `"en.donation.title": "Give Now"`). |
+| `locales` | `Record<string, string>` | Flat-map of translation key overrides. Supported: `en`, `fr`, `de`, `it`. |

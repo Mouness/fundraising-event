@@ -1,15 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ThankYouPage } from '@features/donation/pages/ThankYouPage';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterAll } from 'vitest';
 import * as router from 'react-router-dom';
+import { useAppConfig } from '@core/providers/AppConfigProvider';
 
 // Mocks
 vi.mock('@core/providers/AppConfigProvider', () => ({
-    useAppConfig: () => ({
+    useAppConfig: vi.fn(() => ({
         config: {
             donation: { sharing: { enabled: true, networks: ['twitter'] } }
         }
-    }),
+    })),
 }));
 vi.mock('@core/lib/confetti', () => ({
     fireConfetti: vi.fn(),
@@ -34,8 +35,14 @@ vi.mock('@core/components/ui/card', () => ({
 }));
 
 describe('ThankYouPage', () => {
+    const originalOpen = window.open;
     beforeEach(() => {
         vi.clearAllMocks();
+        window.open = vi.fn();
+    });
+
+    afterAll(() => {
+        window.open = originalOpen;
     });
 
     it('should redirect if no state', () => {
@@ -52,5 +59,71 @@ describe('ThankYouPage', () => {
         expect(screen.getByText('donation.success')).toBeDefined();
         expect(screen.getByText(/donation.success_detail \$100/)).toBeDefined();
         expect(screen.getByText('tx123')).toBeDefined();
+        expect(screen.getByText('John')).toBeDefined();
+    });
+
+    it('should handle social sharing', async () => {
+        vi.mocked(useAppConfig).mockReturnValue({
+            config: {
+                donation: {
+                    sharing: {
+                        enabled: true,
+                        networks: ['twitter', 'facebook', 'linkedin']
+                    }
+                }
+            }
+        } as any);
+
+        (router.useLocation as any).mockReturnValue({
+            state: { amount: 100 }
+        });
+        render(<ThankYouPage />);
+
+        const twitterBtn = screen.getByLabelText('Twitter');
+        await fireEvent.click(twitterBtn);
+        expect(window.open).toHaveBeenCalledWith(
+            expect.stringContaining('twitter.com/intent/tweet'),
+            '_blank',
+            expect.any(String)
+        );
+
+        const facebookBtn = screen.getByLabelText('Facebook');
+        await fireEvent.click(facebookBtn);
+        expect(window.open).toHaveBeenCalledWith(
+            expect.stringContaining('facebook.com/sharer/sharer.php'),
+            '_blank',
+            expect.any(String)
+        );
+
+        const linkedinBtn = screen.getByLabelText('LinkedIn');
+        await fireEvent.click(linkedinBtn);
+        expect(window.open).toHaveBeenCalledWith(
+            expect.stringContaining('linkedin.com/sharing/share-offsite'),
+            '_blank',
+            expect.any(String)
+        );
+    });
+
+    it('should render multiple social networks based on config', () => {
+        vi.mocked(useAppConfig).mockReturnValue({
+            config: {
+                donation: {
+                    sharing: {
+                        enabled: true,
+                        networks: ['twitter', 'facebook', 'linkedin']
+                    }
+                }
+            }
+        } as any);
+
+        (router.useLocation as any).mockReturnValue({
+            state: { amount: 100 }
+        });
+
+        render(<ThankYouPage />);
+
+        expect(screen.getByRole('button', { name: /twitter/i })).toBeDefined();
+        expect(screen.getByRole('button', { name: /facebook/i })).toBeDefined();
+        expect(screen.getByRole('button', { name: /linkedin/i })).toBeDefined();
     });
 });

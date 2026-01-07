@@ -9,7 +9,7 @@ export class EventsService {
   constructor(
     private prisma: PrismaService,
     private whiteLabelingService: WhiteLabelingService,
-  ) {}
+  ) { }
 
   private readonly defaultSelect = {
     id: true,
@@ -47,7 +47,7 @@ export class EventsService {
       by: ['eventId'],
       _sum: { amount: true },
       _count: { id: true },
-      where: { status: 'SUCCEEDED' },
+      where: { status: 'COMPLETED' },
     });
 
     return events.map((event) => {
@@ -74,7 +74,7 @@ export class EventsService {
       _sum: { amount: true },
       _count: { id: true },
       where: {
-        status: 'SUCCEEDED',
+        status: 'COMPLETED',
         eventId: { in: events.map((e) => e.id) },
       },
     });
@@ -98,17 +98,38 @@ export class EventsService {
     });
     if (!event) throw new NotFoundException('Event not found');
 
-    // Aggregate donations (SUCCEEDED only)
+    // Aggregate donations (COMPLETED)
     const stats = await this.prisma.donation.aggregate({
       _sum: { amount: true },
       _count: { id: true },
-      where: { eventId: event.id, status: 'SUCCEEDED' },
+      // Support both usages if legacy data exists, but primarily COMPLETED
+      where: { eventId: event.id, status: 'COMPLETED' },
+    });
+
+    // Fetch recent donations
+    const recentDonations = await this.prisma.donation.findMany({
+      where: { eventId: event.id, status: 'COMPLETED' },
+      orderBy: { createdAt: 'desc' },
+      take: 10,
+      select: {
+        id: true,
+        amount: true,
+        currency: true,
+        donorName: true,
+        message: true,
+        isAnonymous: true,
+        createdAt: true,
+      }
     });
 
     return {
       ...event,
       raised: (stats._sum.amount?.toNumber() || 0) / 100,
       donorCount: stats._count.id || 0,
+      donations: recentDonations.map(d => ({
+        ...d,
+        amount: (d.amount as any).toNumber()
+      }))
     };
   }
 
@@ -116,7 +137,7 @@ export class EventsService {
     // Check for formConfig in the payload (extra field from frontend)
     const formConfig = updateEventDto.formConfig;
     if (formConfig) {
-      await this.whiteLabelingService.updateEventSettings(id, { formConfig });
+      await this.whiteLabelingService.updateEventSettings(id, { donation: { form: formConfig } as any });
     }
 
     return this.prisma.event.update({

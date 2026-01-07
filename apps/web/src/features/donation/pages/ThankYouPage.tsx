@@ -23,7 +23,7 @@ export const ThankYouPage = () => {
     }
 
     const shareUrl = window.location.origin;
-    const shareText = `I just donated to support this amazing cause! Join me at ${shareUrl}`;
+    const shareText = t('thankyou.share_text', { defaultValue: 'I just donated to support this amazing cause! Join me at {{url}}', url: shareUrl });
 
     const handleShare = (platform: 'twitter' | 'facebook' | 'linkedin') => {
         let url = '';
@@ -81,12 +81,12 @@ export const ThankYouPage = () => {
                     >
                         {state.transactionId && (
                             <div className="flex justify-between">
-                                <span style={{ color: 'var(--thankyou-receipt-label)' }}>Transaction ID</span>
+                                <span style={{ color: 'var(--thankyou-receipt-label)' }}>{t('thankyou.receipt.transaction_id')}</span>
                                 <span className="font-mono" style={{ color: 'var(--thankyou-receipt-text)' }}>{state.transactionId}</span>
                             </div>
                         )}
                         <div className="flex justify-between">
-                            <span style={{ color: 'var(--thankyou-receipt-label)' }}>Date</span>
+                            <span style={{ color: 'var(--thankyou-receipt-label)' }}>{t('thankyou.receipt.date')}</span>
                             <span style={{ color: 'var(--thankyou-receipt-text)' }}>{new Date().toLocaleDateString()}</span>
                         </div>
                         {state.donorName && (
@@ -100,27 +100,27 @@ export const ThankYouPage = () => {
                     <div className="space-y-3">
                         <div className="text-center text-sm font-medium flex items-center justify-center gap-2" style={{ color: 'var(--thankyou-share-label)' }}>
                             <Share2 className="w-4 h-4" />
-                            Share your support
+                            {t('thankyou.receipt.share_label')}
                         </div>
                         <div className="flex justify-center gap-4">
                             {config.donation.sharing?.enabled && config.donation.sharing.networks.map((network: string) => {
                                 if (network === 'facebook') {
                                     return (
-                                        <Button key={network} variant="outline" size="icon" onClick={() => handleShare('facebook')} className="hover:opacity-80 hover:text-[#1877F2] hover:border-[#1877F2]">
+                                        <Button key={network} variant="outline" size="icon" onClick={() => handleShare('facebook')} className="hover:opacity-80 hover:text-[#1877F2] hover:border-[#1877F2]" aria-label="Facebook">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                                         </Button>
                                     );
                                 }
                                 if (network === 'twitter') {
                                     return (
-                                        <Button key={network} variant="outline" size="icon" onClick={() => handleShare('twitter')} className="hover:opacity-80 hover:text-[#1DA1F2] hover:border-[#1DA1F2]">
+                                        <Button key={network} variant="outline" size="icon" onClick={() => handleShare('twitter')} className="hover:opacity-80 hover:text-[#1DA1F2] hover:border-[#1DA1F2]" aria-label="Twitter">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-12.7 12.5S1.2 5.3 7.6 4.5c2.1-.3 3.3.4 3.3.4s0-1.9 1.9-2.3c3-.7 5.1 2.3 5.4 3.5 1-.3 2.1-.8 2.1-.8s-.6 2.3-1.8 3.1c.9-.1 1.8-.3 1.8-.3s-.3 1.8-1.3 2.8" /></svg>
                                         </Button>
                                     );
                                 }
                                 if (network === 'linkedin') {
                                     return (
-                                        <Button key={network} variant="outline" size="icon" onClick={() => handleShare('linkedin')} className="hover:opacity-80 hover:text-[#0A66C2] hover:border-[#0A66C2]">
+                                        <Button key={network} variant="outline" size="icon" onClick={() => handleShare('linkedin')} className="hover:opacity-80 hover:text-[#0A66C2] hover:border-[#0A66C2]" aria-label="LinkedIn">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
                                         </Button>
                                     );

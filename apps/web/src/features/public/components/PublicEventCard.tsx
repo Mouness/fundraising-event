@@ -44,7 +44,7 @@ export const PublicEventCard = ({ event, index }: PublicEventCardProps) => {
                                 ? 'bg-green-600 text-white dark:bg-green-500'
                                 : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                                 }`}>
-                                {event.status || 'DRAFT'}
+                                {event.status ? t(`admin_events.status.${event.status.toLowerCase()}`, event.status) : 'DRAFT'}
                             </div>
                             <ArrowRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                         </div>

@@ -8,10 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@core/components/ui/select';
 import { useTranslation } from 'react-i18next';
 
-const CLIENT_LOCALE_GROUPS = {
-    'en': 'English',
-    'fr': 'Français'
-};
+import { LOCALE_LABELS } from '@fundraising/white-labeling';
+
+const CLIENT_LOCALE_GROUPS = LOCALE_LABELS;
 
 interface LocalizationFormProps {
     localeOverrides: { key: string, value: string, locale: string }[];
@@ -117,7 +116,7 @@ export const LocalizationForm = ({ localeOverrides, setLocaleOverrides }: Locali
                                     className="h-8 text-xs bg-background"
                                 />
                             </div>
-                            <Button type="button" size="sm" onClick={addLocaleOverride} className="h-8 px-3">
+                            <Button type="button" size="sm" onClick={addLocaleOverride} className="h-8 px-3" aria-label="Add Override">
                                 <Plus className="h-3 w-3" />
                             </Button>
                         </div>
@@ -142,7 +141,7 @@ export const LocalizationForm = ({ localeOverrides, setLocaleOverrides }: Locali
                                                 placeholder={t('admin_branding.localization.translation')}
                                             />
                                         </div>
-                                        <Button type="button" variant="ghost" size="icon" className="h-6 w-6 shrink-0 text-muted-foreground hover:text-destructive" onClick={() => removeLocaleField(idx)}>
+                                        <Button type="button" variant="ghost" size="icon" className="h-6 w-6 shrink-0 text-muted-foreground hover:text-destructive" onClick={() => removeLocaleField(idx)} aria-label="Remove Override">
                                             <Trash2 className="h-3 w-3" />
                                         </Button>
                                     </div>

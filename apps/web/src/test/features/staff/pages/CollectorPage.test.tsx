@@ -3,6 +3,7 @@ import { CollectorPage } from '@features/staff/pages/CollectorPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { SyncService } from '@features/staff/services/sync.service';
 import { toast } from 'sonner';
+import { useStaffAuth } from '@features/staff/hooks/useStaffAuth';
 
 // Mocks
 vi.mock('@features/staff/services/sync.service', () => ({
@@ -13,9 +14,16 @@ vi.mock('@features/staff/services/sync.service', () => ({
 }));
 
 vi.mock('@features/staff/hooks/useStaffAuth', () => ({
-    useStaffAuth: () => ({
+    useStaffAuth: vi.fn(() => ({
         getStaffUser: () => ({ id: 'staff-1', eventId: 'test-event' }),
-        isStaffAuthenticated: () => true,
+        isStaffAuthenticated: vi.fn((_id?: string) => true),
+    })),
+}));
+
+vi.mock('@features/events/context/EventContext', () => ({
+    useEvent: () => ({
+        event: { id: 'test-event', slug: 'test-event' },
+        isLoading: false,
     }),
 }));
 
@@ -85,6 +93,43 @@ describe('CollectorPage', () => {
                 'test-event'
             );
             expect(toast.success).toHaveBeenCalled();
+        });
+    });
+    it('should show error on submission failure', async () => {
+        (SyncService.submitDonation as any).mockResolvedValue({ success: false, error: 'Network Error' });
+        render(<CollectorPage />);
+
+        // Enter amount ($1.00)
+        fireEvent.click(await screen.findByText('1'));
+        fireEvent.click(screen.getByText('00'));
+
+        const submitBtn = screen.getByText('staff.collect_button');
+        fireEvent.click(submitBtn);
+
+        await waitFor(() => {
+            expect(toast.error).toHaveBeenCalledWith('Network Error');
+        });
+    });
+
+    it('should show error if session is invalid', async () => {
+        // Mock getStaffUser to return null. Use mockReturnValue to persist across re-renders.
+        vi.mocked(useStaffAuth).mockReturnValue({
+            getStaffUser: () => null,
+            isStaffAuthenticated: vi.fn(() => true),
+        } as any);
+
+        render(<CollectorPage />);
+
+        // Enter amount
+        fireEvent.click(await screen.findByText('1'));
+        fireEvent.click(screen.getByText('00'));
+
+        const submitBtn = screen.getByText('staff.collect_button');
+        fireEvent.click(submitBtn);
+
+        await waitFor(() => {
+            expect(toast.error).toHaveBeenCalledWith('Session invalid. Please login again.');
+            expect(SyncService.submitDonation).not.toHaveBeenCalled();
         });
     });
 });

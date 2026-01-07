@@ -1,8 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AppHeader } from "@core/components/AppHeader";
+import { useTranslation } from "react-i18next";
 
 export const StaffLayout = () => {
+    const { t } = useTranslation('common');
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     useEffect(() => {
@@ -20,11 +22,11 @@ export const StaffLayout = () => {
 
     return (
         <div
-            className="min-h-screen text-slate-900 dark:text-slate-50"
+            className="min-h-screen"
             style={{ backgroundColor: 'var(--staff-page-bg)' }}
         >
             <AppHeader
-                title="Staff Collector"
+                title={t('staff.collector_title')}
                 showOnlineStatus={true}
                 isOnline={isOnline}
             />

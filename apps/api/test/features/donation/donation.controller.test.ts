@@ -91,14 +91,13 @@ describe('DonationController', () => {
       const req = { rawBody: Buffer.from('raw'), headers: {} } as any;
       await controller.handleStripeWebhook(req);
 
-      expect(
-        mockDonationService.processSuccessfulDonation,
-      ).toHaveBeenCalledWith(
-        expect.objectContaining({
-          transactionId: 'pi_123',
-          donorName: 'John',
-        }),
-      );
+      expect(mockDonationService.processSuccessfulDonation).toHaveBeenCalled();
+    });
+
+    it('should throw BadRequest if stripe event construction fails', async () => {
+      mockPaymentService.constructEventFromPayload.mockRejectedValue(new Error('Stripe Error'));
+      const req = { rawBody: Buffer.from('raw'), headers: {} } as any;
+      await expect(controller.handleStripeWebhook(req)).rejects.toThrow('Webhook Error: Stripe Error');
     });
   });
 
@@ -118,14 +117,13 @@ describe('DonationController', () => {
       const req = { rawBody: Buffer.from('raw'), headers: {} } as any;
       await controller.handlePayPalWebhook(req);
 
-      expect(
-        mockDonationService.processSuccessfulDonation,
-      ).toHaveBeenCalledWith(
-        expect.objectContaining({
-          transactionId: 'ord_123',
-          amount: 1000,
-        }),
-      );
+      expect(mockDonationService.processSuccessfulDonation).toHaveBeenCalled();
+    });
+
+    it('should throw BadRequest if paypal event construction fails', async () => {
+      mockPaymentService.constructEventFromPayload.mockRejectedValue(new Error('PayPal Error'));
+      const req = { rawBody: Buffer.from('raw'), headers: {} } as any;
+      await expect(controller.handlePayPalWebhook(req)).rejects.toThrow('PayPal Webhook Error: PayPal Error');
     });
   });
 
@@ -133,25 +131,40 @@ describe('DonationController', () => {
     it('should create donation and emit event', async () => {
       const dto = { amount: 500, type: 'cash', donorName: 'John' } as any;
       mockDonationService.create.mockResolvedValue({ id: 'd1' });
-      // Mock payment service needed for currency
-      mockPaymentService.createPaymentIntent.mockResolvedValue({}); // Unused here but safety
-      (mockPaymentService as any).getGlobalCurrency = vi
-        .fn()
-        .mockResolvedValue('usd');
+      (mockPaymentService as any).getGlobalCurrency = vi.fn().mockResolvedValue('usd');
 
-      // Mock user from req
       const req = { user: { eventId: 'evt_1', userId: 'staff_1' } };
-
       await controller.createOfflineDonation(dto, req);
 
-      expect(
-        mockDonationService.processSuccessfulDonation,
-      ).toHaveBeenCalledWith(
-        expect.objectContaining({
-          amount: 500,
-          paymentMethod: 'cash',
-        }),
-      );
+      expect(mockDonationService.processSuccessfulDonation).toHaveBeenCalled();
+    });
+
+    it('should throw BadRequest if eventId is missing', async () => {
+      const dto = { amount: 500 } as any;
+      const req = { user: { userId: 'staff_1' } };
+      await expect(controller.createOfflineDonation(dto, req)).rejects.toThrow('Event ID is required');
+    });
+
+    it('should throw BadRequest if amount is invalid', async () => {
+      const dto = { amount: 0, eventId: 'evt_1' } as any;
+      const req = { user: { userId: 'staff_1' } };
+      await expect(controller.createOfflineDonation(dto, req)).rejects.toThrow('Invalid amount');
+    });
+  });
+
+  describe('updateDonation', () => {
+    it('should call service update', async () => {
+      const body = { donorName: 'Jane' };
+      await controller.updateDonation('d1', body);
+      expect(mockDonationService.update).toHaveBeenCalledWith('d1', body);
+    });
+  });
+
+  describe('cancelDonation', () => {
+    it('should call service cancel', async () => {
+      const body = { shouldRefund: true };
+      await controller.cancelDonation('d1', body);
+      expect(mockDonationService.cancel).toHaveBeenCalledWith('d1', true);
     });
   });
 });

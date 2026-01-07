@@ -36,8 +36,8 @@ export const CreateEventPage = () => {
     };
 
     return (
-        <div className="space-y-6 max-w-2xl mx-auto">
-            <div className="flex items-center gap-4">
+        <div className="space-y-6 max-w-2xl mx-auto p-4">
+            <div className="flex items-center gap-4 mb-6">
                 <Button variant="ghost" size="icon" onClick={() => navigate('/admin/events')}>
                     <ArrowLeft className="h-4 w-4" />
                 </Button>
@@ -56,23 +56,43 @@ export const CreateEventPage = () => {
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <div className="space-y-2">
                             <Label htmlFor="name">{t('admin_events.name', 'Campaign Name')}</Label>
-                            <Input id="name" {...form.register('name')} placeholder="e.g. Ramadan 2024" />
-                            {form.formState.errors.name && <span className="text-sm text-red-500">{form.formState.errors.name.message}</span>}
+                            <Input
+                                id="name"
+                                placeholder={t('admin_events.create_placeholder_name', 'e.g. Annual Charity Gala')}
+                                {...form.register('name')}
+                            />
+                            {form.formState.errors.name && (
+                                <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>
+                            )}
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="slug">{t('admin_events.slug', 'URL Slug')}</Label>
                             <div className="flex items-center gap-2">
-                                <span className="text-muted-foreground text-sm font-mono bg-muted px-2 py-1.5 rounded">{window.location.host}/</span>
-                                <Input id="slug" {...form.register('slug')} placeholder="ramadan-2024" className="font-mono" />
+                                <span className="text-muted-foreground text-sm font-mono bg-muted px-2 py-1.5 rounded">/</span>
+                                <Input
+                                    id="slug"
+                                    placeholder={t('admin_events.create_placeholder_slug', 'my-event')}
+                                    {...form.register('slug')}
+                                    className="font-mono"
+                                />
                             </div>
-                            {form.formState.errors.slug && <span className="text-sm text-red-500">{form.formState.errors.slug.message}</span>}
+                            {form.formState.errors.slug && (
+                                <p className="text-sm text-destructive">{form.formState.errors.slug.message}</p>
+                            )}
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="goalAmount">{t('admin_events.goal_amount', 'Fundraising Goal')}</Label>
-                            <Input id="goalAmount" type="number" {...form.register('goalAmount')} />
-                            {form.formState.errors.goalAmount && <span className="text-sm text-red-500">{form.formState.errors.goalAmount.message}</span>}
+                            <Input
+                                id="goalAmount"
+                                type="number"
+                                placeholder={t('admin_events.create_placeholder_goal', '10000')}
+                                {...form.register('goalAmount', { valueAsNumber: true })}
+                            />
+                            {form.formState.errors.goalAmount && (
+                                <p className="text-sm text-destructive">{form.formState.errors.goalAmount.message}</p>
+                            )}
                         </div>
 
                         <div className="flex justify-end pt-4">

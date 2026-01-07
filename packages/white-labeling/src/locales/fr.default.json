@@ -5,17 +5,16 @@
         "email": "Email",
         "password": "Mot de passe",
         "submit": "Se connecter",
-        "logging_in": "Connexion en cours...",
         "google": "Continuer avec Google",
         "loading": "Connexion...",
+        "logging_in": "Connexion en cours...",
         "email_placeholder": "admin@exemple.com"
     },
     "nav": {
         "dashboard": "Tableau de Bord",
         "events": "Événements",
         "staff": "Équipe",
-        "settings": "Paramètres",
-        "logout": "Déconnexion"
+        "settings": "Paramètres"
     },
     "admin_events": {
         "title": "Événements",
@@ -33,6 +32,11 @@
         "slug": "Slug URL",
         "goal_amount": "Objectif de collecte",
         "create_action": "Créer la campagne",
+        "create_placeholder_slug": "mon-evenement",
+        "create_placeholder_goal": "10000",
+        "layout": {
+            "title": "Gestion de l'événement"
+        },
         "status": {
             "active": "ACTIF",
             "draft": "BROUILLON",
@@ -91,14 +95,14 @@
     "admin_team": {
         "title": "Base Globale du Personnel",
         "subtitle": "Gérez tous les bénévoles sur la plateforme",
-        "title_assign": "Affectation des Bénévoles",
-        "subtitle_assign": "Sélectionnez les membres de l'équipe pour cet événement",
-        "assign_member": "Ajouter à l'événement",
-        "assign_member_desc": "Choisissez un bénévole dans la base globale.",
+        "title_assign": "Équipe de l'événement",
+        "subtitle_assign": "Affectez des bénévoles existants à cet événement",
+        "assign_member": "Affecter un membre",
+        "assign_member_desc": "Sélectionnez un bénévole existant dans la base pour cet événement.",
         "pool_title": "Base des bénévoles",
         "pool_desc": "Cliquez pour ajouter à l'événement",
         "assigned_title_short": "Équipe Affectée",
-        "assigned_empty": "L'équipe est vide",
+        "assigned_empty": "Personne n'est encore affecté",
         "pool_empty": "Aucun bénévole disponible",
         "assigned_title": "Bénévoles Affectés",
         "assigned_desc": "Ces bénévoles sont autorisés à collecter des dons pour cet événement spécifique.",
@@ -133,49 +137,24 @@
         "confirm_delete_title": "Supprimer le bénévole",
         "member_updated": "Membre mis à jour avec succès"
     },
-    "dashboard": {
-        "title": "Tableau de bord",
-        "overview": "Aperçu",
-        "platform_overview": "Aperçu de la plateforme",
-        "export_receipts": "Exporter les reçus (ZIP)",
-        "export_failed": "Échec de l'exportation des reçus. Veuillez réessayer.",
-        "chart_placeholder": "Graphique",
-        "recent_donations": "Dons récents",
-        "stats": {
-            "revenue": "Revenu total",
-            "total_revenue": "Revenu total",
-            "active_events": "Événements actifs",
-            "currently_live": "Actuellement en direct",
-            "donations": "Dons",
-            "total_donors": "Total donateurs",
-            "donors_description": "Donateurs uniques à vie",
-            "staff_members": "Membres du personnel",
-            "events_count": "Sur {{count}} événements"
-        },
-        "campaigns": {
-            "title": "Campagnes Actives",
-            "empty": "Aucune campagne active trouvée.",
-            "view_all": "Voir tous les événements",
-            "active": "ACTIF",
-            "raised": "Récolté",
-            "goal": "Objectif: {{amount}}",
-            "manage": "Gérer le Tableau de Bord"
-        }
-    },
     "live": {
-        "title": "En Direct",
+        "title": "Écran Live",
         "status": {
             "connected": "Connecté",
             "connecting": "Connexion..."
         },
-        "amount": "Montant",
-        "from": "De",
-        "anonymous": "Anonyme",
+        "new_donation": "Nouveau Don !",
         "waiting": "En attente de dons...",
         "scan_to_donate": "SCANNEZ POUR DONNER",
         "total_raised": "Total récolté",
         "goal": "Objectif",
-        "give_at": "Faites un don sur <1>{{url}}</1>"
+        "give_at": "Faites un don sur <1>{{url}}</1>",
+        "progress": "Progression",
+        "scan_to_contribute": "Scannez pour contribuer",
+        "recent_gifts": "Dons récents",
+        "target": "Cible",
+        "join_the_impact": "Rejoignez l'impact",
+        "live_feed": "Fil en direct"
     },
     "donation": {
         "title": "Faire un don",
@@ -198,6 +177,7 @@
         "success_detail": "Votre don de {{amount}} a bien été reçu.",
         "make_another": "Faire un autre don",
         "error": "Une erreur est survenue. Veuillez réessayer.",
+        "error_init": "Échec de l'initialisation du don. Veuillez réessayer.",
         "error_invalid_event": "Configuration d'événement invalide. Veuillez retourner à l'accueil de l'événement.",
         "pay_now": "Payer maintenant",
         "date": "Date",
@@ -208,6 +188,7 @@
         "receipt_failed": "Échec du téléchargement du reçu. Veuillez réessayer."
     },
     "common": {
+        "logo": "Logo",
         "back": "Retour",
         "actions": "Actions",
         "loading": "Chargement des données...",
@@ -216,31 +197,38 @@
         "edit": "Modifier",
         "cancel": "Annuler",
         "delete": "Supprimer",
+        "logout": "Se déconnecter",
         "save_changes": "Enregistrer les modifications",
         "saving": "Enregistrement...",
-        "saved_successfully": "Paramètres enregistrés avec succès",
-        "logout": "Se déconnecter"
+        "saved_successfully": "Enregistré avec succès",
+        "amount": "Montant",
+        "anonymous": "Anonyme",
+        "app_name": "Plateforme de Collecte"
     },
     "status": {
         "completed": "Complété",
         "pending": "En attente",
-        "failed": "Échoué"
+        "failed": "Échoué",
+        "cancelled": "Annulé",
+        "refunded": "Remboursé"
     },
     "admin": {
-        "header": "Administration"
+        "header": "Administration Collecte"
     },
     "app_header": {
         "title": "Événement de Collecte",
+        "home": "Accueil",
         "online": "En ligne",
         "offline": "Hors ligne"
     },
     "staff": {
+        "collector_title": "App Collecteur",
         "enter_amount": "Entrer le montant",
         "submit_error": "Erreur lors de la soumission.",
         "success_offline": "HORS LIGNE : Don sauvegardé ! \nMontant : {{amount}}",
         "success_online": "SUCCÈS : Don collecté ! \nMontant : {{amount}}",
         "back_online": "De retour en ligne : {{count}} dons synchronisés !",
-        "collect_button": "Collecter",
+        "collect_button": "Collecter le Don",
         "donor": {
             "name_label": "Nom du donateur (Optionnel)",
             "name_placeholder": "Jean Dupont",
@@ -264,9 +252,17 @@
             "submit": "Se connecter"
         }
     },
+    "thankyou": {
+        "receipt": {
+            "transaction_id": "ID Transaction",
+            "date": "Date",
+            "from": "De",
+            "share_label": "Partagez votre soutien"
+        },
+        "share_text": "Je viens de faire un don pour soutenir cette cause incroyable ! Rejoignez-moi sur {{url}}"
+    },
     "root_landing": {
         "hero": {
-            "title": "Plateforme d'Impact",
             "subtitle": "Découvrez et soutenez nos campagnes de collecte de fonds.",
             "badge": "Plateforme d'Impact",
             "explore": "Explorer les événements"
@@ -284,17 +280,7 @@
             "goal_of": "sur {{amount}} d'objectif"
         },
         "empty": "Aucune campagne active trouvée. Revenez bientôt !",
-        "footer": {
-            "rights": "Tous droits réservés."
-        }
-    },
-    "thankyou": {
-        "receipt": {
-            "transaction_id": "ID Transaction",
-            "date": "Date",
-            "from": "De",
-            "share_label": "Partager votre soutien"
-        }
+        "footer": {}
     },
     "landing": {
         "hero": {
@@ -323,8 +309,37 @@
             "website": "Site Web",
             "support": "Support",
             "rights": "Tous droits réservés.",
-            "staff": "Accès Staff",
-            "login": "Connexion Admin"
+            "staff": "Connexion Staff"
+        }
+    },
+    "dashboard": {
+        "title": "Tableau de Bord",
+        "overview": "Aperçu",
+        "platform_overview": "Aperçu de la plateforme",
+        "recent_donations": "Dons récents",
+        "chart_placeholder": "Graphique",
+        "export_receipts": "Exporter les reçus (ZIP)",
+        "export_failed": "Échec de l'exportation des reçus. Veuillez réessayer.",
+        "stats": {
+            "revenue": "Revenu total",
+            "events_count": "Sur {{count}} événements",
+            "active_events": "Événements actifs",
+            "currently_live": "Actuellement en direct",
+            "total_donors": "Total Donateurs",
+            "donors_description": "Donateurs uniques à vie",
+            "total_revenue": "Revenu Total",
+            "donations": "Dons",
+            "staff_members": "Membres du personnel",
+            "revenue_trend": "Tendance des revenus"
+        },
+        "campaigns": {
+            "title": "Campagnes Actives",
+            "empty": "Aucun événement actif trouvé.",
+            "view_all": "Voir tous les événements"
+        },
+        "activity": {
+            "title": "Activité Récente",
+            "empty": "Aucune activité récente"
         }
     },
     "error": {
@@ -363,16 +378,10 @@
             "email": "Adresse email invalide",
             "url": "URL invalide",
             "uuid": "UUID invalide",
-            "emoji": "Emoji invalide",
-            "datetime": "Datetime invalide",
-            "cuid": "CUID invalide",
-            "ulid": "ULID invalide",
-            "ip": "Adresse IP invalide",
             "regex": "Format invalide"
         },
         "invalid_enum_value": "Valeur invalide. Attendu : {{options}}",
         "invalid_date": "Date invalide",
-        "invalid_union": "Entrée invalide",
         "not_multiple_of": "Doit être un multiple de {{multipleOf}}",
         "not_finite": "Doit être fini",
         "custom": "Entrée invalide"
@@ -492,7 +501,12 @@
             "backgrounds": "Images d'Arrière-plan",
             "landing": "Fond de Page d'Accueil",
             "donor": "Fond Donateur / Authentification",
-            "live": "Fond d'Écran en Direct"
+            "live": "Fond d'Écran en Direct",
+            "links_title": "Liens Externes",
+            "links_desc": "Configurez les URLs de destination pour les fonctionnalités de la page d'accueil.",
+            "impact_url": "URL Impact",
+            "community_url": "URL Communauté",
+            "interactive_url": "URL Interactif"
         },
         "localization": {
             "title": "Localisation",
@@ -506,11 +520,25 @@
             "translation": "Traduction..."
         },
         "modules": {
+            "admin_layout": {
+                "title": "Admin"
+            },
             "payment_nav": "Paiement",
             "payment_title": "Configuration du Paiement",
-            "payment_description": "Renseignez les informations nécessaires à la réception des paiements.",
+            "payment_description": "Configurez les fournisseurs de paiement et la devise.",
             "currency": "Devise",
-            "provider": "Prestataire"
+            "provider": "Prestataire de Paiement",
+            "stripe": {
+                "title": "Paramètres Stripe",
+                "publishable_key": "Clé Publique",
+                "secret_key": "Clé Secrète"
+            },
+            "paypal": {
+                "title": "Paramètres PayPal",
+                "client_id": "Client ID",
+                "secret": "Secret",
+                "sandbox": "Mode Sandbox"
+            }
         }
     },
     "event_settings": {
@@ -543,9 +571,6 @@
         },
         "branding": {
             "success_save": "Paramètres de design mis à jour",
-            "saved_successfully": "Paramètres enregistrés avec succès",
-            "save_changes": "Enregistrer les modifications",
-            "subtitle": "Configurez les détails et l'apparence de l'événement.",
             "error_save": "Échec de l'enregistrement des paramètres",
             "strategy_title": "Stratégie de Marque",
             "strategy_desc": "Décidez si cet événement doit suivre la marque de l'organisation ou avoir sa propre identité.",
@@ -559,13 +584,22 @@
             "logo_url": "URL du Logo de l'Événement",
             "accent_color": "Couleur d'Accent de l'Événement",
             "override_warning": "La marque personnalisée de l'événement remplace l'apparence standard de l'organisation pour cet événement spécifique.",
-            "apply_overrides": "Appliquer les Surcharges de Thème"
+            "apply_overrides": "Appliquer les Surcharges de Thème",
+            "saved_successfully": "Personnalisation enregistrée avec succès",
+            "save_changes": "Enregistrer les modifications",
+            "subtitle": "Configurez le design et l'apparence de l'événement.",
+            "live_page_title": "Thème Page Live",
+            "live_page_desc": "Personnalisez l'apparence de l'affichage des dons en temps réel.",
+            "landing_links_title": "Liens Page d'Accueil",
+            "landing_links_desc": "Configurez les liens externes pour les cartes de la page d'accueil.",
+            "theme_overrides": "Surcharges de Thème (Variables CSS)",
+            "theme_overrides_desc": "Aucune surcharge. Cliquez sur \"Ajouter Variable\" pour personnaliser le thème."
         }
     },
     "payment": {
         "error_missing_config": "La configuration de paiement est manquante. Veuillez contacter le support.",
         "error_processing": "Une erreur est survenue lors du traitement de votre paiement. Veuillez réessayer.",
-        "error_generic": "Le paiement a échoué. Veuillez vérifier vos informations et réessayer.",
+        "error_generic": "Le paiement a échoué. Veuillez vérifier vos détails et réessayer.",
         "unknown_provider": "Fournisseur de paiement inconnu : {{providerId}}"
     },
     "date": {
@@ -576,5 +610,14 @@
         "minutes_ago": "il y a {{count}} minutes",
         "seconds_ago": "il y a {{count}} secondes",
         "just_now": "à l'instant"
+    },
+    "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant",
+        "more": "Plus de pages"
+    },
+    "confirmation": {
+        "title": "Êtes-vous sûr ?",
+        "description": "Cette action est irréversible."
     }
 }

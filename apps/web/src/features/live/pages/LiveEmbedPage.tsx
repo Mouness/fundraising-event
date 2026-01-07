@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEvent } from '@features/events/context/EventContext';
 import { useLiveSocket } from '@features/live/hooks/useLiveSocket';
-import { DonationGauge } from '../components/DonationGauge';
+import { GaugeClassic } from '../components/gauges/GaugeClassic';
 import { DonationFeed, type Donation } from '../components/DonationFeed';
 
 export const LiveEmbedPage = () => {
@@ -74,7 +74,7 @@ export const LiveEmbedPage = () => {
     if (isLoading || !event) return <div className="flex h-screen items-center justify-center text-white/50">{t('common.loading')}</div>;
 
     const renderGauge = () => (
-        <DonationGauge
+        <GaugeClassic
             totalRaisedCents={totalRaisedCents}
             prevTotal={prevTotal}
             goalAmount={Number(event.goalAmount)}

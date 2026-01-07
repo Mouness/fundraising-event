@@ -14,8 +14,7 @@
         "dashboard": "Dashboard",
         "events": "Events",
         "staff": "Staff",
-        "settings": "Settings",
-        "logout": "Logout"
+        "settings": "Settings"
     },
     "admin_events": {
         "title": "Events",
@@ -33,6 +32,11 @@
         "slug": "URL Slug",
         "goal_amount": "Fundraising Goal",
         "create_action": "Create Campaign",
+        "create_placeholder_slug": "my-event",
+        "create_placeholder_goal": "10000",
+        "layout": {
+            "title": "Event Management"
+        },
         "status": {
             "active": "ACTIVE",
             "draft": "DRAFT",
@@ -147,7 +151,13 @@
         "scan_to_donate": "SCAN TO DONATE",
         "total_raised": "Total Raised",
         "goal": "Goal",
-        "give_at": "Give at <1>{{url}}</1>"
+        "give_at": "Give at <1>{{url}}</1>",
+        "progress": "Progress",
+        "scan_to_contribute": "Scan to contribute",
+        "recent_gifts": "Recent Gifts",
+        "target": "Target",
+        "join_the_impact": "Join the Impact",
+        "live_feed": "Live Feed"
     },
     "donation": {
         "title": "Make a Donation",
@@ -170,6 +180,7 @@
         "success_detail": "Your donation of {{amount}} has been received.",
         "make_another": "Make another donation",
         "error": "Something went wrong. Please try again.",
+        "error_init": "Failed to initialize donation. Please try again.",
         "error_invalid_event": "Invalid event configuration. Please return to the event home page.",
         "pay_now": "Pay Now",
         "date": "Date",
@@ -180,6 +191,7 @@
         "receipt_failed": "Failed to download receipt. Please try again."
     },
     "common": {
+        "logo": "Logo",
         "back": "Back",
         "actions": "Actions",
         "loading": "Loading data...",
@@ -191,22 +203,29 @@
         "logout": "Log off",
         "save_changes": "Save Changes",
         "saving": "Saving...",
-        "saved_successfully": "Saved successfully"
+        "saved_successfully": "Saved successfully",
+        "amount": "Amount",
+        "anonymous": "Anonymous",
+        "app_name": "Fundraising Platform"
     },
     "status": {
         "completed": "Completed",
         "pending": "Pending",
-        "failed": "Failed"
+        "failed": "Failed",
+        "cancelled": "Cancelled",
+        "refunded": "Refunded"
     },
     "admin": {
         "header": "Fundraising Admin"
     },
     "app_header": {
         "title": "Fundraising Event",
+        "home": "Home",
         "online": "Online",
         "offline": "Offline"
     },
     "staff": {
+        "collector_title": "Staff Collector",
         "enter_amount": "Enter Amount",
         "submit_error": "Error submitting donation.",
         "success_offline": "OFFLINE: Donation saved to queue! \nAmount: {{amount}}",
@@ -242,11 +261,11 @@
             "date": "Date",
             "from": "From",
             "share_label": "Share your support"
-        }
+        },
+        "share_text": "I just donated to support this amazing cause! Join me at {{url}}"
     },
     "root_landing": {
         "hero": {
-            "title": "Impact Platform",
             "subtitle": "Discover and support our fundraising campaigns.",
             "badge": "Impact Platform",
             "explore": "Explore Events"
@@ -264,9 +283,7 @@
             "goal_of": "of {{amount}} goal"
         },
         "empty": "No active campaigns found. Check back soon!",
-        "footer": {
-            "rights": "All rights reserved."
-        }
+        "footer": {}
     },
     "landing": {
         "hero": {
@@ -295,8 +312,7 @@
             "website": "Website",
             "support": "Support",
             "rights": "All rights reserved.",
-            "staff": "Staff Login",
-            "login": "Admin Login"
+            "staff": "Staff Login"
         }
     },
     "dashboard": {
@@ -316,16 +332,17 @@
             "donors_description": "Lifetime unique donors",
             "total_revenue": "Total Revenue",
             "donations": "Donations",
-            "staff_members": "Staff Members"
+            "staff_members": "Staff Members",
+            "revenue_trend": "Revenue Trend"
         },
         "campaigns": {
             "title": "Active Campaigns",
             "empty": "No active events found.",
-            "view_all": "View all events",
-            "active": "Active",
-            "raised": "Raised",
-            "goal": "Goal: {{amount}}",
-            "manage": "Manage Dashboard"
+            "view_all": "View all events"
+        },
+        "activity": {
+            "title": "Recent Activity",
+            "empty": "No recent activity"
         }
     },
     "error": {
@@ -364,16 +381,10 @@
             "email": "Invalid email address",
             "url": "Invalid URL",
             "uuid": "Invalid UUID",
-            "emoji": "Invalid emoji",
-            "datetime": "Invalid datetime",
-            "cuid": "Invalid CUID",
-            "ulid": "Invalid ULID",
-            "ip": "Invalid IP address",
             "regex": "Invalid format"
         },
         "invalid_enum_value": "Invalid value. Expected: {{options}}",
         "invalid_date": "Invalid date",
-        "invalid_union": "Invalid input",
         "not_multiple_of": "Must be a multiple of {{multipleOf}}",
         "not_finite": "Must be finite",
         "custom": "Invalid input"
@@ -493,7 +504,12 @@
             "backgrounds": "Background Images",
             "landing": "Landing Page Background",
             "donor": "Donor/Auth Background",
-            "live": "Live Screen Background"
+            "live": "Live Screen Background",
+            "links_title": "Landing Page External Links",
+            "links_desc": "Configure the destination URLs for the landing page feature boxes.",
+            "impact_url": "Impact URL",
+            "community_url": "Community URL",
+            "interactive_url": "Interactive URL"
         },
         "localization": {
             "title": "Localization",
@@ -507,11 +523,25 @@
             "translation": "Translation..."
         },
         "modules": {
+            "admin_layout": {
+                "title": "Admin"
+            },
             "payment_nav": "Payment",
-            "payment_title": "Payment Configuration",
-            "payment_description": "Provide the information needed to receive payments.",
+            "payment_title": "Payment Settings",
+            "payment_description": "Configure payment providers and currency.",
             "currency": "Currency",
-            "provider": "Provider"
+            "provider": "Payment Provider",
+            "stripe": {
+                "title": "Stripe Settings",
+                "publishable_key": "Publishable Key",
+                "secret_key": "Secret Key"
+            },
+            "paypal": {
+                "title": "PayPal Settings",
+                "client_id": "Client ID",
+                "secret": "Secret",
+                "sandbox": "Sandbox Mode"
+            }
         }
     },
     "event_settings": {
@@ -560,7 +590,13 @@
             "apply_overrides": "Apply Theme Overrides",
             "saved_successfully": "Branding saved successfully",
             "save_changes": "Save Changes",
-            "subtitle": "Configure event branding and appearance."
+            "subtitle": "Configure event branding and appearance.",
+            "live_page_title": "Live Page Theme",
+            "live_page_desc": "Customize the appearance of the real-time donation display.",
+            "landing_links_title": "Landing Page Links",
+            "landing_links_desc": "Configure external links for the landing page cards.",
+            "theme_overrides": "Theme Overrides (CSS Variables)",
+            "theme_overrides_desc": "No overrides. Click \"Add Variable\" to customize theme."
         }
     },
     "payment": {
@@ -577,5 +613,14 @@
         "minutes_ago": "{{count}} minutes ago",
         "seconds_ago": "{{count}} seconds ago",
         "just_now": "just now"
+    },
+    "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "more": "More pages"
+    },
+    "confirmation": {
+        "title": "Are you sure?",
+        "description": "This action cannot be undone."
     }
 }

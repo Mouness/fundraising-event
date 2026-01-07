@@ -16,7 +16,7 @@ export const PublicFooter = () => {
             }}>
             <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 opacity-80">
                 <p>
-                    © {new Date().getFullYear()} <span className="font-medium">{config.communication?.legalName || 'Fundraising Platform'}</span>. {t('landing.footer.rights')}
+                    © {new Date().getFullYear()} <span className="font-medium">{config.communication?.legalName || t('common.app_name', 'Fundraising Platform')}</span>. {t('landing.footer.rights')}
                 </p>
                 <div className="flex items-center gap-6">
                     {config.communication?.website && (

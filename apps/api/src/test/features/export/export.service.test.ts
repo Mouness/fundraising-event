@@ -85,4 +85,80 @@ describe('ExportService', () => {
     await service.exportReceipts();
     expect(pdfServiceMock.generateReceipt).not.toHaveBeenCalled();
   });
+
+  it('should handle PDF generation error gracefully', async () => {
+    prismaMock.donation.findMany.mockResolvedValue([
+      {
+        id: '4',
+        amount: new Prisma.Decimal(100),
+        createdAt: new Date(),
+        donorName: 'Donor 4',
+        event: { slug: 'event-1' },
+      },
+    ]);
+
+    pdfServiceMock.generateReceipt.mockRejectedValue(new Error('PDF ERROR'));
+
+    const result = await service.exportReceipts();
+    expect(result).toBeDefined();
+    // Flow should complete even with error
+  });
+
+  describe('getReceipt', () => {
+    it('should return PDF buffer for individual receipt', async () => {
+      const mockDonation = {
+        id: '1',
+        amount: new Prisma.Decimal(100),
+        createdAt: new Date(),
+        donorName: 'Donor 1',
+        event: { slug: 'event-1' },
+      };
+      prismaMock.donation.findUnique.mockResolvedValue(mockDonation);
+      pdfServiceMock.generateReceipt.mockResolvedValue(Buffer.from('PDF'));
+
+      const result = await service.getReceipt('1');
+      expect(result).toEqual(Buffer.from('PDF'));
+      expect(pdfServiceMock.generateReceipt).toHaveBeenCalledWith('event-1', {
+        amount: 100,
+        donorName: 'Donor 1',
+        date: mockDonation.createdAt,
+        transactionId: '1',
+      });
+    });
+
+    it('should throw if donation not found', async () => {
+      prismaMock.donation.findUnique.mockResolvedValue(null);
+      await expect(service.getReceipt('999')).rejects.toThrow(
+        'Donation not found',
+      );
+    });
+
+    it('should throw if event context is missing', async () => {
+      prismaMock.donation.findUnique.mockResolvedValue({
+        id: '1',
+        event: null,
+      });
+      await expect(service.getReceipt('1')).rejects.toThrow(
+        'Event context missing',
+      );
+    });
+
+    it('should use default donor name if missing', async () => {
+      const mockDonation = {
+        id: '1',
+        amount: new Prisma.Decimal(100),
+        createdAt: new Date(),
+        donorName: null,
+        event: { slug: 'event-1' },
+      };
+      prismaMock.donation.findUnique.mockResolvedValue(mockDonation);
+      pdfServiceMock.generateReceipt.mockResolvedValue(Buffer.from('PDF'));
+
+      await service.getReceipt('1');
+      expect(pdfServiceMock.generateReceipt).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ donorName: 'Supporter' }),
+      );
+    });
+  });
 });

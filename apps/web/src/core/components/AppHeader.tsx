@@ -59,7 +59,7 @@ export const AppHeader = ({
             {config.theme?.assets?.logo && (
                 <img
                     src={config.theme.assets.logo}
-                    alt="Logo"
+                    alt={t('common.logo')}
                     className="h-8 w-auto object-contain"
                 />
             )}

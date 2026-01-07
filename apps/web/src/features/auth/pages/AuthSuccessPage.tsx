@@ -31,7 +31,7 @@ export const AuthSuccessPage = () => {
 
     return (
         <div className="flex items-center justify-center min-h-screen">
-            <div className="text-xl">{t('auth.logging_in')}</div>
+            <div className="text-xl">{t('login.logging_in')}</div>
         </div>
     );
 };

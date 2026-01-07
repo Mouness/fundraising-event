@@ -25,10 +25,12 @@ describe('EventsService', () => {
               findUnique: vi.fn(),
               update: vi.fn(),
               delete: vi.fn(),
+              count: vi.fn(),
             },
             donation: {
               groupBy: vi.fn(),
               aggregate: vi.fn(),
+              findMany: vi.fn(),
             },
           },
         },
@@ -108,6 +110,7 @@ describe('EventsService', () => {
 
       (prismaService.event.findFirst as any).mockResolvedValue(event);
       (prismaService.donation.aggregate as any).mockResolvedValue(stats);
+      (prismaService.donation.findMany as any).mockResolvedValue([]);
 
       const result = await service.findOne('gala');
       expect(result).toMatchObject({
@@ -137,7 +140,7 @@ describe('EventsService', () => {
       expect(result).toEqual(expected);
       expect(whiteLabelingService.updateEventSettings).toHaveBeenCalledWith(
         '1',
-        { formConfig: dto.formConfig },
+        { donation: { form: dto.formConfig } },
       );
     });
   });

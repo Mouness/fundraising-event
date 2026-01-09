@@ -19,6 +19,15 @@ export default defineConfig(({ mode }) => {
                 '@core': path.resolve(__dirname, './src/core'),
                 '@features': path.resolve(__dirname, './src/features'),
                 '@test': path.resolve(__dirname, './src/test'),
+                '@fundraising/white-labeling/css': path.resolve(
+                    __dirname,
+                    '../../packages/white-labeling/src/theme/theme.default.css',
+                ),
+                '@fundraising/white-labeling': path.resolve(
+                    __dirname,
+                    '../../packages/white-labeling/src/index.ts',
+                ),
+                '@fundraising/types': path.resolve(__dirname, '../../packages/types/src/index.ts'),
             },
         },
         server: {

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{content.title}} - {{eventName}}</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9fafb;
+        }
+
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            background-color: #f9fafb;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 40px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .logo {
+            max-height: 80px;
+            width: auto;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .accent-bar {
+            height: 4px;
+
+            background-color: {
+                    {
+                    primaryColor
+                }
+            }
+
+            ;
+            width: 60px;
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        h1 {
+            color: #111827;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 10px;
+            text-align: center;
+        }
+
+        .description {
+            color: #4b5563;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .receipt-card {
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .amount-label {
+            color: #6b7280;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin: 0 0 5px;
+        }
+
+        .amount-value {
+            color: {
+                    {
+                    primaryColor
+                }
+            }
+
+            ;
+            font-size: 42px;
+            font-weight: 800;
+            text-align: center;
+            margin: 0;
+        }
+
+        .details-table {
+            width: 100%;
+            margin-top: 25px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+        }
+
+        .details-table td {
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .label {
+            color: #6b7280;
+        }
+
+        .value {
+            color: #111827;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f9fafb;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .org-name {
+            color: #374151;
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .cta-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 15px 25px;
+
+            background-color: {
+                    {
+                    primaryColor
+                }
+            }
+
+            ;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .signature-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .signature-line {
+            width: 150px;
+            border-top: 1px solid #d1d5db;
+            margin: 10px auto;
+        }
+
+        .signature-text {
+            font-size: 14px;
+            color: #4b5563;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                {{#logoUrl}}
+                <img src="{{logoUrl}}" alt="{{eventName}}" class="logo">
+                {{/logoUrl}}
+                {{^logoUrl}}
+                <h1>{{eventName}}</h1>
+                {{/logoUrl}}
+            </div>
+
+            <div class="content">
+                <div class="accent-bar"></div>
+                <h1>{{content.title}}</h1>
+                <p class="description">{{content.thankYou}}</p>
+
+                <div class="receipt-card">
+                    <p class="amount-label">{{content.amount}}</p>
+                    <p class="amount-value">{{amount}} {{currency}}</p>
+
+                    <table class="details-table">
+                        <tr>
+                            <td class="label">{{content.receiptNumber}}</td>
+                            <td class="value">{{transactionId}}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{{content.date}}</td>
+                            <td class="value">{{date}}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{{content.donorName}}</td>
+                            <td class="value">{{donorName}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="signature-section">
+                    <div class="signature-text">{{signatureText}}</div>
+                    <div class="signature-line"></div>
+                    <div style="font-size: 11px; color: #9ca3af;">{{content.authorizedSignature}}</div>
+                </div>
+
+                <p style="font-size: 14px; color: #6b7280; text-align: center; margin-top: 40px;">
+                    {{content.footerTextDefault}}
+                </p>
+            </div>
+
+            <div class="footer">
+                <p class="org-name">{{legalName}}</p>
+                <p>{{address}}</p>
+                {{#taxId}}<p>{{content.taxIdLabel}} {{taxId}}</p>{{/taxId}}
+                <p>
+                    <a href="mailto:{{supportEmail}}" style="color: {{primaryColor}};">{{supportEmail}}</a>
+                    {{#website}} | <a href="{{website}}"
+                        style="color: {{primaryColor}};">{{content.visitWebsite}}</a>{{/website}}
+                </p>
+                <div style="margin-top: 20px; font-style: italic;">{{footerText}}</div>
+                <p style="margin-top: 20px;">&copy; {{year}} {{eventName}}. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

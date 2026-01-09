@@ -1,0 +1,123 @@
+{
+    "id": "evt_default",
+    "slug": "default",
+    "name": "Fundraising Event",
+    "description": "Defaul Fundraising Event Description",
+    "theme": {
+        "assets": {},
+        "variables": {}
+    },
+    "content": {
+        "title": "",
+        "totalLabel": "Total Raised",
+        "goalAmount": 10000,
+        "landing": {
+            "impact": {
+                "url": "/impact",
+                "enabled": true
+            },
+            "community": {
+                "url": "/community",
+                "enabled": true
+            },
+            "interactive": {
+                "url": "/interactive",
+                "enabled": true
+            }
+        }
+    },
+    "live": {
+        "theme": "modern"
+    },
+    "donation": {
+        "form": {
+            "phone": {
+                "enabled": true,
+                "required": false
+            },
+            "address": {
+                "enabled": false,
+                "required": false
+            },
+            "company": {
+                "enabled": false,
+                "required": false
+            },
+            "message": {
+                "enabled": true,
+                "required": false
+            },
+            "anonymous": {
+                "enabled": true,
+                "required": false
+            }
+        },
+        "sharing": {
+            "enabled": true,
+            "networks": [
+                "facebook",
+                "twitter",
+                "linkedin"
+            ]
+        },
+        "payment": {
+            "provider": "stripe",
+            "currency": "EUR",
+            "config": {
+                "stripe": {
+                    "publishableKey": "pk_test_placeholder",
+                    "secretKey": "",
+                    "webhookSecret": ""
+                },
+                "paypal": {
+                    "clientId": "",
+                    "clientSecret": "",
+                    "webhookId": "",
+                    "sandbox": true
+                }
+            }
+        }
+    },
+    "communication": {
+        "legalName": "My Organization Inc.",
+        "taxId": "",
+        "address": "123 Charity Lane, City, Country",
+        "website": "https://example.com",
+        "supportEmail": "support@example.com",
+        "phone": "+1 234 567 890",
+        "footerText": "Merci pour votre générosité. Votre don fait la différence.",
+        "signatureText": "Executive Director",
+        "signatureImage": "",
+        "pdf": {
+            "enabled": true
+        },
+        "email": {
+            "enabled": true,
+            "senderName": "Fundraising Event Team",
+            "replyTo": "donations@fundraising-event.org",
+            "subjectLine": "Merci pour votre don",
+            "provider": "console",
+            "config": {
+                "smtp": {
+                    "host": "localhost",
+                    "port": 1025,
+                    "secure": false,
+                    "auth": {
+                        "user": "",
+                        "pass": ""
+                    }
+                }
+            }
+        }
+    },
+    "locales": {
+        "default": "fr",
+        "supported": [
+            "fr",
+            "de",
+            "en",
+            "it"
+        ],
+        "overrides": {}
+    }
+}

@@ -1,0 +1,29 @@
+export const donors = {
+    firstNames: ['Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'William', 'Sophia', 'James', 'Isabella', 'Oliver', 'Mia', 'Elijah', 'Lucas', 'Harper'],
+    lastNames: ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez']
+};
+
+export const donationKeywords = [
+    'For the trees', 'Save the whales', 'Climate Action', 'Mother Earth',
+    'Green Future', 'Sustainable', 'Eco-friendly', 'Carbon Offset',
+    'Solar Power', 'Wind Energy', 'Conservation', 'Biodiversity',
+    'Protect', 'Restore', 'Future', 'Hope', 'Clean Air', 'Water'
+];
+
+export const messages = [
+    "Planting trees for a greener tomorrow!",
+    "Save the oceans, save ourselves. Keep up the great work.",
+    "For the future of my children and the planet.",
+    "Proud to support this vital conservation effort.",
+    "Renewable energy is the only way forward. Let's go solar!",
+    "Protecting wildlife is protecting our heritage.",
+    "Small steps lead to big changes. Happy to contribute.",
+    "Offsetting my carbon footprint with this donation.",
+    "Nature needs heroes. Thank you for being them.",
+    "Let's clean up our act and our planet.",
+    "Supporting sustainable agriculture in our cities.",
+    "Hope this helps restore balance to the ecosystem.",
+    "From a nature lover with gratitude.",
+    "Every species matters. Don't let them disappear.",
+    "Green power for the people!"
+];

@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo"
+  },
+  "exclude": [
+    "node_modules",
+    "src/test",
+    "dist",
+    "**/*spec.ts",
+    "vitest.config.ts",
+    "database/prisma.config.ts"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ConfigScope {
+  GLOBAL
+  EVENT
+}
+
+model Configuration {
+  id               String      @id @default(uuid())
+  scope            ConfigScope @default(GLOBAL)
+  entityId         String?     // Null for GLOBAL, matches Event.id for EVENT
+  
+  // Isolated Identity
+  organization     String?
+  address          String?
+  phone            String?
+  logo             String?
+  email            String?
+  website          String?
+
+  // Granular JSON Blocks
+  themeVariables   Json?       // Record<string, string>
+  assets           Json?       
+  event            Json?       
+  form             Json?       
+  communication    Json?       
+  payment          Json?       
+  socialNetwork    Json?       
+  locales          Json?
+  liveTheme        String?
+
+
+  updatedAt        DateTime    @updatedAt
+  @@unique([scope, entityId])
+}
+
+model Event {
+  id            String   @id @default(uuid())
+  slug          String   @unique
+  name          String
+  date          DateTime @default(now())
+  description   String?
+  goalAmount    Decimal
+  status        String   @default("active") // active, draft, closed
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  donations     Donation[]
+  staffMembers  StaffMember[]
+}
+
+model StaffMember {
+  id        String   @id @default(uuid())
+  code      String   @unique // The pin code (global)
+  name      String // Name of the volunteer
+  events    Event[]
+  donations Donation[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Donation {
+  id            String   @id @default(uuid())
+  amount        Decimal
+  currency      String   @default("EUR")
+  donorName     String?  // Null if anonymous
+  donorEmail    String?
+  message       String?  // Support message
+  isAnonymous   Boolean  @default(false)
+  status        String   // PENDING, COMPLETED, FAILED, CANCELLED, REFUNDED
+  paymentMethod String   // STRIPE, CASH, CHECK, PLEDGE
+  transactionId String? @unique
+  eventId       String
+  event         Event    @relation(fields: [eventId], references: [id])
+  staffMemberId String?
+  staffMember   StaffMember? @relation(fields: [staffMemberId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

@@ -16,9 +16,9 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLanding:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/cover_ramadan.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/cover_ramadan.jpg',
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/live_modern_abstract.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/live_modern_abstract.jpg',
                 },
                 variables: {
                     '--primary': '#14532D', // Darker Green
@@ -59,9 +59,9 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLanding:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/cover_orphans.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/cover_orphans.jpg',
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/live_elegant.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/live_elegant.jpg',
                 },
                 variables: {
                     '--primary': '#DB2777', // Pink/Magenta
@@ -100,9 +100,9 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLanding:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/cover_gaza.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/cover_gaza.jpg',
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/bg_live.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/bg_live.jpg',
                 },
                 variables: {
                     '--primary': '#DC2626', // Urgent Red
@@ -146,9 +146,9 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLanding:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/cover_orphans.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/cover_orphans.jpg',
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/live_waqf.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/live_waqf.png',
                 },
                 variables: {
                     '--primary': '#1E293B', // Slate 800
@@ -201,9 +201,9 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLanding:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/cover_water.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/cover_water.png',
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/bg_live_clean.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/bg_live_clean.jpg',
                 },
                 variables: {
                     '--primary': '#0284C7', // Sky Blue

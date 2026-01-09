@@ -176,7 +176,7 @@ describe('CheckoutForm', () => {
         });
 
         await waitFor(() => {
-            expect(screen.getByText('Failed to initialize donation. Please try again.')).toBeDefined();
+            expect(screen.getByText('donation.error_init')).toBeDefined();
         });
     });
 

@@ -197,7 +197,7 @@ describe('DonationService', () => {
         eventId: 'evt_1',
       });
       await service.cancel('d1', true);
-      expect(mockPaymentService.refundDonation).toHaveBeenCalledWith('evt_1', 'tx_123');
+      expect(mockPaymentService.refundDonation).toHaveBeenCalledWith('tx_123');
       expect(mockPrismaService.donation.update).toHaveBeenCalledWith({
         where: { id: 'd1' },
         data: { status: 'REFUNDED' },

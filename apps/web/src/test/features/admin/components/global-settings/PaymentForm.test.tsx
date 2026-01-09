@@ -28,8 +28,8 @@ describe('PaymentForm', () => {
         );
 
         expect(screen.getByText('admin_branding.modules.payment_title')).toBeDefined();
-        expect(screen.getByText('Stripe Settings')).toBeDefined();
-        expect(screen.getByLabelText('Publishable Key')).toBeDefined();
+        expect(screen.getByText('admin_branding.modules.stripe.title')).toBeDefined();
+        expect(screen.getByLabelText('admin_branding.modules.stripe.publishable_key')).toBeDefined();
     });
 
     it('switches to paypal provider', () => {

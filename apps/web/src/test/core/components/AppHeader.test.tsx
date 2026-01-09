@@ -40,7 +40,7 @@ describe('AppHeader', () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByAltText('Logo')).toBeDefined();
+        expect(screen.getByAltText('common.logo')).toBeDefined();
         expect(screen.getByText('Test App')).toBeDefined();
     });
 

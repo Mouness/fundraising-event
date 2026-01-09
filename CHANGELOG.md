@@ -15,35 +15,35 @@ All notable changes to this project will be documented in this file.
     - Added `socket.io-client` integration.
     - Created `useLiveSocket` hook for real-time updates.
     - Added `LivePage` with connection status indicator.
+    - Added multiple gauge styles (Classic, Circular, Minimal) with customization.
+    - Added support for multiple Live themes (Modern, Elegant, Classic).
+    - Added layout and gauge selection in Event Settings.
 - **Event Module:**
     - Implemented CRUD endpoints for Events (`/events`).
     - Added `EventService` and `EventController` with Unit and E2E Tests.
+    - Moved Payment Provider keys (Stripe, PayPal) to database (`EventConfig`) for Admin UI configuration.
+- **Donation Flow:**
+    - Implemented Stripe integration.
+    - Backend: `DonationModule`, `StripeService`, Webhooks.
+    - Frontend: `/donate` page, Stripe Elements form.
 - **Gateway Module:**
     - Initialized WebSocket Gateway (`GatewayGateway`) with Socket.io.
     - Added `joinEvent` subscription for real-time rooms.
     - Added Unit Tests for Gateway connection and event handling.
 - **Infrastructure:**
+    - Initial Monorepo Structure (NestJS + React).
     - Created `PrismaModule` for global database access.
     - Setup `Vitest` for backend testing (replacing Jest).
     - Restructured project: moved agent docs to `agent/` and Dockerfiles to `deploy/`.
+    - Docker Environment (Postgres + Redis).
+    - Shared DTOs package.
+    - Optimized API Docker image for smaller footprint.
 - **Docs:**
     - Added backend documentation in `agent/docs/backend/`.
-
-### Refactor
-- Refactored frontend to support i18n completely.
-- Removed hardcoded text from dashboard and login pages.
-
-### Added
-- **Donation Flow**: Implemented Stripe integration.
-  - Backend: `DonationModule`, `StripeService`, Webhooks.
-  - Frontend: `/donate` page, Stripe Elements form.
-
-### Changed
-- Refactored `PrismaService` to be a standalone module to fix dependency injection in tests.
-- Updated `agents.md` with "Prime Directive" for context awareness.
-
-### Added
-- Initial Monorepo Structure (NestJS + React).
-- Docker Environment (Postgres + Redis).
-- Backend Core: Auth Module (JWT + PIN), Event Module (CRUD), Gateway Module (Socket.io).
-- Shared DTOs package.
+    - Added GitHub Pages publishing workflow.
+- **UI/UX & Internationalization:**
+    - Implemented full i18n support for frontend.
+    - Normalized CSS variable names (e.g., `*-color` to `*-text`) for consistent theming.
+    - Enhanced Donation list to show update timestamps ("Updated [time] ago").
+    - Simplified Header UI (icon-only logout).
+    - Removed hardcoded text from dashboard and login pages.

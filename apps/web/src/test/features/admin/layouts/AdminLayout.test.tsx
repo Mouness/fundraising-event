@@ -16,7 +16,7 @@ vi.mock('@core/components/AppHeader', () => ({
 describe('AdminLayout', () => {
     it('renders header and sidebar links', async () => {
         render(<AdminLayout />);
-        expect(await screen.findByTestId('app-header')).toHaveTextContent('Admin');
+        expect(await screen.findByTestId('app-header')).toHaveTextContent('admin_layout.title');
         expect(screen.getByText('nav.dashboard')).toBeInTheDocument();
         expect(screen.getByText('nav.events')).toBeInTheDocument();
         expect(screen.getByText('nav.staff')).toBeInTheDocument();

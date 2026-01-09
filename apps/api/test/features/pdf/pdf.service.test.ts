@@ -73,6 +73,7 @@ describe('PdfService', () => {
         },
         content: { title: 'Event' },
         theme: { variables: { '--primary': '#aabbcc' } },
+        donation: { payment: { currency: 'USD' } },
       });
 
       // Mock PDF Stream
@@ -116,6 +117,7 @@ describe('PdfService', () => {
         communication: { pdf: { enabled: true } },
         content: { title: 'Event' },
         theme: { assets: { logo: 'http://example.com/logo.png' } },
+        donation: { payment: { currency: 'USD' } },
       });
 
       mockHttpService.get.mockReturnValue(of({ data: Buffer.from('logo') }));
@@ -149,6 +151,7 @@ describe('PdfService', () => {
         communication: { pdf: { enabled: true } },
         content: { title: 'Event' },
         theme: { assets: { logo: '/logo.png' } },
+        donation: { payment: { currency: 'USD' } },
       });
 
       mockConfigService.get.mockReturnValue('http://frontend.com');
@@ -182,6 +185,7 @@ describe('PdfService', () => {
         slug: 'slug',
         communication: { pdf: { enabled: true } },
         content: { title: 'Event' },
+        donation: { payment: { currency: 'USD' } },
       });
 
       const mockStream = {

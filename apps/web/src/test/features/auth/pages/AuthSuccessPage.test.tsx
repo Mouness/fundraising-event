@@ -34,7 +34,7 @@ describe('AuthSuccessPage', () => {
                 <AuthSuccessPage />
             </MemoryRouter>
         );
-        expect(screen.getByText('auth.logging_in')).toBeDefined();
+        expect(screen.getByText('login.logging_in')).toBeDefined();
     });
 
     it('navigates to login if no token provided', async () => {

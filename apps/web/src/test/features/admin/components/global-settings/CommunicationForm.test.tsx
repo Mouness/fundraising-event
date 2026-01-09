@@ -47,7 +47,7 @@ describe('CommunicationForm', () => {
             </Wrapper>
         );
 
-        expect(screen.getByText('admin_branding.communication.pdf.template')).toBeDefined();
+        expect(screen.getByText('admin_branding.communication.receipts.footer_text')).toBeDefined();
     });
 
     it('shows sharing settings when enabled', () => {

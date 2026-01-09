@@ -165,7 +165,13 @@ vi.mock('@fundraising/white-labeling', () => {
                 getState: () => ({ config: pState.config }),
                 subscribe: vi.fn(),
             }
-        }))
+        })),
+        LOCALE_LABELS: {
+            en: 'English',
+            fr: 'Français',
+            de: 'Deutsch',
+            it: 'Italiano'
+        }
     };
 });
 

@@ -128,7 +128,7 @@ describe('CollectorPage', () => {
         fireEvent.click(submitBtn);
 
         await waitFor(() => {
-            expect(toast.error).toHaveBeenCalledWith('Session invalid. Please login again.');
+            expect(toast.error).toHaveBeenCalledWith('staff.session_invalid');
             expect(SyncService.submitDonation).not.toHaveBeenCalled();
         });
     });

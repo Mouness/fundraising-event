@@ -111,11 +111,6 @@ export const events = [
                     '--live-status-indicator': '#FACC15',
                 },
             },
-            donation: {
-                payment: {
-                    currency: 'USD',
-                },
-            },
         },
     },
     {
@@ -145,6 +140,11 @@ export const events = [
                 assets: {
                     backgroundLanding:
                         'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/wildlife_landing.jpg',
+                },
+            },
+            donation: {
+                form: {
+                    phone: { enabled: true, required: false },
                 },
             },
         },

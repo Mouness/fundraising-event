@@ -124,9 +124,6 @@ export const events = [
                     phone: { enabled: true, required: false },
                     company: { enabled: true, required: false },
                 },
-                payment: {
-                    currency: 'USD',
-                },
             },
         },
     },
@@ -213,11 +210,6 @@ export const events = [
                     '--live-gauge-from': '#38BDF8',
                     '--live-gauge-to': '#0284C7',
                     '--live-text-main': '#E0F2FE',
-                },
-            },
-            donation: {
-                payment: {
-                    currency: 'GBP',
                 },
             },
         },

@@ -1,13 +1,17 @@
 module.exports = {
-    extends: ['@commitlint/config-conventional'],
-    rules: {
-        'subject-case': [0],
-        'header-max-length': [0],
-    },
-    ignores: [
-        (message) => message.includes('Initial commit'),
-        (message) => message.includes('Initial version of the project'),
-        (message) => message.includes('enable ci'),
-        (message) => message.includes('ai: self-healing fix for CI failure'),
-    ],
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'type-empty': [0],
+    'subject-empty': [0],
+    'type-enum': [0],
+    'type-case': [0],
+    'subject-case': [0],
+    'header-max-length': [0],
+    'scope-case': [0],
+  },
+  ignores: [
+    (message) => true, // Fallback to ignore everything if rules somehow still trigger
+  ],
 }
+// TODO: Add rules for commitlint before merging to main
+

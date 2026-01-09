@@ -152,7 +152,7 @@ jobs:
           file: apps/web/deploy/Dockerfile
           build-args: |
             VITE_API_URL=${{ vars.VITE_API_URL }}
-            VITE_STRIPE_PUBLIC_KEY=${{ vars.VITE_STRIPE_PUBLIC_KEY }}
+            VITE_STRIPE_PUBLIC_KEY=${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
           push: false
           tags: fundraising-web:latest
           cache-from: type=gha

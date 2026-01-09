@@ -4,6 +4,7 @@ COPY . .
 RUN corepack enable && corepack prepare pnpm@latest --activate
 RUN pnpm install --frozen-lockfile
 RUN pnpm --filter api db:generate
+RUN pnpm --filter "@fundraising/*" build
 
 # Build Args for Vite
 ARG VITE_API_TARGET

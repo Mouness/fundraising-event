@@ -1,0 +1,246 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@v6
+
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check Formatting
+        run: pnpm format:check
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Test
+        run: pnpm test
+      
+      - name: Upload Coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: "**/coverage/**"
+          retention-days: 7
+
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+
+  scan:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Security Audit
+        run: pnpm audit --prod
+
+  dockerize:
+    needs: [test, lint, scan]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Build API Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: apps/api/deploy/Dockerfile
+          push: false
+          tags: fundraising-api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
+      - name: Build Web Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: apps/web/deploy/Dockerfile
+          build-args: |
+            VITE_API_URL=${{ vars.VITE_API_URL }}
+            VITE_STRIPE_PUBLIC_KEY=${{ vars.VITE_STRIPE_PUBLIC_KEY }}
+          push: false
+          tags: fundraising-web:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  scan-containers:
+    needs: dockerize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan API Image
+        uses: anchore/scan-action@v3
+        with:
+          image: "fundraising-api:latest"
+          fail-build: true
+          severity-cutoff: critical
+
+      - name: Scan Web Image
+        uses: anchore/scan-action@v3
+        with:
+          image: "fundraising-web:latest"
+          fail-build: true
+          severity-cutoff: critical
+
+  deploy-docs:
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+      - run: pip install mkdocs-material 
+      - run: mkdocs gh-deploy --force
+
+  release:
+    needs: [test, lint, scan]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  self-heal:
+    needs: [test, lint, scan]
+    if: failure() && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+        pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Re-run Failure to Capture Log
+        run: |
+          # Try to identify the failure by running lint first (it's fastest)
+          pnpm lint > failure.log 2>&1 || pnpm test > failure.log 2>&1 || true
+      
+      - name: AI Healing Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/healing-agent.js failure.log
+      
+      - name: Create Pull Request with Fix
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "ai: self-healing fix for CI failure"
+          branch: ai-healing-fix
+          title: "🤖 AI-Generated Fix for CI Failure"
+          body: |
+            This PR was automatically generated by the AI Healing Agent to fix a CI failure.
+            
+            Logs analyzed:
+            ```
+            $(cat healing_summary.txt)
+            ```
+          delete-branch: true

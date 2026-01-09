@@ -1,11 +1,15 @@
 import { DeepPartial } from '../types';
 
+const isObject = (item: any): item is Record<string, any> => {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
 /**
  * Deep merges two objects.
  * properties in source override properties in target.
  * Arrays are replaced, not concatenated (usually preferred for config).
  */
-export function deepMerge<T extends object>(target: T, ...sources: DeepPartial<T>[]): T {
+export const deepMerge = <T extends object>(target: T, ...sources: DeepPartial<T>[]): T => {
     if (!sources.length) return target;
 
     // Merge the first source into target
@@ -22,8 +26,8 @@ export function deepMerge<T extends object>(target: T, ...sources: DeepPartial<T
             const sourceValue = source[sourceKey];
             const targetValue = target[targetKey];
 
-            if (sourceValue === '' || sourceValue === null) {
-                // Skip empty strings and nulls to support inheritance 
+            if (sourceValue === '' || sourceValue === null || sourceValue === undefined) {
+                // Skip empty strings, nulls, and undefined to support inheritance 
                 // (source empty means fall back to target)
                 return;
             }
@@ -44,8 +48,4 @@ export function deepMerge<T extends object>(target: T, ...sources: DeepPartial<T
 
     // Recursively merge remaining sources
     return deepMerge(output, ...sources);
-}
-
-function isObject(item: any): item is Record<string, any> {
-    return (item && typeof item === 'object' && !Array.isArray(item));
 }

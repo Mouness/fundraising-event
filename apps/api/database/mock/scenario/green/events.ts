@@ -9,22 +9,30 @@ export const events = [
         date: new Date('2025-04-22'),
         description: 'Join us for a night of action to protect the lungs of our planet.',
         config: {
-            liveTheme: 'modern',
-            assets: {
-                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/rainforest_landing.png'
+            live: {
+                theme: 'modern'
             },
-            themeVariables: {
-                '--primary': '#1B5E20', // Darker Jungle Green
-                '--accent': '#C6FF00',  // Lime Green
-                '--live-page-bg': '#000000',
-                '--live-text-main': '#E8F5E9',
-                '--live-gauge-from': '#C6FF00',
-                '--live-gauge-to': '#1B5E20'
+            theme: {
+                assets: {
+                    backgroundLanding: '/mock-assets/rainforest_landing.png',
+                    backgroundLive: '/mock-assets/rainforest_landing.png'
+                },
+                variables: {
+                    '--primary': '#1B5E20', // Darker Jungle Green
+                    '--accent': '#C6FF00',  // Lime Green
+                    '--live-page-bg': '#000000',
+                    '--live-text-main': '#E8F5E9',
+                    '--live-text-title': '#FFFFFF',
+                    '--live-gauge-from': '#C6FF00',
+                    '--live-gauge-to': '#1B5E20'
+                }
             },
-            form: {
-                collectAddress: true,
-                collectPhone: false,
-                collectCompany: true
+            donation: {
+                form: {
+                    address: { enabled: true, required: false },
+                    phone: { enabled: false, required: false },
+                    company: { enabled: true, required: false }
+                }
             }
         }
     },
@@ -38,27 +46,33 @@ export const events = [
         date: new Date('2025-06-08'), // Ocean Day
         description: 'Removing 50 tons of plastic from the Pacific Garbage Patch.',
         config: {
-            liveTheme: 'elegant',
-            assets: {
-                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/ocean_live.png'
+            live: {
+                theme: 'elegant'
             },
-            themeVariables: {
-                '--primary': '#0288D1', // Ocean Blue
-                '--secondary': '#E0F7FA',
-                '--background': '#F0F9FF',
-                '--live-page-bg': '#083344', // Dark Cyan
-                '--live-elegant-gold': '#22D3EE', // Cyan instead of gold
-                '--live-elegant-amount-color': '#FFFFFF',
-                '--live-text-main': '#F0F9FF' // High contrast light blue
+            theme: {
+                assets: {
+                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/ocean_live.png'
+                },
+                variables: {
+                    '--primary': '#0288D1', // Ocean Blue
+                    '--secondary': '#E0F7FA',
+                    '--background': '#F0F9FF',
+                    '--live-page-bg': '#083344', // Dark Cyan
+                    '--live-elegant-gold': '#22D3EE', // Cyan instead of gold
+                    '--live-elegant-amount-color': '#FFFFFF',
+                    '--live-text-main': '#F0F9FF' // High contrast light blue
+                }
             },
             locales: {
-                overrides: [
-                    { locale: 'en', key: 'live.latest_donations', value: 'Latest Impacts' },
-                    { locale: 'fr', key: 'live.latest_donations', value: 'Derniers Impacts' }
-                ]
+                overrides: {
+                    en: { 'live.latest_donations': 'Latest Impacts' },
+                    fr: { 'live.latest_donations': 'Derniers Impacts' }
+                }
             },
-            form: {
-                collectCompany: true // Corporate sponsors
+            donation: {
+                form: {
+                    company: { enabled: true, required: false }
+                }
             }
         }
     },
@@ -72,24 +86,31 @@ export const events = [
         date: new Date('2025-09-01'),
         description: 'Empowering the next generation with renewable energy independence.',
         config: {
-            liveTheme: 'modern',
-            assets: {
-                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/solar_live.png'
+            live: {
+                theme: 'modern'
             },
-            themeVariables: {
-                '--primary': '#FACC15', // Yellow
-                '--primary-foreground': '#000000',
-                '--secondary': '#262626', // Dark Grey
-                '--secondary-foreground': '#FFFFFF',
-                '--background': '#171717', // Dark Mode Layout
-                '--foreground': '#FFFFFF',
-                '--radius': '0rem', // Sharp modern look
-                '--live-page-bg': '#000000', // Pitch black
-                '--live-text-main': '#FACC15',
-                '--live-status-indicator': '#FACC15'
+            theme: {
+                assets: {
+                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/solar_live.png'
+                },
+                variables: {
+                    '--primary': '#e6d079ff', // Yellow
+                    '--primary-foreground': '#000000',
+                    '--secondary': '#262626', // Dark Grey
+                    '--secondary-foreground': '#FFFFFF',
+                    '--background': '#171717', // Dark Mode Layout
+                    '--foreground': '#FFFFFF',
+                    '--radius': '0rem', // Sharp modern look
+                    '--live-page-bg': '#000000', // Pitch black
+                    '--live-text-title': '#FFFFFF',
+                    '--live-text-main': '#FACC15',
+                    '--live-status-indicator': '#FACC15'
+                }
             },
-            payment: {
-                currency: 'USD'
+            donation: {
+                payment: {
+                    currency: 'USD'
+                }
             }
         }
     },
@@ -103,19 +124,23 @@ export const events = [
         date: new Date('2025-10-04'), // Animal Day
         description: 'Building safe havens for the world\'s most vulnerable species.',
         config: {
-            liveTheme: 'elegant',
-            themeVariables: {
-                '--primary': '#78350F', // Brown
-                '--primary-foreground': '#FFFFFF',
-                '--secondary': '#FFEDD5', // Light Orange
-                '--accent': '#F97316', // Orange
-                '--radius': '0.5rem',
-                '--live-page-bg': '#291206', // Dark Brown
-                '--live-elegant-gold': '#F97316', // Orange highlight
-                '--live-text-main': '#FFEDD5' // High contrast light orange
+            live: {
+                theme: 'elegant'
             },
-            assets: {
-                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/wildlife_landing.png'
+            theme: {
+                variables: {
+                    '--primary': '#78350F', // Brown
+                    '--primary-foreground': '#FFFFFF',
+                    '--secondary': '#FFEDD5', // Light Orange
+                    '--accent': '#F97316', // Orange
+                    '--radius': '0.5rem',
+                    '--live-page-bg': '#291206', // Dark Brown
+                    '--live-elegant-gold': '#F97316', // Orange highlight
+                    '--live-text-main': '#FFEDD5' // High contrast light orange
+                },
+                assets: {
+                    backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/wildlife_landing.png'
+                }
             }
         }
     },
@@ -129,22 +154,29 @@ export const events = [
         date: new Date('2025-05-15'),
         description: 'Transforming gray rooftops into green community spaces.',
         config: {
-            liveTheme: 'modern',
-            assets: {
-                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/urban_live.png'
+            live: {
+                theme: 'modern'
             },
-            themeVariables: {
-                '--primary': '#86EFAC', // Pastel Green
-                '--primary-foreground': '#064E3B',
-                '--secondary': '#F0FDF4',
-                '--background': '#FFFFFF',
-                '--radius': '1.5rem', // Ultra rounded
-                '--live-page-bg': '#ECFCCB', // Lime light bg
-                '--live-text-main': '#064E3B',
-                '--live-feed-item-bg': '#FFFFFF'
+            theme: {
+                assets: {
+                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/urban_live.png'
+                },
+                variables: {
+                    '--primary': '#86EFAC', // Pastel Green
+                    '--primary-foreground': '#064E3B',
+                    '--secondary': '#F0FDF4',
+                    '--background': '#FFFFFF',
+                    '--radius': '1.5rem', // Ultra rounded
+                    '--live-page-bg': '#ECFCCB', // Lime light bg
+                    '--live-text-title': '#FFFFFF',
+                    '--live-text-main': '#064E3B',
+                    '--live-feed-item-bg': '#FFFFFF'
+                }
             },
-            form: {
-                collectPhone: true // Coordinating volunteers
+            donation: {
+                form: {
+                    phone: { enabled: true, required: false }
+                }
             }
         }
     }

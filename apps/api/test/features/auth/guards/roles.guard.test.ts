@@ -60,7 +60,7 @@ describe('RolesGuard', () => {
     });
 });
 
-function createMockContext(user: any = null): ExecutionContext {
+const createMockContext = (user: any = null): ExecutionContext => {
     return {
         getHandler: vi.fn(),
         getClass: vi.fn(),

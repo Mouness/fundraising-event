@@ -1,27 +1,33 @@
 {
     "id": "evt_default",
-    "name": "Default Event",
-    "description": "Default Description",
     "slug": "default",
+    "name": "Fundraising Event",
+    "description": "Defaul Fundraising Event Description",
+    "theme": {
+        "assets": {},
+        "variables": {}
+    },
     "content": {
-        "title": "Fundraising Event",
+        "title": "",
         "totalLabel": "Total Raised",
         "goalAmount": 10000,
         "landing": {
             "impact": {
-                "url": "/impact"
+                "url": "/impact",
+                "enabled": true
             },
             "community": {
-                "url": "/community"
+                "url": "/community",
+                "enabled": true
             },
             "interactive": {
-                "url": "/interactive"
+                "url": "/interactive",
+                "enabled": true
             }
         }
     },
-    "theme": {
-        "assets": {},
-        "variables": {}
+    "live": {
+        "theme": "modern"
     },
     "donation": {
         "form": {
@@ -58,27 +64,50 @@
             "provider": "stripe",
             "currency": "EUR",
             "config": {
-                "publishableKey": "pk_test_placeholder"
+                "stripe": {
+                    "publishableKey": "pk_test_placeholder",
+                    "secretKey": "",
+                    "webhookSecret": ""
+                },
+                "paypal": {
+                    "clientId": "",
+                    "clientSecret": "",
+                    "webhookId": "",
+                    "sandbox": true
+                }
             }
         }
     },
     "communication": {
-        "legalName": "Fundraising Event ONG",
-        "address": "Paris, France",
-        "website": "https://fundraising-event.org",
-        "supportEmail": "contact@fundraising-event.org",
-        "phone": "+33 6 99 99 99 99",
+        "legalName": "My Organization Inc.",
+        "taxId": "",
+        "address": "123 Charity Lane, City, Country",
+        "website": "https://example.com",
+        "supportEmail": "support@example.com",
+        "phone": "+1 234 567 890",
+        "footerText": "Merci pour votre générosité. Votre don fait la différence.",
+        "signatureText": "Executive Director",
+        "signatureImage": "",
         "pdf": {
-            "enabled": true,
-            "footerText": "Merci pour votre générosité. Votre don fait la différence.",
-            "templateStyle": "formal"
+            "enabled": true
         },
         "email": {
             "enabled": true,
             "senderName": "Fundraising Event Team",
             "replyTo": "donations@fundraising-event.org",
             "subjectLine": "Merci pour votre don",
-            "footerText": "Fundraising Event est une organisation de démonstration."
+            "provider": "console",
+            "config": {
+                "smtp": {
+                    "host": "localhost",
+                    "port": 1025,
+                    "secure": false,
+                    "auth": {
+                        "user": "",
+                        "pass": ""
+                    }
+                }
+            }
         }
     },
     "locales": {
@@ -88,6 +117,7 @@
             "de",
             "en",
             "it"
-        ]
+        ],
+        "overrides": {}
     }
 }

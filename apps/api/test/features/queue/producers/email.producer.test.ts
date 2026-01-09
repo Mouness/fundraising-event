@@ -27,13 +27,14 @@ describe('EmailProducer', () => {
   });
 
   it('should add send-receipt job', async () => {
-    await producer.sendReceipt('test@example.com', 100, 'tx_123');
+    await producer.sendReceipt('test@example.com', 100, 'tx_123', 'test-event');
     expect(mockQueue.add).toHaveBeenCalledWith(
       'send-receipt',
       expect.objectContaining({
         email: 'test@example.com',
         amount: 100,
         transactionId: 'tx_123',
+        eventSlug: 'test-event',
       }),
       expect.any(Object),
     );

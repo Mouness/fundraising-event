@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { MailProvider } from './mail-provider.interface';
+import { MailProvider, MailConfig } from './mail-provider.interface';
 
 @Injectable()
 export class ConsoleMailProvider implements MailProvider {
@@ -9,8 +9,9 @@ export class ConsoleMailProvider implements MailProvider {
     to: string,
     subject: string,
     template: string,
-    context: any,
+    context: Record<string, any>,
     attachments?: { filename: string; content: Buffer }[],
+    config?: MailConfig,
   ): Promise<void> {
     this.logger.log(`================ EMAIL SIMULATION ================`);
     this.logger.log(`TO: ${to}`);

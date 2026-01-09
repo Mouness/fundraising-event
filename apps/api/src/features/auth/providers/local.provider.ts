@@ -1,44 +1,76 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthProvider, AuthUser } from './auth-provider.interface';
-import * as bcrypt from 'bcrypt';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class LocalAuthProvider implements AuthProvider {
-  constructor(private configService: ConfigService) {}
+  private readonly logger = new Logger(LocalAuthProvider.name);
+
+  constructor(private configService: ConfigService) { }
 
   async verify(credentials: Record<string, any>): Promise<AuthUser | null> {
-    const adminEmail = this.configService.get<string>('ADMIN_EMAIL') || '';
-    const adminPassHash =
-      this.configService.get<string>('ADMIN_PASSWORD') || '';
+    const adminEmail = this.configService.get<string>('ADMIN_EMAIL');
 
-    // Case 1: External Trusted Provider (e.g. Google) - only check email (ID)
-    if (credentials.isTrusted && credentials.email) {
-      if (credentials.email === adminEmail) {
-        return {
-          id: 'admin',
-          email: adminEmail,
-          role: 'ADMIN',
-          name: (credentials.name as string) || 'Administrator',
-          picture: credentials.picture as string,
-        };
-      }
+    if (!adminEmail) {
+      this.logger.warn('ADMIN_EMAIL is not configured');
       return null;
     }
 
-    // Case 2: Local Password Auth (Compare with Bcrypt)
+    if (credentials.isTrusted) {
+      return this.verifyTrustedProvider(credentials, adminEmail);
+    }
+
     if (credentials.email === adminEmail && credentials.password) {
-      const isMatch = await bcrypt.compare(credentials.password, adminPassHash);
-      if (isMatch) {
-        return {
-          id: 'admin',
-          email: adminEmail,
-          role: 'ADMIN',
-          name: 'Administrator',
-        };
-      }
+      return this.verifyPassword(credentials.password, adminEmail);
     }
 
     return null;
+  }
+
+  private verifyTrustedProvider(credentials: Record<string, any>, adminEmail: string): AuthUser | null {
+    if (credentials.email !== adminEmail) {
+      return null;
+    }
+
+    return this.createAdminUser(
+      adminEmail,
+      (credentials.name as string) || 'Administrator',
+      credentials.picture as string,
+    );
+  }
+
+  private async verifyPassword(password: string, adminEmail: string): Promise<AuthUser | null> {
+    const adminPassHash =
+      this.configService.get<string>('ADMIN_PASSWORD') || '';
+
+    // 1. Plain Text Check
+    if (password === adminPassHash) {
+      return this.createAdminUser(adminEmail, 'Administrator');
+    }
+
+    // 2. Argon2 Check
+    try {
+      const isMatch = await argon2.verify(adminPassHash, password);
+      if (isMatch) {
+        return this.createAdminUser(adminEmail, 'Administrator');
+      }
+    } catch (e) {
+      this.logger.error(
+        `Error verifying password: ${e instanceof Error ? e.message : e}`,
+      );
+    }
+
+    return null;
+  }
+
+  private createAdminUser(email: string, name: string, picture?: string): AuthUser {
+    return {
+      id: 'admin',
+      email,
+      role: 'ADMIN',
+      name,
+      picture,
+    };
   }
 }

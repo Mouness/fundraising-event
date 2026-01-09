@@ -1,5 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailService } from '@/features/mail/mail.service';
+import { ConsoleMailProvider } from '@/features/mail/providers/console-mail.provider';
+import { NodemailerProvider } from '@/features/mail/providers/nodemailer.provider';
 import { WhiteLabelingService } from '@/features/white-labeling/white-labeling.service';
 import { PdfService } from '@/features/pdf/pdf.service';
 import { ConfigService } from '@nestjs/config';
@@ -24,17 +26,23 @@ const mockTemplate = `
 describe('MailService', () => {
   let service: MailService;
   let whiteLabelingService: WhiteLabelingService;
-  let mailProviderMock: { send: ReturnType<typeof vi.fn> };
+  let consoleMailProviderMock: { send: ReturnType<typeof vi.fn> };
+  let nodemailerProviderMock: { send: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
-    mailProviderMock = { send: vi.fn() };
+    consoleMailProviderMock = { send: vi.fn() };
+    nodemailerProviderMock = { send: vi.fn() };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MailService,
         {
-          provide: 'MAIL_PROVIDER',
-          useValue: mailProviderMock,
+          provide: ConsoleMailProvider,
+          useValue: consoleMailProviderMock,
+        },
+        {
+          provide: NodemailerProvider,
+          useValue: nodemailerProviderMock,
         },
         {
           provide: WhiteLabelingService,
@@ -45,7 +53,10 @@ describe('MailService', () => {
         {
           provide: ConfigService,
           useValue: {
-            get: vi.fn().mockReturnValue('http://localhost:3000'),
+            get: vi.fn((key: string) => {
+              if (key === 'FRONTEND_URL') return 'http://localhost:3000';
+              return undefined;
+            }),
           },
         },
         {
@@ -105,7 +116,7 @@ describe('MailService', () => {
     expect(whiteLabelingService.getEventSettings).toHaveBeenCalledWith(
       'test-event',
     );
-    expect(mailProviderMock.send).toHaveBeenCalled();
+    expect(consoleMailProviderMock.send).toHaveBeenCalled();
   });
 
   it('should render template with dynamic color and send email', async () => {
@@ -155,12 +166,12 @@ describe('MailService', () => {
     expect(mockedFs.readFile).toHaveBeenCalled();
 
     // Verify MailProvider called
-    expect(mailProviderMock.send).toHaveBeenCalledTimes(1);
+    expect(consoleMailProviderMock.send).toHaveBeenCalledTimes(1);
 
-    const [to, subject, html] = mailProviderMock.send.mock.calls[0];
+    const [to, subject, html] = consoleMailProviderMock.send.mock.calls[0];
 
     expect(to).toBe('john@example.com');
-    expect(subject).toContain('$50');
+    expect(subject).toContain('Test Event');
 
     // CRITICAL CHECK: Did {{primaryColor}} get replaced by 'blue'?
     expect(html).toContain('background-color: blue');

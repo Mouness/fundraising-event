@@ -1,5 +1,4 @@
 import { SupportedLocale } from './locales';
-
 export interface EventConfig {
     /** Unique identifier for the event */
     id: string;
@@ -13,100 +12,153 @@ export interface EventConfig {
     /** Description of the event (System/DB) */
     description?: string;
 
-    /** Visual theme configuration */
-    theme?: {
-        /** Generic assets map (e.g. logo, background) */
-        assets?: Record<string, string>;
-        /** Generic CSS variables map (e.g. --primary, --radius) */
-        variables?: Record<string, string>;
-    };
+    theme?: ThemeConfig;
+    content: ContentConfig;
+    live?: LiveConfig;
+    donation: DonationConfig;
+    communication: CommunicationConfig;
+    locales?: LocalesConfig;
+}
 
-    /** Text content configuration */
-    content: {
-        /** Main title of the event (Display Override) - defaults to event.name */
-        title: string;
-        /** Label for the total raised amount (e.g. "Total Raised") */
-        totalLabel: string;
-        /** Fundraising goal amount in dollars */
-        goalAmount: number;
-        /** Landing page configuration (features, footer links) */
-        landing?: {
-            impact?: { url?: string; enabled?: boolean };
-            community?: { url?: string; enabled?: boolean };
-            interactive?: { url?: string; enabled?: boolean };
-        };
-    };
+/** Visual theme configuration */
+export interface ThemeConfig {
+    /** Generic assets map (e.g. logo, background) */
+    assets?: Record<string, string>;
+    /** Generic CSS variables map (e.g. --primary, --radius) */
+    variables?: Record<string, string>;
+}
 
-    /** Live Page Configuration */
-    live?: {
-        /** Visual Theme Proposal */
-        theme: 'classic' | 'modern' | 'elegant';
-    };
-
-    /** Donation flow configuration */
-    donation: {
-        /** Form field toggles */
-        form: {
-            /** Collect donor phone number */
-            phone: { enabled: boolean; required: boolean };
-            /** Collect donor address */
-            address: { enabled: boolean; required: boolean };
-            /** Collect company name */
-            company: { enabled: boolean; required: boolean };
-            /** Collect donor message/comment */
-            message: { enabled: boolean; required: boolean };
-            /** Allow anonymous donations */
-            anonymous: { enabled: boolean; required: boolean };
-        };
-
-        /** Social media sharing configuration */
-        sharing: {
-            enabled: boolean;
-            /** List of enabled specialized sharing buttons */
-            networks: ('facebook' | 'twitter' | 'linkedin')[];
-        };
-
-        /** Payment provider configuration */
-        payment: {
-            provider: 'stripe' | 'paypal' | string;
-            /** Currency code (e.g. USD, EUR) */
-            currency: string;
-            /** Provider-specific config (public keys, etc.) */
-            config?: Record<string, any>;
-        };
-    };
-    /** Unified Communication configuration (Email & PDF) */
-    communication: {
-        /** Organization Details */
-        legalName: string;
-        address: string;
-        website?: string;
-        supportEmail?: string;
-        phone?: string;
-
-        /** PDF Specifics */
-        pdf: {
-            enabled: boolean;
-            footerText?: string;
-            templateStyle?: 'minimal' | 'formal';
-        };
-
-        /** Email Specifics */
-        email: {
-            enabled: boolean;
-            senderName?: string;
-            replyTo?: string;
-            subjectLine?: string;
-            footerText?: string;
-        };
-    };
-
-    /** Localization overrides */
-    locales?: {
-        default: SupportedLocale;
-        supported: SupportedLocale[];
-        /** Key-value overrides for translations */
-        overrides?: Record<string, any>;
+/** Text content configuration */
+export interface ContentConfig {
+    /** Main title of the event (Display Override) - defaults to event.name */
+    title: string;
+    /** Label for the total raised amount (e.g. "Total Raised") */
+    totalLabel: string;
+    /** Fundraising goal amount in dollars */
+    goalAmount: number;
+    /** Landing page configuration (features, footer links) */
+    landing?: {
+        impact?: { url?: string; enabled?: boolean };
+        community?: { url?: string; enabled?: boolean };
+        interactive?: { url?: string; enabled?: boolean };
     };
 }
+
+/** Live Page Configuration */
+export interface LiveConfig {
+    /** Visual Theme Proposal */
+    theme: 'classic' | 'modern' | 'elegant';
+}
+
+/** Donation flow configuration */
+export interface DonationConfig {
+    /** Form field toggles */
+    form: {
+        /** Collect donor phone number */
+        phone: DonationFormFieldConfig;
+        /** Collect donor address */
+        address: DonationFormFieldConfig;
+        /** Collect company name */
+        company: DonationFormFieldConfig;
+        /** Collect donor message/comment */
+        message: DonationFormFieldConfig;
+        /** Allow anonymous donations */
+        anonymous: DonationFormFieldConfig;
+    };
+    sharing: SharingConfig;
+    payment: PaymentConfig;
+}
+
+/** Social media sharing configuration */
+export interface SharingConfig {
+    enabled: boolean;
+    /** List of enabled specialized sharing buttons */
+    networks: ('facebook' | 'twitter' | 'linkedin')[];
+}
+
+/** Form field configuration */
+export interface DonationFormFieldConfig {
+    enabled: boolean;
+    required: boolean;
+}
+
+/** Stripe-specific config */
+export interface StripeProviderConfig {
+    publishableKey: string;
+    secretKey: string;
+    webhookSecret: string;
+}
+
+/** PayPal-specific config */
+export interface PayPalProviderConfig {
+    clientId: string;
+    clientSecret: string;
+    webhookId: string;
+    sandbox: boolean;
+}
+
+/** Payment provider configuration */
+export interface PaymentConfig {
+    provider: 'stripe' | 'paypal' | string;
+    /** Currency code (e.g. USD, EUR) */
+    currency: string;
+    /** Provider-specific config (public keys, etc.) */
+    config?: {
+        stripe?: StripeProviderConfig;
+        paypal?: PayPalProviderConfig;
+    };
+}
+
+/** Unified Communication configuration (Email & PDF) */
+export interface CommunicationConfig {
+    /** Organization Details */
+    legalName: string;
+    taxId?: string; // Tax ID / Charity Registration Number
+    address: string;
+    website?: string;
+    supportEmail?: string;
+    phone?: string;
+    footerText?: string; // footer text for receipts
+    signatureText?: string; // e.g. "CEO Name, Title"
+    signatureImage?: string; // URL to signature image
+
+    pdf: PdfConfig;
+    email: EmailConfig;
+}
+
+/** PDF template configuration */
+export interface PdfConfig {
+    enabled: boolean;
+}
+
+/** Email receipt configuration */
+export interface EmailConfig {
+    enabled: boolean;
+    senderName?: string;
+    replyTo?: string;
+    subjectLine?: string;
+    provider?: 'console' | 'smtp' | 'resend' | 'gmail' | 'outlook';
+    config?: EmailProviderConfig;
+}
+
+export interface EmailProviderConfig {
+    smtp?: {
+        host: string;
+        port: number;
+        secure: boolean;
+        auth?: {
+            user: string;
+            pass: string;
+        };
+    };
+}
+
+/** Localization configuration */
+export interface LocalesConfig {
+    default: SupportedLocale;
+    supported: SupportedLocale[];
+    /** Key-value overrides for translations */
+    overrides?: Record<string, any>;
+}
+
 

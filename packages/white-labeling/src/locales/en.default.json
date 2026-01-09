@@ -16,6 +16,9 @@
         "staff": "Staff",
         "settings": "Settings"
     },
+    "admin_layout": {
+        "title": "Admin"
+    },
     "admin_events": {
         "title": "Events",
         "subtitle": "Manage your fundraising campaigns",
@@ -204,9 +207,11 @@
         "save_changes": "Save Changes",
         "saving": "Saving...",
         "saved_successfully": "Saved successfully",
+        "add_variable": "Add Variable",
         "amount": "Amount",
         "anonymous": "Anonymous",
-        "app_name": "Fundraising Platform"
+        "app_name": "Fundraising Platform",
+        "form_validation_error": "Please check the form for errors."
     },
     "status": {
         "completed": "Completed",
@@ -257,10 +262,17 @@
     },
     "thankyou": {
         "receipt": {
+            "title": "Official Donation Receipt",
             "transaction_id": "Transaction ID",
             "date": "Date",
             "from": "From",
-            "share_label": "Share your support"
+            "message_body": "Thank you, {{donorName}}, for your generous contribution. Your support directly impacts our mission.",
+            "authorized_signature": "Authorized Signature",
+            "pdf_attached": "An official PDF receipt is attached to this email for your records.",
+            "share_label": "Share your support",
+            "tax_id_label": "Tax ID:",
+            "website_label": "Website",
+            "visit_website": "Visit our website"
         },
         "share_text": "I just donated to support this amazing cause! Join me at {{url}}"
     },
@@ -286,6 +298,7 @@
         "footer": {}
     },
     "landing": {
+        "back_to_events": "Back to all events",
         "hero": {
             "welcome": "Welcome to",
             "description": "Join us in making a difference. Your contribution helps us achieve our goal of {{goal}}."
@@ -312,7 +325,8 @@
             "website": "Website",
             "support": "Support",
             "rights": "All rights reserved.",
-            "staff": "Staff Login"
+            "staff": "Staff Login",
+            "admin": "Admin Login"
         }
     },
     "dashboard": {
@@ -427,16 +441,60 @@
                 "email_placeholder": "support@...",
                 "phone": "Phone Number",
                 "phone_placeholder": "+1...",
-                "address": "Physical Address"
+                "address": "Physical Address",
+                "tax_id": "Tax ID / Charity No.",
+                "tax_id_placeholder": "e.g. 12-3456789",
+                "signature_text": "Signature Text (for Receipts)",
+                "signature_text_placeholder": "e.g. CEO Name",
+                "signature_image": "Signature Image (URL)",
+                "signature_image_placeholder": "https://..."
+            },
+            "sender_name": "Sender Name",
+            "sender_name_placeholder": "e.g. Gala Team",
+            "reply_to": "Reply-To Email",
+            "subject_line": "Subject Line Prefix",
+            "subject_line_placeholder": "Thanks for attending the Gala!",
+            "receipts": {
+                "title": "Receipts & Notifications",
+                "description": "Configure automated receipts and notifications sent to donors.",
+                "footer_text": "Shared Footer Text",
+                "footer_text_placeholder": "e.g. Thank you for your support...",
+                "footer_text_help": "This text will appear at the bottom of both emails and PDF receipts."
             },
             "email": {
+                "config_title": "Email Configuration",
                 "title": "Email Receipts",
                 "description": "Configure automated email receipts sent to donors.",
-                "enable": "Enable",
+                "enable": "Send Email Receipts",
                 "sender": "Sender Name",
                 "reply_to": "Reply-To Email",
                 "subject": "Subject Line",
-                "footer": "Email Footer"
+                "footer": "Email Footer",
+                "provider_label": "Email Provider",
+                "providers": {
+                    "console": "Console (Dev / Logs)",
+                    "smtp": "Custom SMTP",
+                    "resend": "Resend",
+                    "gmail": "Gmail",
+                    "outlook": "Outlook"
+                },
+                "smtp": {
+                    "title": "SMTP Configuration",
+                    "host": "Host",
+                    "host_placeholder": "smtp.example.com",
+                    "port": "Port",
+                    "port_placeholder": "465",
+                    "secure": "Use Secure Connection (SSL/TLS)",
+                    "username": "Username",
+                    "username_placeholder": "user@example.com",
+                    "password": "Password / API Key",
+                    "password_placeholder": "••••••••",
+                    "help": {
+                        "gmail": "For Gmail, use an <1>App Password</1> (requires 2FA enabled).",
+                        "outlook": "For Outlook, use an <1>App Password</1> if 2FA is enabled.",
+                        "resend": "For Resend, 'Username' should be <1>resend</1> and 'Password' is your API Key."
+                    }
+                }
             },
             "sharing": {
                 "title": "Social Sharing",
@@ -450,7 +508,7 @@
             "pdf": {
                 "title": "PDF Receipts",
                 "description": "Configure downloadable PDF receipts.",
-                "enable": "Enable",
+                "enable": "Include PDF Attachment",
                 "template": "Template Style",
                 "formal": "Formal",
                 "minimal": "Minimal",
@@ -509,7 +567,10 @@
             "links_desc": "Configure the destination URLs for the landing page feature boxes.",
             "impact_url": "Impact URL",
             "community_url": "Community URL",
-            "interactive_url": "Interactive URL"
+            "interactive_url": "Interactive URL",
+            "impact_label": "Impact Box",
+            "community_label": "Community Box",
+            "interactive_label": "Interactive Box"
         },
         "localization": {
             "title": "Localization",
@@ -534,7 +595,8 @@
             "stripe": {
                 "title": "Stripe Settings",
                 "publishable_key": "Publishable Key",
-                "secret_key": "Secret Key"
+                "secret_key": "Secret Key",
+                "webhook_secret": "Webhook Secret"
             },
             "paypal": {
                 "title": "PayPal Settings",
@@ -584,10 +646,17 @@
             "display_name": "Event Display Title (Override)",
             "display_name_desc": "Leave empty to use the Event Name.",
             "display_name_placeholder": "e.g. Annual Charity Gala",
+            "identity_assets": "Identity & Assets",
+            "background_landing": "Landing Background",
+            "background_live": "Live Screen Background",
             "logo_url": "Event Logo URL",
             "accent_color": "Event Accent Color",
             "override_warning": "Custom event branding overrides the organization's standard look for this specific event.",
             "apply_overrides": "Apply Theme Overrides",
+            "communication": {
+                "title": "Communication Overrides",
+                "override_label": "Override default communication settings"
+            },
             "saved_successfully": "Branding saved successfully",
             "save_changes": "Save Changes",
             "subtitle": "Configure event branding and appearance.",

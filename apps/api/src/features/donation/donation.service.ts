@@ -167,10 +167,7 @@ export class DonationService {
       } else {
         try {
           if (donation.transactionId) {
-            await this.paymentService.refundDonation(
-              donation.eventId || undefined,
-              donation.transactionId,
-            );
+            await this.paymentService.refundDonation(donation.transactionId);
           }
           newStatus = 'REFUNDED';
         } catch (error) {

@@ -6,41 +6,52 @@ import { firstValueFrom } from 'rxjs';
 import {
   PaymentProvider,
   CreatePaymentIntentResult,
+  PaymentConfig,
 } from '../interfaces/payment-provider.interface';
+import { PayPalProviderConfig } from '@fundraising/white-labeling';
 
 @Injectable()
 export class PayPalService implements PaymentProvider {
   private readonly logger = new Logger(PayPalService.name);
-  private baseUrl: string;
-  private clientId: string;
-  private clientSecret: string;
 
   constructor(
     private configService: ConfigService,
     private readonly httpService: HttpService,
-  ) {
-    const sandbox = this.configService.get<string>('PAYPAL_SANDBOX') === 'true';
-    this.baseUrl = sandbox
-      ? 'https://api-m.sandbox.paypal.com'
-      : 'https://api-m.paypal.com';
+  ) { }
 
-    this.clientId = this.configService.get<string>('PAYPAL_CLIENT_ID') || '';
-    this.clientSecret =
-      this.configService.get<string>('PAYPAL_CLIENT_SECRET') || '';
+  private getCredentials(config?: PaymentConfig) {
+    const ppConfig = config as PayPalProviderConfig;
+    const clientId =
+      ppConfig?.clientId || this.configService.get<string>('PAYPAL_CLIENT_ID');
+    const clientSecret =
+      ppConfig?.clientSecret ||
+      this.configService.get<string>('PAYPAL_CLIENT_SECRET');
+    const sandbox =
+      ppConfig?.sandbox ??
+      (this.configService.get<string>('PAYPAL_SANDBOX') === 'true');
 
-    if (!this.clientId || !this.clientSecret) {
+    if (!clientId || !clientSecret) {
       this.logger.warn('PAYPAL_CLIENT_ID or PAYPAL_CLIENT_SECRET not defined');
     }
+
+    return { clientId, clientSecret, sandbox };
   }
 
-  private async getAccessToken(): Promise<string> {
-    const auth = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString(
-      'base64',
-    );
+  private getBaseUrl(sandbox: boolean): string {
+    return sandbox
+      ? 'https://api-m.sandbox.paypal.com'
+      : 'https://api-m.paypal.com';
+  }
+
+  private async getAccessToken(config?: PaymentConfig): Promise<string> {
+    const { clientId, clientSecret, sandbox } = this.getCredentials(config);
+    const baseUrl = this.getBaseUrl(sandbox);
+
+    const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
     try {
       const { data } = await firstValueFrom(
         this.httpService.post(
-          `${this.baseUrl}/v1/oauth2/token`,
+          `${baseUrl}/v1/oauth2/token`,
           'grant_type=client_credentials',
           {
             headers: {
@@ -64,9 +75,12 @@ export class PayPalService implements PaymentProvider {
     amount: number,
     currency: string = 'USD',
     metadata: Record<string, any> = {},
+    config?: PaymentConfig,
   ): Promise<CreatePaymentIntentResult> {
     try {
-      const accessToken = await this.getAccessToken();
+      const accessToken = await this.getAccessToken(config);
+      const { sandbox } = this.getCredentials(config);
+      const baseUrl = this.getBaseUrl(sandbox);
 
       // PayPal expects standard units (e.g. 10.00), not cents.
       // Assuming amount passed is in CENTS.
@@ -86,7 +100,7 @@ export class PayPalService implements PaymentProvider {
       };
 
       const { data } = await firstValueFrom(
-        this.httpService.post(`${this.baseUrl}/v2/checkout/orders`, payload, {
+        this.httpService.post(`${baseUrl}/v2/checkout/orders`, payload, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
@@ -111,8 +125,12 @@ export class PayPalService implements PaymentProvider {
   async constructEventFromPayload(
     headers: IncomingHttpHeaders | string,
     payload: Buffer,
+    config?: PaymentConfig,
   ): Promise<any> {
-    const webhookId = this.configService.get<string>('PAYPAL_WEBHOOK_ID');
+    const ppConfig = config as PayPalProviderConfig;
+    const webhookId =
+      ppConfig?.webhookId || this.configService.get<string>('PAYPAL_WEBHOOK_ID');
+
     if (!webhookId) {
       this.logger.warn(
         'PAYPAL_WEBHOOK_ID not set. Skipping verification (INSECURE).',
@@ -120,7 +138,9 @@ export class PayPalService implements PaymentProvider {
       return JSON.parse(payload.toString());
     }
 
-    const accessToken = await this.getAccessToken();
+    const accessToken = await this.getAccessToken(config);
+    const { sandbox } = this.getCredentials(config); // Get sandbox status
+    const baseUrl = this.getBaseUrl(sandbox);
     const body = JSON.parse(payload.toString());
 
     const verificationBody = {
@@ -136,7 +156,7 @@ export class PayPalService implements PaymentProvider {
     try {
       const { data: result } = await firstValueFrom(
         this.httpService.post(
-          `${this.baseUrl}/v1/notifications/verify-webhook-signature`,
+          `${baseUrl}/v1/notifications/verify-webhook-signature`,
           verificationBody,
           {
             headers: {
@@ -160,17 +180,17 @@ export class PayPalService implements PaymentProvider {
     }
   }
 
-  async refundDonation(paymentId: string): Promise<any> {
+  async refundDonation(paymentId: string, config?: PaymentConfig): Promise<any> {
     try {
-      const accessToken = await this.getAccessToken();
+      const accessToken = await this.getAccessToken(config);
+      const { sandbox } = this.getCredentials(config);
+      const baseUrl = this.getBaseUrl(sandbox);
+
       // Look up the capture ID associated with this Order ID
       const { data: orderData } = await firstValueFrom(
-        this.httpService.get(
-          `${this.baseUrl}/v2/checkout/orders/${paymentId}`,
-          {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          },
-        ),
+        this.httpService.get(`${baseUrl}/v2/checkout/orders/${paymentId}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }),
       );
 
       // Find capture ID from purchase units
@@ -183,7 +203,7 @@ export class PayPalService implements PaymentProvider {
 
       const { data } = await firstValueFrom(
         this.httpService.post(
-          `${this.baseUrl}/v2/payments/captures/${captureId}/refund`,
+          `${baseUrl}/v2/payments/captures/${captureId}/refund`,
           {},
           {
             headers: {

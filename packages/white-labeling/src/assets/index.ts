@@ -19,7 +19,7 @@ export type AssetRegistry = typeof defaultAssets;
 /**
  * Loads the final assets map by merging defaults with database overrides.
  */
-export function loadAssets(): AssetRegistry {
+export const loadAssets = (): AssetRegistry => {
     const globalAssets = getGlobalConfig()?.theme?.assets || {};
     const eventAssets = getEventConfig()?.theme?.assets || {};
 

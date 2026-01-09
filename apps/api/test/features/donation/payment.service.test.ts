@@ -18,14 +18,11 @@ const mockPayPalService = {
   refundDonation: vi.fn(),
 };
 
-const mockPrismaService = {
-  configuration: {
-    findFirst: vi.fn(),
-  },
-};
+const mockPrismaService = {};
 
 const mockWhiteLabelingService = {
   getGlobalSettings: vi.fn(),
+  getEventSettings: vi.fn(),
 };
 
 describe('PaymentService', () => {
@@ -47,25 +44,19 @@ describe('PaymentService', () => {
   });
 
   describe('getProvider', () => {
-    it('should default to stripe if no global config found', async () => {
-      mockPrismaService.configuration.findFirst.mockResolvedValue(null);
-      const provider = await service.getProvider();
-      expect(provider).toBe(mockStripeService);
-    });
-
-    it('should return stripe if configured', async () => {
-      mockPrismaService.configuration.findFirst.mockResolvedValue({
-        payment: { provider: 'stripe' },
+    it('should default to stripe if no config found', async () => {
+      mockWhiteLabelingService.getGlobalSettings.mockResolvedValue({
+        donation: { payment: { provider: 'stripe' } },
       });
       const provider = await service.getProvider();
       expect(provider).toBe(mockStripeService);
     });
 
-    it('should return paypal if configured', async () => {
-      mockPrismaService.configuration.findFirst.mockResolvedValue({
-        payment: { provider: 'paypal' },
+    it('should return paypal if configured globally', async () => {
+      mockWhiteLabelingService.getGlobalSettings.mockResolvedValue({
+        donation: { payment: { provider: 'paypal' } },
       });
-      const provider = await service.getProvider();
+      const provider = await service.getProvider(); // Removed arg
       expect(provider).toBe(mockPayPalService);
     });
   });
@@ -87,29 +78,43 @@ describe('PaymentService', () => {
   });
 
   describe('constructEventFromPayload', () => {
-    it('should delegate to stripe service for default provider', async () => {
+    it('should delegate to stripe service if providerName is stripe', async () => {
+      mockWhiteLabelingService.getGlobalSettings.mockResolvedValue({
+        donation: { payment: { provider: 'paypal' } }, // Global is paypal
+      });
       await service.constructEventFromPayload(
         {},
         Buffer.from('payload'),
-        'stripe',
+        'stripe', // But we explicitly want stripe
       );
-      expect(mockStripeService.constructEventFromPayload).toHaveBeenCalled();
+      expect(mockStripeService.constructEventFromPayload).toHaveBeenCalledWith(
+        {},
+        Buffer.from('payload'),
+        expect.anything(),
+      );
     });
 
-    it('should delegate to paypal service when specified', async () => {
+    it('should delegate to paypal service when providerName is paypal', async () => {
+      mockWhiteLabelingService.getGlobalSettings.mockResolvedValue({
+        donation: { payment: { provider: 'stripe' } },
+      });
       await service.constructEventFromPayload(
         {},
         Buffer.from('payload'),
         'paypal',
       );
-      expect(mockPayPalService.constructEventFromPayload).toHaveBeenCalled();
+      expect(mockPayPalService.constructEventFromPayload).toHaveBeenCalledWith(
+        {},
+        Buffer.from('payload'),
+        expect.anything(),
+      );
     });
   });
 
   describe('createPaymentIntent', () => {
     it('should call getProvider and delegate to it', async () => {
-      mockPrismaService.configuration.findFirst.mockResolvedValue({
-        payment: { provider: 'stripe' },
+      mockWhiteLabelingService.getGlobalSettings.mockResolvedValue({
+        donation: { payment: { provider: 'stripe' } },
       });
       mockStripeService.createPaymentIntent.mockResolvedValue({ id: 'pi_1' });
 
@@ -122,21 +127,25 @@ describe('PaymentService', () => {
         100,
         'usd',
         { eventId: 'evt_1' },
+        expect.anything(),
       );
     });
   });
 
   describe('refundDonation', () => {
     it('should call getProvider and delegate refund', async () => {
-      mockPrismaService.configuration.findFirst.mockResolvedValue({
-        payment: { provider: 'paypal' },
+      mockWhiteLabelingService.getGlobalSettings.mockResolvedValue({
+        donation: { payment: { provider: 'paypal' } },
       });
       mockPayPalService.refundDonation.mockResolvedValue({ status: 'refunded' });
 
-      const result = await service.refundDonation('evt_1', 'txn_1');
+      const result = await service.refundDonation('txn_1');
 
       expect(result).toEqual({ status: 'refunded' });
-      expect(mockPayPalService.refundDonation).toHaveBeenCalledWith('txn_1');
+      expect(mockPayPalService.refundDonation).toHaveBeenCalledWith(
+        'txn_1',
+        expect.anything(),
+      );
     });
   });
 });

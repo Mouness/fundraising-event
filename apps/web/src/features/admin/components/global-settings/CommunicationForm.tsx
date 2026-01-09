@@ -5,12 +5,11 @@ import { Checkbox } from '@core/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { ReceiptForm } from './ReceiptForm';
 
 export const CommunicationForm = () => {
     const { t } = useTranslation();
-    const { register, control, setValue } = useFormContext();
-    const emailEnabled = useWatch({ control, name: 'emailReceipt.enabled' });
-    const pdfEnabled = useWatch({ control, name: 'pdfReceipt.enabled' });
+    const { register, setValue, control } = useFormContext(); // Added control back if needed elsewhere, though mostly used in sub-forms
     const sharingEnabled = useWatch({ control, name: 'sharing.enabled' });
     const networks = useWatch({ control, name: 'sharing.networks' }) || [];
 
@@ -33,6 +32,20 @@ export const CommunicationForm = () => {
                             <Input id="phone" {...register('phone')} placeholder={t('admin_branding.communication.contact.phone_placeholder')} />
                         </div>
                     </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                            <Label>{t('admin_branding.communication.contact.tax_id')}</Label>
+                            <Input {...register('taxId')} placeholder={t('admin_branding.communication.contact.tax_id_placeholder')} />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label>{t('admin_branding.communication.contact.signature_text')}</Label>
+                            <Input {...register('signatureText')} placeholder={t('admin_branding.communication.contact.signature_text_placeholder')} />
+                        </div>
+                    </div>
+                    <div className="grid gap-2">
+                        <Label>{t('admin_branding.communication.contact.signature_image')}</Label>
+                        <Input {...register('signatureImage')} placeholder={t('admin_branding.communication.contact.signature_image_placeholder')} />
+                    </div>
                     <div className="grid gap-2">
                         <Label htmlFor="address">{t('admin_branding.communication.contact.address')}</Label>
                         <Textarea id="address" {...register('address')} rows={3} />
@@ -40,81 +53,8 @@ export const CommunicationForm = () => {
                 </CardContent>
             </Card>
 
-            {/* Email Configuration */}
-            <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
-                <CardHeader>
-                    <div className="flex items-center justify-between">
-                        <CardTitle>{t('admin_branding.communication.email.title')}</CardTitle>
-                        <div className="flex items-center space-x-2">
-                            <Checkbox
-                                id="emailEnabled"
-                                checked={emailEnabled}
-                                onCheckedChange={(checked) => setValue('emailReceipt.enabled', checked === true)}
-                            />
-                            <label htmlFor="emailEnabled" className="text-sm font-medium">{t('admin_branding.communication.email.enable')}</label>
-                        </div>
-                    </div>
-                    <CardDescription>{t('admin_branding.communication.email.description')}</CardDescription>
-                </CardHeader>
-                {emailEnabled && (
-                    <CardContent className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="grid gap-2">
-                                <Label>{t('admin_branding.communication.email.sender')}</Label>
-                                <Input {...register('emailReceipt.senderName')} />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label>{t('admin_branding.communication.email.reply_to')}</Label>
-                                <Input {...register('emailReceipt.replyTo')} />
-                            </div>
-                        </div>
-                        <div className="grid gap-2">
-                            <Label>{t('admin_branding.communication.email.subject')}</Label>
-                            <Input {...register('emailReceipt.subjectLine')} />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label>{t('admin_branding.communication.email.footer')}</Label>
-                            <Textarea {...register('emailReceipt.footerText')} className="font-mono text-xs" rows={2} />
-                        </div>
-                    </CardContent>
-                )}
-            </Card>
-
-            {/* PDF Configuration */}
-            <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
-                <CardHeader>
-                    <div className="flex items-center justify-between">
-                        <CardTitle>{t('admin_branding.communication.pdf.title')}</CardTitle>
-                        <div className="flex items-center space-x-2">
-                            <Checkbox
-                                id="pdfEnabled"
-                                checked={pdfEnabled}
-                                onCheckedChange={(checked) => setValue('pdfReceipt.enabled', checked === true)}
-                            />
-                            <label htmlFor="pdfEnabled" className="text-sm font-medium">{t('admin_branding.communication.pdf.enable')}</label>
-                        </div>
-                    </div>
-                    <CardDescription>{t('admin_branding.communication.pdf.description')}</CardDescription>
-                </CardHeader>
-                {pdfEnabled && (
-                    <CardContent className="space-y-4">
-                        <div className="grid gap-2">
-                            <Label>{t('admin_branding.communication.pdf.template')}</Label>
-                            <select
-                                {...register('pdfReceipt.templateStyle')}
-                                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                            >
-                                <option value="formal">{t('admin_branding.communication.pdf.formal')}</option>
-                                <option value="minimal">{t('admin_branding.communication.pdf.minimal')}</option>
-                            </select>
-                        </div>
-                        <div className="grid gap-2">
-                            <Label>{t('admin_branding.communication.pdf.footer')}</Label>
-                            <Textarea {...register('pdfReceipt.footerText')} className="font-mono text-xs" rows={2} />
-                        </div>
-                    </CardContent>
-                )}
-            </Card>
+            {/* Receipt & Notifications */}
+            <ReceiptForm />
 
             {/* Social Sharing Configuration */}
             <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
@@ -125,7 +65,7 @@ export const CommunicationForm = () => {
                             <Checkbox
                                 id="sharingEnabled"
                                 checked={sharingEnabled}
-                                onCheckedChange={(checked) => setValue('sharing.enabled', checked === true)}
+                                onCheckedChange={(checked: boolean) => setValue('sharing.enabled', checked === true)}
                             />
                             <label htmlFor="sharingEnabled" className="text-sm font-medium">{t('admin_branding.communication.sharing.enable')}</label>
                         </div>
@@ -141,8 +81,9 @@ export const CommunicationForm = () => {
                                     <Checkbox
                                         id={`network-${network}`}
                                         checked={networks.includes(network)}
-                                        onCheckedChange={(checked) => {
-                                            const newNetworks = checked
+                                        onCheckedChange={(checked: boolean) => {
+                                            const isChecked = checked === true;
+                                            const newNetworks = isChecked
                                                 ? [...networks, network]
                                                 : networks.filter((n: string) => n !== network);
                                             setValue('sharing.networks', newNetworks);

@@ -46,7 +46,7 @@ export const getEventConfig = () => WhiteLabelStore.getInstance().getEventConfig
 /**
  * Fetches global configuration and updates the store.
  */
-export async function fetchGlobalConfig(apiUrl: string): Promise<EventConfig | null> {
+export const fetchGlobalConfig = async (apiUrl: string): Promise<EventConfig | null> => {
     try {
         const store = WhiteLabelStore.getInstance();
         const { data } = await axios.get(`${apiUrl}/settings/global`, {
@@ -63,7 +63,7 @@ export async function fetchGlobalConfig(apiUrl: string): Promise<EventConfig | n
 /**
  * Fetches event configuration and updates the store.
  */
-export async function fetchEventConfig(apiUrl: string, slug: string): Promise<EventConfig | null> {
+export const fetchEventConfig = async (apiUrl: string, slug: string): Promise<EventConfig | null> => {
     try {
         const store = WhiteLabelStore.getInstance();
         const { data } = await axios.get(`${apiUrl}/events/${slug}/settings`, {
@@ -86,7 +86,7 @@ export async function fetchEventConfig(apiUrl: string, slug: string): Promise<Ev
  * Initializes the white-labeling library by fetching configuration from the backend.
  * This function now expects specific endpoints for global and event settings.
  */
-export async function initWhiteLabeling(apiUrl: string, slug?: string): Promise<void> {
+export const initWhiteLabeling = async (apiUrl: string, slug?: string): Promise<void> => {
     await fetchGlobalConfig(apiUrl);
 
     if (slug) {

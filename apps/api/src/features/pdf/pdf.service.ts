@@ -4,8 +4,10 @@ import * as path from 'path';
 import { WhiteLabelingService } from '../white-labeling/white-labeling.service';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
-
 import { ConfigService } from '@nestjs/config';
+import { ReceiptData, ReceiptContext } from '../mail/interfaces/receipt.interfaces';
+import { getReceiptTemplate } from './templates/receipt.template';
+import { I18nUtil } from '../../common/utils/i18n.util';
 
 @Injectable()
 export class PdfService {
@@ -17,17 +19,14 @@ export class PdfService {
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
   ) {
-    // Resolve fonts ensuring correct path whether running from root or apps/api
-    // But commonly pnpm -r runs in package CWD.
-    // Also handling dist vs src for robustness if possible, but keeping it simple for dev first.
     const fontBase = path.join(process.cwd(), 'src/assets/fonts');
 
     const fonts = {
       Roboto: {
         normal: path.join(fontBase, 'Roboto-Regular.ttf'),
         bold: path.join(fontBase, 'Roboto-Bold.ttf'),
-        italics: path.join(fontBase, 'Roboto-Regular.ttf'), // Fallback
-        bolditalics: path.join(fontBase, 'Roboto-Bold.ttf'), // Fallback
+        italics: path.join(fontBase, 'Roboto-Regular.ttf'),
+        bolditalics: path.join(fontBase, 'Roboto-Bold.ttf'),
       },
     };
     try {
@@ -37,198 +36,92 @@ export class PdfService {
     }
   }
 
-  async generateReceipt(
-    eventSlug: string,
-    data: {
-      amount: number;
-      donorName: string;
-      date: Date;
-      transactionId: string;
-    },
-  ): Promise<Buffer> {
-    // Resolve Config
-    const eventConfig =
-      await this.whiteLabelingService.getEventSettings(eventSlug);
+  // Overload 1: Convenience (Builds context then calls Overload 2)
+  async generateReceipt(eventSlug: string, data: ReceiptData): Promise<Buffer>;
+  // Overload 2: Efficient (Direct usage)
+  async generateReceipt(context: ReceiptContext): Promise<Buffer>;
 
-    if (!eventConfig) {
-      throw new Error(`Event config not found for slug: ${eventSlug}`);
+  async generateReceipt(arg1: string | ReceiptContext, arg2?: ReceiptData): Promise<Buffer> {
+    const context = typeof arg1 === 'string'
+      ? await this.buildContext(arg1, arg2!)
+      : arg1 as ReceiptContext;
+
+    return this.renderReceipt(context);
+  }
+
+  private async renderReceipt(context: ReceiptContext): Promise<Buffer> {
+    // Fetch Images
+    let logoImage: string | Buffer | null = null;
+    let signatureImage: string | Buffer | null = null;
+    try {
+      if (context.logoUrl) logoImage = await this.fetchImage(context.logoUrl);
+      if (context.signatureImage) signatureImage = await this.fetchImage(context.signatureImage as string);
+    } catch (error) {
+      this.logger.warn(`Failed to load images for PDF: ${error.message}`);
     }
 
-    const { communication: commConfig, theme } = eventConfig;
+    const docDefinition = getReceiptTemplate(context, { logo: logoImage, signature: signatureImage });
 
+    return new Promise((resolve, reject) => {
+      try {
+        const pdfDoc = this.printer.createPdfKitDocument(docDefinition as any);
+        const chunks: Buffer[] = [];
+        pdfDoc.on('data', (chunk) => chunks.push(chunk));
+        pdfDoc.on('end', () => resolve(Buffer.concat(chunks)));
+        pdfDoc.on('error', (err) => reject(err));
+        pdfDoc.end();
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  private async buildContext(eventSlug: string, data: ReceiptData): Promise<ReceiptContext> {
+    const eventConfig = await this.whiteLabelingService.getEventSettings(eventSlug);
+    if (!eventConfig) throw new Error(`Event config not found for slug: ${eventSlug}`);
+
+    const { communication: commConfig, theme, donation } = eventConfig;
     if (!commConfig?.pdf?.enabled) {
       this.logger.warn('Receipt generation requested but disabled in config');
     }
 
     const primaryColor = theme?.variables?.['--primary'] || '#000000';
+    const currency = data.currency || donation.payment.currency || 'USD';
+    const formattedDate = new Date(data.date || new Date()).toLocaleDateString();
 
-    let logoImage: string | Buffer | null = null;
-    try {
-      const logoPath = theme?.assets?.logo;
-      if (logoPath) {
-        logoImage = await this.fetchImage(logoPath);
+    const locale = eventConfig.locales?.default || 'en';
+    const localeData = I18nUtil.getEffectiveLocaleData(locale, eventConfig.locales?.overrides);
+
+    return {
+      ...data,
+      eventName: eventConfig.content.title,
+      logoUrl: theme?.assets?.logo || '',
+      primaryColor,
+      legalName: commConfig.legalName,
+      taxId: commConfig.taxId,
+      address: commConfig.address,
+      website: commConfig.website,
+      supportEmail: commConfig.supportEmail,
+      phone: commConfig.phone,
+      footerText: commConfig.footerText,
+      signatureText: commConfig.signatureText,
+      year: new Date().getFullYear(),
+      currency,
+      date: formattedDate,
+      content: {
+        title: I18nUtil.t(localeData, 'thankyou.receipt.title') === 'thankyou.receipt.title' ? 'Official Donation Receipt' : I18nUtil.t(localeData, 'thankyou.receipt.title'),
+        receiptNumber: I18nUtil.t(localeData, 'thankyou.receipt.transaction_id'),
+        date: I18nUtil.t(localeData, 'thankyou.receipt.date'),
+        donorName: I18nUtil.t(localeData, 'thankyou.receipt.from'),
+        amount: I18nUtil.t(localeData, 'donation.amount'),
+        thankYou: I18nUtil.t(localeData, 'thankyou.receipt.message_body', { donorName: data.donorName || data.name || 'Supporter' }),
+        authorizedSignature: I18nUtil.t(localeData, 'thankyou.receipt.authorized_signature'),
+        footerTextDefault: I18nUtil.t(localeData, 'thankyou.receipt.pdf_attached'),
+        taxIdLabel: I18nUtil.t(localeData, 'thankyou.receipt.tax_id_label'),
+        websiteLabel: I18nUtil.t(localeData, 'thankyou.receipt.website_label'),
+        visitWebsite: I18nUtil.t(localeData, 'thankyou.receipt.visit_website'),
       }
-    } catch (error) {
-      this.logger.warn(`Failed to load logo for PDF: ${error.message}`);
-    }
-
-    const formattedDate = new Date(data.date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-
-    const docDefinition = {
-      content: [
-        logoImage
-          ? {
-              image: logoImage,
-              width: 100,
-              alignment: 'center',
-              margin: [0, 0, 0, 10],
-            }
-          : {},
-        {
-          text: eventConfig.content.title.toUpperCase(),
-          style: 'header',
-          alignment: 'center',
-          margin: [0, 0, 0, 20],
-        },
-
-        {
-          text: 'OFFICIAL DONATION RECEIPT',
-          style: 'subheader',
-          alignment: 'center',
-          margin: [0, 0, 0, 40],
-        },
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*', '*'],
-            body: [
-              [
-                { text: 'Organization Details', style: 'tableHeader' },
-                { text: 'Donation Details', style: 'tableHeader' },
-              ],
-              [
-                {
-                  text: [
-                    {
-                      text: commConfig.legalName || 'Organization Details',
-                      bold: true,
-                    },
-                    '\n',
-                    commConfig.address || 'Organization Address',
-                    '\n',
-                    {
-                      text: commConfig.website || '',
-                      italics: true,
-                      color: 'blue',
-                      decoration: 'underline',
-                    },
-                  ],
-                  margin: [0, 10, 0, 10],
-                },
-                {
-                  text: [
-                    { text: 'Date: ', bold: true },
-                    formattedDate,
-                    '\n',
-                    { text: 'Receipt #: ', bold: true },
-                    data.transactionId.substring(0, 8).toUpperCase(),
-                    '\n',
-                    { text: 'Amount: ', bold: true },
-                    `$${(data.amount / 100).toFixed(2)}`,
-                  ],
-                  margin: [0, 10, 0, 10],
-                },
-              ],
-            ],
-          },
-          layout: 'lightHorizontalLines',
-          margin: [0, 0, 0, 40],
-        },
-
-        {
-          text: 'Donor Information',
-          style: 'sectionHeader',
-          margin: [0, 0, 0, 10],
-        },
-        {
-          text: [{ text: 'Name: ', bold: true }, data.donorName, '\n'],
-          margin: [0, 0, 0, 20],
-        },
-
-        {
-          text: 'Thank you for your support!',
-          style: 'highlight',
-          alignment: 'center',
-          margin: [0, 20],
-        },
-
-        {
-          text:
-            commConfig.pdf?.footerText ||
-            'This is a computer-generated receipt.',
-          style: 'footer',
-          alignment: 'center',
-          margin: [0, 50, 0, 0],
-        },
-      ],
-      styles: {
-        header: {
-          fontSize: 22,
-          bold: true,
-          color: primaryColor,
-        },
-        subheader: {
-          fontSize: 16,
-          bold: true,
-          color: '#7f8c8d',
-        },
-        sectionHeader: {
-          fontSize: 14,
-          bold: true,
-          color: '#2c3e50',
-          decoration: 'underline',
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 12,
-          color: primaryColor,
-          fillColor: '#f8f9fa',
-        },
-        highlight: {
-          fontSize: 14,
-          bold: true,
-          italics: true,
-          color: '#27ae60',
-        },
-        footer: {
-          fontSize: 10,
-          color: '#95a5a6',
-        },
-      },
-      defaultStyle: {
-        font: 'Roboto',
-      },
     };
-
-    return new Promise((resolve, reject) => {
-      try {
-        const pdfDoc = this.printer.createPdfKitDocument(docDefinition);
-        const chunks: Buffer[] = [];
-        pdfDoc.on('data', (chunk) => chunks.push(chunk));
-        pdfDoc.on('end', () => resolve(Buffer.concat(chunks)));
-        pdfDoc.on('error', (err) =>
-          reject(err instanceof Error ? err : new Error(String(err))),
-        );
-        pdfDoc.end();
-      } catch (err) {
-        reject(err instanceof Error ? err : new Error(String(err)));
-      }
-    });
   }
 
   private async fetchImage(url: string): Promise<Buffer> {

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
     initWhiteLabeling,
     loadConfigs,
@@ -34,7 +34,9 @@ const AppConfigContext = createContext<AppConfigContextType>({
     refreshConfig: async () => { }
 });
 
-export const AppConfigProvider = ({ children, slug }: PropsWithChildren<{ slug?: string }>) => {
+export const AppConfigProvider = ({ children, slug: slugProp }: PropsWithChildren<{ slug?: string }>) => {
+    const params = useParams<{ slug: string }>();
+    const slug = slugProp || params.slug;
     const [config, setConfig] = useState<EventConfig>(INITIAL_CONFIG);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);

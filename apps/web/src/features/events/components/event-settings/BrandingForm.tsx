@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { Button } from '@core/components/ui/button';
 import { AlertCircle as AlertIcon, Palette, Image as ImageIcon, Mail, Plus, Trash2 } from 'lucide-react';
+import { ToggledInputField } from './ToggledInputField';
+
 
 export const BrandingForm = () => {
     const { t } = useTranslation('common');
@@ -51,19 +53,28 @@ export const BrandingForm = () => {
                     <div className="space-y-4 pt-6 border-t">
                         <Label className="text-base font-semibold block mb-2">{t('admin_branding.assets.links_title', 'Landing Page External Links')}</Label>
                         <p className="text-sm text-muted-foreground mb-4">{t('admin_branding.assets.links_desc', 'Configure the destination URLs for the landing page feature boxes.')}</p>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="landingImpact" className="text-xs font-semibold">{t('admin_branding.assets.impact_url', 'Impact URL')}</Label>
-                                <Input id="landingImpact" placeholder="https://..." {...register('landing.impact.url')} />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="landingCommunity" className="text-xs font-semibold">{t('admin_branding.assets.community_url', 'Community URL')}</Label>
-                                <Input id="landingCommunity" placeholder="https://..." {...register('landing.community.url')} />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="landingInteractive" className="text-xs font-semibold">{t('admin_branding.assets.interactive_url', 'Interactive URL')}</Label>
-                                <Input id="landingInteractive" placeholder="https://..." {...register('landing.interactive.url')} />
-                            </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <ToggledInputField
+                                id="impact"
+                                label={t('admin_branding.assets.impact_label')}
+                                inputLabel={t('admin_branding.assets.impact_url')}
+                                enabledPath="landing.impact.enabled"
+                                inputPath="landing.impact.url"
+                            />
+                            <ToggledInputField
+                                id="community"
+                                label={t('admin_branding.assets.community_label')}
+                                inputLabel={t('admin_branding.assets.community_url')}
+                                enabledPath="landing.community.enabled"
+                                inputPath="landing.community.url"
+                            />
+                            <ToggledInputField
+                                id="interactive"
+                                label={t('admin_branding.assets.interactive_label')}
+                                inputLabel={t('admin_branding.assets.interactive_url')}
+                                enabledPath="landing.interactive.enabled"
+                                inputPath="landing.interactive.url"
+                            />
                         </div>
                     </div>
 

@@ -23,24 +23,41 @@ theme:
     - toc.integrate
 
 nav:
-  - Home: index.md
-  - Getting Started: getting-started.md
-  - Architecture: architecture.md
-  - Project Structure: project-structure.md
-  - Configuration: configuration.md
-  - API Reference: api-reference.md
-  - White-Labeling: white-labeling.md
-  - Features:
-    - Authentication: features/authentication.md
-    - Events Management: features/events.md
-    - Donation Flow: features/donation.md
-    - Live Event: features/live-event.md
-    - Staff Collector: features/staff.md
-    - Admin Dashboard: features/admin.md
-    - Global Settings: features/global-settings.md
-    - Public Landing Pages: features/public-landing-pages.md
-    - Communication & PDF: features/communication.md
-    - Backend PDF & Queue: features/backend-pdf.md
+  - Welcome: index.md
+  - User Guide (EN):
+    - Introduction: user/en/index.md
+    - Global Settings: user/en/global_settings.md
+    - Events Management: user/en/events.md
+    - Design & Branding: user/en/branding.md
+    - Staff & Volunteers: user/en/staff.md
+    - Live Mode: user/en/live.md
+    - Donations: user/en/donations.md
+  - Guide Utilisateur (FR):
+    - Introduction: user/fr/index.md
+    - Paramètres Globaux: user/fr/global_settings.md
+    - Gestion des Événements: user/fr/events.md
+    - Design & Marque: user/fr/branding.md
+    - Personnel & Bénévoles: user/fr/staff.md
+    - Mode Live: user/fr/live.md
+    - Dons: user/fr/donations.md
+  - Technical Documentation:
+    - Getting Started: technical/getting-started.md
+    - Architecture: technical/architecture.md
+    - Project Structure: technical/project-structure.md
+    - Configuration: technical/configuration.md
+    - API Reference: technical/api-reference.md
+    - Features:
+      - Donation Flow: technical/features/donation.md
+      - Live Event: technical/features/live-event.md
+      - Landing Pages: technical/features/public-landing-pages.md
+      - Admin Dashboard: technical/features/admin.md
+      - Staff Collector: technical/features/staff.md
+      - Communication: technical/features/communication.md
+      - Global Settings: technical/features/global-settings.md
+      - Event Configuration: technical/features/events.md
+    - White-Labeling: technical/white-labeling.md
+    - Providers Integration: technical/providers.md
+    - Authentication: technical/authentication.md
 
 markdown_extensions:
   - admonition

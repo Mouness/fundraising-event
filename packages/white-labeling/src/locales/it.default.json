@@ -17,6 +17,9 @@
         "settings": "Impostazioni",
         "logout": "Esci"
     },
+    "admin_layout": {
+        "title": "Admin"
+    },
     "admin_events": {
         "title": "Eventi",
         "subtitle": "Gestisci le tue campagne di raccolta fondi",
@@ -145,6 +148,9 @@
             "connecting": "Connessione..."
         },
         "new_donation": "Nuova Donazione!",
+        "amount": "Importo",
+        "from": "Da",
+        "anonymous": "Anonimo",
         "waiting": "In attesa di donazioni...",
         "scan_to_donate": "SCANSIONA PER DONARE",
         "total_raised": "Totale Raccolto",
@@ -204,7 +210,8 @@
         "saved_successfully": "Salvato con successo",
         "amount": "Importo",
         "anonymous": "Anonimo",
-        "app_name": "Piattaforma Fundraising"
+        "app_name": "Piattaforma Fundraising",
+        "form_validation_error": "Si prega di controllare il modulo per eventuali errori."
     },
     "status": {
         "completed": "Completato",
@@ -255,10 +262,17 @@
     },
     "thankyou": {
         "receipt": {
+            "title": "Ricevuta Ufficiale Donazione",
             "transaction_id": "ID Transazione",
             "date": "Data",
             "from": "Da",
-            "share_label": "Condividi"
+            "message_body": "Grazie, {{donorName}}, per il tuo generoso contributo. Il tuo supporto impatta direttamente la nostra missione.",
+            "authorized_signature": "Firma Autorizzata",
+            "pdf_attached": "Una ricevuta PDF ufficiale è allegata a questa email per i tuoi archivi.",
+            "share_label": "Condividi",
+            "tax_id_label": "Codice Fiscale e/o P.IVA:",
+            "website_label": "Sito Web",
+            "visit_website": "Visita il nostro sito"
         },
         "share_text": "Ho appena donato! Unisciti a me su {{url}}"
     },
@@ -284,6 +298,7 @@
         "footer": {}
     },
     "landing": {
+        "back_to_events": "Torna a tutti gli eventi",
         "hero": {
             "welcome": "Benvenuto a",
             "description": "La tua donazione ci aiuta a raggiungere il nostro obiettivo di {{goal}}."
@@ -425,16 +440,55 @@
                 "email_placeholder": "supporto@...",
                 "phone": "Telefono",
                 "phone_placeholder": "+39...",
-                "address": "Indirizzo"
+                "address": "Indirizzo",
+                "tax_id": "Codice Fiscale / P.IVA",
+                "tax_id_placeholder": "es. 12-3456789",
+                "signature_text": "Firma (Testo)",
+                "signature_text_placeholder": "es. Nome CEO",
+                "signature_image": "Firma (URL Immagine)",
+                "signature_image_placeholder": "https://..."
+            },
+            "receipts": {
+                "title": "Ricevute & Notifiche",
+                "description": "Configura ricevute automatiche e notifiche.",
+                "footer_text": "Testo Footer Comune",
+                "footer_text_placeholder": "es. Grazie per il supporto...",
+                "footer_text_help": "Questo testo apparirà in fondo a email e PDF."
             },
             "email": {
+                "config_title": "Configurazione Email",
                 "title": "Ricevute Email",
                 "description": "Configura ricevute automatiche.",
                 "enable": "Abilita",
                 "sender": "Nome Mittente",
                 "reply_to": "Rispondi a",
                 "subject": "Oggetto",
-                "footer": "Footer Email"
+                "footer": "Footer Email",
+                "provider_label": "Provider Email",
+                "providers": {
+                    "console": "Console (Sviluppo / Log)",
+                    "smtp": "SMTP Personalizzato",
+                    "resend": "Resend",
+                    "gmail": "Gmail",
+                    "outlook": "Outlook"
+                },
+                "smtp": {
+                    "title": "Configurazione SMTP",
+                    "host": "Host",
+                    "host_placeholder": "smtp.esempio.it",
+                    "port": "Porta",
+                    "port_placeholder": "465",
+                    "secure": "Usa connessione sicura (SSL/TLS)",
+                    "username": "Nome utente",
+                    "username_placeholder": "utente@esempio.it",
+                    "password": "Password / Chiave API",
+                    "password_placeholder": "••••••••",
+                    "help": {
+                        "gmail": "Per Gmail, usa una <1>Password per le App</1> (richiede 2FA abilitata).",
+                        "outlook": "Per Outlook, usa una <1>Password per le App</1> se la 2FA è abilitata.",
+                        "resend": "Per Resend, il nome utente dovrebbe essere <1>resend</1> e la password è la tua Chiave API."
+                    }
+                }
             },
             "sharing": {
                 "title": "Social Sharing",
@@ -507,7 +561,10 @@
             "links_desc": "URL destinazione card.",
             "impact_url": "URL Impatto",
             "community_url": "URL Comunità",
-            "interactive_url": "URL Interattivo"
+            "interactive_url": "URL Interattivo",
+            "impact_label": "Box Impatto",
+            "community_label": "Box Comunità",
+            "interactive_label": "Box Interattivo"
         },
         "localization": {
             "title": "Localizzazione",
@@ -532,7 +589,8 @@
             "stripe": {
                 "title": "Impostazioni Stripe",
                 "publishable_key": "Chiave Pubblica",
-                "secret_key": "Chiave Segreta"
+                "secret_key": "Chiave Segreta",
+                "webhook_secret": "Segreto Webhook"
             },
             "paypal": {
                 "title": "Impostazioni PayPal",

@@ -11,5 +11,5 @@ export const usePublicEvents = () => {
         }
     });
 
-    return { events: events || [], isLoading, error };
+    return { events: Array.isArray(events) ? events : [], isLoading, error };
 };

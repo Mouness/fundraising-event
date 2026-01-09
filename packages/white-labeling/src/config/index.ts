@@ -7,7 +7,7 @@ import type { DeepPartial, EventConfig } from '../types';
  * Loads the structural and content configuration.
  * Merges defaults with database overrides (if any).
  */
-export function loadConfigs(): EventConfig {
+export const loadConfigs = (): EventConfig => {
     const globalConfig = getGlobalConfig();
     const eventConfig = getEventConfig();
     const baseConfig = eventConfigDefault as EventConfig;
@@ -17,14 +17,14 @@ export function loadConfigs(): EventConfig {
 
     // 2. Global Overrides
     if (globalConfig) {
-        result = deepMerge(result, globalConfig as DeepPartial<EventConfig>);
+        result = deepMerge(result, globalConfig as DeepPartial<EventConfig>) as EventConfig;
     }
 
     // 3. Event Overrides
     if (eventConfig) {
         const mappedEventConfig = { ...eventConfig } as any;
 
-        result = deepMerge(result, mappedEventConfig as DeepPartial<EventConfig>);
+        result = deepMerge(result, mappedEventConfig as DeepPartial<EventConfig>) as EventConfig;
     }
 
     return result;

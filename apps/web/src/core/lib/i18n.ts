@@ -18,7 +18,7 @@ i18n
         fallbackLng: 'en',
         defaultNS: 'common',
         ns: ['common'],
-        debug: false, // import.meta.env.DEV
+        debug: true, // import.meta.env.DEV
 
         interpolation: {
             escapeValue: false,

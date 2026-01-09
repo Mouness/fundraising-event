@@ -21,7 +21,7 @@ interface ConfirmationDialogProps {
     variant?: "default" | "destructive"
 }
 
-export function ConfirmationDialog({
+export const ConfirmationDialog = ({
     open,
     onOpenChange,
     onConfirm,
@@ -30,7 +30,7 @@ export function ConfirmationDialog({
     confirmText,
     cancelText,
     variant = "default",
-}: ConfirmationDialogProps) {
+}: ConfirmationDialogProps) => {
     const { t } = useTranslation('common')
 
     return (

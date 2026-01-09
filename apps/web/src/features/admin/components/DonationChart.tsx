@@ -49,7 +49,7 @@ export const DonationChart = () => {
             </CardHeader>
             <CardContent className="pl-2">
                 <div className="h-[350px] w-full min-w-0">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                             <XAxis

@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import { join } from 'path';
 import { ISLAMIC_SCENARIO } from './scenario/islamic';
 import { GREEN_SCENARIO } from './scenario/green';
+import { WhiteLabelingMapper } from '../../src/features/white-labeling/white-labeling.mapper';
 
 dotenv.config({ path: join(__dirname, '../../.env') });
 
@@ -20,34 +21,6 @@ const main = async () => {
     const scenarioName = scenarioArg ? scenarioArg.split('=')[1] : 'islamic'; // Default to islamic
 
     console.log(`🌱 Starting Seed with scenario: ${scenarioName.toUpperCase()}...`);
-
-    // 1.1 Copy Assets
-    const fs = require('fs');
-    const path = require('path');
-
-    // Define source and destination
-    // Assuming we are running from apps/api/database/mock or root, we need to be careful with paths.
-    // __dirname is usually apps/api/database/mock (where seeds.ts is)
-    const sourceDir = join(__dirname, 'scenario', scenarioName, 'assets');
-    const destDir = join(__dirname, '../../../../apps/web/public/mock-assets');
-
-    if (fs.existsSync(sourceDir)) {
-        console.log(`📂 Found assets in ${sourceDir}, copying to ${destDir}...`);
-
-        if (!fs.existsSync(destDir)) {
-            fs.mkdirSync(destDir, { recursive: true });
-        }
-
-        const files = fs.readdirSync(sourceDir);
-        for (const file of files) {
-            const srcFile = join(sourceDir, file);
-            const destFile = join(destDir, file);
-            fs.copyFileSync(srcFile, destFile);
-        }
-        console.log(`✅ Copied ${files.length} assets.`);
-    } else {
-        console.log(`ℹ️  No specific assets folder found at ${sourceDir}, skipping copy.`);
-    }
 
     let scenarioData: any;
 
@@ -77,7 +50,7 @@ const main = async () => {
         data: {
             scope: 'GLOBAL',
             entityId: 'GLOBAL',
-            ...scenarioData.globalSettings
+            ...WhiteLabelingMapper.toDbPayload(scenarioData.globalSettings) as any
         }
     });
 
@@ -131,7 +104,7 @@ const main = async () => {
                 data: {
                     scope: 'EVENT',
                     entityId: createdEvent.id,
-                    ...config
+                    ...WhiteLabelingMapper.toDbPayload(config) as any
                 }
             });
         }
@@ -179,7 +152,7 @@ const main = async () => {
             const message = hasMessage ? rawMessage : null;
 
             // Determine currency: Event override > Global > Default EUR
-            const currency = (config as any)?.payment?.currency || (scenarioData.globalSettings.payment as any)?.currency || 'EUR';
+            const currency = (config as any)?.donation?.payment?.currency || (scenarioData.globalSettings.donation?.payment as any)?.currency || 'EUR';
 
             return {
                 amount,

@@ -6,24 +6,30 @@ import Stripe from 'stripe';
 import {
   PaymentProvider,
   CreatePaymentIntentResult,
+  PaymentConfig,
 } from '../interfaces/payment-provider.interface';
+import { StripeProviderConfig } from '@fundraising/white-labeling';
 
 @Injectable()
 export class StripeService implements PaymentProvider {
-  private stripe: Stripe;
   private readonly logger = new Logger(StripeService.name);
 
-  constructor(private configService: ConfigService) {
-    const secretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
+  constructor(private configService: ConfigService) { }
+
+  private getClient(config?: PaymentConfig): Stripe {
+    const stripeConfig = config as StripeProviderConfig;
+    const secretKey =
+      stripeConfig?.secretKey || this.configService.get<string>('STRIPE_SECRET_KEY');
+
     if (!secretKey) {
       this.logger.error(
-        'STRIPE_SECRET_KEY is not defined in environment variables',
+        'Stripe Secret Key is missing (Check DB Config or ENV)',
       );
-      // In dev mode, we might want to throw or just log. For now, logging.
+      throw new Error('Stripe Secret Key is not configured');
     }
 
-    this.stripe = new Stripe(secretKey || 'sk_test_placeholder', {
-      // apiVersion: '2024-12-18.acacia', // Letting SDK default to avoid type mismatch
+    return new Stripe(secretKey, {
+      apiVersion: '2025-12-15.clover', // Updated to match SDK version
     });
   }
 
@@ -38,9 +44,11 @@ export class StripeService implements PaymentProvider {
     amount: number,
     currency: string = 'usd',
     metadata: Record<string, any> = {},
+    config?: PaymentConfig,
   ): Promise<CreatePaymentIntentResult> {
     try {
-      const paymentIntent = await this.stripe.paymentIntents.create({
+      const stripe = this.getClient(config);
+      const paymentIntent = await stripe.paymentIntents.create({
         amount, // Amount in cents
         currency,
         metadata,
@@ -64,10 +72,12 @@ export class StripeService implements PaymentProvider {
   constructEventFromPayload(
     headers: IncomingHttpHeaders | string,
     payload: Buffer,
+    config?: PaymentConfig,
   ) {
-    const webhookSecret = this.configService.get<string>(
-      'STRIPE_WEBHOOK_SECRET',
-    );
+    const stripeConfig = config as StripeProviderConfig;
+    const webhookSecret =
+      stripeConfig?.webhookSecret ||
+      this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
 
     if (!webhookSecret) {
       throw new Error('STRIPE_WEBHOOK_SECRET is not configured');
@@ -79,14 +89,16 @@ export class StripeService implements PaymentProvider {
       return Promise.reject(new Error('Missing stripe-signature header'));
     }
 
+    const stripe = this.getClient(config);
     return Promise.resolve(
-      this.stripe.webhooks.constructEvent(payload, signature, webhookSecret),
+      stripe.webhooks.constructEvent(payload, signature, webhookSecret),
     );
   }
 
-  async refundDonation(paymentIntentId: string): Promise<any> {
+  async refundDonation(paymentIntentId: string, config?: PaymentConfig): Promise<any> {
     try {
-      return await this.stripe.refunds.create({
+      const stripe = this.getClient(config);
+      return await stripe.refunds.create({
         payment_intent: paymentIntentId,
       });
     } catch (error) {

@@ -70,6 +70,14 @@ export const EventSettingsPage = () => {
                 website: '',
                 address: ''
             },
+            landing: {
+                impact: { url: '', enabled: true },
+                community: { url: '', enabled: true },
+                interactive: { url: '', enabled: true },
+            },
+            live: {
+                theme: 'classic'
+            }
         }
     });
 
@@ -132,9 +140,18 @@ export const EventSettingsPage = () => {
                 backgroundLive: data.theme?.assets?.backgroundLive || '',
             },
             landing: {
-                impact: { url: data.content?.landing?.impact?.url || '' },
-                community: { url: data.content?.landing?.community?.url || '' },
-                interactive: { url: data.content?.landing?.interactive?.url || '' },
+                impact: {
+                    url: data.content?.landing?.impact?.url || '',
+                    enabled: data.content?.landing?.impact?.enabled ?? true
+                },
+                community: {
+                    url: data.content?.landing?.community?.url || '',
+                    enabled: data.content?.landing?.community?.enabled ?? true
+                },
+                interactive: {
+                    url: data.content?.landing?.interactive?.url || '',
+                    enabled: data.content?.landing?.interactive?.enabled ?? true
+                },
             },
             themeVariables: variableArray,
             communication: {
@@ -222,7 +239,13 @@ export const EventSettingsPage = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <Button
-                            onClick={form.handleSubmit((data) => mutation.mutate(data))}
+                            onClick={form.handleSubmit(
+                                (data) => mutation.mutate(data),
+                                (errors) => {
+                                    console.error('Form Validation Errors:', errors);
+                                    toast.error(t('common.form_validation_error', 'Please check the form for errors.'));
+                                }
+                            )}
                             disabled={mutation.isPending || isEventLoading}
                         >
                             {mutation.isPending ? (

@@ -25,7 +25,7 @@ export const GaugeModern = ({
                     key={totalRaisedCents}
                     initial={{ scale: 0.95, opacity: 0.8 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="text-7xl lg:text-9xl font-black tracking-tighter leading-none"
+                    className="text-5xl lg:text-7xl font-black tracking-tighter leading-none"
                     style={{ color: 'var(--live-modern-accent, #6366f1)' }}
                 >
                     <CountUp

@@ -16,6 +16,9 @@
         "staff": "Équipe",
         "settings": "Paramètres"
     },
+    "admin_layout": {
+        "title": "Admin"
+    },
     "admin_events": {
         "title": "Événements",
         "subtitle": "Gérez vos campagnes de collecte de fonds",
@@ -144,6 +147,9 @@
             "connecting": "Connexion..."
         },
         "new_donation": "Nouveau Don !",
+        "amount": "Montant",
+        "from": "De",
+        "anonymous": "Anonyme",
         "waiting": "En attente de dons...",
         "scan_to_donate": "SCANNEZ POUR DONNER",
         "total_raised": "Total récolté",
@@ -201,9 +207,11 @@
         "save_changes": "Enregistrer les modifications",
         "saving": "Enregistrement...",
         "saved_successfully": "Enregistré avec succès",
+        "add_variable": "Ajouter une variable",
         "amount": "Montant",
         "anonymous": "Anonyme",
-        "app_name": "Plateforme de Collecte"
+        "app_name": "Plateforme de Collecte",
+        "form_validation_error": "Veuillez vérifier les erreurs dans le formulaire."
     },
     "status": {
         "completed": "Complété",
@@ -254,10 +262,17 @@
     },
     "thankyou": {
         "receipt": {
+            "title": "Reçu Officiel de Don",
             "transaction_id": "ID Transaction",
             "date": "Date",
             "from": "De",
-            "share_label": "Partagez votre soutien"
+            "message_body": "Merci, {{donorName}}, pour votre généreuse contribution. Votre soutien impacte directement notre mission.",
+            "authorized_signature": "Signature Autorisée",
+            "pdf_attached": "Un reçu officiel PDF est joint à cet email pour vos dossiers.",
+            "share_label": "Partagez votre soutien",
+            "tax_id_label": "Numéro Fiscal :",
+            "website_label": "Site Web",
+            "visit_website": "Visitez notre site web"
         },
         "share_text": "Je viens de faire un don pour soutenir cette cause incroyable ! Rejoignez-moi sur {{url}}"
     },
@@ -283,6 +298,7 @@
         "footer": {}
     },
     "landing": {
+        "back_to_events": "Retour à tous les événements",
         "hero": {
             "welcome": "Bienvenue à",
             "description": "Rejoignez-nous pour faire la différence. Votre contribution nous aide à atteindre notre objectif de {{goal}}."
@@ -309,7 +325,8 @@
             "website": "Site Web",
             "support": "Support",
             "rights": "Tous droits réservés.",
-            "staff": "Connexion Staff"
+            "staff": "Connexion Staff",
+            "admin": "Connexion Admin"
         }
     },
     "dashboard": {
@@ -424,16 +441,60 @@
                 "email_placeholder": "support@...",
                 "phone": "Numéro de téléphone",
                 "phone_placeholder": "+1...",
-                "address": "Adresse physique"
+                "address": "Adresse physique",
+                "tax_id": "Numéro fiscal / Association",
+                "tax_id_placeholder": "ex: 12-3456789",
+                "signature_text": "Signature (Texte)",
+                "signature_text_placeholder": "ex: Nom du Directeur",
+                "signature_image": "Signature (Image URL)",
+                "signature_image_placeholder": "https://..."
+            },
+            "sender_name": "Nom de l'expéditeur",
+            "sender_name_placeholder": "ex: Équipe Gala",
+            "reply_to": "Email de réponse",
+            "subject_line": "Préfixe de l'objet",
+            "subject_line_placeholder": "Merci d'avoir participé au Gala !",
+            "receipts": {
+                "title": "Reçus & Notifications",
+                "description": "Configurez les reçus automatisés et les notifications envoyés aux donateurs.",
+                "footer_text": "Texte de Pied de Page Commun",
+                "footer_text_placeholder": "ex: Merci de votre soutien...",
+                "footer_text_help": "Ce texte apparaîtra au bas des emails et des reçus PDF."
             },
             "email": {
+                "config_title": "Configuration Email",
                 "title": "Reçus par E-mail",
                 "description": "Configurez les reçus automatisés envoyés aux donateurs.",
-                "enable": "Activer",
+                "enable": "Envoyer les reçus par email",
                 "sender": "Nom de l'expéditeur",
                 "reply_to": "Email de réponse",
                 "subject": "Objet de l'e-mail",
-                "footer": "Pied de page de l'e-mail"
+                "footer": "Pied de page de l'e-mail",
+                "provider_label": "Fournisseur de messagerie",
+                "providers": {
+                    "console": "Console (Dev / Logs)",
+                    "smtp": "SMTP personnalisé",
+                    "resend": "Resend",
+                    "gmail": "Gmail",
+                    "outlook": "Outlook"
+                },
+                "smtp": {
+                    "title": "Configuration SMTP",
+                    "host": "Hôte",
+                    "host_placeholder": "smtp.exemple.com",
+                    "port": "Port",
+                    "port_placeholder": "465",
+                    "secure": "Utiliser une connexion sécurisée (SSL/TLS)",
+                    "username": "Nom d'utilisateur",
+                    "username_placeholder": "utilisateur@exemple.com",
+                    "password": "Mot de passe / Clé API",
+                    "password_placeholder": "••••••••",
+                    "help": {
+                        "gmail": "Pour Gmail, utilisez un <1>Mot de passe d'application</1> (nécessite l'activation de la 2FA).",
+                        "outlook": "Pour Outlook, utilisez un <1>Mot de passe d'application</1> si la 2FA est activée.",
+                        "resend": "Pour Resend, le nom d'utilisateur doit être <1>resend</1> et le mot de passe est votre clé API."
+                    }
+                }
             },
             "sharing": {
                 "title": "Partage Social",
@@ -447,7 +508,7 @@
             "pdf": {
                 "title": "Reçus PDF",
                 "description": "Configurez les reçus PDF téléchargeables.",
-                "enable": "Activer",
+                "enable": "Inclure le reçu PDF",
                 "template": "Style de modèle",
                 "formal": "Formel",
                 "minimal": "Minimal",
@@ -506,7 +567,10 @@
             "links_desc": "Configurez les URLs de destination pour les fonctionnalités de la page d'accueil.",
             "impact_url": "URL Impact",
             "community_url": "URL Communauté",
-            "interactive_url": "URL Interactif"
+            "interactive_url": "URL Interactif",
+            "impact_label": "Encadré Impact",
+            "community_label": "Encadré Communauté",
+            "interactive_label": "Encadré Interactif"
         },
         "localization": {
             "title": "Localisation",
@@ -515,7 +579,7 @@
             "label_overrides": "Surcharges de Libellés",
             "language": "Langue",
             "key": "Clé",
-            "key_placeholder": "Ex: auth.login",
+            "key_placeholder": "ex: auth.login",
             "no_overrides": "Aucune surcharge pour {{locale}}",
             "translation": "Traduction..."
         },
@@ -531,7 +595,8 @@
             "stripe": {
                 "title": "Paramètres Stripe",
                 "publishable_key": "Clé Publique",
-                "secret_key": "Clé Secrète"
+                "secret_key": "Clé Secrète",
+                "webhook_secret": "Secret Webhook"
             },
             "paypal": {
                 "title": "Paramètres PayPal",
@@ -581,10 +646,17 @@
             "display_name": "Titre d'Affichage de l'Événement (Surcharge)",
             "display_name_desc": "Laisser vide pour utiliser le nom de l'événement.",
             "display_name_placeholder": "Ex: Gala de Charité Annuel",
+            "identity_assets": "Identité & Ressources",
+            "background_landing": "Arrière-plan d'accueil",
+            "background_live": "Arrière-plan de l'écran live",
             "logo_url": "URL du Logo de l'Événement",
             "accent_color": "Couleur d'Accent de l'Événement",
             "override_warning": "La marque personnalisée de l'événement remplace l'apparence standard de l'organisation pour cet événement spécifique.",
             "apply_overrides": "Appliquer les Surcharges de Thème",
+            "communication": {
+                "title": "Surcharges de Communication",
+                "override_label": "Surcharger les paramètres de communication par défaut"
+            },
             "saved_successfully": "Personnalisation enregistrée avec succès",
             "save_changes": "Enregistrer les modifications",
             "subtitle": "Configurez le design et l'apparence de l'événement.",

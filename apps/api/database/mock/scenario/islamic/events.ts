@@ -9,26 +9,33 @@ export const events = [
         date: new Date('2025-03-15'),
         description: 'Une soirée de partage et de générosité pour soutenir nos actions à travers le monde.',
         config: {
-            liveTheme: 'modern',
-            assets: {
-                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/landing_pattern.png',
-                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_modern.png' // Custom Modern BG Use
+            live: {
+                theme: 'modern'
             },
-            themeVariables: {
-                '--primary': '#14532D', // Darker Green
-                '--accent': '#F59E0B',  // Amber/Gold
-                '--live-page-bg': '#020617', // Very dark night blue
-                '--live-title-color': '#FCD34D', // Gold text
-                '--live-amount-color': '#FCD34D',
-                '--live-gauge-from': '#FCD34D',
-                '--live-gauge-to': '#14532D'
+            theme: {
+                assets: {
+                    backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/main/apps/api/database/mock/scenario/islamic/assets/landing_pattern_light.png',
+                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/main/apps/api/database/mock/scenario/islamic/assets/live_modern_abstract.png'
+                },
+                variables: {
+                    '--primary': '#14532D', // Darker Green
+                    '--accent': '#F59E0B',  // Amber/Gold
+                    '--live-page-bg': '#020617', // Very dark night blue
+                    '--live-title-color': '#FCD34D', // Gold text
+                    '--live-amount-color': '#FCD34D',
+                    '--live-gauge-from': '#FCD34D',
+                    '--live-gauge-to': '#14532D'
+                }
             },
-            form: {
-                collectAddress: true,
-                collectPhone: true
-            },
-            socialNetwork: {
-                twitter: 'https://x.com/ummahcare' // Override adds twitter
+            donation: {
+                form: {
+                    address: { enabled: true, required: false },
+                    phone: { enabled: true, required: false }
+                },
+                sharing: {
+                    enabled: true,
+                    networks: ['facebook', 'twitter', 'linkedin']
+                }
             }
         }
     },
@@ -42,25 +49,31 @@ export const events = [
         date: new Date('2025-04-10'),
         description: 'Offrez un sourire à un orphelin ce jour de fête. Jouets, vêtements et friandises.',
         config: {
-            liveTheme: 'elegant', // Elegant theme for festival
-            assets: {
-                backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png', // Using elegant bg for landing too
-                backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png' // Custom Elegant BG Use
+            live: {
+                theme: 'elegant'
             },
-            themeVariables: {
-                '--primary': '#DB2777', // Pink/Magenta
-                '--primary-foreground': '#FFFFFF',
-                '--secondary': '#FCE7F3', // Light pink
-                '--accent': '#2DD4BF', // Teal accent
-                '--radius': '1rem', // Very rounded
-                '--live-page-bg': '#500724', // Dark Pink bg
-                '--live-text-main': '#FCE7F3',
-                '--live-amount-color': '#FFFFFF'
+            theme: {
+                assets: {
+                    backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png',
+                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png'
+                },
+                variables: {
+                    '--primary': '#DB2777', // Pink/Magenta
+                    '--primary-foreground': '#FFFFFF',
+                    '--secondary': '#FCE7F3', // Light pink
+                    '--accent': '#2DD4BF', // Teal accent
+                    '--radius': '1rem', // Very rounded
+                    '--live-page-bg': '#500724', // Dark Pink bg
+                    '--live-text-main': '#FCE7F3',
+                    '--live-amount-color': '#FFFFFF'
+                }
             },
-            form: {
-                collectAddress: false, // Simple flow
-                collectPhone: false,
-                collectCompany: false
+            donation: {
+                form: {
+                    address: { enabled: false, required: false },
+                    phone: { enabled: false, required: false },
+                    company: { enabled: false, required: false }
+                }
             }
         }
     },
@@ -70,34 +83,40 @@ export const events = [
         slug: 'emergency-relief',
         name: 'URGENCE: Fonds de Secours',
         goalAmount: 1000000,
-        status: 'active', // Highly active
+        status: 'active',
         date: new Date('2024-12-01'),
         description: 'Aide médicale et alimentaire d\'urgence. Situation critique. Agissez maintenant.',
         config: {
-            liveTheme: 'modern',
-            assets: {
-                backgroundLanding: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2680&auto=format&fit=crop' // Rubble/Hands
+            live: {
+                theme: 'modern'
             },
-            themeVariables: {
-                '--primary': '#DC2626', // Urgent Red
-                '--primary-foreground': '#FFFFFF',
-                '--secondary': '#171717', // Black
-                '--secondary-foreground': '#FFFFFF',
-                '--background': '#000000', // Black bg landing
-                '--foreground': '#FFFFFF', // White text
-                '--radius': '0rem', // Sharp edges
-                '--accent': '#FFFFFF',
-                '--live-page-bg': '#000000',
-                '--live-text-main': '#FFFFFF',
-                '--live-amount-color': '#DC2626'
+            theme: {
+                assets: {
+                    backgroundLanding: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2680&auto=format&fit=crop'
+                },
+                variables: {
+                    '--primary': '#DC2626', // Urgent Red
+                    '--primary-foreground': '#FFFFFF',
+                    '--secondary': '#171717', // Black
+                    '--secondary-foreground': '#FFFFFF',
+                    '--background': '#000000', // Black bg landing
+                    '--foreground': '#FFFFFF', // White text
+                    '--radius': '0rem', // Sharp edges
+                    '--accent': '#FFFFFF',
+                    '--live-page-bg': '#000000',
+                    '--live-text-main': '#FFFFFF',
+                    '--live-amount-color': '#DC2626'
+                }
             },
-            form: {
-                collectAddress: true, // Need mostly email/amount
-                collectPhone: true,
-                collectCompany: true // Corporate matching
-            },
-            payment: {
-                currency: 'USD' // International aid
+            donation: {
+                form: {
+                    address: { enabled: true, required: false },
+                    phone: { enabled: true, required: false },
+                    company: { enabled: true, required: false }
+                },
+                payment: {
+                    currency: 'USD'
+                }
             }
         }
     },
@@ -111,32 +130,42 @@ export const events = [
         date: new Date('2025-06-01'),
         description: 'Une aumône perpétuelle. Participez à la construction de l\'avenir.',
         config: {
-            liveTheme: 'elegant', // Elegant suits corporate
-            themeVariables: {
-                '--primary': '#1E293B', // Slate 800
-                '--primary-foreground': '#F8FAFC',
-                '--secondary': '#CBD5E1', // Slate 300
-                '--radius': '0.2rem', // Small radius
-                '--live-page-bg': '#0F172A', // Slate 900
-                '--live-elegant-gold': '#94A3B8', // Silver instead of gold
-                '--live-text-main': '#F8FAFC' // High contrast white slate
+            live: {
+                theme: 'elegant'
+            },
+            theme: {
+                variables: {
+                    '--primary': '#1E293B', // Slate 800
+                    '--primary-foreground': '#F8FAFC',
+                    '--secondary': '#CBD5E1', // Slate 300
+                    '--radius': '0.2rem', // Small radius
+                    '--live-page-bg': '#0F172A', // Slate 900
+                    '--live-elegant-gold': '#94A3B8', // Silver instead of gold
+                    '--live-text-main': '#F8FAFC'
+                }
             },
             communication: {
+                footerText: 'Waqf Shares Certificate - Ummah Care',
                 pdf: {
-                    template: 'formal',
-                    footer: 'Waqf Shares Certificate - Ummah Care'
+                    enabled: true
                 }
             },
             locales: {
-                overrides: [
-                    { locale: 'fr', key: 'donations.title', value: 'Parts de Waqf' },
-                    { locale: 'en', key: 'donations.title', value: 'Waqf Shares' },
-                    { locale: 'fr', key: 'common.total', value: 'Total Investi' }
-                ]
+                overrides: {
+                    fr: {
+                        'donations.title': 'Parts de Waqf',
+                        'common.total': 'Total Investi'
+                    },
+                    en: {
+                        'donations.title': 'Waqf Shares'
+                    }
+                }
             },
-            form: {
-                collectCompany: true,
-                collectAddress: true
+            donation: {
+                form: {
+                    company: { enabled: true, required: false },
+                    address: { enabled: true, required: false }
+                }
             }
         }
     },
@@ -150,18 +179,24 @@ export const events = [
         date: new Date('2025-08-15'),
         description: 'L\'eau c\'est la vie. 100% de votre don va au projet.',
         config: {
-            liveTheme: 'live-theme-modern',
-            themeVariables: {
-                '--primary': '#0284C7', // Sky Blue
-                '--secondary': '#E0F2FE',
-                '--radius': '0.75rem',
-                '--live-page-bg': '#0C4A6E', // Dark Sky
-                '--live-gauge-from': '#38BDF8',
-                '--live-gauge-to': '#0284C7',
-                '--live-text-main': '#E0F2FE' // High contrast light blue
+            live: {
+                theme: 'modern'
             },
-            payment: {
-                currency: 'GBP' // UK base support
+            theme: {
+                variables: {
+                    '--primary': '#0284C7', // Sky Blue
+                    '--secondary': '#E0F2FE',
+                    '--radius': '0.75rem',
+                    '--live-page-bg': '#0C4A6E', // Dark Sky
+                    '--live-gauge-from': '#38BDF8',
+                    '--live-gauge-to': '#0284C7',
+                    '--live-text-main': '#E0F2FE'
+                }
+            },
+            donation: {
+                payment: {
+                    currency: 'GBP'
+                }
             }
         }
     }

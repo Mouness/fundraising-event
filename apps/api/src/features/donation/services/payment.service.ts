@@ -2,72 +2,71 @@ import { Injectable } from '@nestjs/common';
 import { IncomingHttpHeaders } from 'http';
 import { StripeService } from './stripe.service';
 import { PayPalService } from './paypal.service';
-import { PrismaService } from '../../../database/prisma.service';
-import { PaymentProvider } from '../interfaces/payment-provider.interface';
 import { WhiteLabelingService } from '../../white-labeling/white-labeling.service';
+
+import { PaymentConfig } from '../interfaces/payment-provider.interface';
 
 @Injectable()
 export class PaymentService {
   constructor(
     private readonly stripeService: StripeService,
     private readonly payPalService: PayPalService,
-    private readonly prisma: PrismaService,
     private readonly whiteLabelingService: WhiteLabelingService,
-  ) {}
+  ) { }
 
-  async getProvider(_eventId?: string): Promise<PaymentProvider> {
-    // 1. Check Global Settings first
-    const globalConfig = await this.prisma.configuration.findFirst({
-      where: { scope: 'GLOBAL' },
-    });
+  async getProvider() {
+    const { provider } = await this.getPaymentContext();
+    return provider;
+  }
 
-    let provider = 'stripe'; // Default
-    const config: any = globalConfig ? globalConfig : {};
+  private async getPaymentContext() {
+    // 1. Fetch Global Settings (Payment is always global-level)
+    const settings = await this.whiteLabelingService.getGlobalSettings();
 
-    // For now, payment configuration is strictly global.
-    // Event-level overrides are not yet supported or required.
+    return this.resolveContext(settings || {});
+  }
 
-    // Parsing the config structure from GlobalSettingsPage
-    // structure: { payment: { provider: 'stripe' | 'paypal' } }
-    if (config.payment?.provider) {
-      provider = config.payment.provider;
-    }
+  private resolveContext(settings: any) {
+    const providerName = settings?.donation?.payment?.provider || 'stripe';
+    const config = settings?.donation?.payment?.config || {};
 
-    switch (provider) {
-      case 'paypal':
-        return this.payPalService;
-      case 'stripe':
-      default:
-        return this.stripeService;
-    }
+    const providerConfig =
+      (providerName === 'paypal' ? config.paypal : config.stripe) || {};
+
+    const providerService = providerName === 'paypal' ? this.payPalService : this.stripeService;
+
+    return { provider: providerService, config: providerConfig as PaymentConfig, providerName };
   }
 
   async getGlobalCurrency(): Promise<string> {
     const settings = await this.whiteLabelingService.getGlobalSettings();
-    // Mapped structure puts payment config in donation.payment
     return settings.donation?.payment?.currency || 'usd';
   }
 
   // Facade methods
   async createPaymentIntent(amount: number, currency: string, metadata: any) {
-    const eventId = metadata?.eventId;
-    const provider = await this.getProvider(eventId);
-    return provider.createPaymentIntent(amount, currency, metadata);
+    const { provider, config } = await this.getPaymentContext();
+    return provider.createPaymentIntent(amount, currency, metadata, config);
   }
 
   async constructEventFromPayload(
     headers: IncomingHttpHeaders | string,
     payload: Buffer,
-    providerName: string = 'stripe',
+    providerName?: string,
   ) {
-    if (providerName === 'paypal') {
-      return this.payPalService.constructEventFromPayload(headers, payload);
-    }
-    return this.stripeService.constructEventFromPayload(headers, payload);
+    const settings = await this.whiteLabelingService.getGlobalSettings();
+    const resolvedProviderName = providerName || settings?.donation?.payment?.provider || 'stripe';
+
+    const provider = resolvedProviderName === 'paypal' ? this.payPalService : this.stripeService;
+    const config = (resolvedProviderName === 'paypal'
+      ? settings?.donation?.payment?.config?.paypal
+      : settings?.donation?.payment?.config?.stripe) || {};
+
+    return provider.constructEventFromPayload(headers, payload, config as PaymentConfig);
   }
 
-  async refundDonation(eventId: string | undefined, transactionId: string) {
-    const provider = await this.getProvider(eventId);
-    return provider.refundDonation(transactionId);
+  async refundDonation(transactionId: string) {
+    const { provider, config } = await this.getPaymentContext();
+    return provider.refundDonation(transactionId, config);
   }
 }

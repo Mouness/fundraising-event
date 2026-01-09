@@ -4,45 +4,21 @@ import deDefault from './de.default.json';
 import itDefault from './it.default.json';
 import { getGlobalConfig, getEventConfig } from '../store';
 import { deepMerge } from '../utils/merge';
+import { EventConfig, DeepPartial } from '../types';
 
 import { SupportedLocale } from '../types/locales';
 
-const defaultLocales: Record<SupportedLocale, any> = {
+export const defaultLocales: Record<SupportedLocale, any> = {
     en: enDefault,
     fr: frDefault,
     de: deDefault,
     it: itDefault
 };
 
-
-/**
- * Loads the application locales by merging static defaults with dynamic database overrides.
- * Supports both nested structures and flat-map overrides (e.g. { "en.donation.title": "..." }).
- */
-export function loadLocales(): typeof defaultLocales {
-    const globalConfig = getGlobalConfig();
-    const eventConfig = getEventConfig();
-
-    // 1. Defaults
-    let result = defaultLocales;
-
-    // 2. Global Overrides (Nested Structure + Flat Map)
-    if (globalConfig?.locales?.overrides) {
-        result = processOverrides(result, globalConfig.locales.overrides);
-    }
-
-    // 3. Event Overrides (Nested Structure + Flat Map)
-    if (eventConfig?.locales?.overrides) {
-        result = processOverrides(result, eventConfig.locales.overrides);
-    }
-
-    return result;
-}
-
 /**
  * Sets a value in a nested object based on a dot-notated path string.
  */
-function applyFlatOverride(target: any, path: string, value: string) {
+const applyFlatOverride = (target: any, path: string, value: string) => {
     const parts = path.split('.');
     if (parts.length < 2) return;
 
@@ -58,7 +34,7 @@ function applyFlatOverride(target: any, path: string, value: string) {
 /**
  * Merges overrides and applies flat dot-notation keys.
  */
-function processOverrides(base: any, overrides: any) {
+const processOverrides = (base: any, overrides: any) => {
     // 1. Deep merge to handle nested objects
     const result = deepMerge(base, overrides);
 
@@ -77,6 +53,33 @@ function processOverrides(base: any, overrides: any) {
             });
         }
     });
+
+    return result;
+}
+
+/**
+ * Loads the application locales by merging static defaults with dynamic database overrides.
+ * Supports both nested structures and flat-map overrides (e.g. { "en.donation.title": "..." }).
+ */
+export const loadLocales = (
+    providedGlobalConfig?: DeepPartial<EventConfig> | null,
+    providedEventConfig?: DeepPartial<EventConfig> | null
+): typeof defaultLocales => {
+    const globalConfig = providedGlobalConfig ?? getGlobalConfig();
+    const eventConfig = providedEventConfig ?? getEventConfig();
+
+    // 1. Defaults
+    let result = defaultLocales;
+
+    // 2. Global Overrides (Nested Structure + Flat Map)
+    if (globalConfig?.locales?.overrides) {
+        result = processOverrides(result, globalConfig.locales.overrides);
+    }
+
+    // 3. Event Overrides (Nested Structure + Flat Map)
+    if (eventConfig?.locales?.overrides) {
+        result = processOverrides(result, eventConfig.locales.overrides);
+    }
 
     return result;
 }

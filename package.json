@@ -10,7 +10,9 @@
     "lint": "pnpm -r --parallel lint",
     "db:migrate": "pnpm --filter api db:migrate",
     "db:generate": "pnpm --filter api db:generate",
-    "db:studio": "pnpm --filter api db:studio"
+    "db: studio": "pnpm --filter api db:studio",
+    "format": "pnpm -r format",
+    "format:check": "pnpm -r exec prettier --check \"**/*.{ts,tsx,js,json,md}\""
   },
   "pnpm": {
     "overrides": {
@@ -19,5 +21,16 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "release": {
+    "branches": [
+      "main",
+      "master"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github"
+    ]
   }
 }

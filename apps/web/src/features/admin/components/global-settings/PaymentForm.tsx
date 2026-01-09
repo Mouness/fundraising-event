@@ -68,6 +68,10 @@ export const PaymentForm = () => {
                             <Label htmlFor="stripe-secret-key">{t('admin_branding.modules.stripe.secret_key', 'Secret Key')}</Label>
                             <Input id="stripe-secret-key" type="password" {...register('payment.config.stripe.secretKey')} placeholder="sk_test_..." />
                         </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="stripe-webhook-secret">{t('admin_branding.modules.stripe.webhook_secret', 'Webhook Secret')}</Label>
+                            <Input id="stripe-webhook-secret" type="password" {...register('payment.config.stripe.webhookSecret')} placeholder="whsec_..." />
+                        </div>
                     </div>
                 )}
 
@@ -79,8 +83,12 @@ export const PaymentForm = () => {
                             <Input id="paypal-client-id" {...register('payment.config.paypal.clientId')} placeholder={t('admin_branding.modules.paypal.client_id', 'Client ID')} />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="paypal-secret">{t('admin_branding.modules.paypal.secret', 'Secret')}</Label>
-                            <Input id="paypal-secret" type="password" {...register('payment.config.paypal.secret')} placeholder={t('admin_branding.modules.paypal.secret', 'Secret')} />
+                            <Label htmlFor="paypal-secret">{t('admin_branding.modules.paypal.secret', 'Client Secret')}</Label>
+                            <Input id="paypal-secret" type="password" {...register('payment.config.paypal.clientSecret')} placeholder={t('admin_branding.modules.paypal.secret', 'Client Secret')} />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="paypal-webhook-id">{t('admin_branding.modules.paypal.webhook_id', 'Webhook ID')}</Label>
+                            <Input id="paypal-webhook-id" {...register('payment.config.paypal.webhookId')} placeholder={t('admin_branding.modules.paypal.webhook_id', 'Webhook ID')} />
                         </div>
                         <div className="flex items-center space-x-2">
                             <Checkbox

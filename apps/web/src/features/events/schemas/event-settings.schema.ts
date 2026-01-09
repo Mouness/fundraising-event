@@ -22,14 +22,23 @@ export const eventSettingsSchema = z.object({
     useGlobalBranding: z.boolean(),
     organization: z.string().optional(),
     assets: z.object({
-        logo: z.string().url().optional().or(z.literal('')),
-        backgroundLanding: z.string().url().optional().or(z.literal('')),
-        backgroundLive: z.string().url().optional().or(z.literal('')),
+        logo: z.string().optional().or(z.literal('')).or(z.null()),
+        backgroundLanding: z.string().optional().or(z.literal('')).or(z.null()),
+        backgroundLive: z.string().optional().or(z.literal('')).or(z.null()),
     }).optional(),
     landing: z.object({
-        impact: z.object({ url: z.string().url().optional().or(z.literal('')) }),
-        community: z.object({ url: z.string().url().optional().or(z.literal('')) }),
-        interactive: z.object({ url: z.string().url().optional().or(z.literal('')) }),
+        impact: z.object({
+            url: z.string().optional().or(z.literal('')).or(z.null()),
+            enabled: z.boolean().default(true)
+        }),
+        community: z.object({
+            url: z.string().optional().or(z.literal('')).or(z.null()),
+            enabled: z.boolean().default(true)
+        }),
+        interactive: z.object({
+            url: z.string().optional().or(z.literal('')).or(z.null()),
+            enabled: z.boolean().default(true)
+        }),
     }).optional(),
     themeVariables: z.array(z.object({
         key: z.string(),

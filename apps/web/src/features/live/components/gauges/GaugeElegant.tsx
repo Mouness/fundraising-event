@@ -57,7 +57,7 @@ export const GaugeElegant = ({
                 >
                     {(totalLabel === 'Total Raised' || !totalLabel) ? t('live.total_raised', 'Total Raised') : totalLabel}
                 </span>
-                <div className="text-7xl font-serif text-slate-100">
+                <div className="text-5xl font-serif text-slate-100">
                     <CountUp
                         start={prevTotal / 100}
                         end={totalRaisedCents / 100}

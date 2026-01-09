@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { LocalAuthProvider } from '@/features/auth/providers/local.provider';
 import { ConfigService } from '@nestjs/config';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as bcrypt from 'bcrypt';
+import * as argon2 from 'argon2';
 
-vi.mock('bcrypt', () => ({
-  compare: vi.fn(),
+vi.mock('argon2', () => ({
+  verify: vi.fn(),
   hash: vi.fn(),
 }));
 
@@ -15,7 +15,8 @@ describe('LocalAuthProvider', () => {
   const mockConfigService = {
     get: vi.fn((key: string) => {
       if (key === 'ADMIN_EMAIL') return 'admin@example.com';
-      if (key === 'ADMIN_PASSWORD') return 'secure-pass-hash';
+      if (key === 'ADMIN_PASSWORD')
+        return '$argon2id$v=19$m=65536,t=3,p=4$salt$hash';
       return null;
     }),
   };
@@ -29,18 +30,21 @@ describe('LocalAuthProvider', () => {
     }).compile();
 
     provider = module.get<LocalAuthProvider>(LocalAuthProvider);
+    vi.clearAllMocks();
   });
 
   describe('verify', () => {
     it('should verify correct admin credentials', async () => {
-      vi.mocked(bcrypt.compare).mockResolvedValue(true as never);
+      vi.mocked(argon2.verify).mockResolvedValue(true);
+
       const result = await provider.verify({
         email: 'admin@example.com',
         password: 'secure-pass',
       });
-      expect(bcrypt.compare).toHaveBeenCalledWith(
+
+      expect(argon2.verify).toHaveBeenCalledWith(
+        '$argon2id$v=19$m=65536,t=3,p=4$salt$hash',
         'secure-pass',
-        'secure-pass-hash',
       );
       expect(result).toEqual({
         id: 'admin',
@@ -51,12 +55,42 @@ describe('LocalAuthProvider', () => {
     });
 
     it('should return null for incorrect admin credentials', async () => {
-      vi.mocked(bcrypt.compare).mockResolvedValue(false as never);
+      vi.mocked(argon2.verify).mockResolvedValue(false);
+
       const result = await provider.verify({
         email: 'admin@example.com',
         password: 'wrong-pass',
       });
       expect(result).toBeNull();
+    });
+
+    it('should verify correct admin credentials via plain text', async () => {
+      // Override mock for this specific test
+      (mockConfigService.get.mockImplementation as any)((key: string) => {
+        if (key === 'ADMIN_EMAIL') return 'admin@example.com';
+        if (key === 'ADMIN_PASSWORD') return 'plain-text-secret';
+        return null;
+      });
+
+      const result = await provider.verify({
+        email: 'admin@example.com',
+        password: 'plain-text-secret',
+      });
+
+      expect(result).toEqual({
+        id: 'admin',
+        email: 'admin@example.com',
+        role: 'ADMIN',
+        name: 'Administrator',
+      });
+
+      // Reset mock
+      mockConfigService.get.mockImplementation((key: string) => {
+        if (key === 'ADMIN_EMAIL') return 'admin@example.com';
+        if (key === 'ADMIN_PASSWORD')
+          return '$argon2id$v=19$m=65536,t=3,p=4$salt$hash';
+        return null;
+      });
     });
 
     it('should verify trusted external user (Google) matching admin email', async () => {

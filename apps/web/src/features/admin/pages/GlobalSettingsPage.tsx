@@ -84,8 +84,11 @@ export const GlobalSettingsPage = () => {
             logo: '',
             email: defaultConfig.communication?.supportEmail || '',
             address: defaultConfig.communication?.address || '',
+            taxId: defaultConfig.communication?.taxId || '',
             phone: '',
             website: defaultConfig.communication?.website || '',
+            signatureText: defaultConfig.communication?.signatureText || '',
+            signatureImage: defaultConfig.communication?.signatureImage || '',
             themeVariables: [],
             // Helper object for common vars
             commonVariables: {} as GlobalSettingsForm['commonVariables'],
@@ -105,13 +108,13 @@ export const GlobalSettingsPage = () => {
                 senderName: defaultConfig.communication?.legalName,
                 replyTo: defaultConfig.communication?.supportEmail,
                 subjectLine: defaultConfig.communication?.email?.subjectLine,
-                footerText: defaultConfig.communication?.email?.footerText
+                provider: 'console',
+                config: {},
             },
             pdfReceipt: {
-                enabled: defaultConfig.communication?.pdf?.enabled ?? true,
-                footerText: defaultConfig.communication?.pdf?.footerText,
-                templateStyle: (defaultConfig.communication?.pdf?.templateStyle as 'minimal' | 'formal')
+                enabled: defaultConfig.communication?.pdf?.enabled ?? true
             },
+            footerText: defaultConfig.communication?.footerText,
             sharing: {
                 enabled: defaultConfig.donation?.sharing?.enabled ?? true,
                 networks: (defaultConfig.donation?.sharing?.networks || ['facebook', 'twitter', 'linkedin']) as ('facebook' | 'twitter' | 'linkedin')[]
@@ -151,8 +154,11 @@ export const GlobalSettingsPage = () => {
             logo: data.theme?.assets?.logo || '',
             email: data.communication?.supportEmail || defaultConfig.communication?.supportEmail || '',
             address: data.communication?.address || defaultConfig.communication?.address || '',
+            taxId: data.communication?.taxId || '',
             phone: data.communication?.phone || '',
             website: data.communication?.website || defaultConfig.communication?.website || '',
+            signatureText: data.communication?.signatureText || '',
+            signatureImage: data.communication?.signatureImage || '',
 
             themeVariables: customVariablesArray,
             commonVariables: commonVars as GlobalSettingsForm['commonVariables'],
@@ -164,14 +170,12 @@ export const GlobalSettingsPage = () => {
                 enabled: defaultConfig.communication?.email?.enabled ?? true,
                 senderName: defaultConfig.communication?.legalName,
                 replyTo: defaultConfig.communication?.supportEmail,
-                subjectLine: defaultConfig.communication?.email?.subjectLine,
-                footerText: defaultConfig.communication?.email?.footerText
+                subjectLine: defaultConfig.communication?.email?.subjectLine
             },
             pdfReceipt: data.communication?.pdf || {
-                enabled: defaultConfig.communication?.pdf?.enabled ?? true,
-                footerText: defaultConfig.communication?.pdf?.footerText,
-                templateStyle: (defaultConfig.communication?.pdf?.templateStyle as 'minimal' | 'formal')
+                enabled: defaultConfig.communication?.pdf?.enabled ?? true
             },
+            footerText: data.communication?.footerText || defaultConfig.communication?.footerText,
             sharing: data.donation?.sharing || {
                 enabled: defaultConfig.donation?.sharing?.enabled ?? true,
                 networks: (defaultConfig.donation?.sharing?.networks || ['facebook', 'twitter', 'linkedin']) as ('facebook' | 'twitter' | 'linkedin')[]
@@ -251,6 +255,10 @@ export const GlobalSettingsPage = () => {
                 website: formData.website,
                 supportEmail: formData.email,
                 phone: formData.phone,
+                taxId: formData.taxId,
+                signatureText: formData.signatureText,
+                signatureImage: formData.signatureImage,
+                footerText: formData.footerText,
                 email: formData.emailReceipt,
                 pdf: formData.pdfReceipt
             },

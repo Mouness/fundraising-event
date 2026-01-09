@@ -6,7 +6,7 @@ import { getGlobalConfig, getEventConfig } from '../store';
  */
 let appliedThemeKeys: string[] = [];
 
-export function loadTheme(apply = false): Record<string, string> {
+export const loadTheme = (apply = false): Record<string, string> => {
     const globalTheme = getGlobalConfig()?.theme?.variables || {};
     const eventTheme = getEventConfig()?.theme?.variables || {};
 

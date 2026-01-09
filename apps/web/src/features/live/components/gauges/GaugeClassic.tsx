@@ -50,7 +50,7 @@ export const GaugeClassic = ({
             {/* Center Counter */}
             <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <motion.div
-                    className="text-8xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent"
+                    className="text-6xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent"
                     style={{ backgroundImage: 'linear-gradient(to bottom, var(--live-classic-counter-gradient-from), var(--live-classic-counter-gradient-to))' }}
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}

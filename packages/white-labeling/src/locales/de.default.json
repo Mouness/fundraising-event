@@ -17,6 +17,9 @@
         "settings": "Einstellungen",
         "logout": "Abmelden"
     },
+    "admin_layout": {
+        "title": "Admin"
+    },
     "admin_events": {
         "title": "Veranstaltungen",
         "subtitle": "Verwalten Sie Ihre Spendenaktionen",
@@ -145,6 +148,9 @@
             "connecting": "Verbinden..."
         },
         "new_donation": "Neue Spende!",
+        "amount": "Betrag",
+        "from": "Von",
+        "anonymous": "Anonym",
         "waiting": "Warten auf Spenden...",
         "scan_to_donate": "SCANNEN ZUM SPENDEN",
         "total_raised": "Gesamt gesammelt",
@@ -204,7 +210,8 @@
         "saved_successfully": "Erfolgreich gespeichert",
         "amount": "Betrag",
         "anonymous": "Anonym",
-        "app_name": "Spendenplattform"
+        "app_name": "Spendenplattform",
+        "form_validation_error": "Bitte überprüfen Sie das Formular auf Fehler."
     },
     "status": {
         "completed": "Abgeschlossen",
@@ -255,10 +262,17 @@
     },
     "thankyou": {
         "receipt": {
+            "title": "Offizielle Spendenquittung",
             "transaction_id": "Transaktions-ID",
             "date": "Datum",
             "from": "Von",
-            "share_label": "Teilen"
+            "message_body": "Danke, {{donorName}}, für Ihren großzügigen Beitrag. Ihre Unterstützung hilft direkt unserer Mission.",
+            "authorized_signature": "Autorisierte Unterschrift",
+            "pdf_attached": "Eine offizielle PDF-Quittung ist dieser E-Mail beigefügt.",
+            "share_label": "Teilen",
+            "tax_id_label": "Steuernummer:",
+            "website_label": "Webseite",
+            "visit_website": "Besuchen Sie unsere Webseite"
         },
         "share_text": "Ich habe gerade gespendet! Mach mit unter {{url}}"
     },
@@ -284,6 +298,7 @@
         "footer": {}
     },
     "landing": {
+        "back_to_events": "Zurück zu allen Veranstaltungen",
         "hero": {
             "welcome": "Willkommen bei",
             "description": "Ihre Spende hilft uns, unser Ziel von {{goal}} zu erreichen."
@@ -425,16 +440,55 @@
                 "email_placeholder": "support@...",
                 "phone": "Telefonnummer",
                 "phone_placeholder": "+49...",
-                "address": "Adresse"
+                "address": "Adresse",
+                "tax_id": "Steuernummer / Verein",
+                "tax_id_placeholder": "z.B. 12-3456789",
+                "signature_text": "Unterschrift (Text)",
+                "signature_text_placeholder": "z.B. Geschäftsführer",
+                "signature_image": "Unterschrift (Bild URL)",
+                "signature_image_placeholder": "https://..."
+            },
+            "receipts": {
+                "title": "Quittungen & Benachrichtigungen",
+                "description": "Konfigurieren Sie automatische Quittungen und Benachrichtigungen.",
+                "footer_text": "Gemeinsamer Fußzeilentext",
+                "footer_text_placeholder": "z.B. Danke für Ihre Unterstützung...",
+                "footer_text_help": "Dieser Text erscheint unten in E-Mails und PDF-Quittungen."
             },
             "email": {
+                "config_title": "E-Mail-Konfiguration",
                 "title": "E-Mail-Quittungen",
                 "description": "Automatische Quittungen konfigurieren.",
                 "enable": "Aktivieren",
                 "sender": "Absendername",
                 "reply_to": "Antwort-an",
                 "subject": "Betreff",
-                "footer": "E-Mail-Fußzeile"
+                "footer": "E-Mail-Fußzeile",
+                "provider_label": "E-Mail-Anbieter",
+                "providers": {
+                    "console": "Konsole (Entwickler / Logs)",
+                    "smtp": "Benutzerdefiniertes SMTP",
+                    "resend": "Resend",
+                    "gmail": "Gmail",
+                    "outlook": "Outlook"
+                },
+                "smtp": {
+                    "title": "SMTP-Konfiguration",
+                    "host": "Host",
+                    "host_placeholder": "smtp.beispiel.de",
+                    "port": "Port",
+                    "port_placeholder": "465",
+                    "secure": "Sichere Verbindung verwenden (SSL/TLS)",
+                    "username": "Benutzername",
+                    "username_placeholder": "benutzer@beispiel.de",
+                    "password": "Passwort / API-Schlüssel",
+                    "password_placeholder": "••••••••",
+                    "help": {
+                        "gmail": "Für Gmail verwenden Sie ein <1>App-Passwort</1> (2FA erforderlich).",
+                        "outlook": "Für Outlook verwenden Sie ein <1>App-Passwort</1>, wenn 2FA aktiviert ist.",
+                        "resend": "Für Resend sollte der Benutzername <1>resend</1> sein und das Passwort ist Ihr API-Schlüssel."
+                    }
+                }
             },
             "sharing": {
                 "title": "Social Sharing",
@@ -507,7 +561,10 @@
             "links_desc": "URLs für Landingpage-Karten.",
             "impact_url": "Impact URL",
             "community_url": "Community URL",
-            "interactive_url": "Interaktive URL"
+            "interactive_url": "Interaktive URL",
+            "impact_label": "Impact Box",
+            "community_label": "Community Box",
+            "interactive_label": "Interaktive Box"
         },
         "localization": {
             "title": "Lokalisierung",
@@ -532,7 +589,8 @@
             "stripe": {
                 "title": "Stripe Einstellungen",
                 "publishable_key": "Öffentlicher Schlüssel",
-                "secret_key": "Geheimer Schlüssel"
+                "secret_key": "Geheimer Schlüssel",
+                "webhook_secret": "Webhook-Geheimnis"
             },
             "paypal": {
                 "title": "PayPal Einstellungen",

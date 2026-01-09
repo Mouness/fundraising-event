@@ -1,5 +1,23 @@
 // Types
-export type { EventConfig } from './types';
+export type { DeepPartial } from './types';
+export type {
+    EventConfig,
+    ThemeConfig,
+    ContentConfig,
+    LiveConfig,
+    DonationFormFieldConfig,
+    SharingConfig,
+    PaymentConfig,
+    DonationConfig,
+    PdfConfig,
+    EmailConfig,
+    CommunicationConfig,
+    LocalesConfig,
+    StripeProviderConfig,
+    PayPalProviderConfig,
+    SupportedLocale,
+} from './types';
+
 export { SUPPORTED_LOCALES, LOCALE_LABELS } from './types';
 
 export { initWhiteLabeling, getGlobalConfig, getEventConfig, fetchGlobalConfig, fetchEventConfig, resetWhiteLabelStore } from './store';

@@ -1,7 +1,7 @@
 import { PublicLayout } from '@features/public/layouts/PublicLayout';
 import { FeatureCard } from '@features/public/components/FeatureCard';
 import { Button } from '@core/components/ui/button';
-import { Globe, Heart, Tv } from 'lucide-react';
+import { Globe, Heart, Tv, ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '@core/providers/AppConfigProvider';
 import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
@@ -17,7 +17,16 @@ export const LandingPage = () => {
 
     return (
         <PublicLayout>
-            <div className="flex-grow flex flex-col items-center justify-center p-4">
+            <div className="flex-grow flex flex-col items-center justify-center p-4 relative">
+                <div className="absolute top-4 left-4 md:top-8 md:left-8 z-10">
+                    <Link to="/">
+                        <Button variant="ghost" className="gap-2 text-muted-foreground hover:text-foreground">
+                            <ArrowLeft className="h-4 w-4" />
+                            {t('landing.back_to_events', 'Back to all events')}
+                        </Button>
+                    </Link>
+                </div>
+
                 <div className="w-full max-w-4xl flex flex-col items-center text-center gap-8 animate-in fade-in zoom-in duration-700 slide-in-from-bottom-8">
 
                     <div className="space-y-4">
@@ -55,25 +64,40 @@ export const LandingPage = () => {
                     </div>
 
                     {/* Stats / Info Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full text-left mt-16">
-                        <FeatureCard
-                            icon={<Heart className="h-6 w-6" style={{ color: 'hsl(var(--landing-feature-icon-primary))' }} />}
-                            title={t('landing.features.impact.title')}
-                            description={t('landing.features.impact.description')}
-                            url={config.content.landing?.impact?.url}
-                        />
-                        <FeatureCard
-                            icon={<Globe className="h-6 w-6" style={{ color: 'hsl(var(--landing-feature-icon-secondary))' }} />}
-                            title={t('landing.features.community.title')}
-                            description={t('landing.features.community.description')}
-                            url={config.content.landing?.community?.url}
-                        />
-                        <FeatureCard
-                            icon={<Tv className="h-6 w-6" style={{ color: 'hsl(var(--landing-feature-icon-tertiary))' }} />}
-                            title={t('landing.features.interactive.title')}
-                            description={t('landing.features.interactive.description')}
-                            url={config.content.landing?.interactive?.url}
-                        />
+                    <div className={`grid grid-cols-1 ${[config.content.landing?.impact?.enabled !== false,
+                        config.content.landing?.community?.enabled !== false,
+                        config.content.landing?.interactive?.enabled !== false].filter(Boolean).length === 2
+                            ? 'sm:grid-cols-2'
+                            : [config.content.landing?.impact?.enabled !== false,
+                            config.content.landing?.community?.enabled !== false,
+                            config.content.landing?.interactive?.enabled !== false].filter(Boolean).length === 1
+                                ? 'sm:grid-cols-1 max-w-sm mx-auto'
+                                : 'sm:grid-cols-3'
+                        } gap-6 w-full text-left mt-16`}>
+                        {config.content.landing?.impact?.enabled !== false && (
+                            <FeatureCard
+                                icon={<Heart className="h-6 w-6" style={{ color: 'hsl(var(--landing-feature-icon-primary))' }} />}
+                                title={t('landing.features.impact.title')}
+                                description={t('landing.features.impact.description')}
+                                url={config.content.landing?.impact?.url}
+                            />
+                        )}
+                        {config.content.landing?.community?.enabled !== false && (
+                            <FeatureCard
+                                icon={<Globe className="h-6 w-6" style={{ color: 'hsl(var(--landing-feature-icon-secondary))' }} />}
+                                title={t('landing.features.community.title')}
+                                description={t('landing.features.community.description')}
+                                url={config.content.landing?.community?.url}
+                            />
+                        )}
+                        {config.content.landing?.interactive?.enabled !== false && (
+                            <FeatureCard
+                                icon={<Tv className="h-6 w-6" style={{ color: 'hsl(var(--landing-feature-icon-tertiary))' }} />}
+                                title={t('landing.features.interactive.title')}
+                                description={t('landing.features.interactive.description')}
+                                url={config.content.landing?.interactive?.url}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

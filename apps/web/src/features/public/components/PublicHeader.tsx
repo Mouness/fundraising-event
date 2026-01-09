@@ -45,7 +45,7 @@ export const PublicHeader = () => {
                     <Link to={staffLink}>
                         <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-2">
                             <UserCog className="h-4 w-4" />
-                            <span>{t('landing.footer.staff')}</span>
+                            <span>{slug ? t('landing.footer.staff') : t('landing.footer.admin')}</span>
                         </Button>
                     </Link>
                 </div>

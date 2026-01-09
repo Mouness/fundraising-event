@@ -5,6 +5,15 @@ import { AppConfigProvider } from '@core/providers/AppConfigProvider';
 import { EventProvider } from '@features/events/context/EventContext';
 import { StaffGuard } from '@features/staff/components/StaffGuard';
 import { AuthGuard } from '@features/auth/components/AuthGuard';
+import { RouteError } from '@core/components/RouteError';
+
+// ... (existing imports, kept implicit by sed-like replacement behavior if I include enough context, but replace_file_content replaces the BLOCK)
+
+// I will do multiple chunks to be safe and precise.
+// Chunk 1: Import
+// Chunk 2: Root route
+// Chunk 3: Event route
+// Chunk 4: Admin route
 
 // Helper for lazy loading
 const Loadable = (Component: ComponentType, fallback = <PageLoader />) => (
@@ -59,161 +68,156 @@ const EventAdminWrapper = () => {
     );
 };
 
-const GlobalAdminWrapper = () => {
-    return (
-        <AppConfigProvider>
-            <Outlet />
-        </AppConfigProvider>
-    );
-};
+const RootLayout = () => (
+    <AppConfigProvider>
+        <Outlet />
+    </AppConfigProvider>
+);
+
+const RootError = () => (
+    <AppConfigProvider>
+        <RouteError />
+    </AppConfigProvider>
+);
 
 export const router = createBrowserRouter([
-    // Generic Root Landing Page (Platform Portal)
     {
-        path: '/',
-        element: (
-            <AppConfigProvider>
-                {Loadable(RootLandingPage)}
-            </AppConfigProvider>
-        )
-    },
-    // Event specific routes under /:slug
-    {
-        path: '/:slug',
-        element: <EventContextWrapper />,
+        element: <RootLayout />,
+        errorElement: <RootError />,
         children: [
+            // Generic Root Landing Page (Platform Portal)
             {
-                index: true,
-                element: Loadable(LandingPage),
+                path: '/',
+                element: Loadable(RootLandingPage)
+            },
+            // Auth Routes
+            {
+                path: 'login',
+                element: Loadable(LoginPage)
             },
             {
-                path: 'donate',
-                element: Loadable(DonationPage),
+                path: 'auth/success',
+                element: Loadable(AuthSuccessPage)
             },
+            // Global / Admin routes
             {
-                path: 'thank-you',
-                element: Loadable(ThankYouPage),
-            },
-            {
-                path: 'live',
-                element: Loadable(LivePage),
-            },
-            {
-                path: 'embed',
-                element: Loadable(LiveEmbedPage),
-            },
-            {
-                path: 'staff',
-                element: Loadable(StaffLayout),
+                path: 'admin',
                 children: [
                     {
-                        path: 'login',
-                        element: Loadable(StaffLoginPage),
-                    },
-                    {
-                        element: <StaffGuard />,
+                        element: <AuthGuard />,
                         children: [
                             {
-                                index: true,
-                                element: <Navigate to="collect" replace />
-                            },
-                            {
-                                path: 'collect',
-                                element: Loadable(CollectorPage),
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    },
-    // Global / Admin routes (no slug context needed or handled differently)
-    {
-        path: '/login',
-        element: (
-            <AppConfigProvider>
-                {Loadable(LoginPage)}
-            </AppConfigProvider>
-        ),
-    },
-    {
-        path: '/auth/success',
-        element: (
-            <AppConfigProvider>
-                {Loadable(AuthSuccessPage)}
-            </AppConfigProvider>
-        ),
-    },
-    {
-        path: '/admin',
-        element: <GlobalAdminWrapper />,
-        children: [
-            {
-                element: <AuthGuard />,
-                children: [
-                    {
-                        element: Loadable(AdminLayout),
-                        children: [
-                            {
-                                path: '',
-                                element: Loadable(DashboardPage),
-                            },
-                            {
-                                path: 'events/new',
-                                element: Loadable(CreateEventPage)
-                            },
-                            {
-                                path: 'events',
-                                element: Loadable(EventListPage)
-                            },
-                            {
-                                path: 'staff',
-                                element: Loadable(StaffManagementPage)
-                            },
-                            {
-                                path: 'settings',
-                                element: Loadable(GlobalSettingsPage)
-                            }
-                        ]
-                    },
-                    // Event specific admin routes (Separate Layout)
-                    {
-                        path: 'events/:slug',
-                        element: <EventAdminWrapper />,
-                        children: [
-                            {
-                                element: Loadable(EventLayout),
+                                element: Loadable(AdminLayout),
                                 children: [
                                     {
-                                        index: true,
-                                        element: Loadable(EventDashboardPage),
+                                        path: '',
+                                        element: Loadable(DashboardPage),
                                     },
                                     {
-                                        path: 'donations',
-                                        element: Loadable(DonationsPage),
+                                        path: 'events/new',
+                                        element: Loadable(CreateEventPage)
+                                    },
+                                    {
+                                        path: 'events',
+                                        element: Loadable(EventListPage)
+                                    },
+                                    {
+                                        path: 'staff',
+                                        element: Loadable(StaffManagementPage)
                                     },
                                     {
                                         path: 'settings',
-                                        element: Loadable(EventSettingsPage),
-                                    },
+                                        element: Loadable(GlobalSettingsPage)
+                                    }
+                                ]
+                            },
+                            // Event specific admin routes (Separate Layout)
+                            {
+                                path: 'events/:slug',
+                                element: <EventAdminWrapper />,
+                                children: [
                                     {
-                                        path: 'team',
-                                        element: Loadable(EventTeamPage),
+                                        element: Loadable(EventLayout),
+                                        children: [
+                                            {
+                                                index: true,
+                                                element: Loadable(EventDashboardPage),
+                                            },
+                                            {
+                                                path: 'donations',
+                                                element: Loadable(DonationsPage),
+                                            },
+                                            {
+                                                path: 'settings',
+                                                element: Loadable(EventSettingsPage),
+                                            },
+                                            {
+                                                path: 'team',
+                                                element: Loadable(EventTeamPage),
+                                            }
+                                        ]
                                     }
                                 ]
                             }
                         ]
                     }
                 ]
+            },
+            // Event specific routes under /:slug
+            {
+                path: ':slug',
+                element: <EventContextWrapper />,
+                children: [
+                    {
+                        index: true,
+                        element: Loadable(LandingPage),
+                    },
+                    {
+                        path: 'donate',
+                        element: Loadable(DonationPage),
+                    },
+                    {
+                        path: 'thank-you',
+                        element: Loadable(ThankYouPage),
+                    },
+                    {
+                        path: 'live',
+                        element: Loadable(LivePage),
+                    },
+                    {
+                        path: 'embed',
+                        element: Loadable(LiveEmbedPage),
+                    },
+                    {
+                        path: 'staff',
+                        element: Loadable(StaffLayout),
+                        children: [
+                            {
+                                path: 'login',
+                                element: Loadable(StaffLoginPage),
+                            },
+                            {
+                                element: <StaffGuard />,
+                                children: [
+                                    {
+                                        index: true,
+                                        element: <Navigate to="collect" replace />
+                                    },
+                                    {
+                                        path: 'collect',
+                                        element: Loadable(CollectorPage),
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            // 404
+            {
+                path: '*',
+                element: Loadable(NotFoundPage)
             }
         ]
-    },
-    {
-        path: '*',
-        element: (
-            <AppConfigProvider>
-                {Loadable(NotFoundPage)}
-            </AppConfigProvider>
-        )
     }
 ]);

@@ -6,10 +6,10 @@ export default defineConfig({
     dts: true,
     clean: true,
     outDir: 'dist',
-    loader: {
-        '.svg': 'dataurl',
-        '.css': 'copy'
-    },
     splitting: false,
     treeshake: true,
+    loader: {
+        '.svg': 'dataurl',
+        '.css': 'copy',
+    },
 });

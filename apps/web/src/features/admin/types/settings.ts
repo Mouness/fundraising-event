@@ -3,14 +3,27 @@ export interface ThemeVariable {
     value: string;
 }
 
+export interface EmailProviderConfig {
+    smtp?: {
+        host: string;
+        port: number;
+        secure: boolean;
+        auth: { user: string; pass: string };
+    };
+}
+
 export interface GlobalSettingsForm {
     // Isolated Identity
     organization: string;
     logo: string;
     email: string; // communication.supportEmail
     address: string;
+    taxId: string;
     phone: string; // Custom/generic
     website: string;
+    signatureText: string;
+    signatureImage: string;
+    footerText: string;
 
     themeVariables: ThemeVariable[];
     commonVariables: {
@@ -44,8 +57,8 @@ export interface GlobalSettingsForm {
     locales: { default: string, supported: string[] };
 
     // Communication Details
-    emailReceipt: { enabled: boolean, senderName: string, replyTo: string, subjectLine: string, footerText: string };
-    pdfReceipt: { enabled: boolean, footerText: string, templateStyle: 'minimal' | 'formal' };
+    emailReceipt: { enabled: boolean; senderName: string; replyTo: string; subjectLine: string; provider: string; config: EmailProviderConfig };
+    pdfReceipt: { enabled: boolean };
     sharing: { enabled: boolean, networks: ('facebook' | 'twitter' | 'linkedin')[] };
 
     assets: {

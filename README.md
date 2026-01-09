@@ -116,6 +116,12 @@ pnpm test
 pnpm test:e2e
 ```
 
+## 🔗 Project Links
+
+- **Repository**: [github.com/Mouness/fundraising-event](https://github.com/Mouness/fundraising-event)
+- **Issues**: [github.com/Mouness/fundraising-event/issues](https://github.com/Mouness/fundraising-event/issues)
+- **Pull Requests**: [github.com/Mouness/fundraising-event/pulls](https://github.com/Mouness/fundraising-event/pulls)
+
 ## 📜 License
 
 This project is licensed under the MIT License.

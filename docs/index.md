@@ -33,3 +33,9 @@ Welcome to the official documentation portal. Please choose the guide that best 
 - [Installation Guide](technical/getting-started.md)
 - [Project Architecture](technical/architecture.md)
 - [Branding & White-Labeling](technical/white-labeling.md)
+
+## GitHub Resources
+
+- [Repository](https://github.com/Mouness/fundraising-event)
+- [Issues](https://github.com/Mouness/fundraising-event/issues)
+- [Pull Requests](https://github.com/Mouness/fundraising-event/pulls)

@@ -8,6 +8,13 @@ Before cooking, ensure you have the following ingredients: - **Node.js**: v20+ (
 
 ---
 
+## Useful Links
+
+- **Repository**: [github.com/Mouness/fundraising-event](https://github.com/Mouness/fundraising-event)
+- **Issues**: [github.com/Mouness/fundraising-event/issues](https://github.com/Mouness/fundraising-event/issues)
+- **Pull Requests**: [github.com/Mouness/fundraising-event/pulls](https://github.com/Mouness/fundraising-event/pulls)
+- **Online Documentation**: [Mouness.github.io/fundraising-event](https://Mouness.github.io/fundraising-event/)
+
 ## 🚀 Recipe 1: The Quick Start (Local Dev)
 
 **Goal**: Run the full stack (API + Database + Frontend) on your machine.

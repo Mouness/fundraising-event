@@ -18,6 +18,7 @@ Clicking on an event card takes you to that specific event's dashboard.
 ![Event Dashboard](../assets/event_dashboard.png)
 
 ### Quick Actions
+
 - **View Landing Page**: Opens the public donation page.
 
 ![Public Landing Page](../assets/public_landing.png)
@@ -47,6 +48,7 @@ Customize what information you collect from donors during the checkout process.
 ![Form Configuration](../assets/event_settings_form.png)
 
 You can enable/disable:
+
 - **Phone Number**
 - **Physical Address**
 - **Company Name**

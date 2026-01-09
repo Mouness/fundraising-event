@@ -8,13 +8,13 @@ The Fundraising Event platform uses a modern Monorepo architecture managed by `p
 graph TD
     User[Donor] -->|HTTPS| Frontend[React Web App]
     Admin[Admin User] -->|HTTPS| Frontend
-    
+
     Frontend -->|REST API| API[NestJS Backend]
     Frontend -->|socket.io| Gateway[WebSocket Gateway]
 
     API -->|Read/Write| DB[(PostgreSQL)]
     API -->|Events| Redis[(Redis)]
-    
+
     Stripe[Stripe] -->|Webhook| API
     PayPal[PayPal] -->|Webhook| API
 ```
@@ -57,6 +57,7 @@ Built with **React 19** and **Vite**, organized following a **Core vs Features**
     - **Internationalization**: Full RTL/LTR support via `react-i18next`.
 
 ### Key Pages
+
 1.  **Donation Page**: Public-facing form for donors.
 2.  **Live Page**: Real-time dashboard for event screens (Projectors).
 3.  **Admin Dashboard**: Restricted area for event management.
@@ -75,7 +76,7 @@ model Configuration {
   id               String      @id @default(uuid())
   scope            ConfigScope @default(GLOBAL)
   entityId         String?     // Null for GLOBAL, matches Event.id for EVENT
-  
+
   // Identity
   organization     String?
   address          String?
@@ -86,12 +87,12 @@ model Configuration {
 
   // JSON Blocks
   themeVariables   Json?       // Record<string, string>
-  assets           Json?       
-  event            Json?       
-  form             Json?       
-  communication    Json?       
-  payment          Json?       
-  socialNetwork    Json?       
+  assets           Json?
+  event            Json?
+  form             Json?
+  communication    Json?
+  payment          Json?
+  socialNetwork    Json?
   locales          Json?
   liveTheme        String?
 
@@ -153,9 +154,11 @@ model Donation {
 ## Shared Packages
 
 ### `@fundraising/white-labeling`
+
 A central library for handling configuration, assets, and themes. This package ensures that both the API and Web apps share the exact same configuration logic and type definitions, enabling true "White Label" capabilities where the core code remains agnostic of the specific event branding.
 
 ### `@fundraising/types`
+
 Shared DTOs (Data Transfer Objects) and interfaces to ensure type compatibility between Frontend and Backend (e.g., `DonationDto`, `CreateEventDto`).
 
 ## Data Flow

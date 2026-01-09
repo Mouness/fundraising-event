@@ -1,66 +1,78 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslation } from 'react-i18next';
-import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card';
-import type { DonationFormValues } from '../schemas/donation.schema';
-import { donationSchema } from '../schemas/donation.schema';
-import { useAppConfig } from '@core/providers/AppConfigProvider';
-import { api } from '@core/lib/api';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
-import { PaymentFormFactory } from './payment/PaymentFormFactory';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CreditCard } from 'lucide-react';
-import { DonationAmountSelector } from './DonationAmountSelector';
-import { DonationContactForm } from './DonationContactForm';
+import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslation } from 'react-i18next'
+import { Card, CardHeader, CardTitle, CardContent } from '@core/components/ui/card'
+import type { DonationFormValues } from '../schemas/donation.schema'
+import { donationSchema } from '../schemas/donation.schema'
+import { useAppConfig } from '@core/providers/AppConfigProvider'
+import { api } from '@core/lib/api'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
+import { PaymentFormFactory } from './payment/PaymentFormFactory'
+import { motion, AnimatePresence } from 'framer-motion'
+import { CreditCard } from 'lucide-react'
+import { DonationAmountSelector } from './DonationAmountSelector'
+import { DonationContactForm } from './DonationContactForm'
 
 export const CheckoutForm = () => {
-    const { t } = useTranslation('common');
-    const navigate = useNavigate();
-    const { slug } = useParams<{ slug: string }>();
-    const { config } = useAppConfig();
-    const [step, setStep] = useState<'details' | 'payment'>('details');
+    const { t } = useTranslation('common')
+    const navigate = useNavigate()
+    const { slug } = useParams<{ slug: string }>()
+    const { config } = useAppConfig()
+    const [step, setStep] = useState<'details' | 'payment'>('details')
     // Define type or import Response type. For now locally.
-    const [sessionData, setSessionData] = useState<{ id: string; clientSecret: string } | null>(null);
-    const [submitError, setSubmitError] = useState<string | null>(null);
-    const [selectedAmount, setSelectedAmount] = useState<number>(20);
+    const [sessionData, setSessionData] = useState<{
+        id: string
+        clientSecret: string
+    } | null>(null)
+    const [submitError, setSubmitError] = useState<string | null>(null)
+    const [selectedAmount, setSelectedAmount] = useState<number>(20)
 
-    const { currency } = useCurrencyFormatter();
+    const { currency } = useCurrencyFormatter()
 
     // Validate slug against config to ensure consistency
     if (slug && config.slug && slug !== config.slug) {
-        console.warn(`Slug mismatch: URL param '${slug}' does not match config slug '${config.slug}'. Using config slug.`);
+        console.warn(
+            `Slug mismatch: URL param '${slug}' does not match config slug '${config.slug}'. Using config slug.`,
+        )
     }
-    const activeSlug = slug || config.slug;
+    const activeSlug = slug || config.slug
 
-    const { register, handleSubmit, setValue, watch, getValues, formState: { errors } } = useForm<DonationFormValues>({
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        getValues,
+        formState: { errors },
+    } = useForm<DonationFormValues>({
         resolver: zodResolver(donationSchema),
         defaultValues: {
             amount: 20,
             isAnonymous: false,
             name: '',
             email: '',
-            message: ''
-        }
-    });
+            message: '',
+        },
+    })
 
     // eslint-disable-next-line react-hooks/incompatible-library
-    const currentAmount = watch('amount');
+    const currentAmount = watch('amount')
 
     const handleAmountSelect = (amount: number) => {
-        setSelectedAmount(amount);
-        setValue('amount', amount);
-    };
+        setSelectedAmount(amount)
+        setValue('amount', amount)
+    }
 
     const onSubmitDetails = async (data: DonationFormValues) => {
         if (!activeSlug) {
-            setSubmitError(t('donation.error_invalid_event'));
-            return;
+            setSubmitError(t('donation.error_invalid_event'))
+            return
         }
 
         try {
-            const amountInCents = Math.round(data.amount * 100);
+            const amountInCents = Math.round(data.amount * 100)
             const { data: intentData } = await api.post('/donations/intent', {
                 amount: amountInCents,
                 currency: currency,
@@ -69,26 +81,28 @@ export const CheckoutForm = () => {
                     donorName: data.name,
                     donorEmail: data.email,
                     message: data.message,
-                    isAnonymous: data.isAnonymous ? 'true' : 'false'
-                }
-            });
+                    isAnonymous: data.isAnonymous ? 'true' : 'false',
+                },
+            })
 
-            setSessionData(intentData);
-            setStep('payment');
+            setSessionData(intentData)
+            setStep('payment')
         } catch (err) {
-            console.error(err);
-            setSubmitError(t('donation.error_init', 'Failed to initialize donation. Please try again.'));
+            console.error(err)
+            setSubmitError(
+                t('donation.error_init', 'Failed to initialize donation. Please try again.'),
+            )
         }
-    };
+    }
 
-    const panelClass = "backdrop-blur-md border-t overflow-hidden mt-6";
+    const panelClass = 'backdrop-blur-md border-t overflow-hidden mt-6'
     const panelStyle = {
         backgroundColor: 'var(--glass-bg)',
         borderColor: 'var(--glass-border)',
         backdropFilter: 'blur(var(--glass-blur))',
         borderRadius: 'var(--donation-card-radius)',
-        boxShadow: 'var(--donation-card-shadow)'
-    };
+        boxShadow: 'var(--donation-card-shadow)',
+    }
 
     return (
         <AnimatePresence mode="wait">
@@ -145,9 +159,9 @@ export const CheckoutForm = () => {
                                             state: {
                                                 amount: currentAmount,
                                                 donorName: getValues('name'),
-                                                transactionId: sessionData.id
-                                            }
-                                        });
+                                                transactionId: sessionData.id,
+                                            },
+                                        })
                                     }}
                                     onBack={() => setStep('details')}
                                     onError={(msg: string) => console.error(msg)}
@@ -156,8 +170,7 @@ export const CheckoutForm = () => {
                         </CardContent>
                     </Card>
                 </motion.div>
-            )
-            }
-        </AnimatePresence >
-    );
+            )}
+        </AnimatePresence>
+    )
 }

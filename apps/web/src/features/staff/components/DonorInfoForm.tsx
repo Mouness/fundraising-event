@@ -1,18 +1,24 @@
-import { Input } from "@core/components/ui/input";
-import { Label } from "@core/components/ui/label";
-import { User, Mail } from "lucide-react";
-import { useTranslation } from 'react-i18next';
+import { Input } from '@core/components/ui/input'
+import { Label } from '@core/components/ui/label'
+import { User, Mail } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface DonorInfoFormProps {
-    name: string;
-    email: string;
-    onNameChange: (val: string) => void;
-    onEmailChange: (val: string) => void;
-    disabled?: boolean;
+    name: string
+    email: string
+    onNameChange: (val: string) => void
+    onEmailChange: (val: string) => void
+    disabled?: boolean
 }
 
-export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabled }: DonorInfoFormProps) => {
-    const { t } = useTranslation('common');
+export const DonorInfoForm = ({
+    name,
+    email,
+    onNameChange,
+    onEmailChange,
+    disabled,
+}: DonorInfoFormProps) => {
+    const { t } = useTranslation('common')
     return (
         <div className="px-4 py-2 space-y-3 w-full max-w-sm mx-auto mb-2">
             <div className="space-y-1">
@@ -37,7 +43,7 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                         style={{
                             backgroundColor: 'var(--staff-input-bg)',
                             color: 'var(--staff-input-text)',
-                            borderColor: 'var(--staff-input-border)'
+                            borderColor: 'var(--staff-input-border)',
                         }}
                         disabled={disabled}
                     />
@@ -66,12 +72,12 @@ export const DonorInfoForm = ({ name, email, onNameChange, onEmailChange, disabl
                         style={{
                             backgroundColor: 'var(--staff-input-bg)',
                             color: 'var(--staff-input-text)',
-                            borderColor: 'var(--staff-input-border)'
+                            borderColor: 'var(--staff-input-border)',
                         }}
                         disabled={disabled}
                     />
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}

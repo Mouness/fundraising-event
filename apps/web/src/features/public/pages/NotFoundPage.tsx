@@ -1,11 +1,11 @@
-import { Button } from '@core/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@core/components/ui/card';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Button } from '@core/components/ui/button'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@core/components/ui/card'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const NotFoundPage = () => {
-    const navigate = useNavigate();
-    const { t } = useTranslation('common');
+    const navigate = useNavigate()
+    const { t } = useTranslation('common')
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-background p-4">
@@ -20,9 +20,7 @@ export const NotFoundPage = () => {
                 </CardHeader>
                 <CardContent>
                     <h2 className="text-xl font-semibold mb-2">{t('not_found.title')}</h2>
-                    <p className="text-muted-foreground">
-                        {t('not_found.message')}
-                    </p>
+                    <p className="text-muted-foreground">{t('not_found.message')}</p>
                 </CardContent>
                 <CardFooter className="flex justify-center">
                     <Button onClick={() => navigate('/')} variant="default" size="lg">
@@ -31,5 +29,5 @@ export const NotFoundPage = () => {
                 </CardFooter>
             </Card>
         </div>
-    );
-};
+    )
+}

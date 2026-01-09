@@ -1,42 +1,45 @@
 # Donation Flow & Stripe Integration
 
 ## Overview
+
 The donation flow allows users to make payments using Stripe. It consists of a React frontend utilizing Stripe Elements and a NestJS backend handling Payment Intents and Webhooks.
 
 ## Architecture
 
 ### Backend (`apps/api`)
+
 **Module**: `DonationModule`
 
 **Service**: `StripeService`
 
-  - Wraps Stripe SDK.
-  - `createPaymentIntent`: Creates an intent (default currency: USD).
-  - `constructEventFromPayload`: Verifies webhook signatures.
+- Wraps Stripe SDK.
+- `createPaymentIntent`: Creates an intent (default currency: USD).
+- `constructEventFromPayload`: Verifies webhook signatures.
 
 **Controller**: `DonationController`
 
-| Method | Endpoint | Description | Auth |
-|:---|:---|:---|:---|
-| `POST` | `/donations/intent` | Returns `clientSecret` | Public |
-| `POST` | `/donations/stripe/webhook` | Listens for `payment_intent.succeeded` | Stripe |
-| `POST` | `/donations/paypal/webhook` | Listens for `CHECKOUT.ORDER.COMPLETED` | PayPal |
-| `POST` | `/donations` | Handles offline/cash donations (Staff) | Staff |
-| `GET` | `/donations` | List donations (with filters) | Admin |
-| `GET` | `/donations/export` | Download CSV export of donations | Admin |
-| `PATCH` | `/donations/:id` | Update donor details (Admin/Staff) | Admin/Staff |
-| `POST` | `/donations/:id/cancel` | Cancel/Refund donation (Admin) | Admin |
+| Method  | Endpoint                    | Description                            | Auth        |
+| :------ | :-------------------------- | :------------------------------------- | :---------- |
+| `POST`  | `/donations/intent`         | Returns `clientSecret`                 | Public      |
+| `POST`  | `/donations/stripe/webhook` | Listens for `payment_intent.succeeded` | Stripe      |
+| `POST`  | `/donations/paypal/webhook` | Listens for `CHECKOUT.ORDER.COMPLETED` | PayPal      |
+| `POST`  | `/donations`                | Handles offline/cash donations (Staff) | Staff       |
+| `GET`   | `/donations`                | List donations (with filters)          | Admin       |
+| `GET`   | `/donations/export`         | Download CSV export of donations       | Admin       |
+| `PATCH` | `/donations/:id`            | Update donor details (Admin/Staff)     | Admin/Staff |
+| `POST`  | `/donations/:id/cancel`     | Cancel/Refund donation (Admin)         | Admin       |
 
 ### Frontend (`apps/web`)
+
 **Page**: `/donate` (`DonationPage.tsx`) maps to `CheckoutForm`.
 
 **Component**: `CheckoutForm.tsx`
 
-  - Uses `PaymentFormFactory` to abstract provider implementation (Stripe).
-  - Collects Amount, Name, Email.
-  - **Optional Fields**: Phone, Address, Company, Message, Anonymous flag.
-  - Submits to backend to get `clientSecret`.
-  - **Refactor**: Strict typing for `sessionData` and `PaymentIntent` responses.
+- Uses `PaymentFormFactory` to abstract provider implementation (Stripe).
+- Collects Amount, Name, Email.
+- **Optional Fields**: Phone, Address, Company, Message, Anonymous flag.
+- Submits to backend to get `clientSecret`.
+- **Refactor**: Strict typing for `sessionData` and `PaymentIntent` responses.
 
 **Validation**: Zod schema (`donation.schema.ts`).
 
@@ -75,6 +78,6 @@ For detailed instructions on configuring Stripe and PayPal (both for production 
 > [!IMPORTANT]
 > **Credential Precedence**
 >
-> The system resolves credentials in this order: **Database (Event Config / Global Settings)** > **Environment Variables**. 
+> The system resolves credentials in this order: **Database (Event Config / Global Settings)** > **Environment Variables**.
 >
 > To avoid hardcoding keys in `.env`, we recommend setting them via the **Admin Panel > Global Settings**.

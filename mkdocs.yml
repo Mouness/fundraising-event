@@ -1,4 +1,5 @@
 site_name: Fundraising Event Documentation
+site_url: https://Mouness.github.io/fundraising-event/
 theme:
   name: material
   palette:

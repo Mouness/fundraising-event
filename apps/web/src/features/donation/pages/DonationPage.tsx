@@ -1,10 +1,10 @@
-import { useAppConfig } from '@core/providers/AppConfigProvider';
-import { CheckoutForm } from '../components/CheckoutForm';
-import { AppHeader } from '@core/components/AppHeader';
+import { useAppConfig } from '@core/providers/AppConfigProvider'
+import { CheckoutForm } from '../components/CheckoutForm'
+import { AppHeader } from '@core/components/AppHeader'
 
 export const DonationPage = () => {
-    const { config } = useAppConfig();
-    const bgImage = config.theme?.assets?.backgroundDonor;
+    const { config } = useAppConfig()
+    const bgImage = config.theme?.assets?.backgroundDonor
 
     return (
         <div
@@ -26,5 +26,5 @@ export const DonationPage = () => {
                 </main>
             </div>
         </div>
-    );
+    )
 }

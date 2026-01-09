@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@core/components/ui/button';
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Button } from '@core/components/ui/button'
 import {
     Dialog,
     DialogContent,
@@ -8,46 +8,60 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@core/components/ui/dialog';
-import { Checkbox } from '@core/components/ui/checkbox';
-import { Label } from '@core/components/ui/label';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '@core/lib/api';
-import { toast } from 'sonner';
-import { Loader2, AlertTriangle } from 'lucide-react';
-import { type DonationTableData } from '../hooks/useDonationsTable';
+} from '@core/components/ui/dialog'
+import { Checkbox } from '@core/components/ui/checkbox'
+import { Label } from '@core/components/ui/label'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { api } from '@core/lib/api'
+import { toast } from 'sonner'
+import { Loader2, AlertTriangle } from 'lucide-react'
+import { type DonationTableData } from '../hooks/useDonationsTable'
 
 interface CancelDonationDialogProps {
-    donation: DonationTableData | null;
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
+    donation: DonationTableData | null
+    open: boolean
+    onOpenChange: (open: boolean) => void
 }
 
-export const CancelDonationDialog = ({ donation, open, onOpenChange }: CancelDonationDialogProps) => {
-    const { t } = useTranslation('common');
-    const queryClient = useQueryClient();
-    const [shouldRefund, setShouldRefund] = useState(false);
+export const CancelDonationDialog = ({
+    donation,
+    open,
+    onOpenChange,
+}: CancelDonationDialogProps) => {
+    const { t } = useTranslation('common')
+    const queryClient = useQueryClient()
+    const [shouldRefund, setShouldRefund] = useState(false)
 
     const mutation = useMutation({
         mutationFn: async () => {
-            if (!donation) throw new Error('No donation selected');
-            await api.post(`/donations/${donation.id}/cancel`, { shouldRefund });
+            if (!donation) throw new Error('No donation selected')
+            await api.post(`/donations/${donation.id}/cancel`, { shouldRefund })
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['donations-table'] });
-            toast.success(shouldRefund ? t('admin_events.donation_modal.success_refund') : t('admin_events.donation_modal.success_cancel'));
-            onOpenChange(false);
-            setShouldRefund(false);
+            queryClient.invalidateQueries({ queryKey: ['donations-table'] })
+            toast.success(
+                shouldRefund
+                    ? t('admin_events.donation_modal.success_refund')
+                    : t('admin_events.donation_modal.success_cancel'),
+            )
+            onOpenChange(false)
+            setShouldRefund(false)
         },
         onError: (error: unknown) => {
-            const msg = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
-            toast.error(msg || t('admin_events.donation_modal.error_cancel'));
+            const msg = (error as { response?: { data?: { message?: string } } })?.response?.data
+                ?.message
+            toast.error(msg || t('admin_events.donation_modal.error_cancel'))
         },
-    });
+    })
 
-    const isStripe = donation?.paymentMethod === 'stripe';
-    const amount = donation ? new Intl.NumberFormat('en-US', { style: 'currency', currency: donation.currency }).format(donation.amount) : '';
-    const donor = donation?.donorName || t('donation.anonymous');
+    const isStripe = donation?.paymentMethod === 'stripe'
+    const amount = donation
+        ? new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: donation.currency,
+          }).format(donation.amount)
+        : ''
+    const donor = donation?.donorName || t('donation.anonymous')
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -93,17 +107,21 @@ export const CancelDonationDialog = ({ donation, open, onOpenChange }: CancelDon
                 </div>
 
                 <DialogFooter>
-                    <Button variant="outline" onClick={() => onOpenChange(false)}>{t('admin_events.donation_modal.keep')}</Button>
+                    <Button variant="outline" onClick={() => onOpenChange(false)}>
+                        {t('admin_events.donation_modal.keep')}
+                    </Button>
                     <Button
                         variant="destructive"
                         disabled={mutation.isPending}
                         onClick={() => mutation.mutate()}
                     >
                         {mutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        {shouldRefund ? t('admin_events.donation_modal.refund_and_cancel') : t('admin_events.donation_modal.cancel_only')}
+                        {shouldRefund
+                            ? t('admin_events.donation_modal.refund_and_cancel')
+                            : t('admin_events.donation_modal.cancel_only')}
                     </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
-    );
-};
+    )
+}

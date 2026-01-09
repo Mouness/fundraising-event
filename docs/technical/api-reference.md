@@ -32,14 +32,15 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-  "user": {
-    "id": "usr_123",
-    "email": "admin@example.com",
-    "role": "ADMIN"
-  }
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "user": {
+        "id": "usr_123",
+        "email": "admin@example.com",
+        "role": "ADMIN"
+    }
 }
 ```
 
@@ -56,15 +57,16 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-  "user": {
-    "id": "staff_123",
-    "name": "John Volunteer",
-    "role": "STAFF",
-    "eventId": "evt_abc"
-  }
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "user": {
+        "id": "staff_123",
+        "name": "John Volunteer",
+        "role": "STAFF",
+        "eventId": "evt_abc"
+    }
 }
 ```
 
@@ -88,16 +90,17 @@ Authorization: Bearer <token>
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "evt_123",
-    "slug": "winter-gala-2025",
-    "name": "Winter Gala 2025",
-    "goalAmount": 50000,
-    "status": "active",
-    "createdAt": "2025-01-01T00:00:00Z"
-  }
+    {
+        "id": "evt_123",
+        "slug": "winter-gala-2025",
+        "name": "Winter Gala 2025",
+        "goalAmount": 50000,
+        "status": "active",
+        "createdAt": "2025-01-01T00:00:00Z"
+    }
 ]
 ```
 
@@ -110,15 +113,16 @@ GET /events/public
 Returns only `active` events with aggregated stats.
 
 **Response:**
+
 ```json
 [
-  {
-    "slug": "winter-gala-2025",
-    "name": "Winter Gala 2025",
-    "goalAmount": 50000,
-    "totalRaised": 25000,
-    "donorCount": 150
-  }
+    {
+        "slug": "winter-gala-2025",
+        "name": "Winter Gala 2025",
+        "goalAmount": 50000,
+        "totalRaised": 25000,
+        "donorCount": 150
+    }
 ]
 ```
 
@@ -129,15 +133,16 @@ GET /events/:slug
 ```
 
 **Response:**
+
 ```json
 {
-  "id": "evt_123",
-  "slug": "winter-gala-2025",
-  "name": "Winter Gala 2025",
-  "date": "2025-12-15T19:00:00Z",
-  "description": "Annual charity gala",
-  "goalAmount": 50000,
-  "status": "active"
+    "id": "evt_123",
+    "slug": "winter-gala-2025",
+    "name": "Winter Gala 2025",
+    "date": "2025-12-15T19:00:00Z",
+    "description": "Annual charity gala",
+    "goalAmount": 50000,
+    "status": "active"
 }
 ```
 
@@ -245,9 +250,10 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
-  "clientSecret": "pi_xxx_secret_yyy"
+    "clientSecret": "pi_xxx_secret_yyy"
 }
 ```
 
@@ -323,14 +329,15 @@ Authorization: Bearer <token>
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "staff_123",
-    "code": "1234",
-    "name": "John Volunteer",
-    "createdAt": "2025-01-01T00:00:00Z"
-  }
+    {
+        "id": "staff_123",
+        "code": "1234",
+        "name": "John Volunteer",
+        "createdAt": "2025-01-01T00:00:00Z"
+    }
 ]
 ```
 
@@ -467,14 +474,15 @@ GET /health
 ```
 
 **Response:**
+
 ```json
 {
-  "status": "ok",
-  "info": {
-    "database": { "status": "up" },
-    "memory_heap": { "status": "up" },
-    "redis": { "status": "up" }
-  }
+    "status": "ok",
+    "info": {
+        "database": { "status": "up" },
+        "memory_heap": { "status": "up" },
+        "redis": { "status": "up" }
+    }
 }
 ```
 
@@ -487,44 +495,44 @@ The WebSocket server uses **Socket.IO** and runs on the same port as the API.
 ### Connection
 
 ```javascript
-import { io } from 'socket.io-client';
+import { io } from 'socket.io-client'
 
 const socket = io('http://localhost:3000', {
-  withCredentials: true
-});
+    withCredentials: true,
+})
 ```
 
 ### Client → Server Events
 
-| Event | Payload | Description |
-|:---|:---|:---|
+| Event       | Payload           | Description             |
+| :---------- | :---------------- | :---------------------- |
 | `joinEvent` | `eventId: string` | Subscribe to event room |
 
 ```javascript
-socket.emit('joinEvent', 'evt_123');
+socket.emit('joinEvent', 'evt_123')
 ```
 
 ### Server → Client Events
 
-| Event | Payload | Description |
-|:---|:---|:---|
+| Event              | Payload                | Description           |
+| :----------------- | :--------------------- | :-------------------- |
 | `donation.created` | `DonationEventPayload` | New donation received |
 
 ```typescript
 interface DonationEventPayload {
-  id: string;
-  eventId: string;
-  amount: number;      // in cents
-  donorName: string;   // "Anonymous" if hidden
-  message?: string;
-  createdAt: string;
+    id: string
+    eventId: string
+    amount: number // in cents
+    donorName: string // "Anonymous" if hidden
+    message?: string
+    createdAt: string
 }
 ```
 
 ```javascript
 socket.on('donation.created', (donation) => {
-  console.log(`${donation.donorName} donated ${donation.amount / 100}€`);
-});
+    console.log(`${donation.donorName} donated ${donation.amount / 100}€`)
+})
 ```
 
 ---
@@ -535,20 +543,20 @@ All endpoints return consistent error responses:
 
 ```json
 {
-  "statusCode": 400,
-  "message": "Validation failed",
-  "error": "Bad Request"
+    "statusCode": 400,
+    "message": "Validation failed",
+    "error": "Bad Request"
 }
 ```
 
-| Status Code | Description |
-|:---|:---|
-| `400` | Bad Request - Invalid input |
-| `401` | Unauthorized - Missing/invalid token |
-| `403` | Forbidden - Insufficient permissions |
-| `404` | Not Found - Resource doesn't exist |
-| `429` | Too Many Requests - Rate limited |
-| `500` | Internal Server Error |
+| Status Code | Description                          |
+| :---------- | :----------------------------------- |
+| `400`       | Bad Request - Invalid input          |
+| `401`       | Unauthorized - Missing/invalid token |
+| `403`       | Forbidden - Insufficient permissions |
+| `404`       | Not Found - Resource doesn't exist   |
+| `429`       | Too Many Requests - Rate limited     |
+| `500`       | Internal Server Error                |
 
 ---
 

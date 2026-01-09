@@ -1,17 +1,21 @@
-import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@core/components/ui/button';
-import { EventCard } from '../components/EventCard';
-import { useEvents } from '@features/events/hooks/useEvents';
-import { PageLoader } from '@core/components/ui/page-loader';
+import { Link } from 'react-router-dom'
+import { Plus } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Button } from '@core/components/ui/button'
+import { EventCard } from '../components/EventCard'
+import { useEvents } from '@features/events/hooks/useEvents'
+import { PageLoader } from '@core/components/ui/page-loader'
 
 export const EventListPage = () => {
-    const { events, isLoading } = useEvents();
-    const { t } = useTranslation('common');
+    const { events, isLoading } = useEvents()
+    const { t } = useTranslation('common')
 
     if (isLoading) {
-        return <div className="flex justify-center items-center h-64"><PageLoader /></div>;
+        return (
+            <div className="flex justify-center items-center h-64">
+                <PageLoader />
+            </div>
+        )
     }
 
     return (
@@ -24,9 +28,7 @@ export const EventListPage = () => {
                     >
                         {t('admin_events.title')}
                     </h1>
-                    <p className="text-muted-foreground mt-1">
-                        {t('admin_events.subtitle')}
-                    </p>
+                    <p className="text-muted-foreground mt-1">{t('admin_events.subtitle')}</p>
                 </div>
                 <Button className="gap-2" asChild>
                     <Link to="/admin/events/new">
@@ -42,5 +44,5 @@ export const EventListPage = () => {
                 ))}
             </div>
         </div>
-    );
-};
+    )
+}

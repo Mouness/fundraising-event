@@ -1,55 +1,57 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { DonationsPage } from '@/features/events/pages/DonationsPage';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { MemoryRouter } from 'react-router-dom';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
-import { api } from '@/core/lib/api';
-import * as EventContext from '@/features/events/context/EventContext';
-import * as useDonationsTableHook from '@/features/events/hooks/useDonationsTable';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { DonationsPage } from '@/features/events/pages/DonationsPage'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MemoryRouter } from 'react-router-dom'
+import { vi, describe, it, expect, beforeEach } from 'vitest'
+import { api } from '@/core/lib/api'
+import * as EventContext from '@/features/events/context/EventContext'
+import * as useDonationsTableHook from '@/features/events/hooks/useDonationsTable'
 
 vi.mock('@/core/lib/api', () => ({
     api: {
         get: vi.fn(),
     },
     getApiErrorMessage: vi.fn(() => 'Error'),
-}));
+}))
 
 vi.mock('@/features/events/context/EventContext', () => ({
     useEvent: vi.fn(),
-}));
+}))
 
 vi.mock('@/features/events/hooks/useDonationsTable', () => ({
     useDonationsTable: vi.fn(),
-}));
+}))
 
 // Mock dialogs to avoid complexity
 vi.mock('@/features/events/components/EditDonationDialog', () => ({
-    EditDonationDialog: ({ open }: any) => open ? <div data-testid="edit-dialog">Edit Dialog Open</div> : null
-}));
+    EditDonationDialog: ({ open }: any) =>
+        open ? <div data-testid="edit-dialog">Edit Dialog Open</div> : null,
+}))
 
 vi.mock('@/features/events/components/CancelDonationDialog', () => ({
-    CancelDonationDialog: ({ open }: any) => open ? <div data-testid="cancel-dialog">Cancel Dialog Open</div> : null
-}));
+    CancelDonationDialog: ({ open }: any) =>
+        open ? <div data-testid="cancel-dialog">Cancel Dialog Open</div> : null,
+}))
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
 const mockEvent = {
     id: 'evt_1',
     slug: 'test-event',
     name: 'Test Event',
     goalAmount: 10000,
-};
+}
 
 describe('DonationsPage', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.clearAllMocks()
 
         vi.mocked(EventContext.useEvent).mockReturnValue({
             event: mockEvent as any,
             isLoading: false,
-            error: null
-        });
+            error: null,
+        })
 
         vi.mocked(useDonationsTableHook.useDonationsTable).mockReturnValue({
             donations: [
@@ -62,8 +64,8 @@ describe('DonationsPage', () => {
                     paymentMethod: 'stripe',
                     isAnonymous: false,
                     status: 'COMPLETED',
-                    createdAt: new Date().toISOString()
-                }
+                    createdAt: new Date().toISOString(),
+                },
             ],
             total: 1,
             pageCount: 1,
@@ -74,9 +76,9 @@ describe('DonationsPage', () => {
             setSearch: vi.fn(),
             status: 'all',
             setStatus: vi.fn(),
-            refetch: vi.fn()
-        } as any);
-    });
+            refetch: vi.fn(),
+        } as any)
+    })
 
     const renderPage = () => {
         return render(
@@ -84,43 +86,49 @@ describe('DonationsPage', () => {
                 <MemoryRouter>
                     <DonationsPage />
                 </MemoryRouter>
-            </QueryClientProvider>
-        );
-    };
+            </QueryClientProvider>,
+        )
+    }
 
     it('should render the page with donations', () => {
-        renderPage();
-        expect(screen.getByText('John')).toBeInTheDocument();
-        expect(screen.getByText('useCurrencyFormatter:10:EUR')).toBeInTheDocument();
-    });
+        renderPage()
+        expect(screen.getByText('John')).toBeInTheDocument()
+        expect(screen.getByText('useCurrencyFormatter:10:EUR')).toBeInTheDocument()
+    })
 
     it('should call export when export button is clicked', async () => {
-        renderPage();
-        const exportButton = screen.getByText('admin_events.export');
+        renderPage()
+        const exportButton = screen.getByText('admin_events.export')
 
-        vi.mocked(api.get).mockResolvedValue({ data: new Blob() });
-        window.URL.createObjectURL = vi.fn(() => 'mock-url');
+        vi.mocked(api.get).mockResolvedValue({ data: new Blob() })
+        window.URL.createObjectURL = vi.fn(() => 'mock-url')
 
-        fireEvent.click(exportButton);
+        fireEvent.click(exportButton)
 
         await waitFor(() => {
-            expect(api.get).toHaveBeenCalledWith(expect.stringContaining('/donations/export'), expect.any(Object));
-        });
-    });
+            expect(api.get).toHaveBeenCalledWith(
+                expect.stringContaining('/donations/export'),
+                expect.any(Object),
+            )
+        })
+    })
 
     it('should call export pdf when export pdf button is clicked', async () => {
-        renderPage();
-        const exportButton = screen.getByText('admin_events.export_pdf');
+        renderPage()
+        const exportButton = screen.getByText('admin_events.export_pdf')
 
-        vi.mocked(api.get).mockResolvedValue({ data: new Blob() });
-        window.URL.createObjectURL = vi.fn(() => 'mock-url');
+        vi.mocked(api.get).mockResolvedValue({ data: new Blob() })
+        window.URL.createObjectURL = vi.fn(() => 'mock-url')
 
-        fireEvent.click(exportButton);
+        fireEvent.click(exportButton)
 
         await waitFor(() => {
-            expect(api.get).toHaveBeenCalledWith(expect.stringContaining('/export/receipts/zip'), expect.any(Object));
-        });
-    });
+            expect(api.get).toHaveBeenCalledWith(
+                expect.stringContaining('/export/receipts/zip'),
+                expect.any(Object),
+            )
+        })
+    })
 
     it('should show loading state', () => {
         vi.mocked(useDonationsTableHook.useDonationsTable).mockReturnValue({
@@ -134,15 +142,15 @@ describe('DonationsPage', () => {
             setSearch: vi.fn(),
             status: 'all',
             setStatus: vi.fn(),
-            refetch: vi.fn()
-        } as any);
+            refetch: vi.fn(),
+        } as any)
 
-        renderPage();
-        expect(screen.getByText('common.loading')).toBeInTheDocument();
-    });
+        renderPage()
+        expect(screen.getByText('common.loading')).toBeInTheDocument()
+    })
 
     it('should handle pagination', () => {
-        const setPage = vi.fn();
+        const setPage = vi.fn()
         vi.mocked(useDonationsTableHook.useDonationsTable).mockReturnValue({
             donations: [],
             total: 20,
@@ -154,17 +162,17 @@ describe('DonationsPage', () => {
             setSearch: vi.fn(),
             status: 'all',
             setStatus: vi.fn(),
-            refetch: vi.fn()
-        } as any);
+            refetch: vi.fn(),
+        } as any)
 
-        renderPage();
-        const nextButton = screen.getByRole('link', { name: /next/i });
-        fireEvent.click(nextButton);
-        expect(setPage).toHaveBeenCalledWith(2);
-    });
+        renderPage()
+        const nextButton = screen.getByRole('link', { name: /next/i })
+        fireEvent.click(nextButton)
+        expect(setPage).toHaveBeenCalledWith(2)
+    })
 
     it('should handle previous interaction', () => {
-        const setPage = vi.fn();
+        const setPage = vi.fn()
         vi.mocked(useDonationsTableHook.useDonationsTable).mockReturnValue({
             donations: [],
             total: 20,
@@ -176,64 +184,67 @@ describe('DonationsPage', () => {
             setSearch: vi.fn(),
             status: 'all',
             setStatus: vi.fn(),
-            refetch: vi.fn()
-        } as any);
+            refetch: vi.fn(),
+        } as any)
 
-        renderPage();
-        const prevButton = screen.getByRole('link', { name: /previous/i });
-        fireEvent.click(prevButton);
-        expect(setPage).toHaveBeenCalledWith(1);
-    });
+        renderPage()
+        const prevButton = screen.getByRole('link', { name: /previous/i })
+        fireEvent.click(prevButton)
+        expect(setPage).toHaveBeenCalledWith(1)
+    })
 
     it('should open edit dialog when edit action is clicked', async () => {
-        const user = userEvent.setup();
-        renderPage();
+        const user = userEvent.setup()
+        renderPage()
 
         // Open dropdown
-        const menuButton = screen.getByRole('button', { name: /open menu/i });
-        await user.click(menuButton);
+        const menuButton = screen.getByRole('button', { name: /open menu/i })
+        await user.click(menuButton)
 
         // Click Edit
-        const editButton = await screen.findByText('common.edit');
-        await user.click(editButton);
+        const editButton = await screen.findByText('common.edit')
+        await user.click(editButton)
 
-        expect(screen.getByTestId('edit-dialog')).toBeInTheDocument();
-    });
+        expect(screen.getByTestId('edit-dialog')).toBeInTheDocument()
+    })
 
     it('should open cancel dialog when cancel action is clicked', async () => {
-        const user = userEvent.setup();
-        renderPage();
+        const user = userEvent.setup()
+        renderPage()
 
         // Open dropdown
-        const menuButton = screen.getByRole('button', { name: /open menu/i });
-        await user.click(menuButton);
+        const menuButton = screen.getByRole('button', { name: /open menu/i })
+        await user.click(menuButton)
 
         // Click Cancel
-        const cancelButton = await screen.findByText('common.cancel');
-        await user.click(cancelButton);
+        const cancelButton = await screen.findByText('common.cancel')
+        await user.click(cancelButton)
 
-        expect(screen.getByTestId('cancel-dialog')).toBeInTheDocument();
-    });
+        expect(screen.getByTestId('cancel-dialog')).toBeInTheDocument()
+    })
 
     it('should download receipt when receipt action is clicked', async () => {
-        const user = userEvent.setup();
-        renderPage();
+        const user = userEvent.setup()
+        renderPage()
 
         // Open dropdown
-        const menuButton = screen.getByRole('button', { name: /open menu/i });
-        await user.click(menuButton);
+        const menuButton = screen.getByRole('button', { name: /open menu/i })
+        await user.click(menuButton)
 
         // Click Receipt
-        const receiptButton = await screen.findByText('admin_events.download_receipt');
+        const receiptButton = await screen.findByText('admin_events.download_receipt')
 
         // Mock API for single receipt
-        vi.mocked(api.get).mockResolvedValue({ data: new Blob() });
-        window.URL.createObjectURL = vi.fn(() => 'mock-receipt-url');
+        vi.mocked(api.get).mockResolvedValue({ data: new Blob() })
+        window.URL.createObjectURL = vi.fn(() => 'mock-receipt-url')
 
-        await user.click(receiptButton);
+        await user.click(receiptButton)
 
         await waitFor(() => {
-            expect(api.get).toHaveBeenCalledWith(expect.stringContaining('/receipt'), expect.any(Object));
-        });
-    });
-});
+            expect(api.get).toHaveBeenCalledWith(
+                expect.stringContaining('/receipt'),
+                expect.any(Object),
+            )
+        })
+    })
+})

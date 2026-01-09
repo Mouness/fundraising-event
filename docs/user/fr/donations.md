@@ -6,9 +6,9 @@ Cette section couvre la manière dont les dons sont traités, suivis et comment 
 
 L'onglet **Dons** de votre événement fournit une liste complète de toutes les transactions.
 
--   **Statut** : Voir si un don a réussi, échoué ou a été remboursé.
--   **Reçus** : Télécharger manuellement les reçus PDF si un donateur le demande.
--   **Export** : Exporter les données donateurs pour des rapports externes.
+- **Statut** : Voir si un don a réussi, échoué ou a été remboursé.
+- **Reçus** : Télécharger manuellement les reçus PDF si un donateur le demande.
+- **Export** : Exporter les données donateurs pour des rapports externes.
 
 ## Fournisseurs de Paiement
 
@@ -24,20 +24,24 @@ Pour accepter les paiements en ligne, vous devez configurer un processeur de pai
 Voici le parcours standard que vos donateurs expérimenteront.
 
 ### 1. Informations Donateur
+
 Les donateurs remplissent leurs coordonnées de base.
 
 ![Formulaire de Don](../assets/donation_form.png)
 
-*Exemple de Données :*
+_Exemple de Données :_
+
 - **Nom** : `Test Donor`
 - **Email** : `donor@example.com`
 
 ### 2. Détails du Paiement
+
 Les donateurs choisissent leur méthode de paiement et entrent leurs identifiants.
 
 ![Écran de Paiement](../assets/donation_payment.png)
 
-*Carte de Crédit Test (Mode Stripe) :*
+_Carte de Crédit Test (Mode Stripe) :_
+
 - **Carte** : `4242 4242 4242 4242`
 - **Exp** : `10/30`
 - **CVC** : `123`

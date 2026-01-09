@@ -1,80 +1,82 @@
-import { IsString, IsOptional, IsNumber, IsObject, Matches } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsObject, Matches } from 'class-validator'
 
 export class CreateEventDto {
     @IsString()
-    @Matches(/^[a-z0-9-]+$/, { message: 'Slug must be lowercase alphanumeric with dashes' })
-    slug!: string;
+    @Matches(/^[a-z0-9-]+$/, {
+        message: 'Slug must be lowercase alphanumeric with dashes',
+    })
+    slug!: string
 
     @IsString()
-    name!: string;
+    name!: string
 
     @IsNumber()
-    goalAmount!: number;
+    goalAmount!: number
 
     @IsObject()
-    themeConfig!: Record<string, any>;
+    themeConfig!: Record<string, any>
 
     @IsOptional()
-    date?: string | Date;
+    date?: string | Date
 
     @IsOptional()
     @IsString()
-    description?: string;
+    description?: string
 
     @IsOptional()
     @IsString()
-    status?: string;
+    status?: string
 
     @IsOptional()
     @IsObject()
-    formConfig?: Record<string, any>;
+    formConfig?: Record<string, any>
 }
 
 export class UpdateEventDto {
     @IsOptional()
     @IsString()
-    slug?: string;
+    slug?: string
 
     @IsOptional()
     @IsString()
-    name?: string;
+    name?: string
 
     @IsOptional()
     @IsNumber()
-    goalAmount?: number;
+    goalAmount?: number
 
     @IsOptional()
     @IsObject()
-    themeConfig?: Record<string, any>;
+    themeConfig?: Record<string, any>
 
     @IsOptional()
-    date?: string | Date;
-
-    @IsOptional()
-    @IsString()
-    description?: string;
+    date?: string | Date
 
     @IsOptional()
     @IsString()
-    status?: string;
+    description?: string
+
+    @IsOptional()
+    @IsString()
+    status?: string
 
     @IsOptional()
     @IsObject()
-    formConfig?: Record<string, any>;
+    formConfig?: Record<string, any>
 }
 
 export class EventResponseDto {
-    id!: string;
-    slug!: string;
-    name!: string;
-    goalAmount!: number;
-    themeConfig!: Record<string, any>;
-    date?: string | Date;
-    description?: string | null;
-    status?: string;
-    raised?: number;
-    donorCount?: number;
-    createdAt!: string | Date;
-    updatedAt!: string | Date;
-    formConfig?: Record<string, any>;
+    id!: string
+    slug!: string
+    name!: string
+    goalAmount!: number
+    themeConfig!: Record<string, any>
+    date?: string | Date
+    description?: string | null
+    status?: string
+    raised?: number
+    donorCount?: number
+    createdAt!: string | Date
+    updatedAt!: string | Date
+    formConfig?: Record<string, any>
 }

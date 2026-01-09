@@ -1,9 +1,9 @@
 export class AuthResponseDto {
-    declare accessToken: string;
+    declare accessToken: string
     declare user?: {
-        id: string;
-        email?: string;
-        name?: string;
-        role: 'ADMIN' | 'STAFF';
-    };
+        id: string
+        email?: string
+        name?: string
+        role: 'ADMIN' | 'STAFF'
+    }
 }

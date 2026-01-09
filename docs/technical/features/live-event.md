@@ -28,11 +28,11 @@ The visual theme, goal amount, and labels are not hardcoded but loaded from the 
 
 Administrators can select from multiple visual themes and gauge styles:
 
-| Theme | Description |
-|:---|:---|
+| Theme       | Description                            |
+| :---------- | :------------------------------------- |
 | **Classic** | Traditional layout with centered gauge |
-| **Modern** | Bold, gradient-heavy design |
-| **Elegant** | Minimalist, sophisticated look |
+| **Modern**  | Bold, gradient-heavy design            |
+| **Elegant** | Minimalist, sophisticated look         |
 
 ---
 
@@ -152,7 +152,7 @@ Theme and gauge selection is configured per-event:
 ```typescript
 // Event settings schema
 live: z.object({
-  theme: z.enum(['classic', 'modern', 'elegant']).default('classic'),
+    theme: z.enum(['classic', 'modern', 'elegant']).default('classic'),
 }).optional()
 ```
 
@@ -178,35 +178,33 @@ Administrators select the theme in the Event Settings page under the "Live Scree
 #### Page & Components
 
 - **`LivePage`** (`apps/web/src/features/live/pages/LivePage.tsx`):
-  - The main container. Orchestrates the WebSocket connection and layout.
-  - Dynamically renders the selected theme component.
-  
+    - The main container. Orchestrates the WebSocket connection and layout.
+    - Dynamically renders the selected theme component.
 - **`DonationFeed`**: A scrolling list of recent donations using `framer-motion` for entrance animations.
 
 #### Theme Components
 
-| File | Description |
-|:---|:---|
-| `LiveClassic.tsx` | Classic centered layout |
-| `LiveModern.tsx` | Modern horizontal layout |
-| `LiveElegant.tsx` | Elegant minimal layout |
+| File              | Description              |
+| :---------------- | :----------------------- |
+| `LiveClassic.tsx` | Classic centered layout  |
+| `LiveModern.tsx`  | Modern horizontal layout |
+| `LiveElegant.tsx` | Elegant minimal layout   |
 
 #### Gauge Components
 
-| File | Description |
-|:---|:---|
-| `GaugeClassic.tsx` | Circular SVG gauge |
-| `GaugeModern.tsx` | Horizontal progress bar |
-| `GaugeElegant.tsx` | Vertical minimal gauge |
+| File               | Description             |
+| :----------------- | :---------------------- |
+| `GaugeClassic.tsx` | Circular SVG gauge      |
+| `GaugeModern.tsx`  | Horizontal progress bar |
+| `GaugeElegant.tsx` | Vertical minimal gauge  |
 
 #### Hooks
 
 - **`useLiveSocket`**:
-  - Manages the `socket.io` connection lifecycle
-  - Listens for `donation.created` events and updates the local state
-  
+    - Manages the `socket.io` connection lifecycle
+    - Listens for `donation.created` events and updates the local state
 - **`useEventConfig`**:
-  - Fetches the theme (colors) and content (titles) to style the page
+    - Fetches the theme (colors) and content (titles) to style the page
 
 ### Backend (`apps/api`)
 
@@ -214,17 +212,17 @@ Administrators select the theme in the Event Settings page under the "Live Scree
 
 - **Technology**: `socket.io`
 - **Events**:
-  - **`joinEvent`** (Client → Server): Client subscribes to updates for a specific event room
-  - **`donation.created`** (Server → Client): Broadcasted when a payment is confirmed
+    - **`joinEvent`** (Client → Server): Client subscribes to updates for a specific event room
+    - **`donation.created`** (Server → Client): Broadcasted when a payment is confirmed
 
 ```typescript
 interface DonationEventPayload {
-  id: string;
-  eventId: string;
-  amount: number;     // cents
-  donorName: string;
-  message?: string;
-  createdAt: string;
+    id: string
+    eventId: string
+    amount: number // cents
+    donorName: string
+    message?: string
+    createdAt: string
 }
 ```
 
@@ -238,7 +236,7 @@ graph TD
     API -->|Persist| DB[(Database)]
     API -->|Emit Event| Gateway[Socket Gateway]
     Gateway -->|Broadcast| Clients[Live Clients]
-    
+
     subgraph Frontend
         Clients --> ThemeSelector{Theme Selector}
         ThemeSelector -->|classic| Classic[LiveClassic]
@@ -258,13 +256,13 @@ The Live Screen uses dedicated CSS variables for theming. See [White-Labeling > 
 
 Key variables:
 
-| Variable | Description |
-|:---|:---|
-| `--live-page-bg` | Page background color |
-| `--live-gauge-track` | Gauge background track |
-| `--live-gauge-shadow` | Gauge glow effect |
+| Variable              | Description                   |
+| :-------------------- | :---------------------------- |
+| `--live-page-bg`      | Page background color         |
+| `--live-gauge-track`  | Gauge background track        |
+| `--live-gauge-shadow` | Gauge glow effect             |
 | `--live-feed-item-bg` | Donation feed item background |
-| `--live-counter-size` | Main counter font size |
+| `--live-counter-size` | Main counter font size        |
 
 ---
 
@@ -277,5 +275,5 @@ Key variables:
 ### Security
 
 - **CORS**: The WebSocket gateway uses `CORS_ORIGIN` environment variable to restrict connection origins.
-  - Development: defaults to `*` if not set (or typically `localhost`)
-  - Production: MUST be set to the frontend's domain (e.g., `https://my-event.com`) to prevent unauthorized cross-site connections
+    - Development: defaults to `*` if not set (or typically `localhost`)
+    - Production: MUST be set to the frontend's domain (e.g., `https://my-event.com`) to prevent unauthorized cross-site connections

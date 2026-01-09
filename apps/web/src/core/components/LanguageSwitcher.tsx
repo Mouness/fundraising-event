@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next';
-import { Globe } from 'lucide-react';
-import { LOCALE_LABELS } from '@fundraising/white-labeling';
+import { useTranslation } from 'react-i18next'
+import { Globe } from 'lucide-react'
+import { LOCALE_LABELS } from '@fundraising/white-labeling'
 
 export const LanguageSwitcher = () => {
-    const { i18n } = useTranslation();
+    const { i18n } = useTranslation()
 
     return (
         <div className="relative flex items-center border rounded-md hover:bg-black/5 transition-colors">
@@ -18,9 +18,11 @@ export const LanguageSwitcher = () => {
                 style={{ color: 'var(--header-text)' }}
             >
                 {Object.entries(LOCALE_LABELS).map(([code, name]) => (
-                    <option key={code} value={code}>{name}</option>
+                    <option key={code} value={code}>
+                        {name}
+                    </option>
                 ))}
             </select>
         </div>
-    );
-};
+    )
+}

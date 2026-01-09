@@ -1,7 +1,7 @@
-import { globalSettings } from './global';
-import { events } from './events';
-import { staff } from './staff';
-import { donors, donationKeywords, messages } from './donors';
+import { globalSettings } from './global'
+import { events } from './events'
+import { staff } from './staff'
+import { donors, donationKeywords, messages } from './donors'
 
 export const ISLAMIC_SCENARIO = {
     globalSettings,
@@ -9,5 +9,5 @@ export const ISLAMIC_SCENARIO = {
     staff,
     donors,
     donationKeywords,
-    messages
-};
+    messages,
+}

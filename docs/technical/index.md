@@ -17,19 +17,19 @@ This project provides a complete fundraising ecosystem featuring:
 
 ### Getting Started
 
-| Document | Description |
-|:---|:---|
-| [Getting Started](getting-started.md) | Installation and setup guide |
-| [Architecture](architecture.md) | System components overview |
-| [Project Structure](project-structure.md) | Folder structure and organization |
-| [Configuration](configuration.md) | Environment variables and settings |
+| Document                                  | Description                        |
+| :---------------------------------------- | :--------------------------------- |
+| [Getting Started](getting-started.md)     | Installation and setup guide       |
+| [Architecture](architecture.md)           | System components overview         |
+| [Project Structure](project-structure.md) | Folder structure and organization  |
+| [Configuration](configuration.md)         | Environment variables and settings |
 
 ### Core Documentation
 
-| Document | Description |
-|:---|:---|
-| [API Reference](api-reference.md) | REST endpoints and WebSocket events |
-| [White-Labeling](white-labeling.md) | Theming, CSS variables, and i18n |
+| Document                            | Description                         |
+| :---------------------------------- | :---------------------------------- |
+| [API Reference](api-reference.md)   | REST endpoints and WebSocket events |
+| [White-Labeling](white-labeling.md) | Theming, CSS variables, and i18n    |
 
 ---
 
@@ -37,27 +37,27 @@ This project provides a complete fundraising ecosystem featuring:
 
 ### Platform Features
 
-| Feature | Description | Documentation |
-|:---|:---|:---|
-| **Authentication** | Admin login, Staff PIN, OAuth | [View →](features/authentication.md) |
-| **Events Management** | Create and configure fundraising events | [View →](features/events.md) |
-| **Global Settings** | Platform-wide configuration | [View →](features/global-settings.md) |
+| Feature               | Description                             | Documentation                         |
+| :-------------------- | :-------------------------------------- | :------------------------------------ |
+| **Authentication**    | Admin login, Staff PIN, OAuth           | [View →](features/authentication.md)  |
+| **Events Management** | Create and configure fundraising events | [View →](features/events.md)          |
+| **Global Settings**   | Platform-wide configuration             | [View →](features/global-settings.md) |
 
 ### Donor-Facing Features
 
-| Feature | Description | Documentation |
-|:---|:---|:---|
-| **Donation Flow** | Stripe & PayPal integration | [View →](features/donation.md) |
-| **Live Event** | Real-time projection screen | [View →](features/live-event.md) |
-| **Public Landing Pages** | Campaign landing pages | [View →](features/public-landing-pages.md) |
+| Feature                  | Description                 | Documentation                              |
+| :----------------------- | :-------------------------- | :----------------------------------------- |
+| **Donation Flow**        | Stripe & PayPal integration | [View →](features/donation.md)             |
+| **Live Event**           | Real-time projection screen | [View →](features/live-event.md)           |
+| **Public Landing Pages** | Campaign landing pages      | [View →](features/public-landing-pages.md) |
 
 ### Staff & Admin Features
 
-| Feature | Description | Documentation |
-|:---|:---|:---|
-| **Admin Dashboard** | Management and analytics | [View →](features/admin.md) |
-| **Staff Collector** | Offline donation collection | [View →](features/staff.md) |
-| **Communication** | Email receipts and PDF generation | [View →](features/communication.md) |
+| Feature             | Description                       | Documentation                       |
+| :------------------ | :-------------------------------- | :---------------------------------- |
+| **Admin Dashboard** | Management and analytics          | [View →](features/admin.md)         |
+| **Staff Collector** | Offline donation collection       | [View →](features/staff.md)         |
+| **Communication**   | Email receipts and PDF generation | [View →](features/communication.md) |
 
 ---
 
@@ -71,31 +71,31 @@ graph LR
         Tailwind[Tailwind CSS v4]
         Shadcn[Shadcn/UI]
     end
-    
+
     subgraph Backend
         NestJS[NestJS]
         Prisma[Prisma ORM]
         SocketIO[Socket.IO]
         BullMQ[BullMQ]
     end
-    
+
     subgraph Infrastructure
         PostgreSQL[(PostgreSQL)]
         Redis[(Redis)]
     end
-    
+
     React --> NestJS
     NestJS --> PostgreSQL
     NestJS --> Redis
 ```
 
-| Layer | Technologies |
-|:---|:---|
-| **Frontend** | React 19, Vite, Tailwind CSS v4, Shadcn/UI, react-i18next |
-| **Backend** | NestJS, Prisma, Socket.IO, BullMQ, pdfmake |
-| **Database** | PostgreSQL |
-| **Cache/Queue** | Redis |
-| **Payments** | Stripe, PayPal |
+| Layer           | Technologies                                              |
+| :-------------- | :-------------------------------------------------------- |
+| **Frontend**    | React 19, Vite, Tailwind CSS v4, Shadcn/UI, react-i18next |
+| **Backend**     | NestJS, Prisma, Socket.IO, BullMQ, pdfmake                |
+| **Database**    | PostgreSQL                                                |
+| **Cache/Queue** | Redis                                                     |
+| **Payments**    | Stripe, PayPal                                            |
 
 ---
 

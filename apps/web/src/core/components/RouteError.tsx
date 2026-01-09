@@ -1,30 +1,33 @@
-import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@core/components/ui/button';
-import { RefreshCcw, Home } from 'lucide-react';
+import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Button } from '@core/components/ui/button'
+import { RefreshCcw, Home } from 'lucide-react'
 
 export const RouteError = () => {
-    const error = useRouteError();
-    const { t } = useTranslation();
+    const error = useRouteError()
+    const { t } = useTranslation()
 
-    let errorMessage = t('error.message', "We encountered an unexpected error. Don't worry, your data is safe.");
-    let errorTitle = t('error.title', 'Something went wrong');
+    let errorMessage = t(
+        'error.message',
+        "We encountered an unexpected error. Don't worry, your data is safe.",
+    )
+    let errorTitle = t('error.title', 'Something went wrong')
 
     if (isRouteErrorResponse(error)) {
         if (error.status === 404) {
-            errorTitle = t('not_found.title', 'Page Not Found');
-            errorMessage = t('not_found.message', "The page you are looking for doesn't exist.");
+            errorTitle = t('not_found.title', 'Page Not Found')
+            errorMessage = t('not_found.message', "The page you are looking for doesn't exist.")
         } else {
-            errorTitle = `${t('error.title', 'Error')} ${error.status}`;
-            errorMessage = error.statusText;
+            errorTitle = `${t('error.title', 'Error')} ${error.status}`
+            errorMessage = error.statusText
         }
     } else if (error instanceof Error) {
-        errorMessage = error.message;
+        errorMessage = error.message
     }
 
     const handleReset = () => {
-        window.location.reload();
-    };
+        window.location.reload()
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-muted/30">
@@ -34,12 +37,8 @@ export const RouteError = () => {
                 </div>
 
                 <div className="space-y-2">
-                    <h2 className="text-2xl font-bold tracking-tight">
-                        {errorTitle}
-                    </h2>
-                    <p className="text-muted-foreground text-sm">
-                        {errorMessage}
-                    </p>
+                    <h2 className="text-2xl font-bold tracking-tight">{errorTitle}</h2>
+                    <p className="text-muted-foreground text-sm">{errorMessage}</p>
                 </div>
 
                 {import.meta.env.DEV && error instanceof Error && (
@@ -54,12 +53,16 @@ export const RouteError = () => {
                         <RefreshCcw className="mr-2 h-4 w-4" />
                         {t('error.reload', 'Try Again')}
                     </Button>
-                    <Button variant="outline" className="flex-1" onClick={() => window.location.href = '/'}>
+                    <Button
+                        variant="outline"
+                        className="flex-1"
+                        onClick={() => (window.location.href = '/')}
+                    >
                         <Home className="mr-2 h-4 w-4" />
                         {t('common.home', 'Go Home')}
                     </Button>
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}

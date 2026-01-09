@@ -1,9 +1,13 @@
-import { ReceiptContext } from '../../mail/interfaces/receipt.interfaces';
+import { ReceiptContext } from '../../mail/interfaces/receipt.interfaces'
 
-export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buffer | string | null; signature: Buffer | string | null }) => {
-    const { logo, signature } = images;
+export const getReceiptTemplate = (
+    context: ReceiptContext,
+    images: { logo: Buffer | string | null; signature: Buffer | string | null },
+) => {
+    const { logo, signature } = images
     // Amount is passed in major units (Dollars/Euros), so we just ensure it's a number.
-    const amountVal = typeof context.amount === 'number' ? context.amount : parseFloat(context.amount || '0');
+    const amountVal =
+        typeof context.amount === 'number' ? context.amount : parseFloat(context.amount || '0')
 
     return {
         content: [
@@ -15,13 +19,17 @@ export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buff
                         [
                             logo
                                 ? {
-                                    image: logo,
-                                    width: 120,
-                                }
+                                      image: logo,
+                                      width: 120,
+                                  }
                                 : { text: context.eventName, style: 'header' },
                             {
                                 text: [
-                                    { text: context.legalName || context.eventName, bold: true, fontSize: 12 },
+                                    {
+                                        text: context.legalName || context.eventName,
+                                        bold: true,
+                                        fontSize: 12,
+                                    },
                                     '\n',
                                     context.address || '',
                                     '\n',
@@ -31,7 +39,9 @@ export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buff
                                     '\n',
                                     context.phone || '',
                                     context.phone || '',
-                                    context.taxId ? `\n${context.content.taxIdLabel} ${context.taxId}` : '',
+                                    context.taxId
+                                        ? `\n${context.content.taxIdLabel} ${context.taxId}`
+                                        : '',
                                 ],
                                 alignment: 'right',
                                 fontSize: 10,
@@ -60,7 +70,12 @@ export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buff
                     body: [
                         [
                             { text: context.content.receiptNumber, style: 'label' },
-                            { text: (context.transactionId || 'N/A').substring(0, 12).toUpperCase(), style: 'value' },
+                            {
+                                text: (context.transactionId || 'N/A')
+                                    .substring(0, 12)
+                                    .toUpperCase(),
+                                style: 'value',
+                            },
                         ],
                         [
                             { text: context.content.date, style: 'label' },
@@ -68,7 +83,10 @@ export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buff
                         ],
                         [
                             { text: context.content.donorName, style: 'label' },
-                            { text: context.donorName || context.name || 'Supporter', style: 'value' },
+                            {
+                                text: context.donorName || context.name || 'Supporter',
+                                style: 'value',
+                            },
                         ],
                     ],
                 },
@@ -84,8 +102,17 @@ export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buff
                         [
                             {
                                 text: [
-                                    { text: context.content.amount + '\n', fontSize: 10, color: '#666666' },
-                                    { text: `${amountVal.toFixed(2)} ${context.currency}`, fontSize: 24, bold: true, color: context.primaryColor },
+                                    {
+                                        text: context.content.amount + '\n',
+                                        fontSize: 10,
+                                        color: '#666666',
+                                    },
+                                    {
+                                        text: `${amountVal.toFixed(2)} ${context.currency}`,
+                                        fontSize: 24,
+                                        bold: true,
+                                        color: context.primaryColor,
+                                    },
                                 ],
                                 alignment: 'center',
                                 fillColor: '#f9fafb',
@@ -109,7 +136,17 @@ export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buff
                                 ? { image: signature, width: 100, alignment: 'center' }
                                 : { text: '', margin: [0, 30] },
                             {
-                                canvas: [{ type: 'line', x1: 0, y1: 5, x2: 200, y2: 5, lineWidth: 1, lineColor: '#cccccc' }],
+                                canvas: [
+                                    {
+                                        type: 'line',
+                                        x1: 0,
+                                        y1: 5,
+                                        x2: 200,
+                                        y2: 5,
+                                        lineWidth: 1,
+                                        lineColor: '#cccccc',
+                                    },
+                                ],
                             },
                             {
                                 text: context.signatureText || context.content.authorizedSignature,
@@ -164,5 +201,5 @@ export const getReceiptTemplate = (context: ReceiptContext, images: { logo: Buff
         defaultStyle: {
             font: 'Roboto',
         },
-    };
-};
+    }
+}

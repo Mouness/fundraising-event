@@ -1,23 +1,23 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
+import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
 
 export interface Donation {
-    amount: number; // in cents
-    currency: string;
-    donorName: string;
-    message?: string;
-    isAnonymous: boolean;
-    timestamp: number;
+    amount: number // in cents
+    currency: string
+    donorName: string
+    message?: string
+    isAnonymous: boolean
+    timestamp: number
 }
 
 interface DonationFeedProps {
-    donations: Donation[];
+    donations: Donation[]
 }
 
 export const DonationFeed = ({ donations }: DonationFeedProps) => {
-    const { t } = useTranslation('common');
-    const { formatCurrency } = useCurrencyFormatter();
+    const { t } = useTranslation('common')
+    const { formatCurrency } = useCurrencyFormatter()
 
     return (
         <div className="flex-1 overflow-hidden relative fade-mask-bottom">
@@ -33,21 +33,30 @@ export const DonationFeed = ({ donations }: DonationFeedProps) => {
                     >
                         <div
                             className="p-5 rounded-2xl flex justify-between items-center shadow-lg relative overflow-hidden group border"
-                            style={{ backgroundColor: 'var(--live-feed-item-bg)', borderColor: 'var(--live-feed-item-border)', backdropFilter: 'blur(var(--glass-blur))' }}
+                            style={{
+                                backgroundColor: 'var(--live-feed-item-bg)',
+                                borderColor: 'var(--live-feed-item-border)',
+                                backdropFilter: 'blur(var(--glass-blur))',
+                            }}
                         >
-
                             {/* Glow Effect on Hover/Entry */}
                             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
                             <div className="flex items-center gap-4 z-10">
                                 <div
                                     className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold"
-                                    style={{ background: 'linear-gradient(to bottom right, var(--live-avatar-bg-start), var(--live-avatar-bg-end))' }}
+                                    style={{
+                                        background:
+                                            'linear-gradient(to bottom right, var(--live-avatar-bg-start), var(--live-avatar-bg-end))',
+                                    }}
                                 >
                                     {d.isAnonymous ? '?' : d.donorName.charAt(0).toUpperCase()}
                                 </div>
                                 <div>
-                                    <p className="font-bold leading-tight" style={{ color: 'var(--live-text-main)' }}>
+                                    <p
+                                        className="font-bold leading-tight"
+                                        style={{ color: 'var(--live-text-main)' }}
+                                    >
                                         {d.isAnonymous ? t('live.anonymous') : d.donorName}
                                     </p>
                                     {d.message && (
@@ -65,7 +74,7 @@ export const DonationFeed = ({ donations }: DonationFeedProps) => {
                                 className="text-2xl font-bold z-10"
                                 style={{ color: 'var(--live-amount-color)' }}
                             >
-                                +{formatCurrency((d.amount / 100), { currency: d.currency })}
+                                +{formatCurrency(d.amount / 100, { currency: d.currency })}
                             </div>
                         </div>
                     </motion.div>
@@ -77,10 +86,13 @@ export const DonationFeed = ({ donations }: DonationFeedProps) => {
                     className="h-full flex flex-col items-center justify-center space-y-4"
                     style={{ color: 'var(--live-text-muted)' }}
                 >
-                    <div className="w-16 h-16 rounded-full border-2 border-dashed animate-spin-slow" style={{ borderColor: 'var(--live-text-muted)' }}></div>
+                    <div
+                        className="w-16 h-16 rounded-full border-2 border-dashed animate-spin-slow"
+                        style={{ borderColor: 'var(--live-text-muted)' }}
+                    ></div>
                     <p>{t('live.waiting')}</p>
                 </div>
             )}
         </div>
-    );
+    )
 }

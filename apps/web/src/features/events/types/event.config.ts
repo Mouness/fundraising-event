@@ -1,1 +1,1 @@
-export type { EventConfig } from '@fundraising/white-labeling';
+export type { EventConfig } from '@fundraising/white-labeling'

@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsup'
 
 export default defineConfig({
     entry: ['src/index.ts', 'src/theme/theme.default.css'],
@@ -12,4 +12,4 @@ export default defineConfig({
         '.svg': 'dataurl',
         '.css': 'copy',
     },
-});
+})

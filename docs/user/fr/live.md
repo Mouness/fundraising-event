@@ -6,10 +6,10 @@ L'**Écran Live** est une fonctionnalité puissante conçue pour être projetée
 
 ## Fonctionnalités
 
--   **Jauge de Progression** : Se remplit dynamiquement à mesure que vous approchez de l'objectif.
--   **Flux de Dons** : Affiche les nouveaux dons instantanément lorsqu'ils arrivent (Nom & Montant).
--   **Code QR** : Un code scannable qui mène directement à la page de don mobile, facilitant la participation du public.
--   **Total Collecté** : Le montant total à jour.
+- **Jauge de Progression** : Se remplit dynamiquement à mesure que vous approchez de l'objectif.
+- **Flux de Dons** : Affiche les nouveaux dons instantanément lorsqu'ils arrivent (Nom & Montant).
+- **Code QR** : Un code scannable qui mène directement à la page de don mobile, facilitant la participation du public.
+- **Total Collecté** : Le montant total à jour.
 
 ## Comment Utiliser
 

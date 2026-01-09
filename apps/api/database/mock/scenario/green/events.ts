@@ -10,31 +10,33 @@ export const events = [
         description: 'Join us for a night of action to protect the lungs of our planet.',
         config: {
             live: {
-                theme: 'modern'
+                theme: 'modern',
             },
             theme: {
                 assets: {
-                    backgroundLanding: '/mock-assets/rainforest_landing.png',
-                    backgroundLive: '/mock-assets/rainforest_landing.png'
+                    backgroundLanding:
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/green/assets/rainforest_landing.png',
+                    backgroundLive:
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/green/assets/live_global.jpg',
                 },
                 variables: {
                     '--primary': '#1B5E20', // Darker Jungle Green
-                    '--accent': '#C6FF00',  // Lime Green
+                    '--accent': '#C6FF00', // Lime Green
                     '--live-page-bg': '#000000',
                     '--live-text-main': '#E8F5E9',
                     '--live-text-title': '#FFFFFF',
                     '--live-gauge-from': '#C6FF00',
-                    '--live-gauge-to': '#1B5E20'
-                }
+                    '--live-gauge-to': '#1B5E20',
+                },
             },
             donation: {
                 form: {
                     address: { enabled: true, required: false },
                     phone: { enabled: false, required: false },
-                    company: { enabled: true, required: false }
-                }
-            }
-        }
+                    company: { enabled: true, required: false },
+                },
+            },
+        },
     },
     {
         // Case 2: Ocean (Water)
@@ -47,11 +49,12 @@ export const events = [
         description: 'Removing 50 tons of plastic from the Pacific Garbage Patch.',
         config: {
             live: {
-                theme: 'elegant'
+                theme: 'elegant',
             },
             theme: {
                 assets: {
-                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/ocean_live.png'
+                    backgroundLive:
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/green/assets/ocean_live.jpg',
                 },
                 variables: {
                     '--primary': '#0288D1', // Ocean Blue
@@ -60,21 +63,21 @@ export const events = [
                     '--live-page-bg': '#083344', // Dark Cyan
                     '--live-elegant-gold': '#22D3EE', // Cyan instead of gold
                     '--live-elegant-amount-color': '#FFFFFF',
-                    '--live-text-main': '#F0F9FF' // High contrast light blue
-                }
+                    '--live-text-main': '#F0F9FF', // High contrast light blue
+                },
             },
             locales: {
                 overrides: {
                     en: { 'live.latest_donations': 'Latest Impacts' },
-                    fr: { 'live.latest_donations': 'Derniers Impacts' }
-                }
+                    fr: { 'live.latest_donations': 'Derniers Impacts' },
+                },
             },
             donation: {
                 form: {
-                    company: { enabled: true, required: false }
-                }
-            }
-        }
+                    company: { enabled: true, required: false },
+                },
+            },
+        },
     },
     {
         // Case 3: Tech/Solar (Future)
@@ -87,11 +90,12 @@ export const events = [
         description: 'Empowering the next generation with renewable energy independence.',
         config: {
             live: {
-                theme: 'modern'
+                theme: 'modern',
             },
             theme: {
                 assets: {
-                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/solar_live.png'
+                    backgroundLive:
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/green/assets/solar_live.jpg',
                 },
                 variables: {
                     '--primary': '#e6d079ff', // Yellow
@@ -104,15 +108,15 @@ export const events = [
                     '--live-page-bg': '#000000', // Pitch black
                     '--live-text-title': '#FFFFFF',
                     '--live-text-main': '#FACC15',
-                    '--live-status-indicator': '#FACC15'
-                }
+                    '--live-status-indicator': '#FACC15',
+                },
             },
             donation: {
                 payment: {
-                    currency: 'USD'
-                }
-            }
-        }
+                    currency: 'USD',
+                },
+            },
+        },
     },
     {
         // Case 4: Wildlife (Tigers/Rhinos)
@@ -122,10 +126,10 @@ export const events = [
         goalAmount: 600000,
         status: 'active',
         date: new Date('2025-10-04'), // Animal Day
-        description: 'Building safe havens for the world\'s most vulnerable species.',
+        description: "Building safe havens for the world's most vulnerable species.",
         config: {
             live: {
-                theme: 'elegant'
+                theme: 'elegant',
             },
             theme: {
                 variables: {
@@ -136,13 +140,14 @@ export const events = [
                     '--radius': '0.5rem',
                     '--live-page-bg': '#291206', // Dark Brown
                     '--live-elegant-gold': '#F97316', // Orange highlight
-                    '--live-text-main': '#FFEDD5' // High contrast light orange
+                    '--live-text-main': '#FFEDD5', // High contrast light orange
                 },
                 assets: {
-                    backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/wildlife_landing.png'
-                }
-            }
-        }
+                    backgroundLanding:
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/green/assets/wildlife_landing.jpg',
+                },
+            },
+        },
     },
     {
         // Case 5: Urban Community (Gardens)
@@ -155,11 +160,12 @@ export const events = [
         description: 'Transforming gray rooftops into green community spaces.',
         config: {
             live: {
-                theme: 'modern'
+                theme: 'modern',
             },
             theme: {
                 assets: {
-                    backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/green/assets/urban_live.png'
+                    backgroundLive:
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/green/assets/urban_live.png',
                 },
                 variables: {
                     '--primary': '#86EFAC', // Pastel Green
@@ -170,14 +176,14 @@ export const events = [
                     '--live-page-bg': '#ECFCCB', // Lime light bg
                     '--live-text-title': '#FFFFFF',
                     '--live-text-main': '#064E3B',
-                    '--live-feed-item-bg': '#FFFFFF'
-                }
+                    '--live-feed-item-bg': '#FFFFFF',
+                },
             },
             donation: {
                 form: {
-                    phone: { enabled: true, required: false }
-                }
-            }
-        }
-    }
-];
+                    phone: { enabled: true, required: false },
+                },
+            },
+        },
+    },
+]

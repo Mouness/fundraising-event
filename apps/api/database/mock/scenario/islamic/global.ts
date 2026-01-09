@@ -5,15 +5,15 @@ export const globalSettings = {
     website: 'https://ummah-care.org',
     address: 'Genève, Suisse',
     live: {
-        theme: 'modern'
+        theme: 'modern',
     },
     theme: {
         variables: {
-            '--primary': '#0F5132',        // Deep Islamic Green
+            '--primary': '#0F5132', // Deep Islamic Green
             '--primary-foreground': '#FFFFFF',
-            '--secondary': '#F8F9FA',      // Off-white
+            '--secondary': '#F8F9FA', // Off-white
             '--secondary-foreground': '#1A1A1A',
-            '--accent': '#D4AF37',         // Gold
+            '--accent': '#D4AF37', // Gold
             '--accent-foreground': '#1A1A1A',
             '--background': '#FFFFFF',
             '--foreground': '#0F172A',
@@ -21,15 +21,19 @@ export const globalSettings = {
             '--muted-foreground': '#64748B',
             '--card': '#FFFFFF',
             '--card-foreground': '#0F172A',
-            '--radius': '0.3rem'
+            '--radius': '0.3rem',
         },
         assets: {
-            logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/logo.png',
-            favicon: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/favicon.png',
-            backgroundLanding: 'https://raw.githubusercontent.com/Mouness/fundraising-event/main/apps/api/database/mock/scenario/islamic/assets/landing_pattern_light.png',
-            backgroundDonor: 'https://raw.githubusercontent.com/Mouness/fundraising-event/main/apps/api/database/mock/scenario/islamic/assets/landing_pattern_light.png',
-            backgroundLive: 'https://raw.githubusercontent.com/Mouness/fundraising-event/0c4d6ab03605d8f54812b7e5e57f14c2f5cc5414/apps/api/database/mock/scenario/islamic/assets/live_elegant.png'
-        }
+            logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/logo.png',
+            favicon:
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/favicon.png',
+            backgroundLanding:
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/landing_pattern_light.jpg',
+            backgroundDonor:
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/bg_donor.jpg',
+            backgroundLive:
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/922f8f190722f5ad863851273beaa50efe8aca55/apps/api/database/mock/scenario/islamic/assets/live_elegant.jpg',
+        },
     },
     communication: {
         legalName: 'Ummah Care Foundation',
@@ -41,27 +45,27 @@ export const globalSettings = {
         signatureText: 'Abdullah Al-Fulan, Director',
         footerText: 'Votre générosité est une lumière. Merci de soutenir notre mission.',
         pdf: {
-            enabled: false
+            enabled: false,
         },
         email: {
             enabled: true,
             senderName: 'Ummah Care Team',
             replyTo: 'donations@ummah-care.org',
-            subjectLine: 'Jazak Allah Kheir pour votre don'
-        }
+            subjectLine: 'Jazak Allah Kheir pour votre don',
+        },
     },
     donation: {
         payment: {
             currency: 'EUR',
-            provider: 'stripe'
+            provider: 'stripe',
         },
         sharing: {
             enabled: true,
-            networks: ['facebook', 'twitter', 'linkedin']
-        }
+            networks: ['facebook', 'twitter', 'linkedin'],
+        },
     },
     locales: {
         default: 'fr',
-        supported: ['fr', 'ar', 'en']
-    }
-};
+        supported: ['fr', 'ar', 'en'],
+    },
+}

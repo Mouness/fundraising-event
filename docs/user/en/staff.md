@@ -4,8 +4,8 @@ Effectively managing your team is crucial for on-site fundraising. The platform 
 
 ## Role Types
 
--   **Administrator**: Has full access to the Admin Dashboard, global settings, and all events.
--   **Staff (Volunteer)**: Has restricted access. They can only access the **Collector App** to process donations on behalf of others.
+- **Administrator**: Has full access to the Admin Dashboard, global settings, and all events.
+- **Staff (Volunteer)**: Has restricted access. They can only access the **Collector App** to process donations on behalf of others.
 
 ## Managing Staff
 
@@ -38,12 +38,14 @@ Once logged in, volunteers see a streamlined dashboard to process donations with
 ![Collector Dashboard](../assets/collector_dashboard.png)
 
 ### Accessing the App
+
 1.  Open the event URL on the device: `http://localhost:5173/ocean-cleanup-2025`
 2.  Click **"Staff Login"** (or "**Connexion Staff**" in French) in the footer.
-    -   *Note*: The Admin login is located on the root landing page.
+    - _Note_: The Admin login is located on the root landing page.
 3.  Enter credentials to start collecting donations.
 
 ### Workflow
+
 1.  **Select Payment Method**: Cash, Check, or Card (via terminal).
 2.  **Enter Donor Details**: Name and Amount.
 3.  **Confirm**: The donation is instantly recorded and appears on the Live Screen.

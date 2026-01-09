@@ -33,6 +33,7 @@ Une fois connecté, les bénévoles voient un tableau de bord épuré pour trait
 ![Tableau de Bord Collecteur](../assets/collector_dashboard.png)
 
 ### Accéder à l'App
+
 1.  Ouvrez l'URL de l'événement sur l'appareil : `http://localhost:5173/ocean-cleanup-2025`
 2.  Ajoutez `/staff` à l'URL.
 3.  Connectez-vous avec le PIN.

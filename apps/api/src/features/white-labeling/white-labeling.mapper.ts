@@ -1,5 +1,5 @@
-import { Configuration, Prisma } from '@prisma/client';
-import { EventConfig, defaultConfig, DeepPartial, deepMerge } from '@fundraising/white-labeling';
+import { Configuration, Prisma } from '@prisma/client'
+import { EventConfig, defaultConfig, DeepPartial, deepMerge } from '@fundraising/white-labeling'
 
 export class WhiteLabelingMapper {
     /**
@@ -7,7 +7,7 @@ export class WhiteLabelingMapper {
      */
     static toEventConfig(config: Configuration, event?: any): EventConfig {
         // 1. Initialize from default config
-        const result: EventConfig = JSON.parse(JSON.stringify(defaultConfig));
+        const result: EventConfig = JSON.parse(JSON.stringify(defaultConfig))
 
         // 2. Map root columns to partial structure (Priority: Low)
         const rootOverrides: DeepPartial<EventConfig> = {
@@ -24,7 +24,7 @@ export class WhiteLabelingMapper {
                 assets: config.logo ? { logo: config.logo } : {},
             },
             live: config.liveTheme ? { theme: config.liveTheme as any } : undefined,
-        };
+        }
 
         // 3. Map JSON blobs to partial structure (Priority: Medium)
         const blobOverrides: DeepPartial<EventConfig> = {
@@ -40,18 +40,22 @@ export class WhiteLabelingMapper {
             },
             communication: (config.communication || undefined) as any,
             locales: (config.locales || undefined) as any,
-        };
+        }
 
         // 4. Map dynamic Event entity props (Priority: High)
-        const eventOverrides: DeepPartial<EventConfig> = event ? {
-            id: event.id,
-            name: event.name,
-            description: event.description || '',
-            content: { goalAmount: event.goalAmount ? Number(event.goalAmount) : undefined }
-        } : {};
+        const eventOverrides: DeepPartial<EventConfig> = event
+            ? {
+                  id: event.id,
+                  name: event.name,
+                  description: event.description || '',
+                  content: {
+                      goalAmount: event.goalAmount ? Number(event.goalAmount) : undefined,
+                  },
+              }
+            : {}
 
         // Perform single multi-source deep merge
-        return deepMerge(result, rootOverrides, blobOverrides, eventOverrides) as EventConfig;
+        return deepMerge(result, rootOverrides, blobOverrides, eventOverrides) as EventConfig
     }
 
     /**
@@ -60,52 +64,68 @@ export class WhiteLabelingMapper {
     static toDbPayload(data: DeepPartial<EventConfig>): Prisma.ConfigurationUpdateInput {
         const payload: Prisma.ConfigurationUpdateInput = {
             updatedAt: new Date(),
-        };
+        }
 
         // 1. Communication -> Root Columns & JSON
         if (data.communication) {
-            const c = data.communication;
-            if (c.legalName !== undefined) payload.organization = c.legalName || null;
-            if (c.address !== undefined) payload.address = c.address || null;
-            if (c.phone !== undefined) payload.phone = c.phone || null;
-            if (c.supportEmail !== undefined) payload.email = c.supportEmail || null;
-            if (c.website !== undefined) payload.website = c.website || null;
+            const c = data.communication
+            if (c.legalName !== undefined) payload.organization = c.legalName || null
+            if (c.address !== undefined) payload.address = c.address || null
+            if (c.phone !== undefined) payload.phone = c.phone || null
+            if (c.supportEmail !== undefined) payload.email = c.supportEmail || null
+            if (c.website !== undefined) payload.website = c.website || null
 
-            payload.communication = this.cleanForPersistence(c) as Prisma.InputJsonValue;
+            payload.communication = this.cleanForPersistence(c) as Prisma.InputJsonValue
         }
 
         // 2. Theme -> Assets (Logo) & Variables
         if (data.theme !== undefined) {
             if (data.theme?.assets !== undefined) {
-                if (data.theme.assets?.logo !== undefined) payload.logo = data.theme.assets.logo || null;
-                payload.assets = this.cleanForPersistence(data.theme.assets) as Prisma.InputJsonValue;
+                if (data.theme.assets?.logo !== undefined)
+                    payload.logo = data.theme.assets.logo || null
+                payload.assets = this.cleanForPersistence(
+                    data.theme.assets,
+                ) as Prisma.InputJsonValue
             }
             if (data.theme?.variables !== undefined) {
-                payload.themeVariables = this.cleanForPersistence(data.theme.variables) as Prisma.InputJsonValue;
+                payload.themeVariables = this.cleanForPersistence(
+                    data.theme.variables,
+                ) as Prisma.InputJsonValue
             }
         }
 
         // 3. Content -> event column
         if (data.content !== undefined) {
             // Logic: If user provides content.title and NOT communication.legalName, we sync to organization
-            if (data.content?.title !== undefined && (!data.communication || data.communication.legalName === undefined)) {
-                payload.organization = data.content.title || null;
+            if (
+                data.content?.title !== undefined &&
+                (!data.communication || data.communication.legalName === undefined)
+            ) {
+                payload.organization = data.content.title || null
             }
-            payload.event = this.cleanForPersistence(data.content) as Prisma.InputJsonValue;
+            payload.event = this.cleanForPersistence(data.content) as Prisma.InputJsonValue
         }
 
         // 4. Donation -> form, payment, sharing
         if (data.donation !== undefined) {
-            if (data.donation?.form !== undefined) payload.form = this.cleanForPersistence(data.donation.form) as Prisma.InputJsonValue;
-            if (data.donation?.payment !== undefined) payload.payment = this.cleanForPersistence(data.donation.payment) as Prisma.InputJsonValue;
-            if (data.donation?.sharing !== undefined) payload.socialNetwork = this.cleanForPersistence(data.donation.sharing) as Prisma.InputJsonValue;
+            if (data.donation?.form !== undefined)
+                payload.form = this.cleanForPersistence(data.donation.form) as Prisma.InputJsonValue
+            if (data.donation?.payment !== undefined)
+                payload.payment = this.cleanForPersistence(
+                    data.donation.payment,
+                ) as Prisma.InputJsonValue
+            if (data.donation?.sharing !== undefined)
+                payload.socialNetwork = this.cleanForPersistence(
+                    data.donation.sharing,
+                ) as Prisma.InputJsonValue
         }
 
         // 5. Locales & Live Theme
-        if (data.locales) payload.locales = this.cleanForPersistence(data.locales) as Prisma.InputJsonValue;
-        if (data.live?.theme) payload.liveTheme = data.live.theme;
+        if (data.locales)
+            payload.locales = this.cleanForPersistence(data.locales) as Prisma.InputJsonValue
+        if (data.live?.theme) payload.liveTheme = data.live.theme
 
-        return payload;
+        return payload
     }
 
     /**
@@ -113,21 +133,21 @@ export class WhiteLabelingMapper {
      * and ensuring correct inheritance behavior (where only actual values override defaults).
      */
     private static cleanForPersistence(obj: any): any {
-        if (obj === null || obj === undefined) return Prisma.DbNull;
-        if (typeof obj !== 'object' || Array.isArray(obj)) return obj;
+        if (obj === null || obj === undefined) return Prisma.DbNull
+        if (typeof obj !== 'object' || Array.isArray(obj)) return obj
 
         const cleaned = Object.entries(obj).reduce((acc: any, [key, value]) => {
             if (value === '' || value === null || value === undefined) {
                 // Skip for inheritance
             } else if (typeof value === 'object') {
-                const child = this.cleanForPersistence(value);
-                if (child !== Prisma.DbNull) acc[key] = child;
+                const child = this.cleanForPersistence(value)
+                if (child !== Prisma.DbNull) acc[key] = child
             } else {
-                acc[key] = value;
+                acc[key] = value
             }
-            return acc;
-        }, {});
+            return acc
+        }, {})
 
-        return Object.keys(cleaned).length > 0 ? cleaned : Prisma.DbNull;
+        return Object.keys(cleaned).length > 0 ? cleaned : Prisma.DbNull
     }
 }

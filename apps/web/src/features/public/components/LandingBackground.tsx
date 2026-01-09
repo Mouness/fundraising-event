@@ -1,10 +1,8 @@
-
-
-import { useAppConfig } from '@core/providers/AppConfigProvider';
+import { useAppConfig } from '@core/providers/AppConfigProvider'
 
 export const LandingBackground = () => {
-    const { config } = useAppConfig();
-    const backgroundImage = config.theme?.assets?.backgroundLanding;
+    const { config } = useAppConfig()
+    const backgroundImage = config.theme?.assets?.backgroundLanding
 
     if (backgroundImage) {
         return (
@@ -16,7 +14,7 @@ export const LandingBackground = () => {
                 <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px]" />
                 <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.03] contrast-150 brightness-150"></div>
             </div>
-        );
+        )
     }
 
     return (
@@ -27,7 +25,7 @@ export const LandingBackground = () => {
                 style={{
                     backgroundColor: 'hsl(var(--landing-hero-gradient-primary))',
                     opacity: 'var(--landing-blob-opacity)',
-                    animation: 'blob-float-1 var(--landing-blob-1-duration) infinite ease-in-out'
+                    animation: 'blob-float-1 var(--landing-blob-1-duration) infinite ease-in-out',
                 }}
             />
             {/* Blob 2 */}
@@ -36,11 +34,11 @@ export const LandingBackground = () => {
                 style={{
                     backgroundColor: 'hsl(var(--landing-hero-gradient-secondary))',
                     opacity: 'var(--landing-blob-opacity)',
-                    animation: 'blob-float-2 var(--landing-blob-2-duration) infinite ease-in-out'
+                    animation: 'blob-float-2 var(--landing-blob-2-duration) infinite ease-in-out',
                 }}
             />
             {/* Noise Texture */}
             <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.03] contrast-150 brightness-150"></div>
         </div>
-    );
-};
+    )
+}

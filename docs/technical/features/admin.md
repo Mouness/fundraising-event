@@ -59,10 +59,10 @@ The admin interface is built with a layout-first approach to ensure consistent n
 
 **API Endpoints**
 
-| Method | Endpoint | Description | Auth |
-|:---|:---|:---|:---|
-| `GET` | `/admin/stats` | Get dashboard statistics | Admin |
-| `GET` | `/admin/me` | Get current admin details | Admin |
+| Method | Endpoint       | Description               | Auth  |
+| :----- | :------------- | :------------------------ | :---- |
+| `GET`  | `/admin/stats` | Get dashboard statistics  | Admin |
+| `GET`  | `/admin/me`    | Get current admin details | Admin |
 
 For a complete list of endpoints, see the [API Reference](../api-reference.md).
 

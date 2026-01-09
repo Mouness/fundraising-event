@@ -1,61 +1,69 @@
-import { Button } from '@core/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@core/components/ui/card';
-import { Input } from '@core/components/ui/input';
-import { Label } from '@core/components/ui/label';
-import { useTranslation } from 'react-i18next';
-import { ChevronRight } from 'lucide-react';
-import type { UseFormRegister, FieldErrors } from 'react-hook-form';
-import type { DonationFormValues } from '../schemas/donation.schema';
-import { useAppConfig } from '@core/providers/AppConfigProvider';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
+import { Button } from '@core/components/ui/button'
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@core/components/ui/card'
+import { Input } from '@core/components/ui/input'
+import { Label } from '@core/components/ui/label'
+import { useTranslation } from 'react-i18next'
+import { ChevronRight } from 'lucide-react'
+import type { UseFormRegister, FieldErrors } from 'react-hook-form'
+import type { DonationFormValues } from '../schemas/donation.schema'
+import { useAppConfig } from '@core/providers/AppConfigProvider'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
 
 interface DonationContactFormProps {
-    register: UseFormRegister<DonationFormValues>;
-    errors: FieldErrors<DonationFormValues>;
-    currentAmount: number;
-    submitError: string | null;
+    register: UseFormRegister<DonationFormValues>
+    errors: FieldErrors<DonationFormValues>
+    currentAmount: number
+    submitError: string | null
 }
 
 export const DonationContactForm = ({
     register,
     errors,
     currentAmount,
-    submitError
+    submitError,
 }: DonationContactFormProps) => {
-    const { t } = useTranslation('common');
-    const { config } = useAppConfig();
-    const { formatCurrency } = useCurrencyFormatter();
+    const { t } = useTranslation('common')
+    const { config } = useAppConfig()
+    const { formatCurrency } = useCurrencyFormatter()
 
-    const panelClass = "backdrop-blur-md border-t overflow-hidden mt-6";
+    const panelClass = 'backdrop-blur-md border-t overflow-hidden mt-6'
     const panelStyle = {
         backgroundColor: 'var(--glass-bg)',
         borderColor: 'var(--glass-border)',
         backdropFilter: 'blur(var(--glass-blur))',
         borderRadius: 'var(--donation-card-radius)',
-        boxShadow: 'var(--donation-card-shadow)'
-    };
+        boxShadow: 'var(--donation-card-shadow)',
+    }
 
     return (
         <Card className={panelClass} style={panelStyle}>
             <CardHeader>
-                <CardTitle className="text-xl" style={{ color: 'var(--donation-title-color)' }}>{t('donation.contact_info')}</CardTitle>
+                <CardTitle className="text-xl" style={{ color: 'var(--donation-title-color)' }}>
+                    {t('donation.contact_info')}
+                </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="name" style={{ color: 'var(--donation-label-color)' }}>{t('donation.name')} *</Label>
+                    <Label htmlFor="name" style={{ color: 'var(--donation-label-color)' }}>
+                        {t('donation.name')} *
+                    </Label>
                     <Input
                         id="name"
                         {...register('name')}
                         style={{
                             backgroundColor: 'var(--donation-input-bg)',
                             color: 'var(--donation-input-text)',
-                            borderColor: 'var(--donation-input-border)'
+                            borderColor: 'var(--donation-input-border)',
                         }}
                     />
-                    {errors.name && <p className="text-sm text-red-500 font-medium">{errors.name.message}</p>}
+                    {errors.name && (
+                        <p className="text-sm text-red-500 font-medium">{errors.name.message}</p>
+                    )}
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="email" style={{ color: 'var(--donation-label-color)' }}>{t('donation.email')} *</Label>
+                    <Label htmlFor="email" style={{ color: 'var(--donation-label-color)' }}>
+                        {t('donation.email')} *
+                    </Label>
                     <Input
                         id="email"
                         type="email"
@@ -63,64 +71,92 @@ export const DonationContactForm = ({
                         style={{
                             backgroundColor: 'var(--donation-input-bg)',
                             color: 'var(--donation-input-text)',
-                            borderColor: 'var(--donation-input-border)'
+                            borderColor: 'var(--donation-input-border)',
                         }}
                     />
-                    {errors.email && <p className="text-sm text-red-500 font-medium">{errors.email.message}</p>}
+                    {errors.email && (
+                        <p className="text-sm text-red-500 font-medium">{errors.email.message}</p>
+                    )}
                 </div>
 
                 {config.donation.form.phone.enabled && (
                     <div className="space-y-2">
-                        <Label htmlFor="phone" style={{ color: 'var(--donation-label-color)' }}>{t('donation.phone')} {config.donation.form.phone.required && '*'}</Label>
+                        <Label htmlFor="phone" style={{ color: 'var(--donation-label-color)' }}>
+                            {t('donation.phone')} {config.donation.form.phone.required && '*'}
+                        </Label>
                         <Input
                             id="phone"
                             type="tel"
-                            {...register('phone', { required: config.donation.form.phone.required ? t('donation.phone_required') : false })}
+                            {...register('phone', {
+                                required: config.donation.form.phone.required
+                                    ? t('donation.phone_required')
+                                    : false,
+                            })}
                             style={{
                                 backgroundColor: 'var(--donation-input-bg)',
                                 color: 'var(--donation-input-text)',
-                                borderColor: 'var(--donation-input-border)'
+                                borderColor: 'var(--donation-input-border)',
                             }}
                         />
-                        {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
+                        {errors.phone && (
+                            <p className="text-sm text-red-500">{errors.phone.message}</p>
+                        )}
                     </div>
                 )}
 
                 {config.donation.form.address?.enabled && (
                     <div className="space-y-2">
-                        <Label htmlFor="address" style={{ color: 'var(--donation-label-color)' }}>{t('donation.address')} {config.donation.form.address.required && '*'}</Label>
+                        <Label htmlFor="address" style={{ color: 'var(--donation-label-color)' }}>
+                            {t('donation.address')} {config.donation.form.address.required && '*'}
+                        </Label>
                         <Input
                             id="address"
-                            {...register('address', { required: config.donation.form.address.required ? t('validation.required') : false })}
+                            {...register('address', {
+                                required: config.donation.form.address.required
+                                    ? t('validation.required')
+                                    : false,
+                            })}
                             style={{
                                 backgroundColor: 'var(--donation-input-bg)',
                                 color: 'var(--donation-input-text)',
-                                borderColor: 'var(--donation-input-border)'
+                                borderColor: 'var(--donation-input-border)',
                             }}
                         />
-                        {errors.address && <p className="text-sm text-red-500">{errors.address.message}</p>}
+                        {errors.address && (
+                            <p className="text-sm text-red-500">{errors.address.message}</p>
+                        )}
                     </div>
                 )}
 
                 {config.donation.form.company?.enabled && (
                     <div className="space-y-2">
-                        <Label htmlFor="company" style={{ color: 'var(--donation-label-color)' }}>{t('donation.company')} {config.donation.form.company.required && '*'}</Label>
+                        <Label htmlFor="company" style={{ color: 'var(--donation-label-color)' }}>
+                            {t('donation.company')} {config.donation.form.company.required && '*'}
+                        </Label>
                         <Input
                             id="company"
-                            {...register('company', { required: config.donation.form.company.required ? t('validation.required') : false })}
+                            {...register('company', {
+                                required: config.donation.form.company.required
+                                    ? t('validation.required')
+                                    : false,
+                            })}
                             style={{
                                 backgroundColor: 'var(--donation-input-bg)',
                                 color: 'var(--donation-input-text)',
-                                borderColor: 'var(--donation-input-border)'
+                                borderColor: 'var(--donation-input-border)',
                             }}
                         />
-                        {errors.company && <p className="text-sm text-red-500">{errors.company.message}</p>}
+                        {errors.company && (
+                            <p className="text-sm text-red-500">{errors.company.message}</p>
+                        )}
                     </div>
                 )}
 
                 {config.donation.form.message.enabled && (
                     <div className="space-y-2">
-                        <Label htmlFor="message" style={{ color: 'var(--donation-label-color)' }}>{t('donation.message')}</Label>
+                        <Label htmlFor="message" style={{ color: 'var(--donation-label-color)' }}>
+                            {t('donation.message')}
+                        </Label>
                         <textarea
                             id="message"
                             {...register('message')}
@@ -128,7 +164,7 @@ export const DonationContactForm = ({
                             style={{
                                 backgroundColor: 'var(--donation-input-bg)',
                                 color: 'var(--donation-input-text)',
-                                borderColor: 'var(--donation-input-border)'
+                                borderColor: 'var(--donation-input-border)',
                             }}
                         />
                     </div>
@@ -142,7 +178,12 @@ export const DonationContactForm = ({
                             {...register('isAnonymous')}
                             className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                         />
-                        <Label htmlFor="isAnonymous" style={{ color: 'var(--donation-label-color)' }}>{t('donation.anonymous')}</Label>
+                        <Label
+                            htmlFor="isAnonymous"
+                            style={{ color: 'var(--donation-label-color)' }}
+                        >
+                            {t('donation.anonymous')}
+                        </Label>
                     </div>
                 )}
             </CardContent>
@@ -154,7 +195,7 @@ export const DonationContactForm = ({
                     className="w-full text-lg shadow-lg hover:shadow-xl transition-all"
                     style={{
                         backgroundColor: 'var(--donation-next-button-bg)',
-                        color: 'var(--donation-next-button-text)'
+                        color: 'var(--donation-next-button-text)',
                     }}
                 >
                     {t('donation.submit', { amount: formatCurrency(currentAmount || 0) })}
@@ -162,5 +203,5 @@ export const DonationContactForm = ({
                 </Button>
             </CardFooter>
         </Card>
-    );
-};
+    )
+}

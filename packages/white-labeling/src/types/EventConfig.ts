@@ -1,53 +1,53 @@
-import { SupportedLocale } from './locales';
+import { SupportedLocale } from './locales'
 export interface EventConfig {
     /** Unique identifier for the event */
-    id: string;
+    id: string
 
     /** URL slug for the event */
-    slug?: string;
+    slug?: string
 
     /** Name of the event (System/DB) */
-    name: string;
+    name: string
 
     /** Description of the event (System/DB) */
-    description?: string;
+    description?: string
 
-    theme?: ThemeConfig;
-    content: ContentConfig;
-    live?: LiveConfig;
-    donation: DonationConfig;
-    communication: CommunicationConfig;
-    locales?: LocalesConfig;
+    theme?: ThemeConfig
+    content: ContentConfig
+    live?: LiveConfig
+    donation: DonationConfig
+    communication: CommunicationConfig
+    locales?: LocalesConfig
 }
 
 /** Visual theme configuration */
 export interface ThemeConfig {
     /** Generic assets map (e.g. logo, background) */
-    assets?: Record<string, string>;
+    assets?: Record<string, string>
     /** Generic CSS variables map (e.g. --primary, --radius) */
-    variables?: Record<string, string>;
+    variables?: Record<string, string>
 }
 
 /** Text content configuration */
 export interface ContentConfig {
     /** Main title of the event (Display Override) - defaults to event.name */
-    title: string;
+    title: string
     /** Label for the total raised amount (e.g. "Total Raised") */
-    totalLabel: string;
+    totalLabel: string
     /** Fundraising goal amount in dollars */
-    goalAmount: number;
+    goalAmount: number
     /** Landing page configuration (features, footer links) */
     landing?: {
-        impact?: { url?: string; enabled?: boolean };
-        community?: { url?: string; enabled?: boolean };
-        interactive?: { url?: string; enabled?: boolean };
-    };
+        impact?: { url?: string; enabled?: boolean }
+        community?: { url?: string; enabled?: boolean }
+        interactive?: { url?: string; enabled?: boolean }
+    }
 }
 
 /** Live Page Configuration */
 export interface LiveConfig {
     /** Visual Theme Proposal */
-    theme: 'classic' | 'modern' | 'elegant';
+    theme: 'classic' | 'modern' | 'elegant'
 }
 
 /** Donation flow configuration */
@@ -55,110 +55,108 @@ export interface DonationConfig {
     /** Form field toggles */
     form: {
         /** Collect donor phone number */
-        phone: DonationFormFieldConfig;
+        phone: DonationFormFieldConfig
         /** Collect donor address */
-        address: DonationFormFieldConfig;
+        address: DonationFormFieldConfig
         /** Collect company name */
-        company: DonationFormFieldConfig;
+        company: DonationFormFieldConfig
         /** Collect donor message/comment */
-        message: DonationFormFieldConfig;
+        message: DonationFormFieldConfig
         /** Allow anonymous donations */
-        anonymous: DonationFormFieldConfig;
-    };
-    sharing: SharingConfig;
-    payment: PaymentConfig;
+        anonymous: DonationFormFieldConfig
+    }
+    sharing: SharingConfig
+    payment: PaymentConfig
 }
 
 /** Social media sharing configuration */
 export interface SharingConfig {
-    enabled: boolean;
+    enabled: boolean
     /** List of enabled specialized sharing buttons */
-    networks: ('facebook' | 'twitter' | 'linkedin')[];
+    networks: ('facebook' | 'twitter' | 'linkedin')[]
 }
 
 /** Form field configuration */
 export interface DonationFormFieldConfig {
-    enabled: boolean;
-    required: boolean;
+    enabled: boolean
+    required: boolean
 }
 
 /** Stripe-specific config */
 export interface StripeProviderConfig {
-    publishableKey: string;
-    secretKey: string;
-    webhookSecret: string;
+    publishableKey: string
+    secretKey: string
+    webhookSecret: string
 }
 
 /** PayPal-specific config */
 export interface PayPalProviderConfig {
-    clientId: string;
-    clientSecret: string;
-    webhookId: string;
-    sandbox: boolean;
+    clientId: string
+    clientSecret: string
+    webhookId: string
+    sandbox: boolean
 }
 
 /** Payment provider configuration */
 export interface PaymentConfig {
-    provider: 'stripe' | 'paypal' | string;
+    provider: 'stripe' | 'paypal' | string
     /** Currency code (e.g. USD, EUR) */
-    currency: string;
+    currency: string
     /** Provider-specific config (public keys, etc.) */
     config?: {
-        stripe?: StripeProviderConfig;
-        paypal?: PayPalProviderConfig;
-    };
+        stripe?: StripeProviderConfig
+        paypal?: PayPalProviderConfig
+    }
 }
 
 /** Unified Communication configuration (Email & PDF) */
 export interface CommunicationConfig {
     /** Organization Details */
-    legalName: string;
-    taxId?: string; // Tax ID / Charity Registration Number
-    address: string;
-    website?: string;
-    supportEmail?: string;
-    phone?: string;
-    footerText?: string; // footer text for receipts
-    signatureText?: string; // e.g. "CEO Name, Title"
-    signatureImage?: string; // URL to signature image
+    legalName: string
+    taxId?: string // Tax ID / Charity Registration Number
+    address: string
+    website?: string
+    supportEmail?: string
+    phone?: string
+    footerText?: string // footer text for receipts
+    signatureText?: string // e.g. "CEO Name, Title"
+    signatureImage?: string // URL to signature image
 
-    pdf: PdfConfig;
-    email: EmailConfig;
+    pdf: PdfConfig
+    email: EmailConfig
 }
 
 /** PDF template configuration */
 export interface PdfConfig {
-    enabled: boolean;
+    enabled: boolean
 }
 
 /** Email receipt configuration */
 export interface EmailConfig {
-    enabled: boolean;
-    senderName?: string;
-    replyTo?: string;
-    subjectLine?: string;
-    provider?: 'console' | 'smtp' | 'resend' | 'gmail' | 'outlook';
-    config?: EmailProviderConfig;
+    enabled: boolean
+    senderName?: string
+    replyTo?: string
+    subjectLine?: string
+    provider?: 'console' | 'smtp' | 'resend' | 'gmail' | 'outlook'
+    config?: EmailProviderConfig
 }
 
 export interface EmailProviderConfig {
     smtp?: {
-        host: string;
-        port: number;
-        secure: boolean;
+        host: string
+        port: number
+        secure: boolean
         auth?: {
-            user: string;
-            pass: string;
-        };
-    };
+            user: string
+            pass: string
+        }
+    }
 }
 
 /** Localization configuration */
 export interface LocalesConfig {
-    default: SupportedLocale;
-    supported: SupportedLocale[];
+    default: SupportedLocale
+    supported: SupportedLocale[]
     /** Key-value overrides for translations */
-    overrides?: Record<string, any>;
+    overrides?: Record<string, any>
 }
-
-

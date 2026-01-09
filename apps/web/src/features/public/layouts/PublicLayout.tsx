@@ -1,7 +1,7 @@
-import type { PropsWithChildren } from 'react';
-import { LandingBackground } from '../components/LandingBackground';
-import { PublicHeader } from '../components/PublicHeader';
-import { PublicFooter } from '../components/PublicFooter';
+import type { PropsWithChildren } from 'react'
+import { LandingBackground } from '../components/LandingBackground'
+import { PublicHeader } from '../components/PublicHeader'
+import { PublicFooter } from '../components/PublicFooter'
 
 export const PublicLayout = ({ children }: PropsWithChildren) => {
     return (
@@ -13,12 +13,10 @@ export const PublicLayout = ({ children }: PropsWithChildren) => {
             <PublicHeader />
 
             {/* Main Content */}
-            <main className="flex-grow flex flex-col relative z-10">
-                {children}
-            </main>
+            <main className="flex-grow flex flex-col relative z-10">{children}</main>
 
             {/* Footer */}
             <PublicFooter />
         </div>
-    );
-};
+    )
+}

@@ -1,12 +1,18 @@
-import { DonationFeed } from '../DonationFeed';
-import { GaugeModern } from '../gauges/GaugeModern';
-import type { LiveThemeProps } from '../../types';
-import QRCode from 'react-qr-code';
-import { useTranslation } from 'react-i18next';
+import { DonationFeed } from '../DonationFeed'
+import { GaugeModern } from '../gauges/GaugeModern'
+import type { LiveThemeProps } from '../../types'
+import QRCode from 'react-qr-code'
+import { useTranslation } from 'react-i18next'
 
-export const LiveModern = ({ config, donations, totalRaisedCents, prevTotal, activeSlug }: LiveThemeProps) => {
-    const { t } = useTranslation('common');
-    const bgImage = config.theme?.assets?.backgroundLive;
+export const LiveModern = ({
+    config,
+    donations,
+    totalRaisedCents,
+    prevTotal,
+    activeSlug,
+}: LiveThemeProps) => {
+    const { t } = useTranslation('common')
+    const bgImage = config.theme?.assets?.backgroundLive
 
     // Use a robust fallback background if variables aren't set
     const bgStyle = {
@@ -15,7 +21,7 @@ export const LiveModern = ({ config, donations, totalRaisedCents, prevTotal, act
         backgroundImage: bgImage ? `url(${bgImage})` : undefined,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-    };
+    }
 
     return (
         <div
@@ -28,7 +34,6 @@ export const LiveModern = ({ config, donations, totalRaisedCents, prevTotal, act
             {/* LEFT PANEL: Hero & Stats */}
             {/* Mobile: min-h-[60vh] to ensure space. Desktop: h-screen sticky to keep it fixed while feed might scroll if needed (though feed has internal scroll) */}
             <div className="relative w-full lg:w-[60%] min-h-[60vh] lg:h-screen flex flex-col p-6 lg:p-16 overflow-hidden z-10 border-b lg:border-b-0 lg:border-r border-white/10">
-
                 {/* Background Ambient Mesh - Only show if NO bg image, or make it subtle? 
                     If bgImage exists, we might want to hide distinct gradients to avoid clashing, 
                     or keep them as subtle tints. Let's keep them but lower opacity if image exists.
@@ -36,8 +41,9 @@ export const LiveModern = ({ config, donations, totalRaisedCents, prevTotal, act
                 <div
                     className="absolute top-0 left-0 w-full h-full pointer-events-none"
                     style={{
-                        background: 'radial-gradient(circle at 20% 20%, var(--live-modern-accent, #6366f1) 0%, transparent 50%)',
-                        opacity: bgImage ? 0.1 : 0.2 // Reduce opacity if image is there
+                        background:
+                            'radial-gradient(circle at 20% 20%, var(--live-modern-accent, #6366f1) 0%, transparent 50%)',
+                        opacity: bgImage ? 0.1 : 0.2, // Reduce opacity if image is there
                     }}
                 />
 
@@ -125,5 +131,5 @@ export const LiveModern = ({ config, donations, totalRaisedCents, prevTotal, act
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}

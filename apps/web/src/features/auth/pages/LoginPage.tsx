@@ -1,41 +1,52 @@
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@core/components/ui/button';
-import { Input } from '@core/components/ui/input';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@core/components/ui/card';
-import { Label } from '@core/components/ui/label';
-import { useTranslation } from 'react-i18next';
-import { useLogin } from '../hooks/useLogin';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from '@core/components/ui/button'
+import { Input } from '@core/components/ui/input'
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardContent,
+    CardDescription,
+    CardFooter,
+} from '@core/components/ui/card'
+import { Label } from '@core/components/ui/label'
+import { useTranslation } from 'react-i18next'
+import { useLogin } from '../hooks/useLogin'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { loginSchema, type LoginFormValues } from '../schemas/login.schema'
 
 export const LoginPage = () => {
-    const { t } = useTranslation('common');
-    const navigate = useNavigate();
-    const { login, error, isLoading } = useLogin();
+    const { t } = useTranslation('common')
+    const navigate = useNavigate()
+    const { login, error, isLoading } = useLogin()
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const userStr = localStorage.getItem('user');
+        const token = localStorage.getItem('token')
+        const userStr = localStorage.getItem('user')
         if (token && userStr) {
             try {
-                const user = JSON.parse(userStr);
+                const user = JSON.parse(userStr)
                 if (user.role === 'ADMIN' || user.role === 'STAFF') {
-                    navigate('/admin');
+                    navigate('/admin')
                 }
             } catch {
                 // Ignore parse error
             }
         }
-    }, [navigate]);
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
+    }, [navigate])
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
-    });
+    })
 
     const onSubmit = async (data: LoginFormValues) => {
-        await login(data);
-    };
+        await login(data)
+    }
 
     return (
         <div
@@ -47,19 +58,29 @@ export const LoginPage = () => {
                 style={{
                     boxShadow: 'var(--auth-card-shadow)',
                     borderRadius: 'var(--auth-card-radius)',
-                    borderColor: 'var(--auth-input-border)'
+                    borderColor: 'var(--auth-input-border)',
                 }}
             >
                 <CardHeader>
-                    <CardTitle className="text-2xl text-center" style={{ color: 'var(--auth-title-color)' }}>{t('login.title')}</CardTitle>
-                    <CardDescription className="text-center" style={{ color: 'var(--auth-subtitle-color)' }}>
+                    <CardTitle
+                        className="text-2xl text-center"
+                        style={{ color: 'var(--auth-title-color)' }}
+                    >
+                        {t('login.title')}
+                    </CardTitle>
+                    <CardDescription
+                        className="text-center"
+                        style={{ color: 'var(--auth-subtitle-color)' }}
+                    >
                         {t('login.subtitle')}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div className="space-y-2">
-                            <Label htmlFor="email" style={{ color: 'var(--auth-label-color)' }}>{t('login.email')}</Label>
+                            <Label htmlFor="email" style={{ color: 'var(--auth-label-color)' }}>
+                                {t('login.email')}
+                            </Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -68,13 +89,17 @@ export const LoginPage = () => {
                                 style={{
                                     backgroundColor: 'var(--auth-input-bg)',
                                     color: 'var(--auth-input-text)',
-                                    borderColor: 'var(--auth-input-border)'
+                                    borderColor: 'var(--auth-input-border)',
                                 }}
                             />
-                            {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+                            {errors.email && (
+                                <p className="text-sm text-red-500">{errors.email.message}</p>
+                            )}
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="password" style={{ color: 'var(--auth-label-color)' }}>{t('login.password')}</Label>
+                            <Label htmlFor="password" style={{ color: 'var(--auth-label-color)' }}>
+                                {t('login.password')}
+                            </Label>
                             <Input
                                 id="password"
                                 type="password"
@@ -82,10 +107,12 @@ export const LoginPage = () => {
                                 style={{
                                     backgroundColor: 'var(--auth-input-bg)',
                                     color: 'var(--auth-input-text)',
-                                    borderColor: 'var(--auth-input-border)'
+                                    borderColor: 'var(--auth-input-border)',
                                 }}
                             />
-                            {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+                            {errors.password && (
+                                <p className="text-sm text-red-500">{errors.password.message}</p>
+                            )}
                         </div>
 
                         {error && <p className="text-sm text-red-500 text-center">{error}</p>}
@@ -96,7 +123,7 @@ export const LoginPage = () => {
                             disabled={isLoading}
                             style={{
                                 backgroundColor: 'var(--auth-button-bg)',
-                                color: 'var(--auth-button-text)'
+                                color: 'var(--auth-button-text)',
                             }}
                         >
                             {isLoading ? t('login.loading') : t('login.submit')}
@@ -113,6 +140,6 @@ export const LoginPage = () => {
                     </a>
                 </CardFooter>
             </Card>
-        </div >
-    );
+        </div>
+    )
 }

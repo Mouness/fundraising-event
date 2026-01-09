@@ -1,20 +1,20 @@
-import { motion } from 'framer-motion';
-import CountUp from 'react-countup';
-import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
+import { motion } from 'framer-motion'
+import CountUp from 'react-countup'
+import { useTranslation } from 'react-i18next'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
 
-import { type GaugeProps } from '../../types';
+import { type GaugeProps } from '../../types'
 
 export const GaugeClassic = ({
     totalRaisedCents,
     prevTotal,
     goalAmount,
-    totalLabel
+    totalLabel,
 }: GaugeProps) => {
-    const { t } = useTranslation('common');
-    const { formatCurrency } = useCurrencyFormatter();
-    const percentage = goalAmount > 0 ? (totalRaisedCents / (goalAmount * 100)) * 100 : 100;
-    const progressPercentage = Math.min(percentage, 100);
+    const { t } = useTranslation('common')
+    const { formatCurrency } = useCurrencyFormatter()
+    const percentage = goalAmount > 0 ? (totalRaisedCents / (goalAmount * 100)) * 100 : 100
+    const progressPercentage = Math.min(percentage, 100)
 
     return (
         <div className="relative w-[500px] h-[500px]">
@@ -23,10 +23,19 @@ export const GaugeClassic = ({
                 style={{ filter: 'drop-shadow(0 0 15px var(--live-gauge-shadow))' }}
             >
                 {/* Track */}
-                <circle cx="50%" cy="50%" r="45%" stroke="var(--live-gauge-track)" strokeWidth="12" fill="none" />
+                <circle
+                    cx="50%"
+                    cy="50%"
+                    r="45%"
+                    stroke="var(--live-gauge-track)"
+                    strokeWidth="12"
+                    fill="none"
+                />
                 {/* Progress */}
                 <motion.circle
-                    cx="50%" cy="50%" r="45%"
+                    cx="50%"
+                    cy="50%"
+                    r="45%"
                     stroke="url(#gradient)"
                     strokeWidth="12"
                     fill="none"
@@ -35,9 +44,13 @@ export const GaugeClassic = ({
                     strokeDashoffset={283 - (283 * progressPercentage) / 100}
                     initial={{ strokeDashoffset: 283 }}
                     animate={{ strokeDashoffset: 283 - (283 * progressPercentage) / 100 }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
                     pathLength={1}
-                    style={{ pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - progressPercentage / 100 }}
+                    style={{
+                        pathLength: 1,
+                        strokeDasharray: 1,
+                        strokeDashoffset: 1 - progressPercentage / 100,
+                    }}
                 />
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -51,7 +64,10 @@ export const GaugeClassic = ({
             <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <motion.div
                     className="text-6xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent"
-                    style={{ backgroundImage: 'linear-gradient(to bottom, var(--live-classic-counter-gradient-from), var(--live-classic-counter-gradient-to))' }}
+                    style={{
+                        backgroundImage:
+                            'linear-gradient(to bottom, var(--live-classic-counter-gradient-from), var(--live-classic-counter-gradient-to))',
+                    }}
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                 >
@@ -70,7 +86,7 @@ export const GaugeClassic = ({
                         backgroundColor: 'var(--live-badge-bg, var(--glass-bg))',
                         backdropFilter: 'blur(var(--glass-blur))',
                         borderColor: 'var(--live-badge-border, var(--glass-border))',
-                        color: 'var(--live-badge-text, var(--live-text-secondary))'
+                        color: 'var(--live-badge-text, var(--live-text-secondary))',
                     }}
                 >
                     {totalLabel || t('live.total_raised')}
@@ -83,5 +99,5 @@ export const GaugeClassic = ({
                 </div>
             </div>
         </div>
-    );
+    )
 }

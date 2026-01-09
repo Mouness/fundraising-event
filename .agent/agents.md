@@ -3,7 +3,9 @@
 This document serves as the primary source of truth for all AI agents and developers working on the **Fundraising Event** project. It outlines the structure, coding standards, boundaries, and tools to ensure consistency and quality.
 
 ## 1. Prime Directive (Context Awareness)
+
 **CRITICAL:** Before starting ANY task, you must ensure you have read and understood the contents of the `.agent/` directory:
+
 1.  `.agent/specs.md` - Functional Specifications.
 2.  `.agent/agents.md` - Developer Guidelines (This file).
 3.  `.agent/AntiGravity.md` - Context/Memory (if present).
@@ -142,117 +144,129 @@ fundraising-event/
 ## 2. Coding Style
 
 ### General
-*   **Language:** TypeScript (Strict Mode enabled).
-*   **Formatting:** Prettier (default config).
-*   **Linting:** ESLint (recommended rules).
-*   **Comments:** Use JSDoc for complex functions. Explain "Why", not "What".
-*   **Types:** One type per file. Do not export multiple types from a single file (except for index barrels).
+
+- **Language:** TypeScript (Strict Mode enabled).
+- **Formatting:** Prettier (default config).
+- **Linting:** ESLint (recommended rules).
+- **Comments:** Use JSDoc for complex functions. Explain "Why", not "What".
+- **Types:** One type per file. Do not export multiple types from a single file (except for index barrels).
 
 ### Frontend (React)
-*   **Components:** Arrow Functions only (`const Component = () => {}`).
-*   **Organization:** Colocate styles, tests, and sub-components within the feature folder.
-*   **Hooks:** comprehensive use of custom hooks to separate logic from UI.
-*   **State:**
-    *   `Jotai` for global client state (e.g., live counter).
-    *   `TanStack Query` for server state (caching, loading states).
-*   **Styling:** **Tailwind CSS v4**.
-    *   Use utility classes for layout and spacing.
-    *   Use `class-variance-authority` (cva) for component variants.
-    *   Avoid inline styles.
-    *   **Theme:** Use strict CSS variables for theming (primary, secondary colors) to support the White Label requirement.
-*   **Naming:** PascalCase for components (`DonationForm.tsx`), camelCase for functions/vars.
-*   **Functions:** Use Arrow Functions (`const myFunc = () => {}`) for all components and utilities. Avoid `function` keyword.
+
+- **Components:** Arrow Functions only (`const Component = () => {}`).
+- **Organization:** Colocate styles, tests, and sub-components within the feature folder.
+- **Hooks:** comprehensive use of custom hooks to separate logic from UI.
+- **State:**
+    - `Jotai` for global client state (e.g., live counter).
+    - `TanStack Query` for server state (caching, loading states).
+- **Styling:** **Tailwind CSS v4**.
+    - Use utility classes for layout and spacing.
+    - Use `class-variance-authority` (cva) for component variants.
+    - Avoid inline styles.
+    - **Theme:** Use strict CSS variables for theming (primary, secondary colors) to support the White Label requirement.
+- **Naming:** PascalCase for components (`DonationForm.tsx`), camelCase for functions/vars.
+- **Functions:** Use Arrow Functions (`const myFunc = () => {}`) for all components and utilities. Avoid `function` keyword.
 
 ### Backend (NestJS)
-*   **Architecture:** Modular (Module, Controller, Service).
-*   **Validation:** DTOs with `class-validator` and `class-transformer`.
-*   **Database:** Prisma ORM. Use raw SQL only if necessary for performance.
-*   **Error Handling:** Global Exception Filters. Return standard HTTP codes.
-*   **Async:** Use `async/await` everywhere. Avoid callback hell.
+
+- **Architecture:** Modular (Module, Controller, Service).
+- **Validation:** DTOs with `class-validator` and `class-transformer`.
+- **Database:** Prisma ORM. Use raw SQL only if necessary for performance.
+- **Error Handling:** Global Exception Filters. Return standard HTTP codes.
+- **Async:** Use `async/await` everywhere. Avoid callback hell.
 
 ## 3. Boundaries & Responsibilities
 
-*   **Frontend:**
-    *   **Display Logic Only:** The frontend should not perform complex business calculations (e.g., tax receipt generation).
-    *   **Optimistic UI:** Allowed for staff entry (offline mode), but must reconcile with server truth.
-    *   **Secrets:** NEVER store Stripe Secret Keys or Admin tokens in Frontend code/env.
+- **Frontend:**
+    - **Display Logic Only:** The frontend should not perform complex business calculations (e.g., tax receipt generation).
+    - **Optimistic UI:** Allowed for staff entry (offline mode), but must reconcile with server truth.
+    - **Secrets:** NEVER store Stripe Secret Keys or Admin tokens in Frontend code/env.
 
-*   **Test Coverage:**
-    *   **Minimum Coverage:** **60%** (CI should fail if below).
-    *   **Target Coverage:** **80%** (Strive for this in all core modules).
+- **Test Coverage:**
+    - **Minimum Coverage:** **60%** (CI should fail if below).
+    - **Target Coverage:** **80%** (Strive for this in all core modules).
 
-*   **Internationalization (i18n):**
-    *   **No Hardcoded Text:** No label or text should be added directly in the code.
-    *   **Use Locales:** Always use the locales files (e.g., via `t('key')`).
-    *   **Bilingual:** Ensure all keys exist in both `en` and `fr` locales.
-*   **Configuration:**
-    *   Always use `useAppConfig()` from `@/providers/AppConfigProvider` to access global settings (theme, event info).
-    *   Do not fetch config manually in components to ensure race-condition-free initialization.
+- **Internationalization (i18n):**
+    - **No Hardcoded Text:** No label or text should be added directly in the code.
+    - **Use Locales:** Always use the locales files (e.g., via `t('key')`).
+    - **Bilingual:** Ensure all keys exist in both `en` and `fr` locales.
+- **Configuration:**
+    - Always use `useAppConfig()` from `@/providers/AppConfigProvider` to access global settings (theme, event info).
+    - Do not fetch config manually in components to ensure race-condition-free initialization.
 
-*   **Backend:**
-    *   **Source of Truth:** Calculates totals, validates payments, generates PDFs.
-    *   **stateless:** The API should remain stateless (use Redis for queues/sockets).
-    *   **Security:** Responsible for all data validation before DB entry.
+- **Backend:**
+    - **Source of Truth:** Calculates totals, validates payments, generates PDFs.
+    - **stateless:** The API should remain stateless (use Redis for queues/sockets).
+    - **Security:** Responsible for all data validation before DB entry.
 
-*   **AI Agents:**
-    *   **Do not** modify the `lib/` or core architectural folders without explicit instruction.
-    *   **Always** read `specs.md` before implementing a new feature.
-    *   **Always** check for existing types/interfaces in `packages/types` (if applicable) before creating duplicates.
+- **AI Agents:**
+    - **Do not** modify the `lib/` or core architectural folders without explicit instruction.
+    - **Always** read `specs.md` before implementing a new feature.
+    - **Always** check for existing types/interfaces in `packages/types` (if applicable) before creating duplicates.
 
 ## 4. Security
 
-*   **Authentication:**
-    *   **Admin:** JWT (Short lived) + Refresh Token.
-    *   **Staff:** PIN Code mechanism (Session based).
-*   **Authorization:** Role Based Access Control (RBAC) via Guards in NestJS.
-*   **Data Protection:**
-    *   PII (Personal Identifiable Information) must be treated with care.
-    *   Encryption at rest for sensitive DB fields if required (though Stripe handles payments).
-*   **Input Validation:** strict Zod schemas on Frontend, DTO validation on Backend.
-*   **Git Security:** Never commit secrets, API keys, or `.env` files to the repository. Use `.gitignore` and environment variables.
+- **Authentication:**
+    - **Admin:** JWT (Short lived) + Refresh Token.
+    - **Staff:** PIN Code mechanism (Session based).
+- **Authorization:** Role Based Access Control (RBAC) via Guards in NestJS.
+- **Data Protection:**
+    - PII (Personal Identifiable Information) must be treated with care.
+    - Encryption at rest for sensitive DB fields if required (though Stripe handles payments).
+- **Input Validation:** strict Zod schemas on Frontend, DTO validation on Backend.
+- **Git Security:** Never commit secrets, API keys, or `.env` files to the repository. Use `.gitignore` and environment variables.
 
 ## 5. Tools to Use
 
 ### Core Stack
-*   **Package Manager:** `pnpm`
-*   **Frontend:** Vite, React 19, Tailwind CSS v4, Shadcn/UI, Lucide React (Icons).
-*   **Backend:** NestJS, Fastify (optional, else Express), Socket.io.
-*   **Database:** PostgreSQL.
-*   **ORM:** Prisma.
-*   **Queue/Cache:** Redis, BullMQ.
+
+- **Package Manager:** `pnpm`
+- **Frontend:** Vite, React 19, Tailwind CSS v4, Shadcn/UI, Lucide React (Icons).
+- **Backend:** NestJS, Fastify (optional, else Express), Socket.io.
+- **Database:** PostgreSQL.
+- **ORM:** Prisma.
+- **Queue/Cache:** Redis, BullMQ.
 
 ### Testing
-*   **Unit:** Vitest (Frontend & Backend).
-*   **E2E:** Playwright (Frontend flow), Supertest (API).
+
+- **Unit:** Vitest (Frontend & Backend).
+- **E2E:** Playwright (Frontend flow), Supertest (API).
 
 ### DevOps
-*   **Container:** Docker, Docker Compose.
+
+- **Container:** Docker, Docker Compose.
 
 ## 6. Standard Commands
 
 ### Package Management
-*   **Install Dependencies:** `pnpm install` (Root).
-*   **Add Package:** `pnpm add <package>` (Use `--filter <app>` to target `api` or `web`).
+
+- **Install Dependencies:** `pnpm install` (Root).
+- **Add Package:** `pnpm add <package>` (Use `--filter <app>` to target `api` or `web`).
 
 ### Development
-*   **Start All:** `pnpm dev` (Runs both API and Web).
-*   **Start Backend:** `pnpm --filter api dev`.
-*   **Start Frontend:** `pnpm --filter web dev`.
+
+- **Start All:** `pnpm dev` (Runs both API and Web).
+- **Start Backend:** `pnpm --filter api dev`.
+- **Start Frontend:** `pnpm --filter web dev`.
 
 ### Database (API)
-*   **Generate Client:** `pnpm db:generate` (Run after schema changes).
-*   **Migration:** `pnpm db:migrate` (Run for DB schema updates).
-*   **Studio:** `pnpm db:studio` (GUI for database).
-*   **Note:** Use `--filter api` if running from the root.
+
+- **Generate Client:** `pnpm db:generate` (Run after schema changes).
+- **Migration:** `pnpm db:migrate` (Run for DB schema updates).
+- **Studio:** `pnpm db:studio` (GUI for database).
+- **Note:** Use `--filter api` if running from the root.
 
 ### Docker
-*   **Start Services:** `docker compose up -d` (Postgres, Redis).
-*   **Stop Services:** `docker compose down`.
+
+- **Start Services:** `docker compose up -d` (Postgres, Redis).
+- **Stop Services:** `docker compose down`.
 
 ### Testing
-*   **E2E Tests:** `pnpm test:e2e`.
+
+- **E2E Tests:** `pnpm test:e2e`.
 
 ## 7. Testing Conventions (Strict)
+
 1. **Location**: All test related files must be located in `src/test/`.
 2. **Naming**: Test files must use the `*.test.{ts,tsx}` extension. `*.spec.*` is forbidden (except for existing e2e if necessary, but prefer converting).
 3. **Mocks**: All mock files/data must be located in `src/mock/`, regardless of usage context.

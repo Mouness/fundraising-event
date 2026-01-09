@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+
 - **Auth Module:**
     - Implemented Admin Login endpoint (`/auth/login`) with JWT support.
     - Implemented Staff Login endpoint (`/auth/staff/login`) with PIN code validation.

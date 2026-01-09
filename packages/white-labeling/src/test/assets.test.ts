@@ -1,17 +1,19 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { loadAssets } from '../assets';
-import { WhiteLabelStore } from '../store';
+import { describe, it, expect, beforeEach } from 'vitest'
+import { loadAssets } from '../assets'
+import { WhiteLabelStore } from '../store'
 
 describe('loadAssets', () => {
     beforeEach(() => {
         // Reset store
-        WhiteLabelStore.getInstance().setEventConfig({ theme: { assets: {} } } as any);
-    });
+        WhiteLabelStore.getInstance().setEventConfig({
+            theme: { assets: {} },
+        } as any)
+    })
 
     it('should return default assets if no db config', () => {
-        const assets = loadAssets();
-        expect(assets.logo).toBeDefined();
-    });
+        const assets = loadAssets()
+        expect(assets.logo).toBeDefined()
+    })
 
     it('should merge db assets', () => {
         WhiteLabelStore.getInstance().setEventConfig({
@@ -20,12 +22,12 @@ describe('loadAssets', () => {
             goalAmount: 100,
             theme: {
                 assets: {
-                    logo: 'custom-logo.png'
-                }
-            }
-        } as any);
+                    logo: 'custom-logo.png',
+                },
+            },
+        } as any)
 
-        const assets = loadAssets();
-        expect(assets.logo).toBe('custom-logo.png');
-    });
-});
+        const assets = loadAssets()
+        expect(assets.logo).toBe('custom-logo.png')
+    })
+})

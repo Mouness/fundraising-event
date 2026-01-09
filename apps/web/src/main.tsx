@@ -9,11 +9,11 @@ import { AppProviders } from '@core/app/providers'
 import { ErrorBoundary } from '@core/providers/ErrorBoundary'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ErrorBoundary>
-      <AppProviders>
-        <RouterProvider router={router} />
-      </AppProviders>
-    </ErrorBoundary>
-  </StrictMode>,
+    <StrictMode>
+        <ErrorBoundary>
+            <AppProviders>
+                <RouterProvider router={router} />
+            </AppProviders>
+        </ErrorBoundary>
+    </StrictMode>,
 )

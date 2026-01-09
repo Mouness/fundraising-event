@@ -1,9 +1,9 @@
-import { useEvent } from '@features/events/context/EventContext';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
-import { useDonationsTable, type DonationTableData } from '../hooks/useDonationsTable';
-import { useState } from 'react';
-import { EditDonationDialog } from '../components/EditDonationDialog';
-import { CancelDonationDialog } from '../components/CancelDonationDialog';
+import { useEvent } from '@features/events/context/EventContext'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
+import { useDonationsTable, type DonationTableData } from '../hooks/useDonationsTable'
+import { useState } from 'react'
+import { EditDonationDialog } from '../components/EditDonationDialog'
+import { CancelDonationDialog } from '../components/CancelDonationDialog'
 import {
     Table,
     TableBody,
@@ -11,28 +11,28 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@core/components/ui/table';
-import { api } from '@core/lib/api';
+} from '@core/components/ui/table'
+import { api } from '@core/lib/api'
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@core/components/ui/select';
-import { Input } from '@core/components/ui/input';
+} from '@core/components/ui/select'
+import { Input } from '@core/components/ui/input'
 import {
     Pagination,
     PaginationContent,
     PaginationItem,
     PaginationNext,
     PaginationPrevious,
-} from '@core/components/ui/pagination';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
-import { Button } from '@core/components/ui/button';
+} from '@core/components/ui/pagination'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card'
+import { Button } from '@core/components/ui/button'
 
-import { Loader2, Download, FileText, MoreVertical, Edit, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { Loader2, Download, FileText, MoreVertical, Edit, Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -40,17 +40,17 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@core/components/ui/dropdown-menu";
-import { useTranslation } from 'react-i18next';
-import { timeAgo } from '@core/lib/date';
+} from '@core/components/ui/dropdown-menu'
+import { useTranslation } from 'react-i18next'
+import { timeAgo } from '@core/lib/date'
 
 export const DonationsPage = () => {
-    const { event } = useEvent();
-    const { t } = useTranslation('common');
-    const { formatCurrency } = useCurrencyFormatter();
+    const { event } = useEvent()
+    const { t } = useTranslation('common')
+    const { formatCurrency } = useCurrencyFormatter()
 
-    const [editingDonation, setEditingDonation] = useState<DonationTableData | null>(null);
-    const [cancellingDonation, setCancellingDonation] = useState<DonationTableData | null>(null);
+    const [editingDonation, setEditingDonation] = useState<DonationTableData | null>(null)
+    const [cancellingDonation, setCancellingDonation] = useState<DonationTableData | null>(null)
 
     const {
         donations,
@@ -62,78 +62,87 @@ export const DonationsPage = () => {
         search,
         setSearch,
         status,
-        setStatus
-    } = useDonationsTable(event?.id || '');
+        setStatus,
+    } = useDonationsTable(event?.id || '')
 
-    if (!event) return null;
+    if (!event) return null
 
     const handleExport = async () => {
         try {
-            const params = new URLSearchParams();
-            if (event.id) params.append('eventId', event.id);
-            if (search) params.append('search', search);
-            if (status && status !== 'all') params.append('status', status);
+            const params = new URLSearchParams()
+            if (event.id) params.append('eventId', event.id)
+            if (search) params.append('search', search)
+            if (status && status !== 'all') params.append('status', status)
 
             const response = await api.get(`/donations/export?${params.toString()}`, {
                 responseType: 'blob',
-            });
+            })
 
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `donations-${event.slug}-${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            const url = window.URL.createObjectURL(new Blob([response.data]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+                'download',
+                `donations-${event.slug}-${new Date().toISOString().split('T')[0]}.csv`,
+            )
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
         } catch (error) {
-            console.error('Export failed', error);
-            toast.error(t('donation.export_failed'));
+            console.error('Export failed', error)
+            toast.error(t('donation.export_failed'))
         }
-    };
+    }
 
     const handleExportPdf = async () => {
         try {
             const response = await api.get(`/export/receipts/zip?eventId=${event.id}`, {
                 responseType: 'blob',
-            });
+            })
 
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `receipts-${event.slug}-${new Date().toISOString().split('T')[0]}.zip`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            const url = window.URL.createObjectURL(new Blob([response.data]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+                'download',
+                `receipts-${event.slug}-${new Date().toISOString().split('T')[0]}.zip`,
+            )
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
         } catch (error) {
-            console.error('PDF Export failed', error);
-            toast.error(t('donation.export_failed'));
+            console.error('PDF Export failed', error)
+            toast.error(t('donation.export_failed'))
         }
-    };
+    }
 
     const handleDownloadSingleReceipt = async (donationId: string) => {
         try {
             const response = await api.get(`/export/receipts/${donationId}`, {
                 responseType: 'blob',
-            });
+            })
 
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `receipt-${donationId.substring(0, 8)}.pdf`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            const url = window.URL.createObjectURL(new Blob([response.data]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', `receipt-${donationId.substring(0, 8)}.pdf`)
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
         } catch (error) {
-            console.error('Receipt download failed', error);
-            toast.error(t('donation.receipt_failed'));
+            console.error('Receipt download failed', error)
+            toast.error(t('donation.receipt_failed'))
         }
-    };
+    }
 
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight" style={{ color: 'var(--admin-heading-color)' }}>
+                    <h2
+                        className="text-3xl font-bold tracking-tight"
+                        style={{ color: 'var(--admin-heading-color)' }}
+                    >
                         {t('admin_events.donations')}
                     </h2>
                     <p className="text-muted-foreground mt-1">
@@ -152,7 +161,12 @@ export const DonationsPage = () => {
                 </div>
             </div>
 
-            <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+            <Card
+                style={{
+                    backgroundColor: 'var(--admin-card-bg)',
+                    borderColor: 'var(--admin-border-color)',
+                }}
+            >
                 <CardHeader>
                     <CardTitle>{t('admin_events.donations_list')}</CardTitle>
                     <CardDescription>
@@ -188,7 +202,9 @@ export const DonationsPage = () => {
                                     <TableHead>{t('donation.donor')}</TableHead>
                                     <TableHead>{t('donation.amount')}</TableHead>
                                     <TableHead>{t('donation.status')}</TableHead>
-                                    <TableHead className="text-right">{t('common.actions')}</TableHead>
+                                    <TableHead className="text-right">
+                                        {t('common.actions')}
+                                    </TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -210,61 +226,112 @@ export const DonationsPage = () => {
                                         <TableRow key={donation.id}>
                                             <TableCell>
                                                 <div className="flex flex-col">
-                                                    <span>{new Date(donation.createdAt).toLocaleDateString()}</span>
-                                                    <span className="text-xs text-muted-foreground">{timeAgo(donation.createdAt)}</span>
+                                                    <span>
+                                                        {new Date(
+                                                            donation.createdAt,
+                                                        ).toLocaleDateString()}
+                                                    </span>
+                                                    <span className="text-xs text-muted-foreground">
+                                                        {timeAgo(donation.createdAt)}
+                                                    </span>
                                                 </div>
                                             </TableCell>
                                             <TableCell>
                                                 <div className="flex flex-col">
-                                                    <span className="font-medium">{donation.isAnonymous ? t('donation.anonymous', 'Anonymous') : donation.donorName}</span>
-                                                    <span className="text-xs text-muted-foreground">{donation.donorEmail}</span>
+                                                    <span className="font-medium">
+                                                        {donation.isAnonymous
+                                                            ? t('donation.anonymous', 'Anonymous')
+                                                            : donation.donorName}
+                                                    </span>
+                                                    <span className="text-xs text-muted-foreground">
+                                                        {donation.donorEmail}
+                                                    </span>
                                                 </div>
                                             </TableCell>
                                             <TableCell>
                                                 <div className="font-medium">
-                                                    {formatCurrency(donation.amount / 100, { currency: donation.currency })}
+                                                    {formatCurrency(donation.amount / 100, {
+                                                        currency: donation.currency,
+                                                    })}
                                                 </div>
                                                 <span className="text-xs text-muted-foreground capitalize">
                                                     {donation.paymentMethod}
-                                                    {donation.staffMember && <span style={{ color: 'var(--primary)' }}> • {donation.staffMember.name}</span>}
+                                                    {donation.staffMember && (
+                                                        <span style={{ color: 'var(--primary)' }}>
+                                                            {' '}
+                                                            • {donation.staffMember.name}
+                                                        </span>
+                                                    )}
                                                 </span>
                                             </TableCell>
                                             <TableCell>
-                                                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold 
-                                                    ${donation.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                                                        donation.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                                                            'bg-red-100 text-red-800'}`}>
-                                                    {t(`status.${donation.status.toLowerCase()}`, donation.status)}
+                                                <span
+                                                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold 
+                                                    ${
+                                                        donation.status === 'COMPLETED'
+                                                            ? 'bg-green-100 text-green-800'
+                                                            : donation.status === 'PENDING'
+                                                              ? 'bg-yellow-100 text-yellow-800'
+                                                              : 'bg-red-100 text-red-800'
+                                                    }`}
+                                                >
+                                                    {t(
+                                                        `status.${donation.status.toLowerCase()}`,
+                                                        donation.status,
+                                                    )}
                                                 </span>
                                             </TableCell>
                                             <TableCell className="text-right">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" className="h-8 w-8 p-0">
-                                                            <span className="sr-only">Open menu</span>
+                                                        <Button
+                                                            variant="ghost"
+                                                            className="h-8 w-8 p-0"
+                                                        >
+                                                            <span className="sr-only">
+                                                                Open menu
+                                                            </span>
                                                             <MoreVertical className="h-4 w-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent align="end">
-                                                        <DropdownMenuLabel>{t('common.actions')}</DropdownMenuLabel>
+                                                        <DropdownMenuLabel>
+                                                            {t('common.actions')}
+                                                        </DropdownMenuLabel>
                                                         <DropdownMenuItem
-                                                            onClick={() => setEditingDonation(donation)}
+                                                            onClick={() =>
+                                                                setEditingDonation(donation)
+                                                            }
                                                         >
                                                             <Edit className="mr-2 h-4 w-4" />
                                                             {t('common.edit', 'Edit')}
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem
-                                                            onClick={() => handleDownloadSingleReceipt(donation.id)}
-                                                            disabled={donation.status !== 'COMPLETED'}
+                                                            onClick={() =>
+                                                                handleDownloadSingleReceipt(
+                                                                    donation.id,
+                                                                )
+                                                            }
+                                                            disabled={
+                                                                donation.status !== 'COMPLETED'
+                                                            }
                                                         >
                                                             <FileText className="mr-2 h-4 w-4" />
-                                                            {t('admin_events.download_receipt', 'Receipt')}
+                                                            {t(
+                                                                'admin_events.download_receipt',
+                                                                'Receipt',
+                                                            )}
                                                         </DropdownMenuItem>
                                                         <DropdownMenuSeparator />
                                                         <DropdownMenuItem
                                                             className="text-red-600 focus:text-red-600"
-                                                            onClick={() => setCancellingDonation(donation)}
-                                                            disabled={donation.status === 'CANCELLED' || donation.status === 'REFUNDED'}
+                                                            onClick={() =>
+                                                                setCancellingDonation(donation)
+                                                            }
+                                                            disabled={
+                                                                donation.status === 'CANCELLED' ||
+                                                                donation.status === 'REFUNDED'
+                                                            }
                                                         >
                                                             <Trash2 className="mr-2 h-4 w-4" />
                                                             {t('common.cancel', 'Cancel / Refund')}
@@ -287,8 +354,13 @@ export const DonationsPage = () => {
                                     <PaginationItem>
                                         <PaginationPrevious
                                             href="#"
-                                            onClick={(e) => { e.preventDefault(); if (page > 1) setPage(page - 1); }}
-                                            className={page === 1 ? 'pointer-events-none opacity-50' : ''}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                if (page > 1) setPage(page - 1)
+                                            }}
+                                            className={
+                                                page === 1 ? 'pointer-events-none opacity-50' : ''
+                                            }
                                         />
                                     </PaginationItem>
 
@@ -301,8 +373,15 @@ export const DonationsPage = () => {
                                     <PaginationItem>
                                         <PaginationNext
                                             href="#"
-                                            onClick={(e) => { e.preventDefault(); if (page < pageCount) setPage(page + 1); }}
-                                            className={page === pageCount ? 'pointer-events-none opacity-50' : ''}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                if (page < pageCount) setPage(page + 1)
+                                            }}
+                                            className={
+                                                page === pageCount
+                                                    ? 'pointer-events-none opacity-50'
+                                                    : ''
+                                            }
                                         />
                                     </PaginationItem>
                                 </PaginationContent>
@@ -311,7 +390,6 @@ export const DonationsPage = () => {
                     )}
                 </CardContent>
             </Card>
-
 
             <EditDonationDialog
                 donation={editingDonation}
@@ -324,6 +402,6 @@ export const DonationsPage = () => {
                 open={!!cancellingDonation}
                 onOpenChange={(open) => !open && setCancellingDonation(null)}
             />
-        </div >
-    );
-};
+        </div>
+    )
+}

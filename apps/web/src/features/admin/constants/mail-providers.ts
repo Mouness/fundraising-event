@@ -17,6 +17,6 @@ export const SMTP_PROVIDERS = {
         secure: false, // STARTTLS
         user: '',
     },
-} as const;
+} as const
 
-export type SmtpProviderType = keyof typeof SMTP_PROVIDERS;
+export type SmtpProviderType = keyof typeof SMTP_PROVIDERS

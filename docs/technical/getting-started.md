@@ -4,10 +4,7 @@ Welcome to the **Fundraising Event** developer guide. This cookbook provides pra
 
 ## 🥘 Prerequisites
 
-Before cooking, ensure you have the following ingredients: 
-    - **Node.js**: v20+ (managed via `pnpm`)
-    - **Docker**: For PostgreSQL and Redis services
-    - **pnpm**: Install via `npm install -g pnpm`
+Before cooking, ensure you have the following ingredients: - **Node.js**: v20+ (managed via `pnpm`) - **Docker**: For PostgreSQL and Redis services - **pnpm**: Install via `npm install -g pnpm`
 
 ---
 
@@ -16,6 +13,7 @@ Before cooking, ensure you have the following ingredients:
 **Goal**: Run the full stack (API + Database + Frontend) on your machine.
 
 1.  **Clone & Install**
+
     ```bash
     git clone https://github.com/your-org/fundraising-event.git
     cd fundraising-event
@@ -24,29 +22,33 @@ Before cooking, ensure you have the following ingredients:
 
 2.  **Environment Config**
     - Copy `.env.example` to `.env` in `apps/api` and `apps/web`.
-    - *Tip*: The default values work out-of-the-box for local docker services.
-    - *Note*: Production settings (Stripe/PayPal keys) can also be configured securely in the **Admin Panel**.
+    - _Tip_: The default values work out-of-the-box for local docker services.
+    - _Note_: Production settings (Stripe/PayPal keys) can also be configured securely in the **Admin Panel**.
 
 3.  **Start Infrastructure**
     Launch Postgres and Redis:
+
     ```bash
-    docker compose --profile infra up -d     
+    docker compose --profile infra up -d
     ```
 
 4.  **Initialize Database**
     Push the schema to your local Postgres:
+
     ```bash
     pnpm prisma migrate dev
     ```
 
 5.  **Set Admin Password**
     Create the initial admin password (hashed):
+
     ```bash
     pnpm --filter api set-admin-password "StrongPassword123!"
     ```
 
 6.  **Serve code!**
     Start both API (port 3000) and Web (port 5173):
+
     ```bash
     pnpm dev
     ```
@@ -54,12 +56,15 @@ Before cooking, ensure you have the following ingredients:
     > **Success!** Visit [http://localhost:5173](http://localhost:5173) and login with `admin@example.com` / `StrongPassword123!`.
 
     ### Alternative: Full Docker Stack
+
     If you prefer to run everything (API, Web, DB, Redis) in Docker:
+
     ```bash
     # Starts Infrastructure (db, redis) AND Application (api, web)
     docker compose --profile application up --build -d
     ```
-    *Note: The web app will run on port **8080** in this mode.*
+
+    _Note: The web app will run on port **8080** in this mode._
 
 ---
 
@@ -73,7 +78,7 @@ Before cooking, ensure you have the following ingredients:
     - `Primary Color` (`--primary`): Main buttons and links.
     - `Radius` (`--radius`): Roundness of cards and inputs.
 4.  **Click Save**.
-5.  *Refresh*: The changes apply instantly across the platform (Live Page, Donation Form, Admin Panel).
+5.  _Refresh_: The changes apply instantly across the platform (Live Page, Donation Form, Admin Panel).
 
 ---
 
@@ -118,9 +123,9 @@ Before cooking, ensure you have the following ingredients:
 **Solution**:
 
 1. Run the password reset command:
-   ```bash
-   pnpm --filter api set-admin-password "NewStrongPassword123!"
-   ```
+    ```bash
+    pnpm --filter api set-admin-password "NewStrongPassword123!"
+    ```
 2. Restart the API server (`pnpm dev` or `docker compose restart api`).
 
 ### Problem: Missing Translations (Keys showing)
@@ -167,12 +172,12 @@ Before cooking, ensure you have the following ingredients:
 
 ## 📚 Common Commands
 
-| Command | Action |
-|:---|:---|
-| `docker compose --profile infra up -d` | Start DB & Redis |
+| Command                                           | Action                         |
+| :------------------------------------------------ | :----------------------------- |
+| `docker compose --profile infra up -d`            | Start DB & Redis               |
 | `docker compose --profile application up --build` | Start Full Stack (Infra + App) |
-| `pnpm dev` | Start dev servers |
-| `pnpm build` | Build for production |
-| `pnpm test` | Run unit tests |
-| `pnpm lint` | Fix linting issues |
-| `pnpm prisma studio` | Open Database GUI |
+| `pnpm dev`                                        | Start dev servers              |
+| `pnpm build`                                      | Build for production           |
+| `pnpm test`                                       | Run unit tests                 |
+| `pnpm lint`                                       | Fix linting issues             |
+| `pnpm prisma studio`                              | Open Database GUI              |

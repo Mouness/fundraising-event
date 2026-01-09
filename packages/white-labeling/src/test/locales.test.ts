@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { loadLocales } from '../locales';
-import { WhiteLabelStore } from '../store';
-import enDefault from '../locales/en.default.json';
+import { describe, it, expect, beforeEach } from 'vitest'
+import { loadLocales } from '../locales'
+import { WhiteLabelStore } from '../store'
+import enDefault from '../locales/en.default.json'
 
 describe('loadLocales', () => {
     beforeEach(() => {
@@ -9,18 +9,18 @@ describe('loadLocales', () => {
         WhiteLabelStore.getInstance().setEventConfig({
             id: 'default',
             content: { goalAmount: 0 },
-            locales: {}
-        } as any);
-    });
+            locales: {},
+        } as any)
+    })
 
     it('should return default locales if no DB config', () => {
-        const result = loadLocales();
-        expect(result.en).toEqual(enDefault);
-        expect(result.fr).toBeDefined();
-    });
+        const result = loadLocales()
+        expect(result.en).toEqual(enDefault)
+        expect(result.fr).toBeDefined()
+    })
 
     it('should merge database locales', () => {
-        const customTitle = "Custom Donation Title";
+        const customTitle = 'Custom Donation Title'
         WhiteLabelStore.getInstance().setEventConfig({
             id: 'custom',
             content: { goalAmount: 100 },
@@ -28,18 +28,18 @@ describe('loadLocales', () => {
                 overrides: {
                     en: {
                         donation: {
-                            title: customTitle
-                        }
-                    }
-                }
-            }
-        } as any);
+                            title: customTitle,
+                        },
+                    },
+                },
+            },
+        } as any)
 
-        const result = loadLocales();
-        expect(result.en.donation.title).toBe(customTitle);
+        const result = loadLocales()
+        expect(result.en.donation.title).toBe(customTitle)
         // Should preserve other keys
-        expect(result.en.donation.submit).toBeDefined();
-    });
+        expect(result.en.donation.submit).toBeDefined()
+    })
 
     it('should handle global flat overrides', () => {
         WhiteLabelStore.getInstance().setGlobalConfig({
@@ -47,12 +47,12 @@ describe('loadLocales', () => {
             content: { title: 'G' },
             locales: {
                 overrides: {
-                    'en.donation.submit': 'Give Now'
-                }
-            }
-        } as any);
+                    'en.donation.submit': 'Give Now',
+                },
+            },
+        } as any)
 
-        const result = loadLocales();
-        expect(result.en.donation.submit).toBe('Give Now');
-    });
-});
+        const result = loadLocales()
+        expect(result.en.donation.submit).toBe('Give Now')
+    })
+})

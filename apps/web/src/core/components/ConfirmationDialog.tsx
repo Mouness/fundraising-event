@@ -5,10 +5,10 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@core/components/ui/dialog"
-import { Button } from "@core/components/ui/button"
-import type { ReactNode } from "react"
-import { useTranslation } from "react-i18next"
+} from '@core/components/ui/dialog'
+import { Button } from '@core/components/ui/button'
+import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface ConfirmationDialogProps {
     open: boolean
@@ -18,7 +18,7 @@ interface ConfirmationDialogProps {
     description?: ReactNode
     confirmText?: string
     cancelText?: string
-    variant?: "default" | "destructive"
+    variant?: 'default' | 'destructive'
 }
 
 export const ConfirmationDialog = ({
@@ -29,7 +29,7 @@ export const ConfirmationDialog = ({
     description,
     confirmText,
     cancelText,
-    variant = "default",
+    variant = 'default',
 }: ConfirmationDialogProps) => {
     const { t } = useTranslation('common')
 
@@ -39,14 +39,12 @@ export const ConfirmationDialog = ({
                 <DialogHeader>
                     <DialogTitle>{title || t('confirmation.title', 'Are you sure?')}</DialogTitle>
                     <DialogDescription>
-                        {description || t('confirmation.description', 'This action cannot be undone.')}
+                        {description ||
+                            t('confirmation.description', 'This action cannot be undone.')}
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button
-                        variant="outline"
-                        onClick={() => onOpenChange(false)}
-                    >
+                    <Button variant="outline" onClick={() => onOpenChange(false)}>
                         {cancelText || t('common.cancel', 'Cancel')}
                     </Button>
                     <Button

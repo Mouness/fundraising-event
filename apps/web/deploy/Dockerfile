@@ -3,6 +3,7 @@ WORKDIR /app
 COPY . .
 RUN corepack enable && corepack prepare pnpm@latest --activate
 RUN pnpm install --frozen-lockfile
+RUN pnpm --filter api db:generate
 
 # Build Args for Vite
 ARG VITE_API_TARGET

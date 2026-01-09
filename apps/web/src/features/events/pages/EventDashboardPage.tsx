@@ -1,26 +1,34 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card';
-import { Target, Users, TrendingUp, Calendar, ExternalLink, Settings, Smartphone } from 'lucide-react';
-import { Button } from '@core/components/ui/button';
-import { Link, useParams } from 'react-router-dom';
-import { RecentDonationsList } from '../components/RecentDonationsList';
-import { useEvents } from '@features/events/hooks/useEvents';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
-import { useTranslation } from 'react-i18next';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@core/components/ui/card'
+import {
+    Target,
+    Users,
+    TrendingUp,
+    Calendar,
+    ExternalLink,
+    Settings,
+    Smartphone,
+} from 'lucide-react'
+import { Button } from '@core/components/ui/button'
+import { Link, useParams } from 'react-router-dom'
+import { RecentDonationsList } from '../components/RecentDonationsList'
+import { useEvents } from '@features/events/hooks/useEvents'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
+import { useTranslation } from 'react-i18next'
 
 export const EventDashboardPage = () => {
-    const { slug } = useParams<{ slug: string }>();
-    const { t } = useTranslation('common');
-    const { events } = useEvents();
-    const { formatCurrency } = useCurrencyFormatter();
+    const { slug } = useParams<{ slug: string }>()
+    const { t } = useTranslation('common')
+    const { events } = useEvents()
+    const { formatCurrency } = useCurrencyFormatter()
 
-    const event = events.find(e => e.slug === slug);
+    const event = events.find((e) => e.slug === slug)
 
-    if (!event) return null;
+    if (!event) return null
 
-    const raised = event.raised || 0;
-    const goal = event.goalAmount || 1;
-    const progress = Math.min(100, Math.round((raised / goal) * 100));
-    const donors = event.donorCount || 0;
+    const raised = event.raised || 0
+    const goal = event.goalAmount || 1
+    const progress = Math.min(100, Math.round((raised / goal) * 100))
+    const donors = event.donorCount || 0
     // const status = event.status?.toUpperCase() || 'DRAFT';
     // Using translation for status would require mapping, for now let's keep it simple or allow backend string if it matches key
 
@@ -62,13 +70,23 @@ export const EventDashboardPage = () => {
 
             {/* Stats Grid */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+                <Card
+                    style={{
+                        backgroundColor: 'var(--admin-card-bg)',
+                        borderColor: 'var(--admin-border-color)',
+                    }}
+                >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.total_raised')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">
+                            {t('admin_events.total_raised')}
+                        </CardTitle>
                         <TrendingUp className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold" style={{ color: 'var(--admin-card-text)' }}>
+                        <div
+                            className="text-2xl font-bold"
+                            style={{ color: 'var(--admin-card-text)' }}
+                        >
                             {formatCurrency(raised)}
                         </div>
                         <p className="text-xs text-muted-foreground">
@@ -77,13 +95,23 @@ export const EventDashboardPage = () => {
                     </CardContent>
                 </Card>
 
-                <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+                <Card
+                    style={{
+                        backgroundColor: 'var(--admin-card-bg)',
+                        borderColor: 'var(--admin-border-color)',
+                    }}
+                >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.donors')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">
+                            {t('admin_events.donors')}
+                        </CardTitle>
                         <Users className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold" style={{ color: 'var(--admin-card-text)' }}>
+                        <div
+                            className="text-2xl font-bold"
+                            style={{ color: 'var(--admin-card-text)' }}
+                        >
                             {donors}
                         </div>
                         <p className="text-xs text-muted-foreground">
@@ -92,13 +120,23 @@ export const EventDashboardPage = () => {
                     </CardContent>
                 </Card>
 
-                <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+                <Card
+                    style={{
+                        backgroundColor: 'var(--admin-card-bg)',
+                        borderColor: 'var(--admin-border-color)',
+                    }}
+                >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.goal')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">
+                            {t('admin_events.goal')}
+                        </CardTitle>
                         <Target className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold" style={{ color: 'var(--admin-card-text)' }}>
+                        <div
+                            className="text-2xl font-bold"
+                            style={{ color: 'var(--admin-card-text)' }}
+                        >
                             {formatCurrency(goal)}
                         </div>
                         <p className="text-xs text-muted-foreground">
@@ -107,16 +145,28 @@ export const EventDashboardPage = () => {
                     </CardContent>
                 </Card>
 
-                <Card style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+                <Card
+                    style={{
+                        backgroundColor: 'var(--admin-card-bg)',
+                        borderColor: 'var(--admin-border-color)',
+                    }}
+                >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{t('admin_events.event_date')}</CardTitle>
+                        <CardTitle className="text-sm font-medium">
+                            {t('admin_events.event_date')}
+                        </CardTitle>
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold" style={{ color: 'var(--admin-card-text)' }}>
+                        <div
+                            className="text-2xl font-bold"
+                            style={{ color: 'var(--admin-card-text)' }}
+                        >
                             {event.date ? new Date(event.date).toLocaleDateString() : 'N/A'}
                         </div>
-                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${event.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                        <span
+                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${event.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}
+                        >
                             {event.status}
                         </span>
                     </CardContent>
@@ -124,11 +174,19 @@ export const EventDashboardPage = () => {
             </div>
 
             {/* Recent Donations List */}
-            <Card className="col-span-4" style={{ backgroundColor: 'var(--admin-card-bg)', borderColor: 'var(--admin-border-color)' }}>
+            <Card
+                className="col-span-4"
+                style={{
+                    backgroundColor: 'var(--admin-card-bg)',
+                    borderColor: 'var(--admin-border-color)',
+                }}
+            >
                 <CardHeader>
                     <CardTitle>{t('dashboard.recent_donations')}</CardTitle>
                     <CardDescription>
-                        {t('admin_events.dashboard.latest_transactions_for', { name: event.name })}
+                        {t('admin_events.dashboard.latest_transactions_for', {
+                            name: event.name,
+                        })}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -136,5 +194,5 @@ export const EventDashboardPage = () => {
                 </CardContent>
             </Card>
         </div>
-    );
-};
+    )
+}

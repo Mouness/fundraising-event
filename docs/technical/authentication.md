@@ -36,7 +36,7 @@ The frontend (`apps/web`) uses:
 ## Security
 
 - **JWT**: Tokens expire in 1 day. Secrets managed via `JWT_SECRET` env var.
-- **Passwords**: 
+- **Passwords**:
     - Admin password stored as **Bcrypt Hash** in `ADMIN_PASSWORD` (Env).
     - Staff authentication uses PIN codes stored in DB.
 - **OAuth**: Google OAuth 2.0 with restricted scope (`email`, `profile`).
@@ -59,7 +59,6 @@ This script will:
 2. Automatically update your `.env` file with the hash.
 3. You must **restart the API server** for the changes to take effect.
 
-
 Required Environment Variables:
 
 - `JWT_SECRET`
@@ -70,6 +69,7 @@ Required Environment Variables:
 - `GOOGLE_CALLBACK_URL`
 
 ### Custom Provider (Auth0)
+
 To enable Auth0 instead of Local Auth:
 
 - Set `AUTH_PROVIDER_TYPE=auth0`

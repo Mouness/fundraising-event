@@ -1,19 +1,19 @@
-import { motion } from 'framer-motion';
-import CountUp from 'react-countup';
-import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
-import { type GaugeProps } from '../../types';
+import { motion } from 'framer-motion'
+import CountUp from 'react-countup'
+import { useTranslation } from 'react-i18next'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
+import { type GaugeProps } from '../../types'
 
 export const GaugeElegant = ({
     totalRaisedCents,
     prevTotal,
     goalAmount,
-    totalLabel
+    totalLabel,
 }: GaugeProps) => {
-    const { t } = useTranslation('common');
-    const { formatCurrency } = useCurrencyFormatter();
-    const percentage = goalAmount > 0 ? (totalRaisedCents / (goalAmount * 100)) * 100 : 100;
-    const progressPercentage = Math.min(percentage, 100);
+    const { t } = useTranslation('common')
+    const { formatCurrency } = useCurrencyFormatter()
+    const percentage = goalAmount > 0 ? (totalRaisedCents / (goalAmount * 100)) * 100 : 100
+    const progressPercentage = Math.min(percentage, 100)
 
     return (
         <div className="relative w-[500px] h-[500px] flex items-center justify-center">
@@ -26,7 +26,9 @@ export const GaugeElegant = ({
                 <circle cx="50%" cy="50%" r="48%" stroke="#1e293b" strokeWidth="2" fill="none" />
                 {/* Progress Gold */}
                 <motion.circle
-                    cx="50%" cy="50%" r="48%"
+                    cx="50%"
+                    cy="50%"
+                    r="48%"
                     stroke="url(#goldGeneric)"
                     strokeWidth="4"
                     fill="none"
@@ -34,9 +36,13 @@ export const GaugeElegant = ({
                     strokeDasharray="301" // Approx 2 * pi * 48
                     initial={{ strokeDashoffset: 301 }}
                     animate={{ strokeDashoffset: 301 - (301 * progressPercentage) / 100 }}
-                    transition={{ duration: 2, ease: "easeInOut" }}
+                    transition={{ duration: 2, ease: 'easeInOut' }}
                     pathLength={1}
-                    style={{ pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - progressPercentage / 100 }}
+                    style={{
+                        pathLength: 1,
+                        strokeDasharray: 1,
+                        strokeDashoffset: 1 - progressPercentage / 100,
+                    }}
                 />
                 <defs>
                     <linearGradient id="goldGeneric" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -52,10 +58,12 @@ export const GaugeElegant = ({
                     className="text-amber-500 text-sm tracking-[0.3em] uppercase mb-2 font-sans border-b border-amber-500/30 pb-1"
                     style={{
                         color: 'var(--live-elegant-gold, #d4af37)',
-                        borderColor: 'var(--live-elegant-gold, #d4af37)'
+                        borderColor: 'var(--live-elegant-gold, #d4af37)',
                     }}
                 >
-                    {(totalLabel === 'Total Raised' || !totalLabel) ? t('live.total_raised', 'Total Raised') : totalLabel}
+                    {totalLabel === 'Total Raised' || !totalLabel
+                        ? t('live.total_raised', 'Total Raised')
+                        : totalLabel}
                 </span>
                 <div className="text-5xl font-serif text-slate-100">
                     <CountUp
@@ -72,5 +80,5 @@ export const GaugeElegant = ({
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}

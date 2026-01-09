@@ -1,5 +1,5 @@
 // Types
-export type { DeepPartial } from './types';
+export type { DeepPartial } from './types'
 export type {
     EventConfig,
     ThemeConfig,
@@ -16,17 +16,24 @@ export type {
     StripeProviderConfig,
     PayPalProviderConfig,
     SupportedLocale,
-} from './types';
+} from './types'
 
-export { SUPPORTED_LOCALES, LOCALE_LABELS } from './types';
+export { SUPPORTED_LOCALES, LOCALE_LABELS } from './types'
 
-export { initWhiteLabeling, getGlobalConfig, getEventConfig, fetchGlobalConfig, fetchEventConfig, resetWhiteLabelStore } from './store';
+export {
+    initWhiteLabeling,
+    getGlobalConfig,
+    getEventConfig,
+    fetchGlobalConfig,
+    fetchEventConfig,
+    resetWhiteLabelStore,
+} from './store'
 
 // Loaders
-export { loadAssets } from './assets';
-export { loadConfigs, defaultConfig } from './config';
-export { loadLocales } from './locales';
-export { loadTheme } from './theme';
+export { loadAssets } from './assets'
+export { loadConfigs, defaultConfig } from './config'
+export { loadLocales } from './locales'
+export { loadTheme } from './theme'
 
 // Utils
-export { deepMerge } from './utils/merge';
+export { deepMerge } from './utils/merge'

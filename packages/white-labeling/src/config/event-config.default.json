@@ -54,11 +54,7 @@
         },
         "sharing": {
             "enabled": true,
-            "networks": [
-                "facebook",
-                "twitter",
-                "linkedin"
-            ]
+            "networks": ["facebook", "twitter", "linkedin"]
         },
         "payment": {
             "provider": "stripe",
@@ -112,12 +108,7 @@
     },
     "locales": {
         "default": "fr",
-        "supported": [
-            "fr",
-            "de",
-            "en",
-            "it"
-        ],
+        "supported": ["fr", "de", "en", "it"],
         "overrides": {}
     }
 }

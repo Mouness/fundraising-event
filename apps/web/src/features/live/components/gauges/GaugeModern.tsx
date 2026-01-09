@@ -1,25 +1,27 @@
-import { motion } from 'framer-motion';
-import CountUp from 'react-countup';
-import { useTranslation } from 'react-i18next';
-import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter';
-import { type GaugeProps } from '../../types';
+import { motion } from 'framer-motion'
+import CountUp from 'react-countup'
+import { useTranslation } from 'react-i18next'
+import { useCurrencyFormatter } from '@core/hooks/useCurrencyFormatter'
+import { type GaugeProps } from '../../types'
 
 export const GaugeModern = ({
     totalRaisedCents,
     prevTotal,
     goalAmount,
-    totalLabel
+    totalLabel,
 }: GaugeProps) => {
-    const { t } = useTranslation('common');
-    const { formatCurrency } = useCurrencyFormatter();
-    const percentage = goalAmount > 0 ? (totalRaisedCents / (goalAmount * 100)) * 100 : 100;
-    const progressPercentage = Math.min(percentage, 100);
+    const { t } = useTranslation('common')
+    const { formatCurrency } = useCurrencyFormatter()
+    const percentage = goalAmount > 0 ? (totalRaisedCents / (goalAmount * 100)) * 100 : 100
+    const progressPercentage = Math.min(percentage, 100)
 
     return (
         <div className="w-full space-y-12">
             <div className="relative z-10 space-y-2 text-left">
                 <span className="text-zinc-400 font-bold text-lg tracking-widest uppercase mb-4 block">
-                    {(totalLabel === 'Total Raised' || !totalLabel) ? t('live.total_raised', 'Total Raised') : totalLabel}
+                    {totalLabel === 'Total Raised' || !totalLabel
+                        ? t('live.total_raised', 'Total Raised')
+                        : totalLabel}
                 </span>
                 <motion.div
                     key={totalRaisedCents}
@@ -50,10 +52,14 @@ export const GaugeModern = ({
                 >
                     <motion.div
                         className="h-full"
-                        style={{ backgroundColor: 'var(--live-modern-gauge-fill, #ffffff)' }}
-                        initial={{ width: `${goalAmount > 0 ? (prevTotal / (goalAmount * 100)) * 100 : 100}%` }}
+                        style={{
+                            backgroundColor: 'var(--live-modern-gauge-fill, #ffffff)',
+                        }}
+                        initial={{
+                            width: `${goalAmount > 0 ? (prevTotal / (goalAmount * 100)) * 100 : 100}%`,
+                        }}
                         animate={{ width: `${progressPercentage}%` }}
-                        transition={{ duration: 1, ease: "circOut" }}
+                        transition={{ duration: 1, ease: 'circOut' }}
                     />
                 </div>
                 <div className="text-right text-base text-zinc-500 font-mono font-bold uppercase">
@@ -61,5 +67,5 @@ export const GaugeModern = ({
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}

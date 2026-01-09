@@ -1,18 +1,18 @@
-import { useFormContext } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { Input } from '@core/components/ui/input';
-import { Label } from '@core/components/ui/label';
-import { Checkbox } from '@core/components/ui/checkbox';
+import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { Input } from '@core/components/ui/input'
+import { Label } from '@core/components/ui/label'
+import { Checkbox } from '@core/components/ui/checkbox'
 
 interface ToggledInputFieldProps {
-    id: string;
-    label: string;
-    description?: string;
-    inputLabel: string;
-    placeholder?: string;
-    enabledPath: string;
-    inputPath: string;
-    type?: string;
+    id: string
+    label: string
+    description?: string
+    inputLabel: string
+    placeholder?: string
+    enabledPath: string
+    inputPath: string
+    type?: string
 }
 
 export const ToggledInputField = ({
@@ -22,23 +22,33 @@ export const ToggledInputField = ({
     placeholder = 'https://...',
     enabledPath,
     inputPath,
-    type = 'text'
+    type = 'text',
 }: ToggledInputFieldProps) => {
-    const { t } = useTranslation('common');
-    const { register, watch, setValue, formState: { errors } } = useFormContext();
-    const isEnabled = watch(enabledPath) !== false;
+    const { t } = useTranslation('common')
+    const {
+        register,
+        watch,
+        setValue,
+        formState: { errors },
+    } = useFormContext()
+    const isEnabled = watch(enabledPath) !== false
 
     // Helper to get nested error
     const getNestedError = (path: string) => {
-        return path.split('.').reduce((obj, key) => obj?.[key], errors as any);
-    };
+        return path.split('.').reduce((obj, key) => obj?.[key], errors as any)
+    }
 
-    const error = getNestedError(inputPath);
+    const error = getNestedError(inputPath)
 
     return (
         <div className="space-y-3 p-4 rounded-lg border bg-muted/10">
             <div className="flex items-center justify-between">
-                <Label htmlFor={`${id}Enabled`} className="text-xs font-bold uppercase tracking-wider">{label}</Label>
+                <Label
+                    htmlFor={`${id}Enabled`}
+                    className="text-xs font-bold uppercase tracking-wider"
+                >
+                    {label}
+                </Label>
                 <Checkbox
                     id={`${id}Enabled`}
                     checked={isEnabled}
@@ -46,7 +56,9 @@ export const ToggledInputField = ({
                 />
             </div>
             <div className="grid gap-2">
-                <Label htmlFor={id} className="text-xs text-muted-foreground">{inputLabel}</Label>
+                <Label htmlFor={id} className="text-xs text-muted-foreground">
+                    {inputLabel}
+                </Label>
                 <Input
                     id={id}
                     type={type}
@@ -62,5 +74,5 @@ export const ToggledInputField = ({
                 )}
             </div>
         </div>
-    );
-};
+    )
+}

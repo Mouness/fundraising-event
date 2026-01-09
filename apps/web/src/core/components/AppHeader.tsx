@@ -1,58 +1,61 @@
-import { useAppConfig } from '@core/providers/AppConfigProvider';
-import { useTranslation } from 'react-i18next';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { LanguageSwitcher } from './LanguageSwitcher';
-import { Button } from './ui/button';
-import { LogOut } from 'lucide-react';
-import { STORAGE_KEYS } from '@core/lib/constants';
+import { useAppConfig } from '@core/providers/AppConfigProvider'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { LanguageSwitcher } from './LanguageSwitcher'
+import { Button } from './ui/button'
+import { LogOut } from 'lucide-react'
+import { STORAGE_KEYS } from '@core/lib/constants'
 
 interface AppHeaderProps {
-    title?: string;
-    showOnlineStatus?: boolean;
-    isOnline?: boolean;
-    rightContent?: React.ReactNode;
+    title?: string
+    showOnlineStatus?: boolean
+    isOnline?: boolean
+    rightContent?: React.ReactNode
 }
 
 export const AppHeader = ({
     title,
     showOnlineStatus = false,
     isOnline = true,
-    rightContent
+    rightContent,
 }: AppHeaderProps) => {
-    const { config } = useAppConfig();
-    const { t } = useTranslation('common');
-    const params = useParams();
-    const navigate = useNavigate();
-    const slug = params?.slug;
+    const { config } = useAppConfig()
+    const { t } = useTranslation('common')
+    const params = useParams()
+    const navigate = useNavigate()
+    const slug = params?.slug
 
     const handleLogout = () => {
-        const isStaff = !!localStorage.getItem(STORAGE_KEYS.STAFF_TOKEN);
-        localStorage.removeItem(STORAGE_KEYS.TOKEN);
-        localStorage.removeItem(STORAGE_KEYS.USER);
-        localStorage.removeItem(STORAGE_KEYS.STAFF_TOKEN);
-        localStorage.removeItem(STORAGE_KEYS.STAFF_USER);
+        const isStaff = !!localStorage.getItem(STORAGE_KEYS.STAFF_TOKEN)
+        localStorage.removeItem(STORAGE_KEYS.TOKEN)
+        localStorage.removeItem(STORAGE_KEYS.USER)
+        localStorage.removeItem(STORAGE_KEYS.STAFF_TOKEN)
+        localStorage.removeItem(STORAGE_KEYS.STAFF_USER)
 
         if (isStaff) {
-            navigate(slug ? `/${slug}` : '/');
+            navigate(slug ? `/${slug}` : '/')
         } else {
-            navigate('/login');
+            navigate('/login')
         }
-    };
+    }
 
     const getUser = () => {
-        const userStr = localStorage.getItem(STORAGE_KEYS.USER) || localStorage.getItem(STORAGE_KEYS.STAFF_USER);
+        const userStr =
+            localStorage.getItem(STORAGE_KEYS.USER) || localStorage.getItem(STORAGE_KEYS.STAFF_USER)
         if (userStr) {
             try {
-                return JSON.parse(userStr);
-            } catch (e) {
-                return null;
+                return JSON.parse(userStr)
+            } catch {
+                return null
             }
         }
-        return null;
-    };
+        return null
+    }
 
-    const user = getUser();
-    const isLoggedIn = !!(localStorage.getItem(STORAGE_KEYS.TOKEN) || localStorage.getItem(STORAGE_KEYS.STAFF_TOKEN));
+    const user = getUser()
+    const isLoggedIn = !!(
+        localStorage.getItem(STORAGE_KEYS.TOKEN) || localStorage.getItem(STORAGE_KEYS.STAFF_TOKEN)
+    )
 
     const headerContent = (
         <>
@@ -69,13 +72,11 @@ export const AppHeader = ({
                     style={{ color: 'var(--header-text)' }}
                 >
                     {config.content?.title || t('app_header.title')}
-                    {title && (
-                        <span style={{ color: 'var(--header-accent)' }}> · {title}</span>
-                    )}
+                    {title && <span style={{ color: 'var(--header-accent)' }}> · {title}</span>}
                 </div>
             </div>
         </>
-    );
+    )
 
     return (
         <header
@@ -83,17 +84,19 @@ export const AppHeader = ({
             style={{
                 height: 'var(--header-height)',
                 backgroundColor: 'var(--header-bg)',
-                borderColor: 'var(--header-border)'
+                borderColor: 'var(--header-border)',
             }}
         >
             {slug ? (
-                <Link to={`/${slug}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label={t('app_header.home')}>
+                <Link
+                    to={`/${slug}`}
+                    className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+                    aria-label={t('app_header.home')}
+                >
                     {headerContent}
                 </Link>
             ) : (
-                <div className="flex items-center gap-3">
-                    {headerContent}
-                </div>
+                <div className="flex items-center gap-3">{headerContent}</div>
             )}
 
             <div className="flex items-center gap-2">
@@ -102,10 +105,11 @@ export const AppHeader = ({
                 {showOnlineStatus && (
                     <div className="flex items-center gap-2">
                         <div
-                            className={`h-2 w-2 rounded-full animate-pulse ${isOnline
-                                ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]'
-                                : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
-                                }`}
+                            className={`h-2 w-2 rounded-full animate-pulse ${
+                                isOnline
+                                    ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]'
+                                    : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
+                            }`}
                         />
                         <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden sm:inline">
                             {isOnline ? t('app_header.online') : t('app_header.offline')}
@@ -118,7 +122,10 @@ export const AppHeader = ({
                 {!rightContent && isLoggedIn && (
                     <div className="flex items-center gap-3 ml-2 pl-2 border-l border-muted/20">
                         {user && (
-                            <span className="text-sm font-medium hidden md:inline opacity-80" style={{ color: 'var(--header-text)' }}>
+                            <span
+                                className="text-sm font-medium hidden md:inline opacity-80"
+                                style={{ color: 'var(--header-text)' }}
+                            >
                                 {user.name || user.email}
                             </span>
                         )}
@@ -137,5 +144,5 @@ export const AppHeader = ({
                 )}
             </div>
         </header>
-    );
-};
+    )
+}

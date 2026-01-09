@@ -33,20 +33,20 @@ Each event can be customized with:
 
 **`CreateEventPage`** (`apps/web/src/features/events/pages/CreateEventPage.tsx`):
 
-  - Simple form to create a new event with minimal required fields
-  - Redirects to EventSettingsPage after creation
+- Simple form to create a new event with minimal required fields
+- Redirects to EventSettingsPage after creation
 
 **`EventSettingsPage`** (`apps/web/src/features/events/pages/EventSettingsPage.tsx`):
 
-  - Comprehensive settings editor with tabbed interface
-  - Sections: General, Form Fields, Live Screen, Branding, Communication
-  - Uses `react-hook-form` with Zod validation
+- Comprehensive settings editor with tabbed interface
+- Sections: General, Form Fields, Live Screen, Branding, Communication
+- Uses `react-hook-form` with Zod validation
 
 **`DonationsPage`** (`apps/web/src/features/events/pages/DonationsPage.tsx`):
 
-  - Data table of all donations for the event
-  - Filtering by status, date range, payment method
-  - Actions: View receipt, edit status, export
+- Data table of all donations for the event
+- Filtering by status, date range, payment method
+- Actions: View receipt, edit status, export
 
 #### Schemas
 
@@ -60,7 +60,7 @@ export const eventSettingsSchema = z.object({
     status: z.enum(['active', 'draft', 'closed']),
     date: z.string().optional(),
     description: z.string().optional(),
-    
+
     // Form Configuration
     formConfig: z.object({
         phone: z.object({ enabled: z.boolean(), required: z.boolean() }),
@@ -72,29 +72,35 @@ export const eventSettingsSchema = z.object({
         collectAddress: z.boolean().optional(),
         // Note: Actual implementation might vary slightly, referring to src/features/events/schemas/event-settings.schema.ts is best.
     }),
-    
+
     // Live Screen
-    live: z.object({
-        theme: z.enum(['classic', 'modern', 'elegant']).default('classic'),
-    }).optional(),
-    
+    live: z
+        .object({
+            theme: z.enum(['classic', 'modern', 'elegant']).default('classic'),
+        })
+        .optional(),
+
     // Branding
     useGlobalBranding: z.boolean(),
     organization: z.string().optional(),
-    assets: z.object({
-        logo: z.string().url().optional(),
-        backgroundLanding: z.string().url().optional(),
-        backgroundLive: z.string().url().optional(),
-    }).optional(),
-    
+    assets: z
+        .object({
+            logo: z.string().url().optional(),
+            backgroundLanding: z.string().url().optional(),
+            backgroundLive: z.string().url().optional(),
+        })
+        .optional(),
+
     // Communication
-    communication: z.object({
-        enabled: z.boolean(),
-        senderName: z.string().optional(),
-        replyTo: z.string().email().optional(),
-        subjectLine: z.string().optional(),
-    }).optional(),
-});
+    communication: z
+        .object({
+            enabled: z.boolean(),
+            senderName: z.string().optional(),
+            replyTo: z.string().email().optional(),
+            subjectLine: z.string().optional(),
+        })
+        .optional(),
+})
 ```
 
 #### Hooks
@@ -106,20 +112,20 @@ export const eventSettingsSchema = z.object({
 #### Context
 
 - **`EventContext`**: Provides current event data to all child components
-  - Used within `EventLayout` to scope components to a specific event
+    - Used within `EventLayout` to scope components to a specific event
 
 ### Backend (`apps/api`)
 
 #### Endpoints
 
-| Method | Endpoint | Description | Auth |
-|:---|:---|:---|:---|
-| `GET` | `/events` | List all events | Admin |
-| `GET` | `/events/public` | List active events | Public |
-| `GET` | `/events/:slug` | Get event by slug | Public |
-| `POST` | `/events` | Create new event | Admin |
-| `PATCH` | `/events/:id` | Update event config | Admin |
-| `DELETE` | `/events/:id` | Delete event | Admin |
+| Method   | Endpoint         | Description         | Auth   |
+| :------- | :--------------- | :------------------ | :----- |
+| `GET`    | `/events`        | List all events     | Admin  |
+| `GET`    | `/events/public` | List active events  | Public |
+| `GET`    | `/events/:slug`  | Get event by slug   | Public |
+| `POST`   | `/events`        | Create new event    | Admin  |
+| `PATCH`  | `/events/:id`    | Update event config | Admin  |
+| `DELETE` | `/events/:id`    | Delete event        | Admin  |
 
 #### Service (`EventService`)
 
@@ -158,14 +164,14 @@ model Configuration {
   id               String      @id @default(uuid())
   scope            ConfigScope @default(EVENT)
   entityId         String?     // Matches Event.id for EVENT scope
-  
+
   themeVariables   Json?       // CSS variable overrides
   assets           Json?       // Logo, backgrounds
   form             Json?       // Form field configuration
   communication    Json?       // Email settings
   liveTheme        String?     // "classic", "modern", "elegant"
   // ... other fields
-  
+
   @@unique([scope, entityId])
 }
 ```
@@ -174,11 +180,11 @@ model Configuration {
 
 ## Event States
 
-| Status | Description | Public Visibility |
-|:---|:---|:---|
-| `draft` | Event is being configured | Hidden |
-| `active` | Event is live and accepting donations | Visible |
-| `closed` | Event has ended | Hidden |
+| Status   | Description                           | Public Visibility |
+| :------- | :------------------------------------ | :---------------- |
+| `draft`  | Event is being configured             | Hidden            |
+| `active` | Event is live and accepting donations | Visible           |
+| `closed` | Event has ended                       | Hidden            |
 
 ---
 
@@ -186,23 +192,24 @@ model Configuration {
 
 Each optional field can be configured with two properties:
 
-| Field | `enabled` | `required` |
-|:---|:---|:---|
-| Phone | Show/hide phone input | Make phone mandatory |
-| Address | Show/hide address input | Make address mandatory |
-| Company | Show/hide company input | Make company mandatory |
-| Message | Show/hide message textarea | Make message mandatory |
-| Anonymous | Show/hide anonymous checkbox | N/A |
+| Field     | `enabled`                    | `required`             |
+| :-------- | :--------------------------- | :--------------------- |
+| Phone     | Show/hide phone input        | Make phone mandatory   |
+| Address   | Show/hide address input      | Make address mandatory |
+| Company   | Show/hide company input      | Make company mandatory |
+| Message   | Show/hide message textarea   | Make message mandatory |
+| Anonymous | Show/hide anonymous checkbox | N/A                    |
 
 Example configuration:
+
 ```json
 {
-  "formConfig": {
-    "phone": { "enabled": true, "required": false },
-    "address": { "enabled": false, "required": false },
-    "company": { "enabled": true, "required": true },
-    "message": { "enabled": true, "required": false },
-    "anonymous": { "enabled": true, "required": false }
-  }
+    "formConfig": {
+        "phone": { "enabled": true, "required": false },
+        "address": { "enabled": false, "required": false },
+        "company": { "enabled": true, "required": true },
+        "message": { "enabled": true, "required": false },
+        "anonymous": { "enabled": true, "required": false }
+    }
 }
 ```

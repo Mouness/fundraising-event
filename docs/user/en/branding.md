@@ -13,10 +13,10 @@ When configuring an event's branding, you have two primary options:
 
 If you choose **Custom Branding**, you can configure:
 
--   **Event Display Title**: Overrides the internal event name on public pages.
--   **Logo URL**: The logo displayed in the header of the landing page and live screen.
--   **Landing Background**: The background image for the donation page.
--   **Live Screen Background**: The background image for the real-time dashboard.
+- **Event Display Title**: Overrides the internal event name on public pages.
+- **Logo URL**: The logo displayed in the header of the landing page and live screen.
+- **Landing Background**: The background image for the donation page.
+- **Live Screen Background**: The background image for the real-time dashboard.
 
 ![Event Branding Settings](../assets/event_settings_branding_top.png)
 
@@ -28,16 +28,19 @@ If you choose **Custom Branding**, you can configure:
 The event landing page features three optional content blocks that can be linked to external resources. You can enable/disable these and set their destination URLs.
 
 ### Feature Boxes
--   **Impact Box**: Highlights the cause.
--   **Community Box**: Connects donors.
--   **Interactive Box**: Promotes the live screen experience.
+
+- **Impact Box**: Highlights the cause.
+- **Community Box**: Connects donors.
+- **Interactive Box**: Promotes the live screen experience.
 
 ### Configuration
+
 In the **Event Settings > Design & Branding** section:
+
 1.  **Enable/Disable**: Use the toggle switch next to each box name to show or hide it on the landing page.
 2.  **Destination URL**: Enter the URL where the user should be taken when they click the box.
-    -   *Example*: `https://www.ocean-cleanup.org/impact`
-    -   *Internal Link*: `/ocean-cleanup-2025/live`
+    - _Example_: `https://www.ocean-cleanup.org/impact`
+    - _Internal Link_: `/ocean-cleanup-2025/live`
 
 ![Branding Settings](../assets/branding_settings.png)
 
@@ -54,14 +57,15 @@ For developers or advanced administrators looking to understand the underlying c
 
 Customize the appearance of the real-time donation display (`/live` page).
 
--   **Theme Selection**:
-    -   `Classic` (Default): Clean and professional.
-    -   `Modern`: Bold typography and high contrast.
-    -   `Elegant`: Serif fonts and gold accents, perfect to galas.
+- **Theme Selection**:
+    - `Classic` (Default): Clean and professional.
+    - `Modern`: Bold typography and high contrast.
+    - `Elegant`: Serif fonts and gold accents, perfect to galas.
 
 ## CSS Overrides
 
 For advanced users, you can inject custom CSS variables to fine-tune the color palette.
--   Click **"Add Variable"**.
--   **Key**: e.g., `--primary`
--   **Value**: e.g., `#ff4500`
+
+- Click **"Add Variable"**.
+- **Key**: e.g., `--primary`
+- **Value**: e.g., `#ff4500`

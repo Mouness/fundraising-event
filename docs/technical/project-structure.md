@@ -126,11 +126,11 @@ fundraising-event/
 
 The frontend follows a **Core vs Features** architecture:
 
-| Directory | Purpose | Import Alias |
-|:---|:---|:---|
-| `src/core/` | Shared infrastructure, UI library, global state | `@core/*` |
-| `src/features/` | Domain-specific logic, pages, components | `@features/*` |
-| `src/test/` | Test utilities and integration tests | `@test/*` |
+| Directory       | Purpose                                         | Import Alias  |
+| :-------------- | :---------------------------------------------- | :------------ |
+| `src/core/`     | Shared infrastructure, UI library, global state | `@core/*`     |
+| `src/features/` | Domain-specific logic, pages, components        | `@features/*` |
+| `src/test/`     | Test utilities and integration tests            | `@test/*`     |
 
 > [!IMPORTANT]
 > Features should **never** import from other features. Cross-feature communication should go through `core/` (providers, stores, events).
@@ -139,17 +139,17 @@ The frontend follows a **Core vs Features** architecture:
 
 The backend uses **NestJS modules** organized by domain:
 
-| Module | Responsibility |
-|:---|:---|
-| `AuthModule` | JWT, OAuth, Staff PIN authentication |
-| `DonationModule` | Payment processing, webhooks |
-| `EventModule` | Event CRUD, configuration |
-| `GatewayModule` | WebSocket real-time events |
-| `MailModule` | Email templates & sending |
-| `PdfModule` | Receipt PDF generation |
-| `QueueModule` | Background job processing |
-| `ExportModule` | Bulk data export (ZIP) |
-| `HealthModule` | Health check endpoints |
+| Module           | Responsibility                       |
+| :--------------- | :----------------------------------- |
+| `AuthModule`     | JWT, OAuth, Staff PIN authentication |
+| `DonationModule` | Payment processing, webhooks         |
+| `EventModule`    | Event CRUD, configuration            |
+| `GatewayModule`  | WebSocket real-time events           |
+| `MailModule`     | Email templates & sending            |
+| `PdfModule`      | Receipt PDF generation               |
+| `QueueModule`    | Background job processing            |
+| `ExportModule`   | Bulk data export (ZIP)               |
+| `HealthModule`   | Health check endpoints               |
 
 ---
 
@@ -194,12 +194,11 @@ packages/white-labeling/src/
 
 ## Key Files Reference
 
-| File | Purpose |
-|:---|:---|
-| `apps/api/database/schema.prisma` | Database schema (Prisma) |
-| `apps/api/.env` | Backend environment variables |
-| `apps/web/.env` | Frontend environment variables |
-| `apps/web/public/config/event-config.json` | Runtime event configuration |
-| `packages/white-labeling/src/theme/theme.default.css` | Default CSS variables |
-| `mkdocs.yml` | Documentation site configuration |
-
+| File                                                  | Purpose                          |
+| :---------------------------------------------------- | :------------------------------- |
+| `apps/api/database/schema.prisma`                     | Database schema (Prisma)         |
+| `apps/api/.env`                                       | Backend environment variables    |
+| `apps/web/.env`                                       | Frontend environment variables   |
+| `apps/web/public/config/event-config.json`            | Runtime event configuration      |
+| `packages/white-labeling/src/theme/theme.default.css` | Default CSS variables            |
+| `mkdocs.yml`                                          | Documentation site configuration |

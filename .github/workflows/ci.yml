@@ -25,7 +25,8 @@ jobs:
       - name: Build
         run: pnpm build
 
-  commitlint:
+  lint-commit:
+    name: Lint Commit Messages
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -34,7 +35,8 @@ jobs:
           fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v6
 
-  format:
+  format-code:
+    name: Code Formatting
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -51,7 +53,8 @@ jobs:
       - name: Check Formatting
         run: pnpm format:check
 
-  test:
+  unit-tests:
+    name: Unit Tests
     needs: build
     runs-on: ubuntu-latest
     services:
@@ -90,7 +93,37 @@ jobs:
           path: "**/coverage/**"
           retention-days: 7
 
-  lint:
+  e2e-tests:
+    name: E2E Tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Playwright Browsers
+        run: pnpm --filter @fundraising/e2e exec playwright install --with-deps
+      - name: Run E2E Tests
+        run: pnpm --filter @fundraising/e2e test
+        env:
+          CI: true
+      - name: Upload Playwright Report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/e2e/playwright-report/
+          retention-days: 7
+
+  lint-code:
+    name: Code Linting
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -109,7 +142,8 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-  scan:
+  scan-code:
+    name: Security Scan
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -127,7 +161,8 @@ jobs:
         run: pnpm audit --prod
 
   dockerize:
-    needs: [test, lint, scan, commitlint, format]
+    name: Docker Build
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -175,6 +210,7 @@ jobs:
           severity-cutoff: critical
 
   deploy-docs:
+    name: Deploy Documentation
     needs: build
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/Initital-project'
     runs-on: ubuntu-latest
@@ -200,7 +236,8 @@ jobs:
       - run: mkdocs gh-deploy --force
 
   release:
-    needs: [test, lint, scan, commitlint, format]
+    name: Semantic Release
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     permissions:
@@ -217,7 +254,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   self-heal:
-    needs: [test, lint, scan, commitlint, format]
+    name: Self-Healing Agent
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
     if: failure() && github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:

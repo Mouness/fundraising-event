@@ -1,3 +1,6 @@
+/**
+ * @vitest-environment jsdom
+ */
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { StripePaymentForm } from '@features/donation/components/payment/StripePaymentForm'
 import { describe, it, expect, vi, beforeEach } from 'vitest'

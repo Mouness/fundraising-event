@@ -5,8 +5,8 @@
     "scripts": {
         "dev": "pnpm -r --parallel dev",
         "build": "pnpm -r build",
-        "test": "pnpm -r test",
-        "test:cov": "pnpm -r test:cov",
+        "test": "pnpm -r --filter !@fundraising/e2e test",
+        "test:cov": "pnpm -r --filter !@fundraising/e2e test:cov",
         "lint": "pnpm -r lint",
         "db:migrate": "pnpm --filter api db:migrate",
         "db:generate": "pnpm --filter api db:generate",

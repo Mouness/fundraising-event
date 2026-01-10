@@ -20,7 +20,10 @@ export const DonationFeed = ({ donations }: DonationFeedProps) => {
     const { formatCurrency } = useCurrencyFormatter()
 
     return (
-        <div className="flex-1 overflow-hidden relative fade-mask-bottom">
+        <div
+            className="flex-1 overflow-hidden relative fade-mask-bottom"
+            data-testid="recent-donations-list"
+        >
             <AnimatePresence mode="popLayout">
                 {donations.map((d) => (
                     <motion.div

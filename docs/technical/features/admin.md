@@ -57,14 +57,14 @@ The admin interface is built with a layout-first approach to ensure consistent n
 - **Security**: All admin routes are protected and require a valid JWT.
 - **State Management**: Uses React Query for data fetching with optimistic updates for better UX.
 
-**API Endpoints**
+**Data Architecture**
 
-| Method | Endpoint       | Description               | Auth  |
-| :----- | :------------- | :------------------------ | :---- |
-| `GET`  | `/admin/stats` | Get dashboard statistics  | Admin |
-| `GET`  | `/admin/me`    | Get current admin details | Admin |
+Unlike standard dashboards that fetch from a single `/stats` endpoint, the platform uses client-side aggregation for better performance and flexibility:
 
-For a complete list of endpoints, see the [API Reference](../api-reference.md).
+- **Statistics**: Derived in the frontend by calculating aggregates (Total Raised, Donor Count) from the `GET /events` list.
+- **User Session**: Authenticated user details are returned during the `/auth/login` handshake and persisted in `localStorage`.
+
+For a complete list of actual API endpoints, see the [API Reference](../api-reference.md).
 
 ---
 

@@ -1,5 +1,7 @@
 # Fundraising Event Documentation
 
+[![CI/CD Pipeline](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml/badge.svg)](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml)
+
 Welcome to the official documentation portal. Please choose the guide that best fits your needs.
 
 <div class="grid cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">

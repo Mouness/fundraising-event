@@ -8,7 +8,10 @@ test.describe('Resilience & Security', () => {
         await expect(page.getByText(/Application error/i)).not.toBeVisible()
     })
 
-    test('should rate limit excessive API requests (Mocked)', async ({ page }) => {
+    test('should handle rate limiting (429) gracefully', async ({ page }) => {
+        // We use a local interceptor even in live mode to verify UI resilience to 429s
+        // without actual backend hammering.
+
         // Mock rate limiting logic on the client-side network interceptor
         let requestCount = 0
         await page.route('**/api/health', async (route) => {

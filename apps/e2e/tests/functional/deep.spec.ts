@@ -2,140 +2,146 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Deep Functional & Integrations', () => {
     test.beforeEach(async ({ page }) => {
-        // Debug
-        page.on('console', (msg) => console.log(`BROWSER LOG: ${msg.text()}`))
+        const USE_MOCKS = process.env.E2E_USE_MOCKS === 'true'
+
+        // Logs
         page.on('pageerror', (err) => console.log(`BROWSER ERROR: ${err.message}`))
-        page.on('request', (request) => console.log('REQ >>', request.method(), request.url()))
 
-        // Catch-all Mocking
-        await page.route('**', async (route) => {
-            const url = route.request().url()
+        if (USE_MOCKS) {
+            // Catch-all Mocking
+            await page.route('**', async (route) => {
+                const url = route.request().url()
 
-            // Mock Global Config
-            if (url.includes('/api/settings/global') || url.includes('/white-labeling/config')) {
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        theme: { variables: {}, assets: {} },
-                        donation: { payment: { provider: 'stripe' } },
-                        features: {},
-                        id: 'global-config',
-                    },
-                })
-                return
-            }
+                // Mock Global Config
+                if (
+                    url.includes('/api/settings/global') ||
+                    url.includes('/white-labeling/config')
+                ) {
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            theme: { variables: {}, assets: {} },
+                            donation: { payment: { provider: 'stripe' } },
+                            features: {},
+                            id: 'global-config',
+                        },
+                    })
+                    return
+                }
 
-            // Mock Event Settings
-            if (url.includes('/api/events/ramadan-gala-2025/settings')) {
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        content: {
-                            title: 'Grand Gala Ramadan',
+                // Mock Event Settings
+                if (url.includes('/api/events/ramadan-gala-2025/settings')) {
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            content: {
+                                title: 'Grand Gala Ramadan',
+                                goalAmount: 500000,
+                                landing: {
+                                    impact: {
+                                        enabled: true,
+                                        title: 'Impact',
+                                        description: 'Our impact',
+                                    },
+                                    community: {
+                                        enabled: true,
+                                        title: 'Community',
+                                        description: 'Our community',
+                                    },
+                                    interactive: {
+                                        enabled: true,
+                                        title: 'Interactive',
+                                        description: 'Interactive features',
+                                    },
+                                },
+                            },
+                            donation: {
+                                enabled: true,
+                                payment: { provider: 'stripe' },
+                                amounts: [10, 20, 50, 100],
+                            },
+                            theme: {
+                                variables: {
+                                    'primary-color': '#10b981',
+                                },
+                            },
+                            id: 'event-config-1',
+                            slug: 'ramadan-gala-2025',
+                        },
+                    })
+                    return
+                }
+
+                // Mock Event Details
+                if (url.includes('/api/events/ramadan-gala-2025') && !url.includes('settings')) {
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            id: '1',
+                            name: 'Grand Gala Ramadan',
+                            slug: 'ramadan-gala-2025',
+                            status: 'ACTIVE',
                             goalAmount: 500000,
-                            landing: {
-                                impact: {
-                                    enabled: true,
-                                    title: 'Impact',
-                                    description: 'Our impact',
-                                },
-                                community: {
-                                    enabled: true,
-                                    title: 'Community',
-                                    description: 'Our community',
-                                },
-                                interactive: {
-                                    enabled: true,
-                                    title: 'Interactive',
-                                    description: 'Interactive features',
-                                },
-                            },
+                            raised: 125000,
+                            currency: 'EUR',
+                            description: 'Support our cause',
                         },
-                        donation: {
-                            enabled: true,
-                            payment: { provider: 'stripe' },
-                            amounts: [10, 20, 50, 100],
+                    })
+                    return
+                }
+
+                // Mock Events List
+                if (url.includes('/api/events') && !url.includes('settings')) {
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            data: [{ id: '1', name: 'Ramadan', slug: 'ramadan-gala-2025' }],
+                            total: 1,
                         },
-                        theme: {
-                            variables: {
-                                'primary-color': '#10b981',
-                            },
+                    })
+                    return
+                }
+
+                // Mock Donation Intent
+                if (url.includes('/donations/intent')) {
+                    await route.fulfill({
+                        status: 201,
+                        contentType: 'application/json',
+                        json: {
+                            id: 'pi_3MtwBwLkdIwHu7ix28a3tqPa',
+                            clientSecret:
+                                'pi_3MtwBwLkdIwHu7ix28a3tqPa_secret_OtZ8834921abcdef123456',
                         },
-                        id: 'event-config-1',
-                        slug: 'ramadan-gala-2025',
-                    },
-                })
-                return
-            }
+                    })
+                    return
+                }
 
-            // Mock Event Details
-            if (url.includes('/api/events/ramadan-gala-2025') && !url.includes('settings')) {
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        id: '1',
-                        name: 'Grand Gala Ramadan',
-                        slug: 'ramadan-gala-2025',
-                        status: 'ACTIVE',
-                        goalAmount: 500000,
-                        raised: 125000,
-                        currency: 'EUR',
-                        description: 'Support our cause',
-                    },
-                })
-                return
-            }
+                // Mock Donations List
+                if (url.includes('/api/donations')) {
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: { data: [], total: 0 },
+                    })
+                    return
+                }
 
-            // Mock Events List
-            if (url.includes('/api/events') && !url.includes('settings')) {
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        data: [{ id: '1', name: 'Ramadan', slug: 'ramadan-gala-2025' }],
-                        total: 1,
-                    },
-                })
-                return
-            }
+                // Mock Auth
+                if (url.includes('/auth/login')) {
+                    await route.fulfill({
+                        status: 201,
+                        json: { accessToken: 'mock-token', user: { id: 'admin-1', role: 'ADMIN' } },
+                    })
+                    return
+                }
 
-            // Mock Donation Intent
-            if (url.includes('/donations/intent')) {
-                await route.fulfill({
-                    status: 201,
-                    contentType: 'application/json',
-                    json: {
-                        id: 'pi_3MtwBwLkdIwHu7ix28a3tqPa',
-                        clientSecret: 'pi_3MtwBwLkdIwHu7ix28a3tqPa_secret_OtZ8834921abcdef123456',
-                    },
-                })
-                return
-            }
-
-            // Mock Donations List
-            if (url.includes('/api/donations')) {
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: { data: [], total: 0 },
-                })
-                return
-            }
-
-            // Mock Auth
-            if (url.includes('/auth/login')) {
-                await route.fulfill({
-                    status: 201,
-                    json: { accessToken: 'mock-token', user: { id: 'admin-1', role: 'ADMIN' } },
-                })
-                return
-            }
-
-            await route.continue()
-        })
+                await route.continue()
+            })
+        }
     })
 
     test('should handle immediate localization switching', async ({ page }) => {

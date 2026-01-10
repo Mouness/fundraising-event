@@ -43,6 +43,7 @@ Thumbs.db
 # Testing
 coverage/
 test-results/
+docs/reports/
 
 # Temporary
 tmp/

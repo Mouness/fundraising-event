@@ -42,6 +42,7 @@ nav:
     - Mode Live: user/fr/live.md
     - Dons: user/fr/donations.md
   - Technical Documentation:
+    - Home: technical/index.md
     - Getting Started: technical/getting-started.md
     - Architecture: technical/architecture.md
     - Project Structure: technical/project-structure.md

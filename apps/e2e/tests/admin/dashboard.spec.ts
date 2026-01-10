@@ -3,62 +3,40 @@ import { test, expect } from '@playwright/test'
 test.describe('Admin Dashboard & Event Management', () => {
     // Helper to login before tests
     test.beforeEach(async ({ page }) => {
-        // Debug console logs from browser
-        page.on('console', (msg) => console.log(`BROWSER LOG: ${msg.text()}`))
+        const USE_MOCKS = process.env.E2E_USE_MOCKS === 'true'
+
+        // Logs
         page.on('pageerror', (err) => console.log(`BROWSER ERROR: ${err.message}`))
-        page.on('request', (request) => console.log('REQ >>', request.method(), request.url()))
-        page.on('requestfailed', (request) =>
-            console.log('REQ FAIL !!', request.url(), request.failure()?.errorText),
-        )
 
-        // Catch-all route to intercept EVERYTHING to guarantee capture
-        await page.route('**', async (route) => {
-            const url = route.request().url()
+        if (USE_MOCKS) {
+            // Catch-all route to intercept EVERYTHING to guarantee capture
+            await page.route('**', async (route) => {
+                const url = route.request().url()
 
-            // Mock Event Settings (Specific first)
-            if (url.includes('/api/events/') && url.includes('/settings')) {
-                console.log('MOCKING EVENT SETTINGS:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        content: { title: 'Ramadan Gala 2025', goalAmount: 10000 },
-                        donation: { enabled: true, payment: { provider: 'stripe' } },
-                        theme: { variables: {} },
-                        id: 'event-config-1',
-                        slug: 'ramadan-gala-2025',
-                    },
-                })
-                return
-            }
+                // Mock Event Settings (Specific first)
+                if (url.includes('/api/events/') && url.includes('/settings')) {
+                    console.log('MOCKING EVENT SETTINGS:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            content: { title: 'Ramadan Gala 2025', goalAmount: 10000 },
+                            donation: { enabled: true, payment: { provider: 'stripe' } },
+                            theme: { variables: {} },
+                            id: 'event-config-1',
+                            slug: 'ramadan-gala-2025',
+                        },
+                    })
+                    return
+                }
 
-            // Mock Single Event Entity
-            if (url.match(/\/api\/events\/[^\/]+$/)) {
-                console.log('MOCKING SINGLE EVENT:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        id: '1',
-                        name: 'Mock Event',
-                        status: 'ACTIVE',
-                        raised: 5000,
-                        donorCount: 10,
-                        goalAmount: 10000,
-                        slug: 'mock-event',
-                    },
-                })
-                return
-            }
-
-            // Mock Event List
-            if (url.includes('/api/events')) {
-                console.log('MOCKING EVENTS LIST:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: [
-                        {
+                // Mock Single Event Entity
+                if (url.match(/\/api\/events\/[^\/]+$/)) {
+                    console.log('MOCKING SINGLE EVENT:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
                             id: '1',
                             name: 'Mock Event',
                             status: 'ACTIVE',
@@ -67,81 +45,105 @@ test.describe('Admin Dashboard & Event Management', () => {
                             goalAmount: 10000,
                             slug: 'mock-event',
                         },
-                    ],
-                })
-                return
-            }
+                    })
+                    return
+                }
 
-            if (url.includes('/api/donations')) {
-                console.log('MOCKING DONATIONS:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        data: [
+                // Mock Event List
+                if (url.includes('/api/events')) {
+                    console.log('MOCKING EVENTS LIST:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: [
                             {
                                 id: '1',
-                                amount: 5000,
-                                currency: 'EUR',
-                                donorName: 'John Doe',
-                                createdAt: new Date().toISOString(),
-                                isAnonymous: false,
+                                name: 'Mock Event',
+                                status: 'ACTIVE',
+                                raised: 5000,
+                                donorCount: 10,
+                                goalAmount: 10000,
+                                slug: 'mock-event',
                             },
                         ],
-                        total: 1,
-                    },
-                })
-                return
-            }
+                    })
+                    return
+                }
 
-            if (url.includes('/api/settings/global') || url.includes('/white-labeling/config')) {
-                console.log('MOCKING CONFIG/SETTINGS:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        theme: { variables: {}, assets: {} },
-                        donation: { payment: { provider: 'stripe' } },
-                        features: {},
-                        id: 'global-config',
-                    },
-                })
-                return
-            }
+                if (url.includes('/api/donations')) {
+                    console.log('MOCKING DONATIONS:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            data: [
+                                {
+                                    id: '1',
+                                    amount: 5000,
+                                    currency: 'EUR',
+                                    donorName: 'John Doe',
+                                    createdAt: new Date().toISOString(),
+                                    isAnonymous: false,
+                                },
+                            ],
+                            total: 1,
+                        },
+                    })
+                    return
+                }
 
-            if (url.includes('/auth/login')) {
-                console.log('MOCKING LOGIN:', url)
-                await route.fulfill({
-                    status: 201,
-                    contentType: 'application/json',
-                    json: {
-                        accessToken: 'mock-token-123',
-                        user: {
+                if (
+                    url.includes('/api/settings/global') ||
+                    url.includes('/white-labeling/config')
+                ) {
+                    console.log('MOCKING CONFIG/SETTINGS:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            theme: { variables: {}, assets: {} },
+                            donation: { payment: { provider: 'stripe' } },
+                            features: {},
+                            id: 'global-config',
+                        },
+                    })
+                    return
+                }
+
+                if (url.includes('/auth/login')) {
+                    console.log('MOCKING LOGIN:', url)
+                    await route.fulfill({
+                        status: 201,
+                        contentType: 'application/json',
+                        json: {
+                            accessToken: 'mock-token-123',
+                            user: {
+                                id: 'admin-1',
+                                email: 'admin@example.com',
+                                role: 'ADMIN',
+                            },
+                        },
+                    })
+                    return
+                }
+
+                if (url.includes('/auth/me')) {
+                    console.log('MOCKING AUTH ME:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
                             id: 'admin-1',
                             email: 'admin@example.com',
                             role: 'ADMIN',
                         },
-                    },
-                })
-                return
-            }
+                    })
+                    return
+                }
 
-            if (url.includes('/auth/me')) {
-                console.log('MOCKING AUTH ME:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        id: 'admin-1',
-                        email: 'admin@example.com',
-                        role: 'ADMIN',
-                    },
-                })
-                return
-            }
-
-            await route.continue()
-        })
+                await route.continue()
+            })
+        }
 
         await page.goto('/login')
         await page.getByLabel(/Email/i).fill('admin@example.com')

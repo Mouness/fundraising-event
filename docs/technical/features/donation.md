@@ -1,8 +1,8 @@
-# Donation Flow & Stripe Integration
+# Donation Flow & Payment Integration
 
 ## Overview
 
-The donation flow allows users to make payments using Stripe. It consists of a React frontend utilizing Stripe Elements and a NestJS backend handling Payment Intents and Webhooks.
+The donation flow allows users to make payments using supported providers (Stripe and PayPal). It consists of a React frontend utilizing a dynamic form factory and a NestJS backend handling payment processing and webhooks.
 
 ## Architecture
 
@@ -10,17 +10,18 @@ The donation flow allows users to make payments using Stripe. It consists of a R
 
 **Module**: `DonationModule`
 
-**Service**: `StripeService`
+**Services**: `StripeService`, `PayPalService`
 
-- Wraps Stripe SDK.
-- `createPaymentIntent`: Creates an intent (default currency: USD).
-- `constructEventFromPayload`: Verifies webhook signatures.
+- Wraps respective provider SDKs.
+- `createPaymentIntent` / `createOrder`: Initiates the payment process.
+- `constructEventFromPayload` / `verifyWebhook`: Validates incoming webhook events.
 
 **Controller**: `DonationController`
 
 | Method  | Endpoint                    | Description                            | Auth        |
 | :------ | :-------------------------- | :------------------------------------- | :---------- |
-| `POST`  | `/donations/intent`         | Returns `clientSecret`                 | Public      |
+| `POST`  | `/donations/intent`         | Returns `clientSecret` (Stripe)        | Public      |
+| `POST`  | `/donations/paypal/order`   | Returns `orderId` (PayPal)             | Public      |
 | `POST`  | `/donations/stripe/webhook` | Listens for `payment_intent.succeeded` | Stripe      |
 | `POST`  | `/donations/paypal/webhook` | Listens for `CHECKOUT.ORDER.COMPLETED` | PayPal      |
 | `POST`  | `/donations`                | Handles offline/cash donations (Staff) | Staff       |
@@ -35,11 +36,11 @@ The donation flow allows users to make payments using Stripe. It consists of a R
 
 **Component**: `CheckoutForm.tsx`
 
-- Uses `PaymentFormFactory` to abstract provider implementation (Stripe).
+- Uses `PaymentFormFactory` to switch between provider implementations (Stripe, PayPal).
 - Collects Amount, Name, Email.
 - **Optional Fields**: Phone, Address, Company, Message, Anonymous flag.
-- Submits to backend to get `clientSecret`.
-- **Refactor**: Strict typing for `sessionData` and `PaymentIntent` responses.
+- Submits to backend to initiate the payment session.
+- **Refactor**: Strict typing for session data and provider responses.
 
 **Validation**: Zod schema (`donation.schema.ts`).
 

@@ -62,6 +62,7 @@ export default defineConfig({
         env: {
             ADMIN_EMAIL: 'admin@example.com',
             ADMIN_PASSWORD: 'admin123',
+            E2E_USE_MOCKS: process.env.E2E_USE_MOCKS || 'false',
         },
     },
 })

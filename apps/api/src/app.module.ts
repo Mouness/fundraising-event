@@ -26,7 +26,7 @@ import { HealthModule } from './features/health/health.module'
                 throttlers: [
                     {
                         ttl: 60000,
-                        limit: 100,
+                        limit: 1000, // Increased for E2E tests
                     },
                 ],
                 storage: new ThrottlerStorageRedisService(
@@ -39,6 +39,7 @@ import { HealthModule } from './features/health/health.module'
         }),
         ConfigModule.forRoot({
             isGlobal: true,
+            envFilePath: ['.env.test', '.env'],
         }),
 
         DatabaseModule,

@@ -1,5 +1,10 @@
 # Fundraising Event Project
 
+[![CI/CD Pipeline](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml/badge.svg)](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml)
+[![pnpm](https://img.shields.io/badge/pnpm-%3E%3D9-orange.svg?style=flat-square&logo=pnpm)](https://pnpm.io/)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D20-green.svg?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
 ![Fundraising Event Dashboard Preview](docs/assets/readme-preview.jpg)
 
 This repository contains the codebase for the **Fundraising Event** application, a platform designed to manage and display live fundraising events with real-time updates.

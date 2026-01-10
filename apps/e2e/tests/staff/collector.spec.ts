@@ -7,115 +7,117 @@ test.describe('Staff Collector App', () => {
     test.setTimeout(60000)
 
     test.beforeEach(async ({ page }) => {
-        // Debug console logs from browser
-        page.on('console', (msg) => console.log(`BROWSER LOG: ${msg.text()}`))
+        const USE_MOCKS = process.env.E2E_USE_MOCKS === 'true'
+
+        // Logs
         page.on('pageerror', (err) => console.log(`BROWSER ERROR: ${err.message}`))
-        page.on('request', (request) => console.log('REQ >>', request.method(), request.url()))
-        page.on('requestfailed', (request) =>
-            console.log('REQ FAIL !!', request.url(), request.failure()?.errorText),
-        )
 
-        // Catch-all route to intercept EVERYTHING
-        await page.route('**', async (route) => {
-            const url = route.request().url()
+        if (USE_MOCKS) {
+            // Catch-all route to intercept EVERYTHING
+            await page.route('**', async (route) => {
+                const url = route.request().url()
 
-            // Mock Staff Login
-            if (url.includes('/auth/staff/login')) {
-                console.log('MOCKING STAFF LOGIN:', url)
-                await route.fulfill({
-                    status: 201,
-                    contentType: 'application/json',
-                    json: {
-                        accessToken: 'mock-staff-token-123',
-                        user: {
-                            id: 'staff-1',
-                            name: 'Staff Member',
-                            role: 'STAFF',
-                            eventId: '1',
+                // Mock Staff Login
+                if (url.includes('/auth/staff/login')) {
+                    console.log('MOCKING STAFF LOGIN:', url)
+                    await route.fulfill({
+                        status: 201,
+                        contentType: 'application/json',
+                        json: {
+                            accessToken: 'mock-staff-token-123',
+                            user: {
+                                id: 'staff-1',
+                                name: 'Staff Member',
+                                role: 'STAFF',
+                                eventId: '1',
+                            },
                         },
-                    },
-                })
-                return
-            }
+                    })
+                    return
+                }
 
-            // Mock Global Settings / Config
-            if (url.includes('/api/settings/global') || url.includes('/white-labeling/config')) {
-                console.log('MOCKING CONFIG/SETTINGS:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        theme: { variables: {}, assets: {} },
-                        donation: { payment: { provider: 'stripe' } },
-                        features: {},
-                        id: 'global-config',
-                    },
-                })
-                return
-            }
-
-            // Mock Event Settings
-            if (url.includes('/api/events/') && url.includes('/settings')) {
-                console.log('MOCKING EVENT SETTINGS:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        content: { title: 'Ramadan Gala 2025', goalAmount: 10000 },
-                        donation: {
-                            enabled: true,
-                            payment: { provider: 'stripe' },
-                            amounts: [10, 50, 100],
+                // Mock Global Settings / Config
+                if (
+                    url.includes('/api/settings/global') ||
+                    url.includes('/white-labeling/config')
+                ) {
+                    console.log('MOCKING CONFIG/SETTINGS:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            theme: { variables: {}, assets: {} },
+                            donation: { payment: { provider: 'stripe' } },
+                            features: {},
+                            id: 'global-config',
                         },
-                        theme: { variables: {} },
-                        id: 'event-config-1',
-                        slug: eventSlug,
-                    },
-                })
-                return
-            }
+                    })
+                    return
+                }
 
-            // Mock Event Details
-            if (url.match(/\/api\/events\/[^\/]+$/)) {
-                console.log('MOCKING EVENTS DETAIL:', url)
-                await route.fulfill({
-                    status: 200,
-                    contentType: 'application/json',
-                    json: {
-                        id: '1',
-                        name: 'Ramadan Gala 2025',
-                        status: 'ACTIVE',
-                        currency: 'EUR',
-                        slug: eventSlug,
-                        goalAmount: 10000,
-                        raised: 5000,
-                        donation: {
-                            enabled: true,
-                            payment: { provider: 'stripe' },
-                            amounts: [10, 50, 100],
+                // Mock Event Settings
+                if (url.includes('/api/events/') && url.includes('/settings')) {
+                    console.log('MOCKING EVENT SETTINGS:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            content: { title: 'Ramadan Gala 2025', goalAmount: 10000 },
+                            donation: {
+                                enabled: true,
+                                payment: { provider: 'stripe' },
+                                amounts: [10, 50, 100],
+                            },
+                            theme: { variables: {} },
+                            id: 'event-config-1',
+                            slug: eventSlug,
                         },
-                    },
-                })
-                return
-            }
+                    })
+                    return
+                }
 
-            // Mock Donations (for collection)
-            if (url.includes('/api/donations')) {
-                console.log('MOCKING DONATION SUBMIT:', url)
-                await route.fulfill({
-                    status: 201,
-                    contentType: 'application/json',
-                    json: {
-                        id: 'new-donation-1',
-                        amount: 50,
-                        status: 'COMPLETED',
-                    },
-                })
-                return
-            }
+                // Mock Event Details
+                if (url.match(/\/api\/events\/[^\/]+$/)) {
+                    console.log('MOCKING EVENTS DETAIL:', url)
+                    await route.fulfill({
+                        status: 200,
+                        contentType: 'application/json',
+                        json: {
+                            id: '1',
+                            name: 'Ramadan Gala 2025',
+                            status: 'ACTIVE',
+                            currency: 'EUR',
+                            slug: eventSlug,
+                            goalAmount: 10000,
+                            raised: 5000,
+                            donation: {
+                                enabled: true,
+                                payment: { provider: 'stripe' },
+                                amounts: [10, 50, 100],
+                            },
+                        },
+                    })
+                    return
+                }
 
-            await route.continue()
-        })
+                // Mock Donations (for collection)
+                if (url.includes('/api/donations')) {
+                    console.log('MOCKING DONATION SUBMIT:', url)
+                    await route.fulfill({
+                        status: 201,
+                        contentType: 'application/json',
+                        json: {
+                            id: 'new-donation-1',
+                            amount: 50,
+                            status: 'COMPLETED',
+                        },
+                    })
+                    return
+                }
+
+                await route.continue()
+            })
+        }
 
         // Ensure clean state
         await page.goto('/')

@@ -8,6 +8,20 @@ Accédez à **Paramètres > Design & Marque** dans le tableau de bord de votre �
 
 ![Paramètres de Marque](../assets/branding_settings.png)
 
+## Centre de Marque Global
+
+Pour configurer l'apparence par défaut de votre organisation (Logo, Couleurs, Nom Légal) :
+
+1.  Allez dans **Paramètres** (Global) dans le menu latéral principal.
+2.  Ajustez **Identité** et **Thème**.
+3.  Ces paramètres s'appliquent à _tous_ les événements par défaut.
+
+[Aller au Guide des Paramètres Globaux](global_settings.md)
+
+## Identité & Assets (Surcharge Événement)
+
+Si vous choisissez de personnaliser la marque pour un événement spécifique, vous pouvez surcharger les défauts globaux :
+
 - **Logo de l'Événement** : Remplace le logo global de l'organisation pour cet événement spécifique.
 - **Arrière-plan Landing** : L'image d'arrière-plan pour la page de don.
 - **Arrière-plan Écran Live** : L'image d'arrière-plan pour le tableau de bord en temps réel.

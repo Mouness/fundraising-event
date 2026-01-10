@@ -7,8 +7,40 @@ Cette section couvre la manière dont les dons sont traités, suivis et comment 
 L'onglet **Dons** de votre événement fournit une liste complète de toutes les transactions.
 
 - **Statut** : Voir si un don a réussi, échoué ou a été remboursé.
-- **Reçus** : Télécharger manuellement les reçus PDF si un donateur le demande.
-- **Export** : Exporter les données donateurs pour des rapports externes.
+
+### Vue Tableau
+
+Le tableau des dons fournit un détail complet de chaque transaction :
+
+- **Date** : Quand le don a eu lieu (survolez pour le temps relatif).
+- **Donateur** : Nom et email du contributeur.
+- **Montant** : Valeur et méthode de paiement utilisée.
+- **Statut** : État actuel du traitement.
+- **Actions** :
+    - **Éditer** : Mettre à jour les détails du donateur (ex: corriger une coquille dans le nom).
+    - **Télécharger le Reçu** : Générer un reçu PDF individuel.
+    - **Annuler/Rembourser** : Rembourser le paiement (si supporté) et marquer comme annulé.
+
+![Tableau des Dons & Exports](../assets/donation_table_export.png)
+
+## Reçus & Exports
+
+La plateforme génère automatiquement des reçus fiscaux PDF pour chaque don réussi. Ces documents sont créés dynamiquement en utilisant vos **Paramètres de Marque Globaux** (logo, nom légal, signature).
+
+### Génération de PDF
+
+- **Email Automatique** : Les reçus sont joints à l'email de confirmation envoyé au donateur immédiatement après le paiement.
+- **Téléchargement Manuel** :
+    1.  Localisez le don dans le tableau.
+    2.  Cliquez sur le bouton **Actions** (trois points).
+    3.  Sélectionnez **Télécharger le Reçu**.
+
+### Export CSV & PDF en Masse
+
+Pour la comptabilité, vous pouvez exporter les données depuis le Tableau de Bord de l'Événement :
+
+1.  **Export CSV** : Télécharge une feuille de calcul de toutes les transactions correspondant à vos filtres actuels.
+2.  **Export PDF (ZIP)** : Génère une archive ZIP contenant les reçus PDF individuels pour tous les dons réussis. Utile pour l'audit ou l'archivage hors ligne.
 
 ## Fournisseurs de Paiement
 

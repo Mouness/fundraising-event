@@ -55,5 +55,17 @@ You can enable/disable:
 - **Message** (Allow donors to leave a comment)
 - **Anonymous Donations** (Allow donors to hide their name from public feeds)
 
-> [!TIP]
 > Keeping the form short increases conversion rates. Only enable fields you strictly need.
+
+## Event Team & Staff Assignment
+
+You can assign members from your **Global Staff Pool** to work on specific events. Assigned members can access the **Collector App** for this event using their PIN.
+
+1.  Navigate to the **Team** tab in the Event Dashboard.
+2.  **Assign Member**: Select a volunteer from the dropdown list.
+3.  **Confirm**: The member is now authorized to collect donations for this event.
+
+![Staff Assignment](../assets/event_staff_assignment.png)
+
+> [!NOTE]
+> Only members already added to the Global Staff Pool (via the main Staff tab) will appear in the list. To add new volunteers, see [Staff Management](staff.md).

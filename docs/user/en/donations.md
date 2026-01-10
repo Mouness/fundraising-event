@@ -17,13 +17,39 @@ You can filter the donation list by:
 - **Status** (Succeeded, Pending, Failed)
 - **Payment Method** (Stripe, PayPal, Cash, etc.)
 
-## Receipts
+### Table View
 
-The platform automatically generates PDF tax receipts for every successful donation.
+The donation table provides a detailed breakdown of each transaction:
 
-- **Email**: Receipts are automatically emailed to the donor if an email address was provided.
-- **Manual Download**: Admins can download a PDF copy of any receipt from the donation list details view.
-- **Bulk Export**: Use the "Export Receipts" button on the dashboard to download a ZIP file containing all receipts for a selected period.
+- **Date**: When the donation occurred (hover for relative time).
+- **Donor**: Name and email of the contributor.
+- **Amount**: Value and payment method used.
+- **Status**: Current processing state.
+- **Actions**:
+    - **Edit**: Update donor details (e.g., fix a typo in the name).
+    - **Download Receipt**: Generate an individual PDF receipt.
+    - **Cancel/Refund**: Refund the payment (if supported) and mark as cancelled.
+
+![Donation Table & Exports](../assets/donation_table_export.png)
+
+## Receipts & Exports
+
+The platform automatically generates PDF tax receipts for every successful donation. These documents are dynamically created using your **Global Branding** settings (logo, legal name, signature).
+
+### PDF Generation
+
+- **Automatic Email**: Receipts are attached to the confirmation email sent to the donor immediately after payment.
+- **Manual Download**:
+    1.  Locate the donation in the table.
+    2.  Click the **Actions** (three dots) button.
+    3.  Select **Download Receipt**.
+
+### Bulk CSV & PDF Export
+
+For accounting purposes, you can export data from the Event Dashboard:
+
+1.  **Export CSV**: Downloads a spreadsheet of all transactions matching your current filters.
+2.  **Export PDFs (ZIP)**: Generates a ZIP archive containing individual PDF receipts for all successful donations. This is useful for auditing or offline record-keeping.
 
 ## Payment Providers
 

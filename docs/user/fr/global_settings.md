@@ -1,6 +1,6 @@
 # Paramètres Globaux
 
-La zone **Paramètres Globaux** vous permet de configurer les défauts de l'organisation qui s'appliquent à tous vos événements. Cela assure une cohérence et vous fait gagner du temps lors de la création de nouvelles campagnes.
+La zone **Paramètres Globaux** vous permet de configurer les défauts de l'organisation qui s'appliquent à tous vos événements. Cela agit comme votre **Centre de Marque**, assurant une cohérence et vous faisant gagner du temps lors de la création de nouvelles campagnes.
 
 Pour accéder à ces paramètres, cliquez sur **Paramètres** dans la barre latérale principale.
 

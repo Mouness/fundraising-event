@@ -15,6 +15,9 @@ Effectively managing your team is crucial for on-site fundraising. The platform 
 
 ![Staff Management](../assets/staff_management.png)
 
+> [!TIP]
+> This section manages the **Global Pool**. To assign these members to a specific campaign, go to that event's dashboard and use the **Team** tab. [See Event Team Guide](events.md#event-team--staff-assignment).
+
 ## Collector App
 
 The Collector App is a simplified interface designed for volunteers at the event venue to collect donations quickly via tablet or mobile.

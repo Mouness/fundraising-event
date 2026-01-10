@@ -48,5 +48,17 @@ Vous pouvez activer/désactiver :
 - **Message** (Permettre aux donateurs de laisser un commentaire)
 - **Dons Anonymes** (Permettre aux donateurs de masquer leur nom des flux publics)
 
-> [!TIP]
 > Garder le formulaire court augmente le taux de conversion. Activez uniquement les champs dont vous avez strictement besoin.
+
+## Équipe de l'Événement et Affectation du Personnel
+
+Vous pouvez affecter des membres de votre **Pool Global de Personnel** pour travailler sur des événements spécifiques. Les membres affectés peuvent accéder à l'**App Collecteur** pour cet événement en utilisant leur code PIN.
+
+1.  Accédez à l'onglet **Équipe** dans le Tableau de Bord de l'Événement.
+2.  **Assigner un Membre** : Sélectionnez un bénévole dans la liste déroulante.
+3.  **Confirmer** : Le membre est maintenant autorisé à collecter des dons pour cet événement.
+
+![Affectation du Personnel](../assets/event_staff_assignment.png)
+
+> [!NOTE]
+> Seuls les membres déjà ajoutés au Pool Global de Personnel (via l'onglet principal Personnel) apparaîtront dans la liste. Pour ajouter de nouveaux bénévoles, voir [Gestion du Personnel](staff.md).

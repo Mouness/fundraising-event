@@ -10,6 +10,9 @@ Gérez votre équipe et donnez aux bénévoles les outils pour collecter des don
 
 ![Gestion du Personnel](../assets/staff_management.png)
 
+> [!TIP]
+> Cette section gère le **Pool Global**. Pour assigner ces membres à une campagne spécifique, allez sur le tableau de bord de cet événement et utilisez l'onglet **Équipe**. [Voir le Guide Équipe de l'Événement](events.md#equipe-de-levenement-et-affectation-du-personnel).
+
 ## App Collecteur
 
 L'application Collecteur est une interface simplifiée conçue pour les bénévoles sur le lieu de l'événement afin de collecter les dons rapidement via tablette ou mobile.

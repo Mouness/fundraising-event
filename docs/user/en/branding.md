@@ -6,12 +6,22 @@ The platform offers powerful tools to customize the look and feel of your event,
 
 When configuring an event's branding, you have two primary options:
 
-1.  **Use Global Branding (Recommended)**: The event will automatically inherit the logo, colors, and legal information configured in the global Organization Settings. This ensures consistency across all your campaigns.
-2.  **Custom Branding**: Uncheck "Use Organization Branding" to define unique assets for a specific event. This is useful for special campaigns with their own visual identity.
+1.  **Use Global Branding (Recommended)**: The event will automatically inherit the logo, colors, and legal information configured in the **Global Settings**.
+2.  **Custom Branding**: Uncheck "Use Organization Branding" to define unique assets for a specific event.
 
-## Identity & Assets
+## Global Branding Center
 
-If you choose **Custom Branding**, you can configure:
+To configure your organization's default look and feel (Logo, Colors, Legal Name):
+
+1.  Go to **Settings** (Global) in the main sidebar.
+2.  Adjust **Identity** and **Theme**.
+3.  These settings apply to _all_ events by default.
+
+[Go to Global Settings Guide](global_settings.md)
+
+## Identity & Assets (Event Override)
+
+If you choose **Custom Branding** for a specific event, you can override the global defaults:
 
 - **Event Display Title**: Overrides the internal event name on public pages.
 - **Logo URL**: The logo displayed in the header of the landing page and live screen.

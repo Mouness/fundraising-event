@@ -1,6 +1,6 @@
 # Global Settings
 
-The **Global Settings** area allows you to configure organization-wide defaults that apply to all your events. This ensures consistency and saves you time when creating new campaigns.
+The **Global Settings** area allows you to configure organization-wide defaults that apply to all your events. This acts as your **Brand Center**, ensuring consistency and saving you time when creating new campaigns.
 
 To access these settings, click on **Settings** in the main sidebar.
 

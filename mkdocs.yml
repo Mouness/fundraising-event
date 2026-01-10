@@ -1,0 +1,76 @@
+site_name: Fundraising Event Documentation v1.0.0
+site_url: https://Mouness.github.io/fundraising-event/
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - navigation.top
+    - toc.integrate
+
+nav:
+  - Welcome: index.md
+  - User Guide (EN):
+    - Introduction: user/en/index.md
+    - Global Settings: user/en/global_settings.md
+    - Events Management: user/en/events.md
+    - Design & Branding: user/en/branding.md
+    - Staff & Volunteers: user/en/staff.md
+    - Live Mode: user/en/live.md
+    - Donations: user/en/donations.md
+  - Guide Utilisateur (FR):
+    - Introduction: user/fr/index.md
+    - Paramètres Globaux: user/fr/global_settings.md
+    - Gestion des Événements: user/fr/events.md
+    - Design & Marque: user/fr/branding.md
+    - Personnel & Bénévoles: user/fr/staff.md
+    - Mode Live: user/fr/live.md
+    - Dons: user/fr/donations.md
+  - Technical Documentation:
+    - Home: technical/index.md
+    - Getting Started: technical/getting-started.md
+    - Architecture: technical/architecture.md
+    - Project Structure: technical/project-structure.md
+    - Configuration: technical/configuration.md
+    - API Reference: technical/api-reference.md
+    - Features:
+      - Donation Flow: technical/features/donation.md
+      - Live Event: technical/features/live-event.md
+      - Landing Pages: technical/features/public-landing-pages.md
+      - Admin Dashboard: technical/features/admin.md
+      - Staff Collector: technical/features/staff.md
+      - Communication: technical/features/communication.md
+      - Global Settings: technical/features/global-settings.md
+      - Event Configuration: technical/features/events.md
+    - White-Labeling: technical/white-labeling.md
+    - Providers Integration: technical/providers.md
+    - Authentication: technical/authentication.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html

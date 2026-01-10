@@ -1,0 +1,441 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+#============================================================================================
+# Build
+#============================================================================================
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+      - name: Build
+        run: pnpm build
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            apps/api/dist
+            packages/types/dist
+            packages/white-labeling/dist
+            node_modules/.prisma
+          retention-days: 1
+#============================================================================================
+# Lint Commit Messages
+#============================================================================================
+  lint-commit:
+    name: Lint Commit Messages
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@v6
+#============================================================================================
+# Code Formatting
+#============================================================================================
+  format-code:
+    name: Code Formatting
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check Formatting
+        run: pnpm format:check
+#============================================================================================
+# Unit Tests
+#============================================================================================
+  unit-tests:
+    name: Unit Tests
+    needs: build
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+      - name: Test
+        run: pnpm test:cov
+      
+      - name: Upload Coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: "**/coverage/**"
+          retention-days: 7
+#============================================================================================
+# Automation Tests
+#============================================================================================
+  e2e-tests:
+    name: E2E Tests
+    needs: [build, unit-tests]
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: fundraising_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:8.4-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+      - name: Setup Database
+        run: pnpm --filter api db:push
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/fundraising_test
+      - name: Seed Database
+        run: pnpm --filter api db:seed:islamic
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/fundraising_test
+      - name: Start API Backend
+        run: |
+          pnpm --filter api start:prod &
+          # Wait for API to be healthy
+          timeout 60s bash -c 'until curl -s http://localhost:3000/api/health; do sleep 2; done'
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/fundraising_test
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          JWT_SECRET: ci_test_secret
+          E2E_USE_MOCKS: "false"
+          ADMIN_EMAIL: "admin@example.com"
+          ADMIN_PASSWORD: "admin123"
+      - name: Install Playwright Browsers
+        run: pnpm --filter @fundraising/e2e exec playwright install --with-deps
+      - name: Run E2E Tests
+        run: pnpm --filter @fundraising/e2e test
+        env:
+          CI: true
+          E2E_USE_MOCKS: "false"
+          ADMIN_EMAIL: "admin@example.com"
+          ADMIN_PASSWORD: "admin123"
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/e2e/playwright-report/
+          retention-days: 7
+#============================================================================================
+# Lint Code
+#============================================================================================
+  lint-code:
+    name: Code Linting
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+      - name: Lint
+        run: pnpm lint
+#============================================================================================
+# Scan Code
+#============================================================================================
+  scan-code:
+    name: Security Scan
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Security Audit
+        run: pnpm audit --prod
+#============================================================================================
+# Build Container Images
+#============================================================================================
+  dockerize:
+    name: Docker Build
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build API Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: apps/api/deploy/Dockerfile
+          push: false
+          outputs: type=docker,dest=/tmp/fundraising-api.tar
+          tags: fundraising-api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build Web Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: apps/web/deploy/Dockerfile
+          build-args: |
+            VITE_API_URL=${{ vars.VITE_API_URL }}
+            VITE_STRIPE_PUBLIC_KEY=${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+          push: false
+          outputs: type=docker,dest=/tmp/fundraising-web.tar
+          tags: fundraising-web:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Upload Docker Images
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-images
+          path: /tmp/*.tar
+          retention-days: 1
+#============================================================================================
+# Scan Container
+#============================================================================================
+  scan-container:
+    name: Security Scan Container
+    needs: dockerize
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Docker Images
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-images
+          path: /tmp
+
+      - name: Load Docker Images
+        run: |
+          docker load --input /tmp/fundraising-api.tar
+          docker load --input /tmp/fundraising-web.tar
+
+      - name: Scan API Image
+        uses: anchore/scan-action@v3
+        with:
+          image: "fundraising-api:latest"
+          fail-build: true
+          severity-cutoff: critical
+
+      - name: Scan Web Image
+        uses: anchore/scan-action@v3
+        with:
+          image: "fundraising-web:latest"
+          fail-build: true
+          severity-cutoff: critical
+#============================================================================================
+# Deploy Documentation
+#============================================================================================
+  deploy-docs:
+    name: Deploy Documentation
+    needs: [build, unit-tests, e2e-tests]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download Coverage Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-reports
+          path: docs/reports/unit
+
+      - name: Download Playwright Report
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-report
+          path: docs/reports/e2e
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+      - run: pip install mkdocs-material 
+      - run: mkdocs gh-deploy --force
+#============================================================================================
+# Release Project
+#============================================================================================
+  release:
+    name: Semantic Release
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, scan-container, lint-commit, format-code]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#============================================================================================
+# Agent To Fix Project Issues
+#============================================================================================
+  self-heal:
+    name: Self-Healing Agent
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, scan-container, lint-commit, format-code]
+    if: failure() && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+        pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+      
+      - name: Re-run Failure to Capture Log
+        run: |
+          # Try to identify the failure by running lint first (it's fastest)
+          pnpm lint > failure.log 2>&1 || pnpm test > failure.log 2>&1 || true
+      
+      - name: AI Healing Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/healing-agent.js failure.log
+      
+      - name: Create Pull Request with Fix
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "ai: self-healing fix for CI failure"
+          branch: ai-healing-fix
+          title: "🤖 AI-Generated Fix for CI Failure"
+          body: |
+            This PR was automatically generated by the AI Healing Agent to fix a CI failure.
+            
+            Logs analyzed:
+            ```
+            $(cat healing_summary.txt)
+            ```
+          delete-branch: true

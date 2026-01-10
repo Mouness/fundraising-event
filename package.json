@@ -1,0 +1,51 @@
+{
+    "name": "fundraising-event-monorepo",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "pnpm -r --parallel dev",
+        "build": "pnpm -r build",
+        "test": "pnpm -r --filter !@fundraising/e2e test",
+        "test:cov": "pnpm -r --filter !@fundraising/e2e test:cov",
+        "lint": "pnpm -r lint",
+        "db:migrate": "pnpm --filter api db:migrate",
+        "db:generate": "pnpm --filter api db:generate",
+        "db: studio": "pnpm --filter api db:studio",
+        "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+        "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
+        "prepare": "husky"
+    },
+    "pnpm": {
+        "overrides": {
+            "qs": "^6.14.1"
+        }
+    },
+    "engines": {
+        "node": ">=20"
+    },
+    "release": {
+        "branches": [
+            "main",
+            "master"
+        ],
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            "@semantic-release/github"
+        ]
+    },
+    "devDependencies": {
+        "eslint": "^9.39.2",
+        "husky": "^9.1.5",
+        "lint-staged": "^15.2.10",
+        "prettier": "^3.7.4"
+    },
+    "lint-staged": {
+        "**/*.{ts,tsx,js,json,md}": [
+            "prettier --write"
+        ],
+        "apps/**/*.{ts,tsx}": [
+            "eslint --fix"
+        ]
+    }
+}

@@ -24,15 +24,15 @@ export const globalSettings = {
             '--radius': '0.3rem',
         },
         assets: {
-            logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/logo.png',
+            logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/islamic/assets/logo.png',
             favicon:
-                'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/favicon.png',
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/islamic/assets/favicon.png',
             backgroundLanding:
-                'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/landing_pattern_light.jpg',
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/islamic/assets/landing_pattern_light.jpg',
             backgroundDonor:
-                'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/bg_donor.jpg',
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/islamic/assets/bg_donor.jpg',
             backgroundLive:
-                'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/islamic/assets/live_elegant.png',
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/islamic/assets/live_elegant.png',
         },
     },
     communication: {

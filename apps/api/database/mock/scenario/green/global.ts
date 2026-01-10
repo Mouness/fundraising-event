@@ -24,13 +24,13 @@ export const globalSettings = {
             '--radius': '0.75rem', // Soft organic feel
         },
         assets: {
-            logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/logo.png',
+            logo: 'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/logo.png',
             favicon:
-                'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/favicon.png',
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/favicon.png',
             backgroundLanding:
-                'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/landing_global.jpg',
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/landing_global.jpg',
             backgroundDonor:
-                'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/donor_bg.jpg',
+                'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/donor_bg.jpg',
         },
     },
     communication: {

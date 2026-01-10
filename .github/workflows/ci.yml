@@ -302,14 +302,14 @@ jobs:
           docker load --input /tmp/fundraising-web.tar
 
       - name: Scan API Image
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v7
         with:
           image: "fundraising-api:latest"
           fail-build: true
           severity-cutoff: critical
 
       - name: Scan Web Image
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v7
         with:
           image: "fundraising-web:latest"
           fail-build: true

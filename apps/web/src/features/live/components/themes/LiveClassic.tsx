@@ -17,7 +17,7 @@ export const LiveClassic = ({
 
     return (
         <div
-            className="min-h-screen overflow-hidden relative font-sans selection:bg-primary selection:text-primary-foreground bg-cover bg-center bg-no-repeat w-full"
+            className="min-h-screen font-sans selection:bg-primary selection:text-primary-foreground bg-cover bg-center bg-no-repeat w-full"
             style={{
                 backgroundColor: 'var(--live-classic-bg, #000)',
                 color: 'var(--live-text-main, #fff)',
@@ -50,7 +50,7 @@ export const LiveClassic = ({
             {/* Overlay for readability if image exists */}
             {bgImage && <div className="absolute inset-0 bg-black/60 z-0" />}
 
-            <main className="relative z-10 w-full h-screen flex flex-col p-8 lg:p-16">
+            <main className="relative z-10 w-full min-h-screen flex flex-col p-8 lg:p-16">
                 {/* Header / Title */}
                 <header className="flex justify-between items-start mb-12">
                     <div className="flex items-center gap-6">

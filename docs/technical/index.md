@@ -39,7 +39,9 @@ This project provides a complete fundraising ecosystem featuring:
 | Document                                                                                           | Description                               |
 | :------------------------------------------------------------------------------------------------- | :---------------------------------------- |
 | [Unit Test Coverage (API)](../reports/unit/apps/api/coverage/index.html)                           | Technical coverage for the NestJS API     |
+| [Unit Test Coverage (Web)](../reports/unit/apps/web/coverage/index.html)                           | Coverage for the React Frontend           |
 | [Unit Test Coverage (White-Labeling)](../reports/unit/packages/white-labeling/coverage/index.html) | Coverage for common packages              |
+| [Unit Test Coverage (Types)](../reports/unit/packages/types/coverage/index.html)                   | Coverage for shared DTOs/Interfaces       |
 | [E2E Test Report](../reports/e2e/index.html)                                                       | Playwright full-stack integration results |
 
 ---

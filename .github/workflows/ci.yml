@@ -7,6 +7,9 @@ on:
     branches: [ main, master, Initital-project ]
 
 jobs:
+#============================================================================================
+# Build
+#============================================================================================
   build:
     name: Build Project
     runs-on: ubuntu-latest
@@ -25,7 +28,19 @@ jobs:
         run: pnpm db:generate
       - name: Build
         run: pnpm build
-
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            apps/api/dist
+            packages/types/dist
+            packages/white-labeling/dist
+            node_modules/.prisma
+          retention-days: 1
+#============================================================================================
+# Lint Commit Messages
+#============================================================================================
   lint-commit:
     name: Lint Commit Messages
     needs: build
@@ -35,7 +50,9 @@ jobs:
         with:
           fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v6
-
+#============================================================================================
+# Code Formatting
+#============================================================================================
   format-code:
     name: Code Formatting
     needs: build
@@ -53,21 +70,18 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Check Formatting
         run: pnpm format:check
-
+#============================================================================================
+# Unit Tests
+#============================================================================================
   unit-tests:
     name: Unit Tests
     needs: build
     runs-on: ubuntu-latest
     services:
       redis:
-        image: redis
+        image: redis:alpine
         ports:
           - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -81,8 +95,10 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Generate Prisma Client
         run: pnpm db:generate
-      - name: Build Workspace Dependencies
-        run: pnpm build
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
       - name: Test
         run: pnpm test:cov
       
@@ -93,10 +109,12 @@ jobs:
           name: coverage-reports
           path: "**/coverage/**"
           retention-days: 7
-
+#============================================================================================
+# Automation Tests
+#============================================================================================
   e2e-tests:
     name: E2E Tests
-    needs: [build, unit-tests, lint-code, lint-commit]
+    needs: [build, unit-tests]
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -134,8 +152,10 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Generate Prisma Client
         run: pnpm db:generate
-      - name: Build API
-        run: pnpm --filter api build
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
       - name: Setup Database
         run: pnpm --filter api db:push
         env:
@@ -173,7 +193,9 @@ jobs:
           name: playwright-report
           path: apps/e2e/playwright-report/
           retention-days: 7
-
+#============================================================================================
+# Lint Code
+#============================================================================================
   lint-code:
     name: Code Linting
     needs: build
@@ -189,11 +211,15 @@ jobs:
           cache: 'pnpm'
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - name: Generate Prisma Client
-        run: pnpm db:generate
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
       - name: Lint
         run: pnpm lint
-
+#============================================================================================
+# Scan Code
+#============================================================================================
   scan-code:
     name: Security Scan
     needs: build
@@ -211,7 +237,9 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Security Audit
         run: pnpm audit --prod
-
+#============================================================================================
+# Build Container Images
+#============================================================================================
   dockerize:
     name: Docker Build
     needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
@@ -228,7 +256,7 @@ jobs:
           context: .
           file: apps/api/deploy/Dockerfile
           push: false
-          load: true
+          outputs: type=docker,dest=/tmp/fundraising-api.tar
           tags: fundraising-api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -242,10 +270,36 @@ jobs:
             VITE_API_URL=${{ vars.VITE_API_URL }}
             VITE_STRIPE_PUBLIC_KEY=${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
           push: false
-          load: true
+          outputs: type=docker,dest=/tmp/fundraising-web.tar
           tags: fundraising-web:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Upload Docker Images
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-images
+          path: /tmp/*.tar
+          retention-days: 1
+#============================================================================================
+# Scan Container
+#============================================================================================
+  scan-container:
+    name: Security Scan Container
+    needs: dockerize
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Docker Images
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-images
+          path: /tmp
+
+      - name: Load Docker Images
+        run: |
+          docker load --input /tmp/fundraising-api.tar
+          docker load --input /tmp/fundraising-web.tar
 
       - name: Scan API Image
         uses: anchore/scan-action@v3
@@ -260,7 +314,9 @@ jobs:
           image: "fundraising-web:latest"
           fail-build: true
           severity-cutoff: critical
-
+#============================================================================================
+# Deploy Documentation
+#============================================================================================
   deploy-docs:
     name: Deploy Documentation
     needs: [build, unit-tests, e2e-tests]
@@ -308,10 +364,12 @@ jobs:
             mkdocs-material-
       - run: pip install mkdocs-material 
       - run: mkdocs gh-deploy --force
-
+#============================================================================================
+# Release Project
+#============================================================================================
   release:
     name: Semantic Release
-    needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, scan-container, lint-commit, format-code]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     permissions:
@@ -326,10 +384,12 @@ jobs:
         uses: cycjimmy/semantic-release-action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+#============================================================================================
+# Agent To Fix Project Issues
+#============================================================================================
   self-heal:
     name: Self-Healing Agent
-    needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
+    needs: [unit-tests, e2e-tests, lint-code, scan-code, scan-container, lint-commit, format-code]
     if: failure() && github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
@@ -348,8 +408,10 @@ jobs:
           cache: 'pnpm'
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - name: Generate Prisma Client
-        run: pnpm db:generate
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
       
       - name: Re-run Failure to Capture Log
         run: |

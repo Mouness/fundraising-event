@@ -43,6 +43,7 @@ Thumbs.db
 # Testing
 coverage/
 test-results/
+playwright-report/
 docs/reports/
 
 # Temporary

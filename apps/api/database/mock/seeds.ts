@@ -189,6 +189,22 @@ const main = async () => {
             generateRandomDonation(i),
         )
 
+        // GUARANTEE: Create one specific recent donation for E2E testing
+        donations.push({
+            amount: 50000,
+            currency: 'EUR',
+            donorName: 'Ahmed Zakat',
+            donorEmail: 'test-guarantee@example.com',
+            isAnonymous: false,
+            message: 'Sadaqah for the cause',
+            eventId: createdEvent.id,
+            status: 'COMPLETED',
+            paymentMethod: 'STRIPE',
+            transactionId: require('crypto').randomUUID(),
+            staffMemberId: undefined,
+            createdAt: new Date(), // NOW, so it appears first in Recent Donations
+        })
+
         await prisma.donation.createMany({
             data: donations,
         })

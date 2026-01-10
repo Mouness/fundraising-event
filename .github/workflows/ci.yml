@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
 #============================================================================================
@@ -114,6 +114,7 @@ jobs:
 #============================================================================================
   e2e-tests:
     name: E2E Tests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [build, unit-tests]
     runs-on: ubuntu-latest
     services:
@@ -242,6 +243,7 @@ jobs:
 #============================================================================================
   dockerize:
     name: Docker Build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [unit-tests, e2e-tests, lint-code, scan-code, lint-commit, format-code]
     runs-on: ubuntu-latest
     steps:
@@ -320,7 +322,7 @@ jobs:
   deploy-docs:
     name: Deploy Documentation
     needs: [build, unit-tests, e2e-tests]
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -370,7 +372,7 @@ jobs:
   release:
     name: Semantic Release
     needs: [unit-tests, e2e-tests, lint-code, scan-code, scan-container, lint-commit, format-code]
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write

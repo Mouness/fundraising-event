@@ -15,9 +15,9 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLanding:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/rainforest_landing.png',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/rainforest_landing.png',
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/live_global.png',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/live_global.png',
                 },
                 variables: {
                     '--primary': '#1B5E20', // Darker Jungle Green
@@ -54,7 +54,7 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/ocean_live.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/ocean_live.jpg',
                 },
                 variables: {
                     '--primary': '#0288D1', // Ocean Blue
@@ -95,7 +95,7 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/solar_live.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/solar_live.jpg',
                 },
                 variables: {
                     '--primary': '#e6d079ff', // Yellow
@@ -139,7 +139,7 @@ export const events = [
                 },
                 assets: {
                     backgroundLanding:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/wildlife_landing.jpg',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/wildlife_landing.jpg',
                 },
             },
             donation: {
@@ -165,7 +165,7 @@ export const events = [
             theme: {
                 assets: {
                     backgroundLive:
-                        'https://raw.githubusercontent.com/Mouness/fundraising-event/b3d693251d9b8754a39ebcd494c4432bfbd5c0fc/apps/api/database/mock/scenario/green/assets/urban_live.png',
+                        'https://raw.githubusercontent.com/Mouness/fundraising-event/117c6ac80414d9f3bfd887dd1d5c31b1d570178b/apps/api/database/mock/scenario/green/assets/urban_live.png',
                 },
                 variables: {
                     '--primary': '#86EFAC', // Pastel Green

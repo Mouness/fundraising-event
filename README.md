@@ -1,5 +1,6 @@
 # Fundraising Event Project
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square)](package.json)
 [![CI/CD Pipeline](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml/badge.svg)](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml)
 [![pnpm](https://img.shields.io/badge/pnpm-%3E%3D9-orange.svg?style=flat-square&logo=pnpm)](https://pnpm.io/)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D20-green.svg?style=flat-square&logo=node.js)](https://nodejs.org/)

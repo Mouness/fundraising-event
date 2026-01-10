@@ -1,5 +1,6 @@
 # Fundraising Event Documentation
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square)](https://github.com/Mouness/fundraising-event/blob/main/package.json)
 [![CI/CD Pipeline](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml/badge.svg)](https://github.com/Mouness/fundraising-event/actions/workflows/ci.yml)
 
 Welcome to the official documentation portal. Please choose the guide that best fits your needs.

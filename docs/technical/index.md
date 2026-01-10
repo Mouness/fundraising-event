@@ -1,5 +1,7 @@
 # Fundraising Event
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square)](https://github.com/Mouness/fundraising-event/blob/main/package.json)
+
 Welcome to the documentation for the **Fundraising Event** platform — a real-time, white-label fundraising solution for physical and hybrid events.
 
 ## Overview

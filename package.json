@@ -47,5 +47,8 @@
         "apps/**/*.{ts,tsx}": [
             "eslint --fix"
         ]
+    },
+    "dependencies": {
+        "dotenv": "^17.2.3"
     }
 }

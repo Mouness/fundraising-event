@@ -85,9 +85,15 @@ Detailed documentation is also available in source form in the `docs/` directory
 
 ### Technical Documentation
 
+- **[Getting Started](https://Mouness.github.io/fundraising-event/technical/getting-started/)**: Developer cookbook and setup guide.
 - **[Architecture](https://Mouness.github.io/fundraising-event/technical/architecture/)**: System design and component overview.
+- **[Project Structure](https://Mouness.github.io/fundraising-event/technical/project-structure/)**: Detailed directory layout explanation.
 - **[API Reference](https://Mouness.github.io/fundraising-event/technical/api-reference/)**: Endpoints and usage.
+- **[Authentication](https://Mouness.github.io/fundraising-event/technical/authentication/)**: Auth flows and security.
 - **[Configuration](https://Mouness.github.io/fundraising-event/technical/configuration/)**: Environment setup details.
+- **[Providers](https://Mouness.github.io/fundraising-event/technical/providers/)**: External services (Payment, Mail, etc).
+- **[Tech Stack](https://Mouness.github.io/fundraising-event/technical/tech-stack/)**: Libraries and tools used.
+- **[Testing](https://Mouness.github.io/fundraising-event/technical/testing/)**: Testing strategy and commands.
 - **[White-Labeling](https://Mouness.github.io/fundraising-event/technical/white-labeling/)**: Customization and branding options.
 
 ### User Guides
@@ -107,7 +113,6 @@ The project is organized as a pnpm monorepo:
     - **[`dto`](packages/dto)**: Shared Data Transfer Objects.
     - **[`white-labeling`](packages/white-labeling)**: Shared logic for theming and i18n.
 - **`agent/`**: AI Agent specific documentation and specifications.
-- **`deploy/`**: Dockerfiles and deployment scripts.
 - **`docs/`**: Project documentation (Markdown).
 
 ## 🧪 Testing

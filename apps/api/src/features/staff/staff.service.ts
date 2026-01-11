@@ -49,7 +49,7 @@ export class StaffService {
                 data: {
                     name: data.name,
                     code: data.code,
-                    events: { connect: { id: data.eventId } },
+                    ...(data.eventId ? { events: { connect: { id: data.eventId } } } : {}),
                 },
             })
         } catch (error) {

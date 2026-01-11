@@ -108,8 +108,8 @@ test.describe('Live Event Page', () => {
                                     id: 'd1',
                                     amount: 5000,
                                     currency: 'EUR',
-                                    donorName: 'Alice',
-                                    message: 'Bravo!',
+                                    donorName: 'Ahmed Zakat',
+                                    message: 'Sadaqah!',
                                     createdAt: new Date().toISOString(),
                                 },
                                 {

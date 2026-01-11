@@ -16,7 +16,7 @@ export const AdminLayout = () => {
             <AppHeader title={t('admin_layout.title', 'Admin')} />
             <div className="flex flex-1 overflow-hidden">
                 <aside
-                    className="p-4 border-r flex flex-col"
+                    className="hidden md:flex p-4 border-r flex-col"
                     style={{
                         width: 'var(--admin-sidebar-width)',
                         backgroundColor: 'var(--admin-sidebar-bg)',

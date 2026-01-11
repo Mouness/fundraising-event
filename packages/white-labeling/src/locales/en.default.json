@@ -37,6 +37,9 @@
         "create_action": "Create Campaign",
         "create_placeholder_slug": "my-event",
         "create_placeholder_goal": "10000",
+        "create_placeholder_name": "e.g. Annual Charity Gala",
+        "create_success": "Event created successfully",
+        "create_error": "Failed to create event",
         "layout": {
             "title": "Event Management"
         },
@@ -138,7 +141,9 @@
         "no_staff_found": "No staff members found.",
         "events_count": "{{count}} events",
         "confirm_delete_title": "Delete staff member",
-        "member_updated": "Staff member updated successfully"
+        "member_updated": "Staff member updated successfully",
+        "member_deleted": "Staff member deleted successfully",
+        "error_delete": "Failed to delete staff member"
     },
     "live": {
         "title": "Live Screen",

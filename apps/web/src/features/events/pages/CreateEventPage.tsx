@@ -16,7 +16,7 @@ export const CreateEventPage = () => {
     const navigate = useNavigate()
 
     const form = useForm<CreateEventFormValues>({
-        resolver: zodResolver(createEventSchema),
+        resolver: zodResolver(createEventSchema) as any,
         defaultValues: {
             name: '',
             slug: '',

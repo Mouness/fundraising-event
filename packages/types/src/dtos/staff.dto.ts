@@ -12,8 +12,8 @@ export class CreateStaffDto {
     declare code: string
 
     @IsString()
-    @IsNotEmpty()
-    declare eventId: string
+    @IsOptional()
+    declare eventId?: string
 }
 
 export class UpdateStaffDto {

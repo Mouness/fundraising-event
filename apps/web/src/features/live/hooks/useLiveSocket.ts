@@ -21,9 +21,11 @@ export const useLiveSocket = (slug: string) => {
     useEffect(() => {
         if (!slug) return
 
-        // Determine socket URL: IfVITE_API_URL is relative (e.g. '/api'), use window origin to connect to root namespace via proxy.
-        // If absolute, use it directly.
-        const socketUrl = VITE_API_URL.startsWith('/') ? window.location.origin : VITE_API_URL
+        // Determine socket URL: If VITE_API_URL is relative (e.g. '/api'), use window origin to connect to root namespace via proxy.
+        // If absolute, parse origin to strip any path (e.g., '/api') to connect to root namespace.
+        const socketUrl = VITE_API_URL.startsWith('/')
+            ? window.location.origin
+            : new URL(VITE_API_URL).origin
         const socket: Socket = io(socketUrl)
 
         socket.on('connect', () => {

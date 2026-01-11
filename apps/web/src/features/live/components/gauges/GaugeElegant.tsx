@@ -21,28 +21,22 @@ export const GaugeElegant = ({
             <div className="absolute inset-0 border border-slate-800 rounded-full scale-110"></div>
             <div className="absolute inset-0 border border-slate-800 rounded-full scale-125 opacity-50"></div>
 
-            <svg className="w-full h-full transform -rotate-90">
+            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                 {/* Track */}
-                <circle cx="50%" cy="50%" r="48%" stroke="#1e293b" strokeWidth="2" fill="none" />
+                <circle cx="50" cy="50" r="48" stroke="#1e293b" strokeWidth="2" fill="none" />
                 {/* Progress Gold */}
                 <motion.circle
-                    cx="50%"
-                    cy="50%"
-                    r="48%"
+                    cx="50"
+                    cy="50"
+                    r="48"
                     stroke="url(#goldGeneric)"
                     strokeWidth="4"
                     fill="none"
-                    strokeLinecap="butt"
-                    strokeDasharray="301" // Approx 2 * pi * 48
-                    initial={{ strokeDashoffset: 301 }}
-                    animate={{ strokeDashoffset: 301 - (301 * progressPercentage) / 100 }}
-                    transition={{ duration: 2, ease: 'easeInOut' }}
-                    pathLength={1}
-                    style={{
-                        pathLength: 1,
-                        strokeDasharray: 1,
-                        strokeDashoffset: 1 - progressPercentage / 100,
-                    }}
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: progressPercentage / 100 }}
+                    transition={{ duration: 2, ease: 'easeOut' }}
+                    style={{ rotate: 0 }}
                 />
                 <defs>
                     <linearGradient id="goldGeneric" x1="0%" y1="0%" x2="100%" y2="0%">

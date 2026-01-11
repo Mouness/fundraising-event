@@ -1,72 +1,84 @@
 import { z } from 'zod'
 import i18next from 'i18next'
 
-const zodErrorMap: z.ZodErrorMap = (issue, ctx) => {
-    let message = ctx.defaultError
+const zodErrorMap = (issue: any, ctx: any) => {
+    // Explicitly handle ctx being undefined or null
+    const defaultError = ctx && ctx.defaultError ? ctx.defaultError : undefined
+    let message = defaultError || issue.message
+    const code = issue.code as string
 
-    switch (issue.code) {
-        case z.ZodIssueCode.invalid_type:
-            if (issue.received === 'undefined' || issue.received === 'null') {
-                message = i18next.t('validation.required', 'This field is required')
-            } else {
-                message = i18next.t('validation.invalid_type', {
-                    expected: issue.expected,
-                    received: issue.received,
-                    defaultValue: ctx.defaultError,
-                })
-            }
-            break
-        case z.ZodIssueCode.too_small:
-            message = i18next.t(`validation.too_small.${issue.type}`, {
-                count: Number(issue.minimum),
-                defaultValue: ctx.defaultError,
-            })
-            break
-        case z.ZodIssueCode.too_big:
-            message = i18next.t(`validation.too_big.${issue.type}`, {
-                count: Number(issue.maximum),
-                defaultValue: ctx.defaultError,
-            })
-            break
-        case z.ZodIssueCode.invalid_string:
-            if (typeof issue.validation === 'string') {
-                message = i18next.t(`validation.invalid_string.${issue.validation}`, {
-                    defaultValue: ctx.defaultError,
-                })
-            }
-            break
-        case z.ZodIssueCode.invalid_enum_value:
-            message = i18next.t('validation.invalid_enum_value', {
-                options: issue.options.join(', '),
-                defaultValue: ctx.defaultError,
-            })
-            break
-        case z.ZodIssueCode.invalid_date:
+    // Loose comparison for Zod 4 compatibility where enums might have changed
+    // Loose comparison for Zod 4 compatibility where enums might have changed
+    if (code === 'invalid_type') {
+        const data = ctx?.data !== undefined ? ctx.data : (issue as any).input
+
+        if (data === undefined || data === null) {
+            message = i18next.t('validation.required', 'This field is required')
+        } else if ((issue as any).received === 'Invalid Date') {
             message = i18next.t('validation.invalid_date', {
-                defaultValue: ctx.defaultError,
+                defaultValue: defaultError,
             })
-            break
-        case z.ZodIssueCode.not_multiple_of:
-            message = i18next.t('validation.not_multiple_of', {
-                multipleOf: Number(issue.multipleOf),
-                defaultValue: ctx.defaultError,
-            })
-            break
-        case z.ZodIssueCode.not_finite:
+        } else if (
+            (issue as any).received === 'Infinity' ||
+            (issue as any).received === '-Infinity'
+        ) {
             message = i18next.t('validation.not_finite', {
-                defaultValue: ctx.defaultError,
+                defaultValue: defaultError,
             })
-            break
-        case z.ZodIssueCode.custom:
-            message = i18next.t('validation.custom', {
-                defaultValue: ctx.defaultError,
+        } else {
+            message = i18next.t('validation.invalid_type', {
+                expected: (issue as any).expected,
+                received: (issue as any).received,
+                defaultValue: defaultError,
             })
-            break
+        }
+    } else if (code === 'too_small') {
+        const type = (issue as any).type || (issue as any).origin
+        message = i18next.t(`validation.too_small.${type}`, {
+            count: Number((issue as any).minimum),
+            defaultValue: defaultError,
+        })
+    } else if (code === 'too_big') {
+        const type = (issue as any).type || (issue as any).origin
+        message = i18next.t(`validation.too_big.${type}`, {
+            count: Number((issue as any).maximum),
+            defaultValue: defaultError,
+        })
+    } else if (code === 'invalid_string' || code === 'invalid_format') {
+        const validation = (issue as any).validation || (issue as any).format
+        if (typeof validation === 'string') {
+            message = i18next.t(`validation.invalid_string.${validation}`, {
+                defaultValue: defaultError,
+            })
+        }
+    } else if (code === 'invalid_enum_value' || code === 'invalid_value') {
+        const options = (issue as any).options || []
+        message = i18next.t('validation.invalid_enum_value', {
+            options: options.join(', '),
+            defaultValue: defaultError,
+        })
+    } else if (code === 'invalid_date') {
+        message = i18next.t('validation.invalid_date', {
+            defaultValue: defaultError,
+        })
+    } else if (code === 'not_multiple_of') {
+        message = i18next.t('validation.not_multiple_of', {
+            multipleOf: Number((issue as any).multipleOf),
+            defaultValue: defaultError,
+        })
+    } else if (code === 'not_finite') {
+        message = i18next.t('validation.not_finite', {
+            defaultValue: defaultError,
+        })
+    } else if (code === 'custom') {
+        message = i18next.t('validation.custom', {
+            defaultValue: defaultError,
+        })
     }
 
     return { message }
 }
 
-z.setErrorMap(zodErrorMap)
+z.setErrorMap(zodErrorMap as any)
 
 export default zodErrorMap

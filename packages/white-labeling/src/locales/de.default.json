@@ -14,8 +14,7 @@
         "dashboard": "Dashboard",
         "events": "Veranstaltungen",
         "staff": "Personal",
-        "settings": "Einstellungen",
-        "logout": "Abmelden"
+        "settings": "Einstellungen"
     },
     "admin_layout": {
         "title": "Admin"
@@ -38,6 +37,9 @@
         "create_action": "Kampagne erstellen",
         "create_placeholder_slug": "meine-veranstaltung",
         "create_placeholder_goal": "10000",
+        "create_placeholder_name": "meine-veranstaltung",
+        "create_success": "Veranstaltung erfolgreich erstellt",
+        "create_error": "Fehler beim Erstellen der Veranstaltung",
         "layout": {
             "title": "Veranstaltungsmanagement"
         },
@@ -139,7 +141,9 @@
         "no_staff_found": "Keine Mitarbeiter gefunden.",
         "events_count": "{{count}} Veranstaltungen",
         "confirm_delete_title": "Mitarbeiter löschen",
-        "member_updated": "Mitarbeiter erfolgreich aktualisiert"
+        "member_updated": "Mitarbeiter erfolgreich aktualisiert",
+        "member_deleted": "Mitglied gelöscht",
+        "error_delete": "Fehler beim Löschen des Mitglieds"
     },
     "live": {
         "title": "Live-Bildschirm",
@@ -208,6 +212,7 @@
         "save_changes": "Änderungen speichern",
         "saving": "Speichern...",
         "saved_successfully": "Erfolgreich gespeichert",
+        "add_variable": "Variable hinzufügen",
         "amount": "Betrag",
         "anonymous": "Anonym",
         "app_name": "Spendenplattform",
@@ -325,7 +330,8 @@
             "website": "Webseite",
             "support": "Support",
             "rights": "Alle Rechte vorbehalten.",
-            "staff": "Personal-Login"
+            "staff": "Personal-Login",
+            "admin": "Admin Login"
         }
     },
     "dashboard": {
@@ -448,6 +454,11 @@
                 "signature_image": "Unterschrift (Bild URL)",
                 "signature_image_placeholder": "https://..."
             },
+            "sender_name": "Absender Name",
+            "sender_name_placeholder": "z.B. Meine Wohltätigkeit",
+            "reply_to": "Antwort an E-Mail",
+            "subject_line": "Betreffzeile",
+            "subject_line_placeholder": "Ihre Quittung...",
             "receipts": {
                 "title": "Quittungen & Benachrichtigungen",
                 "description": "Konfigurieren Sie automatische Quittungen und Benachrichtigungen.",
@@ -640,10 +651,17 @@
             "display_name": "Anzeigetitel (Override)",
             "display_name_desc": "Leer lassen für Standard.",
             "display_name_placeholder": "z.B. Jahresgala",
+            "identity_assets": "Identität & Assets",
+            "background_landing": "Landing-Hintergrund",
+            "background_live": "Live-Hintergrund",
             "logo_url": "Event-Logo URL",
             "accent_color": "Akzentfarbe",
             "override_warning": "Überschreibt Standarddesign.",
             "apply_overrides": "Design überschreiben",
+            "communication": {
+                "title": "Kommunikation",
+                "override_label": "Globale Einstellungen überschreiben"
+            },
             "saved_successfully": "Erfolgreich gespeichert",
             "save_changes": "Speichern",
             "subtitle": "Branding konfigurieren.",

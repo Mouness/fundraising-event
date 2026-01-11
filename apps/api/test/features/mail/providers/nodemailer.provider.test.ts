@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { NodemailerProvider } from '../../../../src/features/mail/providers/nodemailer.provider'
 import { ConfigService } from '@nestjs/config'
 import * as nodemailer from 'nodemailer'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 vi.mock('nodemailer')
 
@@ -40,6 +41,9 @@ describe('NodemailerProvider', () => {
 
         provider = module.get<NodemailerProvider>(NodemailerProvider)
         configService = module.get<ConfigService>(ConfigService)
+
+        // Mock Logger
+        vi.spyOn((provider as any).logger, 'error').mockImplementation(() => {})
     })
 
     it('should be defined', () => {

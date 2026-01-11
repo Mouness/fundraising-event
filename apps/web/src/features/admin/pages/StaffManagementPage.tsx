@@ -73,7 +73,7 @@ export const StaffManagementPage = () => {
             setEditingStaff(null)
             form.reset()
             toast.success(
-                editingStaff ? t('admin_team.member_updated') : t('admin_team.member_created'),
+                editingStaff ? t('admin_team.member_updated') : t('admin_team.success_created'),
             )
         },
         onError: (err: unknown) => {

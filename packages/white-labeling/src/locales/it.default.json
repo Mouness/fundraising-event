@@ -14,8 +14,7 @@
         "dashboard": "Dashboard",
         "events": "Eventi",
         "staff": "Staff",
-        "settings": "Impostazioni",
-        "logout": "Esci"
+        "settings": "Impostazioni"
     },
     "admin_layout": {
         "title": "Admin"
@@ -38,6 +37,9 @@
         "create_action": "Crea Campagna",
         "create_placeholder_slug": "mio-evento",
         "create_placeholder_goal": "10000",
+        "create_placeholder_name": "mio-evento",
+        "create_success": "Evento creato con successo",
+        "create_error": "Errore durante la creazione dell'evento",
         "layout": {
             "title": "Gestione Evento"
         },
@@ -139,7 +141,9 @@
         "no_staff_found": "Nessun membro trovato.",
         "events_count": "{{count}} eventi",
         "confirm_delete_title": "Elimina membro staff",
-        "member_updated": "Membro aggiornato con successo"
+        "member_updated": "Membro aggiornato con successo",
+        "member_deleted": "Membro eliminato",
+        "error_delete": "Errore durante l'eliminazione del membro"
     },
     "live": {
         "title": "Schermo Live",
@@ -208,6 +212,7 @@
         "save_changes": "Salva Modifiche",
         "saving": "Salvataggio...",
         "saved_successfully": "Salvato con successo",
+        "add_variable": "Aggiungi Variabile",
         "amount": "Importo",
         "anonymous": "Anonimo",
         "app_name": "Piattaforma Fundraising",
@@ -325,7 +330,8 @@
             "website": "Sito Web",
             "support": "Supporto",
             "rights": "Tutti i diritti riservati.",
-            "staff": "Login Staff"
+            "staff": "Login Staff",
+            "admin": "Login Amministratore"
         }
     },
     "dashboard": {
@@ -448,6 +454,11 @@
                 "signature_image": "Firma (URL Immagine)",
                 "signature_image_placeholder": "https://..."
             },
+            "sender_name": "Nome Mittente",
+            "sender_name_placeholder": "es. La Mia Carità",
+            "reply_to": "Email Rispondi-a",
+            "subject_line": "Oggetto",
+            "subject_line_placeholder": "La tua ricevuta...",
             "receipts": {
                 "title": "Ricevute & Notifiche",
                 "description": "Configura ricevute automatiche e notifiche.",
@@ -640,10 +651,17 @@
             "display_name": "Titolo Visualizzato (Override)",
             "display_name_desc": "Lascia vuoto per default.",
             "display_name_placeholder": "es. Gala Annuale",
+            "identity_assets": "Identità e Asset",
+            "background_landing": "Sfondo Landing",
+            "background_live": "Sfondo Live",
             "logo_url": "URL Logo Evento",
             "accent_color": "Colore Accento",
             "override_warning": "Override del design standard.",
             "apply_overrides": "Applica Override",
+            "communication": {
+                "title": "Comunicazione",
+                "override_label": "Sovrascrivi Impostazioni Globali"
+            },
             "saved_successfully": "Salvato con successo",
             "save_changes": "Salva",
             "subtitle": "Configura branding.",

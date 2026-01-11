@@ -49,6 +49,7 @@ export class WhiteLabelingMapper {
                   name: event.name,
                   description: event.description || '',
                   content: {
+                      title: event.name,
                       goalAmount: event.goalAmount ? Number(event.goalAmount) : undefined,
                   },
               }

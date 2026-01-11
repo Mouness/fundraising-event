@@ -31,6 +31,11 @@ describe('ExportService', () => {
         }).compile()
 
         service = module.get<ExportService>(ExportService)
+
+        // Mock Logger
+        vi.spyOn((service as any).logger, 'error').mockImplementation(() => {})
+        vi.spyOn((service as any).logger, 'warn').mockImplementation(() => {})
+        vi.spyOn((service as any).logger, 'log').mockImplementation(() => {})
     })
 
     it('should be defined', () => {

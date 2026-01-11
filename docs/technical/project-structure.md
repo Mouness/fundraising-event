@@ -28,6 +28,11 @@ fundraising-event/
 │   │       │   ├── staff/         # Staff code management
 │   │       │   └── white-labeling/# Config service integration
 │   │       └── test/              # Integration tests
+│           └── test/              # Integration tests
+│
+│   ├── e2e/                       # End-to-End Tests (Playwright)
+│   │   ├── playbook/              # Test helpers & drivers
+│   │   └── tests/                 # Spec files
 │   │
 │   └── web/                       # React Frontend (Vite)
 │       ├── public/                # Static public assets
@@ -41,7 +46,7 @@ fundraising-event/
 │           │   ├── hooks/         # Global hooks
 │           │   ├── lib/           # Utilities (api, i18n, utils)
 │           │   ├── providers/     # Context providers
-│           │   └── stores/        # Global state (Jotai)
+│           │   └── stores/        # Global state
 │           │
 │           ├── features/          # Domain features
 │           │   ├── admin/         # Admin Dashboard

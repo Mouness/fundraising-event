@@ -107,6 +107,8 @@ describe('PayPalPaymentForm', () => {
     })
 
     it('should call onError when widget errors', async () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
         render(<PayPalPaymentForm {...defaultProps} />)
 
         const errorBtn = await screen.findByText('Mock Widget Error')
@@ -115,6 +117,8 @@ describe('PayPalPaymentForm', () => {
         await waitFor(() => {
             expect(defaultProps.onError).toHaveBeenCalledWith('payment.error_generic')
         })
+
+        consoleSpy.mockRestore()
     })
 
     it('should call onBack when clicked', async () => {

@@ -30,10 +30,9 @@ vi.mock('pdfmake', () => {
     return {
         default: class MockPdfPrinter {
             constructor() {
-                return {
-                    createPdfKitDocument: mockCreatePdfKitDocument,
-                }
+                // Return the instance shape expected by the service
             }
+            createPdfKitDocument = mockCreatePdfKitDocument
         },
     }
 })
@@ -52,6 +51,10 @@ describe('PdfService', () => {
         }).compile()
 
         service = module.get<PdfService>(PdfService)
+
+        // Mock Logger
+        vi.spyOn((service as any).logger, 'error').mockImplementation(() => {})
+
         vi.clearAllMocks()
     })
 

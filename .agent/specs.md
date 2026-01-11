@@ -111,7 +111,7 @@ The project is designed as a modular web application following the **Client-Serv
 
 ### 1.1 Tech Stack
 
-- **Frontend:** React 19, Vite, Tailwind CSS v4, Shadcn/UI, Jotai, React Query.
+- **Frontend:** React 19, Vite, Tailwind CSS v4, Shadcn/UI, React Query.
 - **Backend:** NestJS, Prisma ORM, Socket.IO, BullMQ.
 - **Infrastructure:** PostgreSQL, Redis.
 
@@ -139,7 +139,7 @@ The frontend follows a feature-based architecture in `apps/web/src/features/`.
 ### 2.3 State Management
 
 - **React Query:** Server state (Donations, Events).
-- **Jotai:** Client state (Live mechanics, Staff queue).
+- **Client State:** Live mechanics, Staff queue.
     - `useLiveSocket`: Manages real-time updates.
     - `StorageService`: Manages offline staff queue in LocalStorage.
 

@@ -34,6 +34,11 @@ describe('Auth0Provider', () => {
 
         provider = module.get<Auth0Provider>(Auth0Provider)
         httpService = module.get<HttpService>(HttpService)
+
+        // Mock Console
+        vi.spyOn(console, 'error').mockImplementation(() => {})
+
+        vi.clearAllMocks()
     })
 
     describe('verify', () => {

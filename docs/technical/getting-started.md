@@ -15,6 +15,18 @@ Before cooking, ensure you have the following ingredients: - **Node.js**: v20+ (
 - **Pull Requests**: [github.com/Mouness/fundraising-event/pulls](https://github.com/Mouness/fundraising-event/pulls)
 - **Online Documentation**: [Mouness.github.io/fundraising-event](https://Mouness.github.io/fundraising-event/)
 
+## 🧪 Running Tests
+
+For detailed instructions on Unit, Integration, and E2E testing, see the [Testing Strategy](testing.md) guide.
+
+### Quick Commands
+
+- Unit Tests: `pnpm test`
+- Test Coverage: `pnpm test:cov`
+- E2E Tests: `pnpm test:e2e` (Requires running app)
+
+---
+
 ## 🚀 Recipe 1: The Quick Start (Local Dev)
 
 **Goal**: Run the full stack (API + Database + Frontend) on your machine.

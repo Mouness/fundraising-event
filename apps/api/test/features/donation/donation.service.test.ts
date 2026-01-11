@@ -56,6 +56,11 @@ describe('DonationService', () => {
         }).compile()
 
         service = module.get<DonationService>(DonationService)
+
+        // Mock Console
+        vi.spyOn(console, 'error').mockImplementation(() => {})
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+
         vi.clearAllMocks()
     })
 

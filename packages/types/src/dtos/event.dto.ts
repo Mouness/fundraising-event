@@ -13,8 +13,9 @@ export class CreateEventDto {
     @IsNumber()
     goalAmount!: number
 
+    @IsOptional()
     @IsObject()
-    themeConfig!: Record<string, any>
+    themeConfig?: Record<string, any>
 
     @IsOptional()
     date?: string | Date

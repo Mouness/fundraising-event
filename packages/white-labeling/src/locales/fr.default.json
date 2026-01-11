@@ -37,6 +37,9 @@
         "create_action": "Créer la campagne",
         "create_placeholder_slug": "mon-evenement",
         "create_placeholder_goal": "10000",
+        "create_placeholder_name": "mon-evenement",
+        "create_success": "Événement créé avec succès",
+        "create_error": "Erreur lors de la création de l'événement",
         "layout": {
             "title": "Gestion de l'événement"
         },
@@ -138,7 +141,9 @@
         "no_staff_found": "Aucun membre du personnel trouvé.",
         "events_count": "{{count}} événements",
         "confirm_delete_title": "Supprimer le bénévole",
-        "member_updated": "Membre mis à jour avec succès"
+        "member_updated": "Membre mis à jour avec succès",
+        "member_deleted": "Membre supprimé",
+        "error_delete": "Erreur lors de la suppression"
     },
     "live": {
         "title": "Écran Live",

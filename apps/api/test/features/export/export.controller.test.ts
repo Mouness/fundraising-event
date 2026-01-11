@@ -41,6 +41,10 @@ describe('ExportController', () => {
 
         controller = module.get<ExportController>(ExportController)
         exportService = module.get<ExportService>(ExportService)
+
+        // Mock Logger to prevent noisy output
+        vi.spyOn((controller as any).logger, 'error').mockImplementation(() => {})
+        vi.spyOn((controller as any).logger, 'log').mockImplementation(() => {})
     })
 
     it('should be defined', () => {

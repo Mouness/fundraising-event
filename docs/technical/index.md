@@ -25,6 +25,8 @@ This project provides a complete fundraising ecosystem featuring:
 | [Architecture](architecture.md)           | System components overview         |
 | [Project Structure](project-structure.md) | Folder structure and organization  |
 | [Configuration](configuration.md)         | Environment variables and settings |
+| [Technology Stack](tech-stack.md)         | Libraries and tools reference      |
+| [Testing Strategy](testing.md)            | E2E, Unit, and Integration tests   |
 
 ### Core Documentation
 

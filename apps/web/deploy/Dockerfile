@@ -1,7 +1,7 @@
-FROM node:20-alpine AS builder
+FROM node:25-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 RUN pnpm --filter api db:generate
 RUN pnpm --filter "@fundraising/*" build

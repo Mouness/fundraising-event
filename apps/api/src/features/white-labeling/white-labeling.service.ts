@@ -19,12 +19,22 @@ export class WhiteLabelingService {
         const event = await this.prisma.event.findUnique({ where: { slug } })
         if (!event) return null
 
-        const config = await this.getConfig(ConfigScope.EVENT, event.id)
-        const mapped = WhiteLabelingMapper.toEventConfig(config || ({} as Configuration), event)
+        // 1. Fetch Global Config
+        const globalSettings = await this.getGlobalSettings()
+
+        // 2. Fetch Event Config
+        const eventConfigDb = await this.getConfig(ConfigScope.EVENT, event.id)
+
+        // 3. Merge (Event > Global > Default)
+        const mapped = WhiteLabelingMapper.toEventConfig(
+            eventConfigDb || ({} as Configuration),
+            event,
+            globalSettings,
+        )
 
         return {
             ...mapped,
-            isOverride: !!config,
+            isOverride: !!eventConfigDb,
         }
     }
 

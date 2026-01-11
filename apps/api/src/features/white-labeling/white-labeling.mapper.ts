@@ -5,9 +5,15 @@ export class WhiteLabelingMapper {
     /**
      * Transforms database Configuration entity and optional Event entity back into the modular EventConfig structure.
      */
-    static toEventConfig(config: Configuration, event?: any): EventConfig {
-        // 1. Initialize from default config
-        const result: EventConfig = JSON.parse(JSON.stringify(defaultConfig))
+    static toEventConfig(
+        config: Configuration,
+        event?: any,
+        baseConfig?: EventConfig,
+    ): EventConfig {
+        // 1. Initialize from base config or default config
+        const result: EventConfig = baseConfig
+            ? JSON.parse(JSON.stringify(baseConfig))
+            : JSON.parse(JSON.stringify(defaultConfig))
 
         // 2. Map root columns to partial structure (Priority: Low)
         const rootOverrides: DeepPartial<EventConfig> = {

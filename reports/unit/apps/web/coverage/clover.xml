@@ -1,0 +1,1715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1768161002100" clover="3.2.0">
+  <project timestamp="1768161002100" name="All files">
+    <metrics statements="1334" coveredstatements="1227" conditionals="1027" coveredconditionals="801" methods="346" coveredmethods="292" elements="2707" coveredelements="2320" complexity="0" loc="1334" ncloc="1334" packages="35" files="90" classes="90"/>
+    <package name="core.components">
+      <metrics statements="38" coveredstatements="37" conditionals="42" coveredconditionals="40" methods="9" coveredmethods="9"/>
+      <file name="AppHeader.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/AppHeader.tsx">
+        <metrics statements="26" coveredstatements="25" conditionals="33" coveredconditionals="31" methods="3" coveredmethods="3"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="22" count="9" type="stmt"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="24" count="9" type="stmt"/>
+        <line num="25" count="9" type="stmt"/>
+        <line num="26" count="9" type="stmt"/>
+        <line num="28" count="9" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="35" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="42" count="9" type="stmt"/>
+        <line num="44" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="52" count="8" type="stmt"/>
+        <line num="55" count="9" type="stmt"/>
+        <line num="56" count="9" type="stmt"/>
+        <line num="61" count="9" type="stmt"/>
+        <line num="81" count="9" type="stmt"/>
+      </file>
+      <file name="ConfirmationDialog.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ConfirmationDialog.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="9" coveredconditionals="9" methods="3" coveredmethods="3"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="34" count="26" type="stmt"/>
+        <line num="36" count="26" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+      </file>
+      <file name="LanguageSwitcher.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/LanguageSwitcher.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="21" count="56" type="stmt"/>
+      </file>
+    </package>
+    <package name="core.components.ui">
+      <metrics statements="165" coveredstatements="154" conditionals="20" coveredconditionals="14" methods="49" coveredmethods="39"/>
+      <file name="button.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/button.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="6" count="24" type="stmt"/>
+        <line num="38" count="24" type="stmt"/>
+        <line num="40" count="492" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="492" type="stmt"/>
+        <line num="50" count="24" type="stmt"/>
+      </file>
+      <file name="card.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/card.tsx">
+        <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+        <line num="4" count="25" type="stmt"/>
+        <line num="6" count="260" type="stmt"/>
+        <line num="13" count="25" type="stmt"/>
+        <line num="15" count="25" type="stmt"/>
+        <line num="17" count="242" type="stmt"/>
+        <line num="20" count="25" type="stmt"/>
+        <line num="22" count="25" type="stmt"/>
+        <line num="24" count="242" type="stmt"/>
+        <line num="31" count="25" type="stmt"/>
+        <line num="33" count="25" type="stmt"/>
+        <line num="37" count="147" type="stmt"/>
+        <line num="39" count="25" type="stmt"/>
+        <line num="41" count="25" type="stmt"/>
+        <line num="43" count="268" type="stmt"/>
+        <line num="46" count="25" type="stmt"/>
+        <line num="48" count="25" type="stmt"/>
+        <line num="50" count="38" type="stmt"/>
+        <line num="53" count="25" type="stmt"/>
+      </file>
+      <file name="checkbox.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/checkbox.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="11" count="93" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+      </file>
+      <file name="dialog.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/dialog.tsx">
+        <metrics statements="22" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="15" count="17" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="30" count="48" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="51" count="10" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="10" type="stmt"/>
+        <line num="64" count="2" type="stmt"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="70" count="10" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
+        <line num="78" count="2" type="stmt"/>
+        <line num="82" count="10" type="stmt"/>
+        <line num="88" count="2" type="stmt"/>
+      </file>
+      <file name="dropdown-menu.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/dropdown-menu.tsx">
+        <metrics statements="33" coveredstatements="28" conditionals="7" coveredconditionals="3" methods="9" coveredmethods="4"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="59" count="8" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="79" count="15" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="112" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="118" count="0" type="stmt"/>
+        <line num="134" count="1" type="stmt"/>
+        <line num="136" count="1" type="stmt"/>
+        <line num="142" count="5" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="150" count="1" type="stmt"/>
+        <line num="154" count="5" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="162" count="1" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="167" count="1" type="stmt"/>
+      </file>
+      <file name="input.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/input.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="15" type="stmt"/>
+        <line num="8" count="434" type="stmt"/>
+        <line num="21" count="15" type="stmt"/>
+      </file>
+      <file name="label.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/label.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="13" type="stmt"/>
+        <line num="10" count="13" type="stmt"/>
+        <line num="14" count="580" type="stmt"/>
+        <line num="16" count="13" type="stmt"/>
+      </file>
+      <file name="page-loader.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/page-loader.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+      </file>
+      <file name="pagination.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/pagination.tsx">
+        <metrics statements="24" coveredstatements="22" conditionals="5" coveredconditionals="3" methods="7" coveredmethods="6"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="35" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="71" count="2" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+      </file>
+      <file name="select.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/select.tsx">
+        <metrics statements="24" coveredstatements="22" conditionals="5" coveredconditionals="5" methods="7" coveredmethods="5"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="17" count="37" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="37" count="27" type="stmt"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+        <line num="51" count="27" type="stmt"/>
+        <line num="59" count="4" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="65" count="37" type="stmt"/>
+        <line num="91" count="4" type="stmt"/>
+        <line num="93" count="4" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="103" count="4" type="stmt"/>
+        <line num="105" count="4" type="stmt"/>
+        <line num="109" count="102" type="stmt"/>
+        <line num="125" count="4" type="stmt"/>
+        <line num="127" count="4" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="137" count="4" type="stmt"/>
+      </file>
+      <file name="table.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/table.tsx">
+        <metrics statements="24" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="6"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="33" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="21" count="33" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="29" count="33" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="47" count="66" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="63" count="143" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+        <line num="78" count="89" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="95" count="2" type="stmt"/>
+      </file>
+      <file name="textarea.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/components/ui/textarea.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="16" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="core.lib">
+      <metrics statements="109" coveredstatements="105" conditionals="83" coveredconditionals="72" methods="15" coveredmethods="15"/>
+      <file name="api.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/lib/api.ts">
+        <metrics statements="32" coveredstatements="32" conditionals="25" coveredconditionals="22" methods="4" coveredmethods="4"/>
+        <line num="4" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="13" count="14" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="17" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="25" count="14" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="30" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="46" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="52" count="3" type="stmt"/>
+        <line num="56" count="14" type="cond" truecount="1" falsecount="0"/>
+        <line num="57" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="58" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="60" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+      </file>
+      <file name="confetti.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/lib/confetti.ts">
+        <metrics statements="23" coveredstatements="22" conditionals="4" coveredconditionals="3" methods="6" coveredmethods="6"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="118" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="60" type="stmt"/>
+        <line num="36" count="60" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="59" type="stmt"/>
+        <line num="41" count="59" type="stmt"/>
+        <line num="46" count="59" type="stmt"/>
+      </file>
+      <file name="constants.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/lib/constants.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="15" type="stmt"/>
+      </file>
+      <file name="date.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/lib/date.ts">
+        <metrics statements="9" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="12" type="stmt"/>
+        <line num="6" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="17" count="12" type="stmt"/>
+        <line num="18" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+      </file>
+      <file name="i18n.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/lib/i18n.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
+        <line num="31" count="14" type="stmt"/>
+        <line num="32" count="18" type="stmt"/>
+        <line num="33" count="18" type="stmt"/>
+        <line num="34" count="36" type="stmt"/>
+      </file>
+      <file name="utils.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/lib/utils.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="33" type="stmt"/>
+        <line num="5" count="3725" type="stmt"/>
+      </file>
+      <file name="zod-i18n.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/lib/zod-i18n.ts">
+        <metrics statements="36" coveredstatements="34" conditionals="50" coveredconditionals="43" methods="1" coveredmethods="1"/>
+        <line num="4" count="57" type="stmt"/>
+        <line num="6" count="17" type="cond" truecount="2" falsecount="2"/>
+        <line num="7" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="17" type="stmt"/>
+        <line num="12" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="15" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="35" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="5" type="stmt"/>
+        <line num="41" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="47" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="48" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="49" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="50" count="4" type="stmt"/>
+        <line num="54" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="55" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="60" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="64" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="69" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="73" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="79" count="17" type="stmt"/>
+        <line num="82" count="57" type="stmt"/>
+      </file>
+    </package>
+    <package name="core.providers">
+      <metrics statements="60" coveredstatements="59" conditionals="25" coveredconditionals="22" methods="13" coveredmethods="12"/>
+      <file name="AppConfigProvider.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/providers/AppConfigProvider.tsx">
+        <metrics statements="46" coveredstatements="45" conditionals="18" coveredconditionals="15" methods="8" coveredmethods="7"/>
+        <line num="29" count="12" type="stmt"/>
+        <line num="37" count="12" type="stmt"/>
+        <line num="44" count="12" type="stmt"/>
+        <line num="48" count="42" type="stmt"/>
+        <line num="49" count="42" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="42" type="stmt"/>
+        <line num="51" count="42" type="stmt"/>
+        <line num="52" count="42" type="stmt"/>
+        <line num="53" count="42" type="stmt"/>
+        <line num="55" count="42" type="stmt"/>
+        <line num="57" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="58" count="22" type="stmt"/>
+        <line num="60" count="22" type="stmt"/>
+        <line num="63" count="21" type="stmt"/>
+        <line num="64" count="21" type="stmt"/>
+        <line num="65" count="21" type="stmt"/>
+        <line num="68" count="21" type="stmt"/>
+        <line num="77" count="21" type="stmt"/>
+        <line num="79" count="21" type="stmt"/>
+        <line num="80" count="21" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="85" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="91" count="42" type="stmt"/>
+        <line num="92" count="21" type="stmt"/>
+        <line num="96" count="42" type="stmt"/>
+        <line num="97" count="22" type="stmt"/>
+        <line num="98" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="104" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="113" count="42" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="117" count="42" type="cond" truecount="2" falsecount="0"/>
+        <line num="118" count="21" type="stmt"/>
+        <line num="125" count="21" type="stmt"/>
+        <line num="132" count="12" type="stmt"/>
+        <line num="133" count="7" type="stmt"/>
+        <line num="134" count="7" type="cond" truecount="1" falsecount="1"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="137" count="7" type="stmt"/>
+      </file>
+      <file name="ErrorBoundary.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/core/providers/ErrorBoundary.tsx">
+        <metrics statements="14" coveredstatements="14" conditionals="7" coveredconditionals="7" methods="5" coveredmethods="5"/>
+        <line num="17" count="9" type="stmt"/>
+        <line num="23" count="10" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="36" count="21" type="stmt"/>
+        <line num="38" count="21" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="43" count="8" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="87" count="11" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.admin.components">
+      <metrics statements="11" coveredstatements="11" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+      <file name="DashboardStats.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/DashboardStats.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+      </file>
+      <file name="RecentActivity.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/RecentActivity.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.admin.components.global-settings">
+      <metrics statements="100" coveredstatements="81" conditionals="71" coveredconditionals="54" methods="35" coveredmethods="25"/>
+      <file name="AssetsForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/AssetsForm.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+      </file>
+      <file name="BrandDesignForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/BrandDesignForm.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="20" count="6" type="stmt"/>
+        <line num="186" count="1" type="stmt"/>
+        <line num="197" count="1" type="stmt"/>
+        <line num="233" count="1" type="stmt"/>
+      </file>
+      <file name="CommunicationForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/CommunicationForm.tsx">
+        <metrics statements="12" coveredstatements="7" conditionals="6" coveredconditionals="4" methods="5" coveredmethods="2"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="8" type="stmt"/>
+        <line num="12" count="8" type="stmt"/>
+        <line num="13" count="8" type="stmt"/>
+        <line num="14" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="8" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="133" count="6" type="stmt"/>
+        <line num="138" count="0" type="stmt"/>
+        <line num="139" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="141" count="0" type="stmt"/>
+        <line num="142" count="0" type="stmt"/>
+      </file>
+      <file name="IdentityForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/IdentityForm.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+      </file>
+      <file name="LocalizationForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/LocalizationForm.tsx">
+        <metrics statements="37" coveredstatements="35" conditionals="18" coveredconditionals="11" methods="13" coveredmethods="12"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="30" count="9" type="stmt"/>
+        <line num="31" count="9" type="stmt"/>
+        <line num="32" count="9" type="stmt"/>
+        <line num="33" count="9" type="stmt"/>
+        <line num="35" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="9" type="stmt"/>
+        <line num="38" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="46" count="9" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="52" count="9" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="58" count="9" type="stmt"/>
+        <line num="60" count="9" type="stmt"/>
+        <line num="80" count="36" type="stmt"/>
+        <line num="81" count="36" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="87" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="88" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="95" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="133" count="36" type="stmt"/>
+        <line num="146" count="1" type="stmt"/>
+        <line num="172" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="173" count="2" type="stmt"/>
+        <line num="188" count="1" type="stmt"/>
+        <line num="201" count="1" type="stmt"/>
+      </file>
+      <file name="PaymentForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/PaymentForm.tsx">
+        <metrics statements="9" coveredstatements="6" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="1"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="169" count="0" type="stmt"/>
+      </file>
+      <file name="ReceiptForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/ReceiptForm.tsx">
+        <metrics statements="19" coveredstatements="10" conditionals="23" coveredconditionals="17" methods="5" coveredmethods="2"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="14" type="stmt"/>
+        <line num="13" count="14" type="stmt"/>
+        <line num="15" count="14" type="stmt"/>
+        <line num="16" count="14" type="stmt"/>
+        <line num="17" count="14" type="stmt"/>
+        <line num="18" count="14" type="stmt"/>
+        <line num="22" count="14" type="stmt"/>
+        <line num="23" count="7" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="34" count="14" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+      </file>
+      <file name="VariablePreview.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/VariablePreview.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="10" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="109" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="108" type="stmt"/>
+      </file>
+      <file name="VariableRow.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/components/global-settings/VariableRow.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="24" count="109" type="stmt"/>
+        <line num="25" count="109" type="stmt"/>
+        <line num="27" count="109" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.admin.constants">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="mail-providers.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/constants/mail-providers.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.admin.layouts">
+      <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="5" methods="2" coveredmethods="2"/>
+      <file name="AdminLayout.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/layouts/AdminLayout.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="5" methods="2" coveredmethods="2"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="12" count="12" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.admin.pages">
+      <metrics statements="146" coveredstatements="124" conditionals="159" coveredconditionals="121" methods="48" coveredmethods="37"/>
+      <file name="DashboardPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/pages/DashboardPage.tsx">
+        <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="6" methods="5" coveredmethods="5"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="25" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="146" count="1" type="stmt"/>
+      </file>
+      <file name="GlobalSettingsPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/pages/GlobalSettingsPage.tsx">
+        <metrics statements="82" coveredstatements="66" conditionals="122" coveredconditionals="92" methods="25" coveredmethods="16"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="18" type="stmt"/>
+        <line num="52" count="18" type="stmt"/>
+        <line num="53" count="18" type="stmt"/>
+        <line num="55" count="18" type="stmt"/>
+        <line num="57" count="18" type="stmt"/>
+        <line num="60" count="5" type="stmt"/>
+        <line num="61" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="65" count="18" type="stmt"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="84" count="18" type="stmt"/>
+        <line num="139" count="18" type="stmt"/>
+        <line num="141" count="18" type="stmt"/>
+        <line num="148" count="18" type="stmt"/>
+        <line num="149" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="151" count="3" type="stmt"/>
+        <line num="154" count="3" type="stmt"/>
+        <line num="155" count="3" type="stmt"/>
+        <line num="156" count="66" type="cond" truecount="2" falsecount="0"/>
+        <line num="161" count="3" type="stmt"/>
+        <line num="162" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="166" count="7" type="stmt"/>
+        <line num="217" count="7" type="stmt"/>
+        <line num="218" count="7" type="cond" truecount="1" falsecount="1"/>
+        <line num="219" count="0" type="stmt"/>
+        <line num="220" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="221" count="0" type="stmt"/>
+        <line num="222" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="223" count="0" type="stmt"/>
+        <line num="229" count="3" type="stmt"/>
+        <line num="232" count="18" type="stmt"/>
+        <line num="233" count="2" type="stmt"/>
+        <line num="234" count="2" type="stmt"/>
+        <line num="235" count="44" type="stmt"/>
+        <line num="236" count="44" type="cond" truecount="1" falsecount="1"/>
+        <line num="238" count="2" type="stmt"/>
+        <line num="239" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="241" count="2" type="stmt"/>
+        <line num="244" count="18" type="stmt"/>
+        <line num="251" count="2" type="stmt"/>
+        <line num="256" count="2" type="stmt"/>
+        <line num="257" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="258" count="0" type="stmt"/>
+        <line num="260" count="0" type="stmt"/>
+        <line num="263" count="2" type="stmt"/>
+        <line num="264" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="265" count="2" type="stmt"/>
+        <line num="266" count="2" type="stmt"/>
+        <line num="267" count="2" type="stmt"/>
+        <line num="270" count="18" type="stmt"/>
+        <line num="271" count="2" type="stmt"/>
+        <line num="301" count="18" type="stmt"/>
+        <line num="302" count="2" type="stmt"/>
+        <line num="303" count="2" type="stmt"/>
+        <line num="306" count="18" type="stmt"/>
+        <line num="307" count="10" type="cond" truecount="3" falsecount="4"/>
+        <line num="309" count="8" type="stmt"/>
+        <line num="311" count="1" type="stmt"/>
+        <line num="313" count="1" type="stmt"/>
+        <line num="315" count="0" type="stmt"/>
+        <line num="317" count="0" type="stmt"/>
+        <line num="319" count="0" type="stmt"/>
+        <line num="326" count="0" type="stmt"/>
+        <line num="330" count="18" type="cond" truecount="2" falsecount="0"/>
+        <line num="331" count="8" type="stmt"/>
+        <line num="337" count="10" type="stmt"/>
+        <line num="358" count="10" type="stmt"/>
+        <line num="384" count="60" type="stmt"/>
+        <line num="386" count="2" type="stmt"/>
+        <line num="422" count="0" type="stmt"/>
+      </file>
+      <file name="StaffManagementPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/pages/StaffManagementPage.tsx">
+        <metrics statements="52" coveredstatements="46" conditionals="29" coveredconditionals="23" methods="18" coveredmethods="16"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="23" type="stmt"/>
+        <line num="35" count="23" type="stmt"/>
+        <line num="36" count="23" type="stmt"/>
+        <line num="43" count="23" type="stmt"/>
+        <line num="44" count="23" type="stmt"/>
+        <line num="46" count="23" type="cond" truecount="1" falsecount="0"/>
+        <line num="49" count="8" type="stmt"/>
+        <line num="50" count="8" type="stmt"/>
+        <line num="54" count="23" type="stmt"/>
+        <line num="62" count="23" type="stmt"/>
+        <line num="64" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="71" count="2" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+        <line num="75" count="2" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="82" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="88" count="23" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="102" count="23" type="stmt"/>
+        <line num="103" count="2" type="stmt"/>
+        <line num="106" count="23" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="112" count="1" type="stmt"/>
+        <line num="115" count="23" type="stmt"/>
+        <line num="116" count="1" type="stmt"/>
+        <line num="119" count="23" type="stmt"/>
+        <line num="120" count="23" type="cond" truecount="2" falsecount="0"/>
+        <line num="121" count="10" type="stmt"/>
+        <line num="131" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="132" count="4" type="stmt"/>
+        <line num="141" count="9" type="stmt"/>
+        <line num="142" count="9" type="stmt"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="173" count="1" type="stmt"/>
+        <line num="183" count="23" type="stmt"/>
+        <line num="196" count="1" type="stmt"/>
+        <line num="197" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="198" count="0" type="stmt"/>
+        <line num="199" count="0" type="stmt"/>
+        <line num="265" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="266" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.admin.schemas">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="staff.schema.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/schemas/staff.schema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.admin.types">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="settings.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/types/settings.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="features.admin.utils">
+      <metrics statements="10" coveredstatements="10" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
+      <file name="theme-utils.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/admin/utils/theme-utils.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="21" type="stmt"/>
+        <line num="10" count="21" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="14" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="19" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="11" type="stmt"/>
+        <line num="27" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.auth.hooks">
+      <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+      <file name="useLogin.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/auth/hooks/useLogin.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.auth.pages">
+      <metrics statements="33" coveredstatements="32" conditionals="20" coveredconditionals="16" methods="5" coveredmethods="5"/>
+      <file name="AuthSuccessPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/auth/pages/AuthSuccessPage.tsx">
+        <metrics statements="17" coveredstatements="16" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="14" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+      </file>
+      <file name="LoginPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/auth/pages/LoginPage.tsx">
+        <metrics statements="16" coveredstatements="16" conditionals="16" coveredconditionals="13" methods="3" coveredmethods="3"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="12" type="stmt"/>
+        <line num="22" count="12" type="stmt"/>
+        <line num="23" count="12" type="stmt"/>
+        <line num="25" count="12" type="stmt"/>
+        <line num="26" count="5" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="28" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="43" count="12" type="stmt"/>
+        <line num="47" count="12" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="51" count="12" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.auth.schemas">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="login.schema.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/auth/schemas/login.schema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.donation.components">
+      <metrics statements="55" coveredstatements="53" conditionals="69" coveredconditionals="47" methods="12" coveredmethods="10"/>
+      <file name="CheckoutForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/components/CheckoutForm.tsx">
+        <metrics statements="35" coveredstatements="33" conditionals="19" coveredconditionals="16" methods="6" coveredmethods="4"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="26" type="stmt"/>
+        <line num="20" count="26" type="stmt"/>
+        <line num="21" count="26" type="stmt"/>
+        <line num="22" count="26" type="stmt"/>
+        <line num="23" count="26" type="stmt"/>
+        <line num="25" count="26" type="stmt"/>
+        <line num="29" count="26" type="stmt"/>
+        <line num="30" count="26" type="stmt"/>
+        <line num="32" count="26" type="stmt"/>
+        <line num="35" count="26" type="cond" truecount="5" falsecount="0"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="40" count="26" type="cond" truecount="2" falsecount="0"/>
+        <line num="49" count="26" type="stmt"/>
+        <line num="61" count="26" type="stmt"/>
+        <line num="63" count="26" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="68" count="26" type="stmt"/>
+        <line num="69" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="74" count="5" type="stmt"/>
+        <line num="75" count="5" type="stmt"/>
+        <line num="76" count="5" type="stmt"/>
+        <line num="88" count="4" type="stmt"/>
+        <line num="89" count="4" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="98" count="26" type="stmt"/>
+        <line num="99" count="26" type="stmt"/>
+        <line num="107" count="26" type="stmt"/>
+        <line num="158" count="1" type="stmt"/>
+        <line num="166" count="0" type="stmt"/>
+        <line num="167" count="0" type="stmt"/>
+      </file>
+      <file name="DonationAmountSelector.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/components/DonationAmountSelector.tsx">
+        <metrics statements="13" coveredstatements="13" conditionals="14" coveredconditionals="13" methods="5" coveredmethods="5"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="23" count="27" type="stmt"/>
+        <line num="24" count="27" type="stmt"/>
+        <line num="26" count="27" type="stmt"/>
+        <line num="27" count="27" type="stmt"/>
+        <line num="34" count="27" type="stmt"/>
+        <line num="44" count="108" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="73" count="27" type="stmt"/>
+        <line num="76" count="27" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="cond" truecount="1" falsecount="1"/>
+      </file>
+      <file name="DonationContactForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/components/DonationContactForm.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="36" coveredconditionals="18" methods="1" coveredmethods="1"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="25" count="22" type="stmt"/>
+        <line num="26" count="22" type="stmt"/>
+        <line num="27" count="22" type="stmt"/>
+        <line num="29" count="22" type="stmt"/>
+        <line num="30" count="22" type="stmt"/>
+        <line num="38" count="22" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.donation.components.payment">
+      <metrics statements="59" coveredstatements="57" conditionals="47" coveredconditionals="38" methods="9" coveredmethods="9"/>
+      <file name="PayPalPaymentForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/components/payment/PayPalPaymentForm.tsx">
+        <metrics statements="23" coveredstatements="21" conditionals="16" coveredconditionals="11" methods="4" coveredmethods="4"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
+        <line num="17" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="20" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="24" count="6" type="stmt"/>
+        <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="43" count="6" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="54" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="61" count="6" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="cond" truecount="1" falsecount="1"/>
+      </file>
+      <file name="StripePaymentForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/components/payment/StripePaymentForm.tsx">
+        <metrics statements="36" coveredstatements="36" conditionals="31" coveredconditionals="27" methods="5" coveredmethods="5"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="32" count="10" type="stmt"/>
+        <line num="33" count="10" type="stmt"/>
+        <line num="34" count="10" type="stmt"/>
+        <line num="35" count="10" type="stmt"/>
+        <line num="36" count="10" type="stmt"/>
+        <line num="37" count="10" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="52" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="53" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="62" count="10" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+        <line num="97" count="1" type="stmt"/>
+        <line num="98" count="5" type="stmt"/>
+        <line num="99" count="5" type="stmt"/>
+        <line num="100" count="5" type="stmt"/>
+        <line num="101" count="5" type="stmt"/>
+        <line num="103" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="108" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="112" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="113" count="1" type="stmt"/>
+        <line num="116" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.donation.pages">
+      <metrics statements="37" coveredstatements="36" conditionals="21" coveredconditionals="20" methods="8" coveredmethods="8"/>
+      <file name="DonationPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/pages/DonationPage.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+      </file>
+      <file name="ThankYouPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/pages/ThankYouPage.tsx">
+        <metrics statements="33" coveredstatements="32" conditionals="17" coveredconditionals="16" methods="7" coveredmethods="7"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="32" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="152" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="153" count="2" type="stmt"/>
+        <line num="158" count="1" type="stmt"/>
+        <line num="179" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="180" count="3" type="stmt"/>
+        <line num="185" count="1" type="stmt"/>
+        <line num="206" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="207" count="2" type="stmt"/>
+        <line num="212" count="1" type="stmt"/>
+        <line num="235" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.donation.schemas">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="donation.schema.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/donation/schemas/donation.schema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.events.components">
+      <metrics statements="8" coveredstatements="8" conditionals="21" coveredconditionals="17" methods="1" coveredmethods="1"/>
+      <file name="EventCard.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/components/EventCard.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="21" coveredconditionals="17" methods="1" coveredmethods="1"/>
+        <line num="21" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="25" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.events.components.event-settings">
+      <metrics statements="10" coveredstatements="10" conditionals="12" coveredconditionals="6" methods="7" coveredmethods="7"/>
+      <file name="GeneralForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/components/event-settings/GeneralForm.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="12" coveredconditionals="6" methods="7" coveredmethods="7"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="9" type="stmt"/>
+        <line num="21" count="9" type="stmt"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="89" count="9" type="stmt"/>
+        <line num="170" count="10" type="stmt"/>
+        <line num="186" count="10" type="stmt"/>
+        <line num="202" count="10" type="stmt"/>
+        <line num="218" count="10" type="stmt"/>
+        <line num="234" count="10" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.events.hooks">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <file name="useEvents.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/hooks/useEvents.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
+      </file>
+    </package>
+    <package name="features.events.pages">
+      <metrics statements="184" coveredstatements="159" conditionals="170" coveredconditionals="117" methods="50" coveredmethods="40"/>
+      <file name="CreateEventPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/pages/CreateEventPage.tsx">
+        <metrics statements="13" coveredstatements="12" conditionals="10" coveredconditionals="8" methods="3" coveredmethods="2"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="15" type="stmt"/>
+        <line num="16" count="15" type="stmt"/>
+        <line num="18" count="15" type="stmt"/>
+        <line num="27" count="15" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="35" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="15" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
+      <file name="DonationsPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/pages/DonationsPage.tsx">
+        <metrics statements="60" coveredstatements="51" conditionals="40" coveredconditionals="24" methods="13" coveredmethods="10"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="11" type="stmt"/>
+        <line num="49" count="11" type="stmt"/>
+        <line num="50" count="11" type="stmt"/>
+        <line num="52" count="11" type="stmt"/>
+        <line num="53" count="11" type="stmt"/>
+        <line num="66" count="11" type="cond" truecount="1" falsecount="1"/>
+        <line num="68" count="11" type="cond" truecount="1" falsecount="1"/>
+        <line num="70" count="11" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="74" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="75" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="97" count="11" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="110" count="1" type="stmt"/>
+        <line num="111" count="1" type="stmt"/>
+        <line num="112" count="1" type="stmt"/>
+        <line num="114" count="0" type="stmt"/>
+        <line num="115" count="0" type="stmt"/>
+        <line num="119" count="11" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
+        <line num="121" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="126" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="128" count="1" type="stmt"/>
+        <line num="129" count="1" type="stmt"/>
+        <line num="130" count="1" type="stmt"/>
+        <line num="131" count="1" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
+        <line num="134" count="0" type="stmt"/>
+        <line num="138" count="11" type="stmt"/>
+        <line num="181" count="0" type="stmt"/>
+        <line num="226" count="8" type="stmt"/>
+        <line num="303" count="1" type="stmt"/>
+        <line num="311" count="1" type="stmt"/>
+        <line num="329" count="1" type="stmt"/>
+        <line num="358" count="1" type="stmt"/>
+        <line num="359" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="377" count="1" type="stmt"/>
+        <line num="378" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="397" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="403" count="0" type="cond" truecount="0" falsecount="2"/>
+      </file>
+      <file name="EventDashboardPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/pages/EventDashboardPage.tsx">
+        <metrics statements="12" coveredstatements="12" conditionals="12" coveredconditionals="7" methods="2" coveredmethods="2"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="26" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="29" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="35" count="2" type="stmt"/>
+      </file>
+      <file name="EventListPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/pages/EventListPage.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+      </file>
+      <file name="EventSettingsPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/pages/EventSettingsPage.tsx">
+        <metrics statements="55" coveredstatements="46" conditionals="87" coveredconditionals="65" methods="14" coveredmethods="10"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="27" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="33" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="40" count="10" type="stmt"/>
+        <line num="41" count="10" type="stmt"/>
+        <line num="42" count="10" type="stmt"/>
+        <line num="43" count="10" type="stmt"/>
+        <line num="45" count="10" type="stmt"/>
+        <line num="89" count="10" type="stmt"/>
+        <line num="102" count="10" type="stmt"/>
+        <line num="103" count="10" type="cond" truecount="2" falsecount="1"/>
+        <line num="105" count="9" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="114" count="10" type="stmt"/>
+        <line num="117" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="119" count="4" type="stmt"/>
+        <line num="120" count="4" type="stmt"/>
+        <line num="126" count="10" type="stmt"/>
+        <line num="127" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="129" count="1" type="stmt"/>
+        <line num="130" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="131" count="4" type="stmt"/>
+        <line num="136" count="4" type="stmt"/>
+        <line num="138" count="4" type="stmt"/>
+        <line num="203" count="10" type="stmt"/>
+        <line num="205" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="208" count="1" type="stmt"/>
+        <line num="219" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="221" count="1" type="stmt"/>
+        <line num="225" count="1" type="stmt"/>
+        <line num="228" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="230" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="231" count="0" type="stmt"/>
+        <line num="236" count="0" type="stmt"/>
+        <line num="259" count="1" type="stmt"/>
+        <line num="260" count="1" type="stmt"/>
+        <line num="263" count="1" type="stmt"/>
+        <line num="264" count="1" type="stmt"/>
+        <line num="265" count="1" type="stmt"/>
+        <line num="268" count="0" type="stmt"/>
+        <line num="270" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="274" count="10" type="stmt"/>
+        <line num="292" count="1" type="stmt"/>
+        <line num="294" count="0" type="stmt"/>
+        <line num="295" count="0" type="stmt"/>
+        <line num="324" count="20" type="stmt"/>
+        <line num="326" count="1" type="stmt"/>
+      </file>
+      <file name="EventTeamPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/pages/EventTeamPage.tsx">
+        <metrics statements="37" coveredstatements="31" conditionals="19" coveredconditionals="11" methods="16" coveredmethods="14"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="16" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="19" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="26" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="34" count="6" type="stmt"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="48" count="6" type="stmt"/>
+        <line num="50" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="63" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="68" count="6" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="72" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="79" count="6" type="stmt"/>
+        <line num="80" count="10" type="stmt"/>
+        <line num="83" count="6" type="stmt"/>
+        <line num="119" count="5" type="stmt"/>
+        <line num="122" count="1" type="stmt"/>
+        <line num="160" count="5" type="stmt"/>
+        <line num="170" count="1" type="stmt"/>
+        <line num="171" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.events.schemas">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="create-event.schema.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/schemas/create-event.schema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+      <file name="event-settings.schema.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/events/schemas/event-settings.schema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.live.components">
+      <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+      <file name="DonationFeed.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/components/DonationFeed.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.live.components.gauges">
+      <metrics statements="21" coveredstatements="21" conditionals="18" coveredconditionals="17" methods="6" coveredmethods="6"/>
+      <file name="GaugeClassic.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/components/gauges/GaugeClassic.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+      </file>
+      <file name="GaugeElegant.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/components/gauges/GaugeElegant.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+      </file>
+      <file name="GaugeModern.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/components/gauges/GaugeModern.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.live.components.themes">
+      <metrics statements="9" coveredstatements="9" conditionals="23" coveredconditionals="14" methods="2" coveredmethods="2"/>
+      <file name="LiveClassic.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/components/themes/LiveClassic.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="13" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+      </file>
+      <file name="LiveModern.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/components/themes/LiveModern.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="10" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.live.pages">
+      <metrics statements="76" coveredstatements="74" conditionals="68" coveredconditionals="56" methods="19" coveredmethods="18"/>
+      <file name="LiveEmbedPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/pages/LiveEmbedPage.tsx">
+        <metrics statements="37" coveredstatements="35" conditionals="30" coveredconditionals="25" methods="10" coveredmethods="9"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="14" type="stmt"/>
+        <line num="10" count="14" type="stmt"/>
+        <line num="13" count="14" type="stmt"/>
+        <line num="14" count="14" type="stmt"/>
+        <line num="15" count="14" type="stmt"/>
+        <line num="17" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="14" type="stmt"/>
+        <line num="21" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="32" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="45" count="14" type="stmt"/>
+        <line num="46" count="6" type="cond" truecount="3" falsecount="1"/>
+        <line num="49" count="6" type="stmt"/>
+        <line num="50" count="6" type="stmt"/>
+        <line num="51" count="6" type="stmt"/>
+        <line num="56" count="14" type="stmt"/>
+        <line num="57" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="58" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="61" count="14" type="stmt"/>
+        <line num="62" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="65" count="5" type="stmt"/>
+        <line num="67" count="6" type="stmt"/>
+        <line num="68" count="6" type="stmt"/>
+        <line num="72" count="14" type="cond" truecount="3" falsecount="1"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="79" count="14" type="stmt"/>
+        <line num="80" count="12" type="stmt"/>
+        <line num="88" count="14" type="stmt"/>
+      </file>
+      <file name="LivePage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/pages/LivePage.tsx">
+        <metrics statements="39" coveredstatements="39" conditionals="38" coveredconditionals="31" methods="9" coveredmethods="9"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="17" type="stmt"/>
+        <line num="15" count="17" type="stmt"/>
+        <line num="16" count="17" type="cond" truecount="1" falsecount="2"/>
+        <line num="19" count="17" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="7" type="stmt"/>
+        <line num="28" count="17" type="stmt"/>
+        <line num="29" count="17" type="stmt"/>
+        <line num="30" count="17" type="stmt"/>
+        <line num="33" count="17" type="stmt"/>
+        <line num="34" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="40" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="51" count="17" type="cond" truecount="2" falsecount="1"/>
+        <line num="53" count="17" type="stmt"/>
+        <line num="54" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="62" count="4" type="stmt"/>
+        <line num="63" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="64" count="3" type="stmt"/>
+        <line num="67" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="73" count="4" type="stmt"/>
+        <line num="76" count="4" type="stmt"/>
+        <line num="80" count="17" type="cond" truecount="1" falsecount="1"/>
+        <line num="83" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="94" count="17" type="stmt"/>
+        <line num="102" count="17" type="cond" truecount="4" falsecount="0"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="109" count="15" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.live.types">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/live/types/index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="features.public.components">
+      <metrics statements="32" coveredstatements="29" conditionals="36" coveredconditionals="28" methods="5" coveredmethods="5"/>
+      <file name="FeatureCard.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/components/FeatureCard.tsx">
+        <metrics statements="7" coveredstatements="5" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="18" type="stmt"/>
+        <line num="38" count="18" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="18" type="cond" truecount="1" falsecount="1"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="46" count="18" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+      </file>
+      <file name="LandingBackground.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/components/LandingBackground.tsx">
+        <metrics statements="6" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="9" type="stmt"/>
+        <line num="5" count="9" type="stmt"/>
+        <line num="7" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="20" count="9" type="stmt"/>
+      </file>
+      <file name="PublicEventCard.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/components/PublicEventCard.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="14" coveredconditionals="10" methods="1" coveredmethods="1"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+      </file>
+      <file name="PublicFooter.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/components/PublicFooter.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="9" type="stmt"/>
+        <line num="7" count="9" type="stmt"/>
+        <line num="8" count="9" type="stmt"/>
+        <line num="10" count="9" type="stmt"/>
+      </file>
+      <file name="PublicHeader.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/components/PublicHeader.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="9" type="stmt"/>
+        <line num="10" count="9" type="stmt"/>
+        <line num="11" count="9" type="stmt"/>
+        <line num="13" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="9" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.public.layouts">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="PublicLayout.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/layouts/PublicLayout.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="9" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.public.pages">
+      <metrics statements="19" coveredstatements="17" conditionals="14" coveredconditionals="12" methods="5" coveredmethods="3"/>
+      <file name="LandingPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/pages/LandingPage.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="10" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="18" count="6" type="stmt"/>
+      </file>
+      <file name="RootLandingPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/public/pages/RootLandingPage.tsx">
+        <metrics statements="12" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="2"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="20" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="114" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.staff.components">
+      <metrics statements="28" coveredstatements="26" conditionals="12" coveredconditionals="12" methods="12" coveredmethods="10"/>
+      <file name="DonationTypeSelector.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/staff/components/DonationTypeSelector.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="26" count="16" type="stmt"/>
+        <line num="27" count="16" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+      </file>
+      <file name="DonorInfoForm.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/staff/components/DonorInfoForm.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+      </file>
+      <file name="Keypad.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/staff/components/Keypad.tsx">
+        <metrics statements="8" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="3"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="22" count="55" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+      </file>
+      <file name="StaffGuard.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/staff/components/StaffGuard.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="10" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.staff.pages">
+      <metrics statements="79" coveredstatements="70" conditionals="60" coveredconditionals="45" methods="17" coveredmethods="12"/>
+      <file name="CollectorPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/staff/pages/CollectorPage.tsx">
+        <metrics statements="58" coveredstatements="49" conditionals="41" coveredconditionals="30" methods="13" coveredmethods="8"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="18" type="stmt"/>
+        <line num="19" count="18" type="stmt"/>
+        <line num="20" count="18" type="stmt"/>
+        <line num="21" count="18" type="stmt"/>
+        <line num="22" count="18" type="stmt"/>
+        <line num="23" count="18" type="stmt"/>
+        <line num="25" count="18" type="stmt"/>
+        <line num="26" count="18" type="cond" truecount="3" falsecount="1"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="18" type="stmt"/>
+        <line num="32" count="18" type="stmt"/>
+        <line num="33" count="18" type="stmt"/>
+        <line num="34" count="18" type="stmt"/>
+        <line num="35" count="18" type="stmt"/>
+        <line num="37" count="18" type="stmt"/>
+        <line num="38" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="8" type="cond" truecount="2" falsecount="2"/>
+        <line num="40" count="8" type="cond" truecount="4" falsecount="1"/>
+        <line num="41" count="8" type="stmt"/>
+        <line num="44" count="18" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="48" count="18" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="55" count="18" type="stmt"/>
+        <line num="56" count="13" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="61" count="13" type="stmt"/>
+        <line num="62" count="13" type="stmt"/>
+        <line num="68" count="18" type="stmt"/>
+        <line num="69" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="71" count="3" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="81" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="86" count="2" type="stmt"/>
+        <line num="88" count="2" type="stmt"/>
+        <line num="90" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="92" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="103" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="108" count="18" type="stmt"/>
+        <line num="109" count="18" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="111" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="114" count="18" type="stmt"/>
+        <line num="115" count="18" type="stmt"/>
+        <line num="118" count="18" type="stmt"/>
+      </file>
+      <file name="StaffLoginPage.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/features/staff/pages/StaffLoginPage.tsx">
+        <metrics statements="21" coveredstatements="21" conditionals="19" coveredconditionals="15" methods="4" coveredmethods="4"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="13" count="9" type="stmt"/>
+        <line num="14" count="9" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
+        <line num="16" count="9" type="stmt"/>
+        <line num="17" count="9" type="stmt"/>
+        <line num="18" count="9" type="stmt"/>
+        <line num="20" count="9" type="stmt"/>
+        <line num="21" count="4" type="cond" truecount="5" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="26" count="9" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="9" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="test">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <file name="utils.tsx" path="/home/runner/work/fundraising-event/fundraising-event/apps/web/src/test/utils.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="21" type="stmt"/>
+        <line num="19" count="11" type="stmt"/>
+        <line num="20" count="21" type="stmt"/>
+        <line num="21" count="21" type="stmt"/>
+        <line num="24" count="11" type="stmt"/>
+        <line num="25" count="19" type="stmt"/>
+        <line num="34" count="19" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

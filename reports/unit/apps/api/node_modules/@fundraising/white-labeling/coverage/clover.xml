@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1768160953644" clover="3.2.0">
+  <project timestamp="1768160953644" name="All files">
+    <metrics statements="127" coveredstatements="117" conditionals="69" coveredconditionals="53" methods="29" coveredmethods="27" elements="225" coveredelements="197" complexity="0" loc="127" ncloc="127" packages="7" files="16" classes="16"/>
+    <package name="src">
+      <metrics statements="38" coveredstatements="33" conditionals="8" coveredconditionals="4" methods="13" coveredmethods="12"/>
+      <file name="store.ts" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/store.ts">
+        <metrics statements="38" coveredstatements="33" conditionals="8" coveredconditionals="4" methods="13" coveredmethods="12"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="8" type="stmt"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="12" count="47" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="8" type="stmt"/>
+        <line num="15" count="47" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="28" count="18" type="stmt"/>
+        <line num="32" count="13" type="stmt"/>
+        <line num="36" count="13" type="stmt"/>
+        <line num="43" count="12" type="stmt"/>
+        <line num="44" count="12" type="stmt"/>
+        <line num="49" count="5" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="66" count="5" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="78" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="92" count="5" type="stmt"/>
+        <line num="93" count="2" type="stmt"/>
+        <line num="95" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="105" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.assets">
+      <metrics statements="11" coveredstatements="10" conditionals="6" coveredconditionals="4" methods="3" coveredmethods="3"/>
+      <file name="index.ts" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/assets/index.ts">
+        <metrics statements="11" coveredstatements="10" conditionals="6" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="30" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.assets.images">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="background-donor.svg" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/assets/images/background-donor.svg">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="background-landing.svg" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/assets/images/background-landing.svg">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="background-live.svg" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/assets/images/background-live.svg">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="favicon.svg" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/assets/images/favicon.svg">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="logo.svg" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/assets/images/logo.svg">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.config">
+      <metrics statements="11" coveredstatements="10" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <file name="event-config.default.json" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/config/event-config.default.json">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="index.ts" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/config/index.ts">
+        <metrics statements="11" coveredstatements="10" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="24" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.locales">
+      <metrics statements="29" coveredstatements="28" conditionals="18" coveredconditionals="14" methods="6" coveredmethods="6"/>
+      <file name="de.default.json" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/locales/de.default.json">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="en.default.json" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/locales/en.default.json">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="fr.default.json" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/locales/fr.default.json">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="index.ts" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/locales/index.ts">
+        <metrics statements="29" coveredstatements="28" conditionals="18" coveredconditionals="14" methods="6" coveredmethods="6"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="46" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="68" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="69" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="72" count="3" type="stmt"/>
+        <line num="75" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="80" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+      </file>
+      <file name="it.default.json" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/locales/it.default.json">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.theme">
+      <metrics statements="15" coveredstatements="15" conditionals="11" coveredconditionals="9" methods="3" coveredmethods="2"/>
+      <file name="index.ts" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/theme/index.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="11" coveredconditionals="9" methods="3" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.utils">
+      <metrics statements="23" coveredstatements="21" conditionals="22" coveredconditionals="19" methods="3" coveredmethods="3"/>
+      <file name="merge.ts" path="/home/runner/work/fundraising-event/fundraising-event/packages/white-labeling/src/utils/merge.ts">
+        <metrics statements="23" coveredstatements="21" conditionals="22" coveredconditionals="19" methods="3" coveredmethods="3"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="56" type="cond" truecount="3" falsecount="0"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="36" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="19" type="stmt"/>
+        <line num="17" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="17" type="stmt"/>
+        <line num="21" count="17" type="cond" truecount="3" falsecount="1"/>
+        <line num="22" count="17" type="stmt"/>
+        <line num="23" count="20" type="stmt"/>
+        <line num="24" count="20" type="stmt"/>
+        <line num="26" count="20" type="stmt"/>
+        <line num="27" count="20" type="stmt"/>
+        <line num="29" count="20" type="cond" truecount="5" falsecount="0"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="35" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="44" count="12" type="stmt"/>
+        <line num="50" count="17" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

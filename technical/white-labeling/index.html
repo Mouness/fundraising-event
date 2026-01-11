@@ -1,0 +1,3847 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://Mouness.github.io/fundraising-event/technical/white-labeling/">
+      
+      
+        <link rel="prev" href="../features/events/">
+      
+      
+        <link rel="next" href="../providers/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>White-Labeling - Fundraising Event Documentation v1.0.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#white-labeling-package" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Fundraising Event Documentation v1.0.0" class="md-header__button md-logo" aria-label="Fundraising Event Documentation v1.0.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fundraising Event Documentation v1.0.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              White-Labeling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Welcome
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user/en/" class="md-tabs__link">
+          
+  
+  
+  User Guide (EN)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user/fr/" class="md-tabs__link">
+          
+  
+  
+  Guide Utilisateur (FR)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Technical Documentation
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Fundraising Event Documentation v1.0.0" class="md-nav__button md-logo" aria-label="Fundraising Event Documentation v1.0.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Fundraising Event Documentation v1.0.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide (EN)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide (EN)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/en/global_settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/en/events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/en/branding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design & Branding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/en/staff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Staff & Volunteers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/en/live/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/en/donations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Donations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide Utilisateur (FR)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guide Utilisateur (FR)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/fr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/fr/global_settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramètres Globaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/fr/events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestion des Événements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/fr/branding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design & Marque
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/fr/staff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Personnel & Bénévoles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/fr/live/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mode Live
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/fr/donations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Documentation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technical Documentation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/donation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Donation Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/live-event/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Event
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/public-landing-pages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Landing Pages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/admin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Admin Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/staff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Staff Collector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/communication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/global-settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    White-Labeling
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    White-Labeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Philosophy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-configuration-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Configuration (JSON)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Configuration (JSON)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eventconfig-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EventConfig Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#react-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        React Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-visual-theming-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Visual Theming (CSS)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Visual Theming (CSS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#css-variables-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS Variables Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CSS Variables Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-colors-shadcntailwind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Colors (Shadcn/Tailwind)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glassmorphism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glassmorphism
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#app-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        App Header
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Auth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Admin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-landing-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Landing Page
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-donation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Donation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-thank-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Thank You
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-live-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Live Screen (Shared)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-live-screen-classic-theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Live Screen (Classic Theme)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-live-screen-modern-theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Live Screen (Modern Theme)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-live-screen-elegant-theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Live Screen (Elegant Theme)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature-staff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature: Staff
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#theme-class-modifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theme Class Modifiers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-internationalization-i18n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Internationalization (i18n)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Internationalization (i18n)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#translation-file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Translation File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-overrides-flat-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Config Overrides (Flat Structure)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-assets-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Assets (Images)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Assets (Images)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developer-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Developer Guide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Developer Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-new-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a New Default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="white-labeling-package">White-Labeling Package</h1>
+<p>The <code>@fundraising/white-labeling</code> package is the engine that allows the application to be customized for different events. It enforces a strict <strong>"Custom overrides Default"</strong> philosophy, ensuring that consumers (Web &amp; API) always receive the fully resolved configuration.</p>
+<h2 id="core-philosophy">Core Philosophy</h2>
+<p>For every customizable element, the package provides a sensible <strong>Default</strong>. If a <strong>Custom</strong> version is provided, it merges with or overrides the default. If not, the default is used silently.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Element</th>
+<th style="text-align: left;">Default Source</th>
+<th style="text-align: left;">Custom Source</th>
+<th style="text-align: left;">Override Mechanism</th>
+<th style="text-align: left;">Export</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Config</strong></td>
+<td style="text-align: left;"><code>src/config/*.json</code></td>
+<td style="text-align: left;"><code>event-config.json</code></td>
+<td style="text-align: left;">Deep Merge</td>
+<td style="text-align: left;"><code>loadConfig</code>, <code>AppConfigProvider</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Styles</strong></td>
+<td style="text-align: left;"><code>src/theme/*.css</code></td>
+<td style="text-align: left;"><code>theme.css</code></td>
+<td style="text-align: left;">CSS Cascade</td>
+<td style="text-align: left;">(Auto-injected)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Locales</strong></td>
+<td style="text-align: left;"><code>src/locales/*.json</code></td>
+<td style="text-align: left;">Custom JSON</td>
+<td style="text-align: left;">Deep Merge</td>
+<td style="text-align: left;"><code>mergeLocales</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Assets</strong></td>
+<td style="text-align: left;"><code>src/assets/*</code></td>
+<td style="text-align: left;">Config URLs</td>
+<td style="text-align: left;">Replacement</td>
+<td style="text-align: left;"><code>assets</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-configuration-json">1. Configuration (JSON)</h2>
+<p>The core <code>EventConfig</code> object drives the behavior of the application (feature flags, text content, amounts).</p>
+<ul>
+<li><strong>Default</strong>: The package bundles a complete default configuration (<code>src/config/event-config.default.json</code>).</li>
+<li><strong>Custom</strong>: The app initializes via <code>AppConfigProvider</code> (React) or <code>initWhiteLabeling</code> (Vanilla/Script) to fetch event data.</li>
+<li><strong>Resolution</strong>: <code>loadConfigs()</code> merges Default JSON + Database Overrides.</li>
+</ul>
+<h3 id="eventconfig-structure">EventConfig Structure</h3>
+<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">EventConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">slug?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">description?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">theme?</span><span class="o">:</span><span class="w"> </span><span class="kt">ThemeConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">ContentConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">live?</span><span class="o">:</span><span class="w"> </span><span class="kt">LiveConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">donation</span><span class="o">:</span><span class="w"> </span><span class="kt">DonationConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">communication</span><span class="o">:</span><span class="w"> </span><span class="kt">CommunicationConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">locales?</span><span class="o">:</span><span class="w"> </span><span class="kt">LocalesConfig</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">ThemeConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">assets?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">variables?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">ContentConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">totalLabel</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">goalAmount</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">landing</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">impact</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">url?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">enabled?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="nx">community</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">url?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">enabled?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="nx">interactive</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">url?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">enabled?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">};</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">LiveConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">theme</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;classic&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;modern&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;elegant&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">DonationConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">form</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">phone</span><span class="o">:</span><span class="w"> </span><span class="kt">DonationFormFieldConfig</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">address</span><span class="o">:</span><span class="w"> </span><span class="kt">DonationFormFieldConfig</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">company</span><span class="o">:</span><span class="w"> </span><span class="kt">DonationFormFieldConfig</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="kt">DonationFormFieldConfig</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">anonymous</span><span class="o">:</span><span class="w"> </span><span class="kt">DonationFormFieldConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="w">  </span><span class="nx">sharing</span><span class="o">:</span><span class="w"> </span><span class="kt">SharingConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">payment</span><span class="o">:</span><span class="w"> </span><span class="kt">PaymentConfig</span><span class="p">;</span><span class="w"> </span><span class="c1">// Strictly Global - Cannot be overridden at event level</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">SharingConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">networks</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;facebook&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;twitter&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;linkedin&#39;</span><span class="p">)[];</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">DonationFormFieldConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">PaymentConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">provider</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;stripe&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;paypal&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">currency</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">config</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">stripe?</span><span class="o">:</span><span class="w"> </span><span class="kt">StripeProviderConfig</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">paypal?</span><span class="o">:</span><span class="w"> </span><span class="kt">PayPalProviderConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="o">!</span><span class="nx">IMPORTANT</span><span class="p">]</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="o">**</span><span class="nx">Payment</span><span class="w"> </span><span class="nx">configuration</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="nx">strictly</span><span class="w"> </span><span class="nb">global</span><span class="p">.</span><span class="o">**</span><span class="w"> </span><span class="nx">While</span><span class="w"> </span><span class="sb">`EventConfig`</span><span class="w"> </span><span class="nx">contains</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="sb">`payment`</span><span class="w"> </span><span class="nx">block</span><span class="p">,</span><span class="w"> </span><span class="nx">values</span><span class="w"> </span><span class="nx">provided</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="nx">level</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">ignored</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">API</span><span class="p">.</span><span class="w"> </span><span class="nx">All</span><span class="w"> </span><span class="nx">payment</span><span class="w"> </span><span class="nx">processing</span><span class="w"> </span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span><span class="w"> </span><span class="nx">currency</span><span class="p">,</span><span class="w"> </span><span class="nx">provider</span><span class="p">)</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">configured</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="o">**</span><span class="nx">Global</span><span class="w"> </span><span class="nx">Settings</span><span class="o">**</span><span class="p">.</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">StripeProviderConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">publishableKey</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">secretKey</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">webhookSecret</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">PayPalProviderConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">clientSecret</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">webhookId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">sandbox</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">CommunicationConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">legalName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">address</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">website?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">supportEmail?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">phone?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">taxId?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// Tax ID / Charity Registration Number</span>
+<span class="w">  </span><span class="nx">footerText?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// Common footer text for receipts</span>
+<span class="w">  </span><span class="nx">signatureText?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// e.g. &quot;CEO Name, Title&quot;</span>
+<span class="w">  </span><span class="nx">signatureImage?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// URL to signature image</span>
+<span class="w">  </span><span class="nx">pdf</span><span class="o">:</span><span class="w"> </span><span class="kt">PdfConfig</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="kt">EmailConfig</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">PdfConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">EmailConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">enabled</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">senderName?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">replyTo?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">subjectLine?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">provider</span><span class="o">?:</span><span class="w"> </span><span class="s1">&#39;console&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;smtp&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;resend&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;gmail&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;outlook&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">config?</span><span class="o">:</span><span class="w"> </span><span class="kt">EmailProviderConfig</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nx">EmailProviderConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">smtp</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">secure</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">auth</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">pass</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// Localization</span>
+<span class="kd">interface</span><span class="w"> </span><span class="nx">LocalesConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;en&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;fr&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;de&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;it&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">supported</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;fr&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;de&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;it&#39;</span><span class="p">)[];</span>
+<span class="w">  </span><span class="nx">overrides?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">any</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="example-configuration">Example Configuration</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;evt_winter_gala&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Winter Gala 2025&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;theme&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;variables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;--primary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#ec4899&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;--radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.5rem&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;assets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;logo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/logo.png&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;backgroundLive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/bg.jpg&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Winter Gala 2025&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;totalLabel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Funds Raised&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;goalAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50000</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;live&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;theme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;modern&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;donation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;form&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;company&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;anonymous&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;sharing&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;networks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;facebook&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;twitter&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;linkedin&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;payment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stripe&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EUR&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;communication&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;legalName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Charity Foundation&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;123 Charity Lane, Paris&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;website&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://mycharity.org&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;supportEmail&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;support@mycharity.org&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;pdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;templateStyle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;formal&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;senderName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Charity&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;subjectLine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Thank you for your donation!&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;locales&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fr&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;supported&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;en&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;de&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;it&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;overrides&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;fr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;donation.submit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Faire un don&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="react-integration">React Integration</h3>
+<p>Wrap your application with <code>AppConfigProvider</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AppConfigProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@core/providers/AppConfigProvider&#39;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">AppProviders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">children</span><span class="w"> </span><span class="p">}</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">children</span><span class="o">:</span><span class="w"> </span><span class="kt">React.ReactNode</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">AppConfigProvider</span><span class="p">&gt;{</span><span class="nx">children</span><span class="p">}&lt;/</span><span class="nt">AppConfigProvider</span><span class="p">&gt;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Access config in components:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useAppConfig</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@core/providers/AppConfigProvider&#39;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">MyComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useAppConfig</span><span class="p">()</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nx">config</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">title</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="2-visual-theming-css">2. Visual Theming (CSS)</h2>
+<p>The appearance is controlled by a comprehensive set of <strong>CSS Variables</strong> defined in <code>theme.default.css</code>. These encompass colors, radii, shadows, and typography.</p>
+<ul>
+<li><strong>Default</strong>: Bundled in <code>dist/theme/theme.default.css</code>.</li>
+<li><strong>Custom</strong>: A <code>theme.css</code> file hosted alongside the config.</li>
+<li><strong>Tailwind 4 Support</strong>: The default theme now includes a <code>@theme</code> block that maps CSS variables to Tailwind 4 configuration.</li>
+</ul>
+<h3 id="css-variables-reference">CSS Variables Reference</h3>
+<h4 id="core-colors-shadcntailwind">Core Colors (Shadcn/Tailwind)</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--background</code></td>
+<td style="text-align: left;">Main background color of the app</td>
+<td style="text-align: left;"><code>#FFFFFF</code></td>
+<td style="text-align: center;"><img alt="#FFFFFF" src="https://placehold.co/20/FFFFFF/FFFFFF.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--foreground</code></td>
+<td style="text-align: left;">Main text color</td>
+<td style="text-align: left;"><code>#1A1A1A</code></td>
+<td style="text-align: center;"><img alt="#1A1A1A" src="https://placehold.co/20/1A1A1A/1A1A1A.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--primary</code></td>
+<td style="text-align: left;">Primary brand color (Blue)</td>
+<td style="text-align: left;"><code>#0062A7</code></td>
+<td style="text-align: center;"><img alt="#0062A7" src="https://placehold.co/20/0062A7/0062A7.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--primary-foreground</code></td>
+<td style="text-align: left;">Text color on primary background</td>
+<td style="text-align: left;"><code>#FFFFFF</code></td>
+<td style="text-align: center;"><img alt="#FFFFFF" src="https://placehold.co/20/FFFFFF/FFFFFF.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--secondary</code></td>
+<td style="text-align: left;">Secondary brand color (Light Gray)</td>
+<td style="text-align: left;"><code>#EDEDED</code></td>
+<td style="text-align: center;"><img alt="#EDEDED" src="https://placehold.co/20/EDEDED/EDEDED.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--secondary-foreground</code></td>
+<td style="text-align: left;">Text color on secondary background</td>
+<td style="text-align: left;"><code>#1A1A1A</code></td>
+<td style="text-align: center;"><img alt="#1A1A1A" src="https://placehold.co/20/1A1A1A/1A1A1A.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--muted</code></td>
+<td style="text-align: left;">Muted background for cards/sections</td>
+<td style="text-align: left;"><code>#f1f5f9</code></td>
+<td style="text-align: center;"><img alt="#f1f5f9" src="https://placehold.co/20/f1f5f9/f1f5f9.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--muted-foreground</code></td>
+<td style="text-align: left;">Muted text color for subtitles</td>
+<td style="text-align: left;"><code>#64748b</code></td>
+<td style="text-align: center;"><img alt="#64748b" src="https://placehold.co/20/64748b/64748b.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--border</code></td>
+<td style="text-align: left;">Default border color</td>
+<td style="text-align: left;"><code>#e2e8f0</code></td>
+<td style="text-align: center;"><img alt="#e2e8f0" src="https://placehold.co/20/e2e8f0/e2e8f0.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--input</code></td>
+<td style="text-align: left;">Default input border color</td>
+<td style="text-align: left;"><code>#e2e8f0</code></td>
+<td style="text-align: center;"><img alt="#e2e8f0" src="https://placehold.co/20/e2e8f0/e2e8f0.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--ring</code></td>
+<td style="text-align: left;">Focus ring color</td>
+<td style="text-align: left;"><code>#0062A7</code></td>
+<td style="text-align: center;"><img alt="#0062A7" src="https://placehold.co/20/0062A7/0062A7.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--radius</code></td>
+<td style="text-align: left;">Base border radius</td>
+<td style="text-align: left;"><code>0.5rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--popover</code></td>
+<td style="text-align: left;">Background of floating popovers</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--popover-foreground</code></td>
+<td style="text-align: left;">Text color for popover content</td>
+<td style="text-align: left;"><code>#0f172a</code></td>
+<td style="text-align: center;"><img alt="#0f172a" src="https://placehold.co/20/0f172a/0f172a.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--accent</code></td>
+<td style="text-align: left;">Accent background for hovered items</td>
+<td style="text-align: left;"><code>#FDB913</code></td>
+<td style="text-align: center;"><img alt="#FDB913" src="https://placehold.co/20/FDB913/FDB913.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--accent-foreground</code></td>
+<td style="text-align: left;">Text color for accented elements</td>
+<td style="text-align: left;"><code>#1A1A1A</code></td>
+<td style="text-align: center;"><img alt="#1A1A1A" src="https://placehold.co/20/1A1A1A/1A1A1A.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--card</code></td>
+<td style="text-align: left;">Background for standard cards</td>
+<td style="text-align: left;"><code>#FFFFFF</code></td>
+<td style="text-align: center;"><img alt="#FFFFFF" src="https://placehold.co/20/FFFFFF/FFFFFF.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--card-foreground</code></td>
+<td style="text-align: left;">Text color within cards</td>
+<td style="text-align: left;"><code>#1A1A1A</code></td>
+<td style="text-align: center;"><img alt="#1A1A1A" src="https://placehold.co/20/1A1A1A/1A1A1A.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--destructive</code></td>
+<td style="text-align: left;">Color for destructive actions</td>
+<td style="text-align: left;"><code>#ef4444</code></td>
+<td style="text-align: center;"><img alt="#ef4444" src="https://placehold.co/20/ef4444/ef4444.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--destructive-foreground</code></td>
+<td style="text-align: left;">Text color on destructive backgrounds</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="global-variables">Global Variables</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--global-link-color</code></td>
+<td style="text-align: left;">Color for hyperlinks</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-link-hover</code></td>
+<td style="text-align: left;">Hover state color for links</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-error-color</code></td>
+<td style="text-align: left;">Standard error red</td>
+<td style="text-align: left;"><code>#ef4444</code></td>
+<td style="text-align: center;"><img alt="#ef4444" src="https://placehold.co/20/ef4444/ef4444.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-error-bg</code></td>
+<td style="text-align: left;">Background for error alerts</td>
+<td style="text-align: left;"><code>#fef2f2</code></td>
+<td style="text-align: center;"><img alt="#fef2f2" src="https://placehold.co/20/fef2f2/fef2f2.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-success-color</code></td>
+<td style="text-align: left;">Standard success green</td>
+<td style="text-align: left;"><code>#16a34a</code></td>
+<td style="text-align: center;"><img alt="#16a34a" src="https://placehold.co/20/16a34a/16a34a.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-success-bg</code></td>
+<td style="text-align: left;">Background for success alerts</td>
+<td style="text-align: left;"><code>rgba(220, 252, 231, 0.5)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/dcfce7/dcfce7.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-radius</code></td>
+<td style="text-align: left;">Aliased base radius</td>
+<td style="text-align: left;"><code>var(--radius)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-radius-sm</code></td>
+<td style="text-align: left;">Small radius for inner elements</td>
+<td style="text-align: left;"><code>calc(var(--radius) - 2px)</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-radius-lg</code></td>
+<td style="text-align: left;">Large radius for cards/modals</td>
+<td style="text-align: left;"><code>calc(var(--radius) + 4px)</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-radius-full</code></td>
+<td style="text-align: left;">Pill/Circle radius</td>
+<td style="text-align: left;"><code>9999px</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-shadow-sm</code></td>
+<td style="text-align: left;">Subtle shadow</td>
+<td style="text-align: left;"><code>0 1px 2px rgba(0, 0, 0, 0.05)</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-shadow</code></td>
+<td style="text-align: left;">Standard depth shadow</td>
+<td style="text-align: left;"><code>0 4px 6px rgba(0, 0, 0, 0.1)</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-shadow-lg</code></td>
+<td style="text-align: left;">Deep shadow for floating elements</td>
+<td style="text-align: left;"><code>0 10px 15px rgba(0, 0, 0, 0.1)</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-font-family</code></td>
+<td style="text-align: left;">Primary font stack</td>
+<td style="text-align: left;"><code>'Inter', system-ui, sans-serif</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-font-mono</code></td>
+<td style="text-align: left;">Monospace font stack</td>
+<td style="text-align: left;"><code>'JetBrains Mono', monospace</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-transition-fast</code></td>
+<td style="text-align: left;">Fast transition for hovers</td>
+<td style="text-align: left;"><code>150ms ease</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--global-transition</code></td>
+<td style="text-align: left;">Standard transition for state changes</td>
+<td style="text-align: left;"><code>300ms ease</code></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="glassmorphism">Glassmorphism</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--glass-bg</code></td>
+<td style="text-align: left;">Translucent background</td>
+<td style="text-align: left;"><code>rgba(255, 255, 255, 0.7)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--glass-blur</code></td>
+<td style="text-align: left;">Blur strength</td>
+<td style="text-align: left;"><code>12px</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--glass-opacity</code></td>
+<td style="text-align: left;">Opacity override</td>
+<td style="text-align: left;"><code>1</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--glass-border</code></td>
+<td style="text-align: left;">Translucent border</td>
+<td style="text-align: left;"><code>rgba(255, 255, 255, 0.3)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--glass-shadow</code></td>
+<td style="text-align: left;">Soft shadow for glass effect</td>
+<td style="text-align: left;"><code>0 8px 32px 0 rgba(0, 0, 0, 0.08)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="app-header">App Header</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--header-bg</code></td>
+<td style="text-align: left;">Header background color</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--header-bg-dark</code></td>
+<td style="text-align: left;">Header background for dark variants</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--header-border</code></td>
+<td style="text-align: left;">Header bottom border</td>
+<td style="text-align: left;"><code>var(--border)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--header-text</code></td>
+<td style="text-align: left;">Header text color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--header-accent</code></td>
+<td style="text-align: left;">Accent color in header</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--header-height</code></td>
+<td style="text-align: left;">Fixed height of the header</td>
+<td style="text-align: left;"><code>4rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-auth">Feature: Auth</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--auth-page-bg</code></td>
+<td style="text-align: left;">Background for login pages</td>
+<td style="text-align: left;"><code>var(--muted)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-input-bg</code></td>
+<td style="text-align: left;">Input field background</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-input-border</code></td>
+<td style="text-align: left;">Input field border</td>
+<td style="text-align: left;"><code>var(--border)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-input-text</code></td>
+<td style="text-align: left;">Input text color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-button-bg</code></td>
+<td style="text-align: left;">Login button background</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-button-text</code></td>
+<td style="text-align: left;">Login button text</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-title-color</code></td>
+<td style="text-align: left;">Title text color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-subtitle-color</code></td>
+<td style="text-align: left;">Subtitle text color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-label-color</code></td>
+<td style="text-align: left;">Form label color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-link-color</code></td>
+<td style="text-align: left;">Links color in auth forms</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-card-shadow</code></td>
+<td style="text-align: left;">Shadow for auth card</td>
+<td style="text-align: left;"><code>var(--global-shadow)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--auth-card-radius</code></td>
+<td style="text-align: left;">Radius for auth card</td>
+<td style="text-align: left;"><code>var(--global-radius-lg)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-admin">Feature: Admin</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--admin-sidebar-bg</code></td>
+<td style="text-align: left;">Sidebar background (Dark)</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-sidebar-text</code></td>
+<td style="text-align: left;">Sidebar text (Light)</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-sidebar-hover</code></td>
+<td style="text-align: left;">Sidebar hover state</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-content-bg</code></td>
+<td style="text-align: left;">Main content area background</td>
+<td style="text-align: left;"><code>var(--muted)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-card-bg</code></td>
+<td style="text-align: left;">Card background in dashboard</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-card-text</code></td>
+<td style="text-align: left;">Card text color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-border-color</code></td>
+<td style="text-align: left;">Border color for admin elements</td>
+<td style="text-align: left;"><code>var(--border)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-heading-color</code></td>
+<td style="text-align: left;">Heading color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-muted-text</code></td>
+<td style="text-align: left;">Secondary text in admin</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-sidebar-width</code></td>
+<td style="text-align: left;">Width of the sidebar</td>
+<td style="text-align: left;"><code>16rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-sidebar-padding</code></td>
+<td style="text-align: left;">Padding inside sidebar</td>
+<td style="text-align: left;"><code>1rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--admin-content-padding</code></td>
+<td style="text-align: left;">Padding for content area</td>
+<td style="text-align: left;"><code>2rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-landing-page">Feature: Landing Page</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--landing-hero-gradient-primary</code></td>
+<td style="text-align: left;">Primary blob color (HSL)</td>
+<td style="text-align: left;"><code>221.2 83.2% 53.3%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-hero-gradient-secondary</code></td>
+<td style="text-align: left;">Secondary blob color (HSL)</td>
+<td style="text-align: left;"><code>262.1 83.3% 57.8%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-blob-opacity</code></td>
+<td style="text-align: left;">Opacity of animated background blobs</td>
+<td style="text-align: left;"><code>0.2</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-blob-1-duration</code></td>
+<td style="text-align: left;">Animation duration for first blob</td>
+<td style="text-align: left;"><code>25s</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-blob-2-duration</code></td>
+<td style="text-align: left;">Animation duration for second blob</td>
+<td style="text-align: left;"><code>35s</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-card-glass-bg</code></td>
+<td style="text-align: left;">Card background color (HSL)</td>
+<td style="text-align: left;"><code>0 0% 100%</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-card-glass-alpha</code></td>
+<td style="text-align: left;">Card background opacity</td>
+<td style="text-align: left;"><code>0.8</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-card-glass-border</code></td>
+<td style="text-align: left;">Card border color (HSL)</td>
+<td style="text-align: left;"><code>0 0% 100%</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-card-glass-border-alpha</code></td>
+<td style="text-align: left;">Card border opacity</td>
+<td style="text-align: left;"><code>0.1</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-hero-bg</code></td>
+<td style="text-align: left;">Hero section background fallback</td>
+<td style="text-align: left;"><code>0 0% 100%</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-hero-text</code></td>
+<td style="text-align: left;">Hero section text color</td>
+<td style="text-align: left;"><code>222.2 84% 4.9%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-footer-bg</code></td>
+<td style="text-align: left;">Footer background color</td>
+<td style="text-align: left;"><code>210 40% 96.1%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-footer-text</code></td>
+<td style="text-align: left;">Footer text color</td>
+<td style="text-align: left;"><code>215.4 16.3% 46.9%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-feature-icon-primary</code></td>
+<td style="text-align: left;">Feature icon 1 (Pink)</td>
+<td style="text-align: left;"><code>346.8 77.2% 49.8%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-feature-icon-secondary</code></td>
+<td style="text-align: left;">Feature icon 2 (Blue)</td>
+<td style="text-align: left;"><code>217.2 91.2% 59.8%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--landing-feature-icon-tertiary</code></td>
+<td style="text-align: left;">Feature icon 3 (Purple)</td>
+<td style="text-align: left;"><code>262.1 83.3% 57.8%</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-donation">Feature: Donation</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--donation-title-color</code></td>
+<td style="text-align: left;">Title color for donation flow</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-subtitle-color</code></td>
+<td style="text-align: left;">Subtitle color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-card-radius</code></td>
+<td style="text-align: left;">Card radius</td>
+<td style="text-align: left;"><code>var(--global-radius-lg)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-button-radius</code></td>
+<td style="text-align: left;">Button radius</td>
+<td style="text-align: left;"><code>var(--global-radius)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-amount-button-bg</code></td>
+<td style="text-align: left;">Amount button default bg</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-amount-button-text</code></td>
+<td style="text-align: left;">Amount button default text</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-amount-button-selected-bg</code></td>
+<td style="text-align: left;">Selected amount bg</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-amount-button-selected-text</code></td>
+<td style="text-align: left;">Selected amount text</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-next-button-bg</code></td>
+<td style="text-align: left;">Next step button bg</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-next-button-text</code></td>
+<td style="text-align: left;">Next step button text</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-input-bg</code></td>
+<td style="text-align: left;">Input background</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-input-text</code></td>
+<td style="text-align: left;">Input text</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-input-border</code></td>
+<td style="text-align: left;">Input border</td>
+<td style="text-align: left;"><code>var(--border)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-label-color</code></td>
+<td style="text-align: left;">Input label</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-page-gradient</code></td>
+<td style="text-align: left;">Page background gradient</td>
+<td style="text-align: left;"><code>linear-gradient(...)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-card-shadow</code></td>
+<td style="text-align: left;">Main card shadow</td>
+<td style="text-align: left;"><code>var(--global-shadow-lg)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--donation-amount-gap</code></td>
+<td style="text-align: left;">Spacing between amount buttons</td>
+<td style="text-align: left;"><code>0.75rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-thank-you">Feature: Thank You</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--thankyou-gradient-start</code></td>
+<td style="text-align: left;">Gradient start color</td>
+<td style="text-align: left;"><code>var(--secondary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-gradient-via</code></td>
+<td style="text-align: left;">Gradient middle color</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-gradient-end</code></td>
+<td style="text-align: left;">Gradient end color</td>
+<td style="text-align: left;"><code>var(--ring)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-card-bg</code></td>
+<td style="text-align: left;">Card background (semi-transparent)</td>
+<td style="text-align: left;"><code>rgba(255, 255, 255, 0.9)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-card-radius</code></td>
+<td style="text-align: left;">Card radius</td>
+<td style="text-align: left;"><code>var(--global-radius-lg)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-card-shadow</code></td>
+<td style="text-align: left;">Card elevation</td>
+<td style="text-align: left;"><code>0 25px 50px rgba(0, 0, 0, 0.25)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-card-border</code></td>
+<td style="text-align: left;">Card border</td>
+<td style="text-align: left;"><code>rgba(255, 255, 255, 0.2)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-title-color</code></td>
+<td style="text-align: left;">Title text color</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-message-color</code></td>
+<td style="text-align: left;">Message text color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-icon-color</code></td>
+<td style="text-align: left;">Success icon color</td>
+<td style="text-align: left;"><code>var(--global-success-color)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-icon-bg</code></td>
+<td style="text-align: left;">Success icon background</td>
+<td style="text-align: left;"><code>var(--global-success-bg)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-receipt-bg</code></td>
+<td style="text-align: left;">Receipt section background</td>
+<td style="text-align: left;"><code>var(--muted)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-receipt-label</code></td>
+<td style="text-align: left;">Receipt label color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-receipt-text</code></td>
+<td style="text-align: left;">Receipt value color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-share-label</code></td>
+<td style="text-align: left;">Share section label</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-share-twitter</code></td>
+<td style="text-align: left;">Twitter brand color</td>
+<td style="text-align: left;"><code>#0ea5e9</code></td>
+<td style="text-align: center;"><img alt="#0ea5e9" src="https://placehold.co/20/0ea5e9/0ea5e9.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-share-facebook</code></td>
+<td style="text-align: left;">Facebook brand color</td>
+<td style="text-align: left;"><code>#2563eb</code></td>
+<td style="text-align: center;"><img alt="#2563eb" src="https://placehold.co/20/2563eb/2563eb.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-share-linkedin</code></td>
+<td style="text-align: left;">LinkedIn brand color</td>
+<td style="text-align: left;"><code>#1d4ed8</code></td>
+<td style="text-align: center;"><img alt="#1d4ed8" src="https://placehold.co/20/1d4ed8/1d4ed8.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-button-bg</code></td>
+<td style="text-align: left;">Action button background</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--thankyou-button-text</code></td>
+<td style="text-align: left;">Action button text</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-live-screen">Feature: Live Screen (Shared)</h4>
+<p>These variables are shared across all live themes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--live-status-indicator</code></td>
+<td style="text-align: left;">Online status dot</td>
+<td style="text-align: left;"><code>var(--global-success-color)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-amount-color</code></td>
+<td style="text-align: left;">Amount display color</td>
+<td style="text-align: left;"><code>var(--global-success-color)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-avatar-bg-start</code></td>
+<td style="text-align: left;">Avatar gradient start</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-avatar-bg-end</code></td>
+<td style="text-align: left;">Avatar gradient end</td>
+<td style="text-align: left;"><code>var(--secondary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-feed-item-bg</code></td>
+<td style="text-align: left;">Background for donation feed items</td>
+<td style="text-align: left;"><code>rgba(15, 23, 42, 0.6)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/0f172a/0f172a.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-feed-item-border</code></td>
+<td style="text-align: left;">Border for donation feed items</td>
+<td style="text-align: left;"><code>rgba(51, 65, 85, 0.5)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-text-main</code></td>
+<td style="text-align: left;">Main text color</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-text-title</code></td>
+<td style="text-align: left;">Color for primary titles</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-text-subtitle</code></td>
+<td style="text-align: left;">Color for subtitles</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-text-secondary</code></td>
+<td style="text-align: left;">Secondary text color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-text-muted</code></td>
+<td style="text-align: left;">Muted text color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-gauge-shadow</code></td>
+<td style="text-align: left;">Gauge glow/shadow effect</td>
+<td style="text-align: left;"><code>rgba(168, 85, 247, 0.3)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-gauge-track</code></td>
+<td style="text-align: left;">Gauge background track color</td>
+<td style="text-align: left;"><code>rgba(255, 255, 255, 0.05)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-qr-bg</code></td>
+<td style="text-align: left;">Background color for QR codes</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-qr-fg</code></td>
+<td style="text-align: left;">Foreground/pattern color for QR codes</td>
+<td style="text-align: left;"><code>#000000</code></td>
+<td style="text-align: center;"><img alt="#000000" src="https://placehold.co/20/000000/000000.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-live-screen-classic-theme">Feature: Live Screen (Classic Theme)</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--live-classic-bg</code></td>
+<td style="text-align: left;">Live screen background</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-header-text</code></td>
+<td style="text-align: left;">Header text color</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-label-text</code></td>
+<td style="text-align: left;">Label text color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-goal-text</code></td>
+<td style="text-align: left;">Goal label color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-bg-accent-1</code></td>
+<td style="text-align: left;">Background glowing orb 1</td>
+<td style="text-align: left;"><code>rgba(88, 28, 135, 0.4)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/581c87/581c87.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-bg-accent-2</code></td>
+<td style="text-align: left;">Background glowing orb 2</td>
+<td style="text-align: left;"><code>rgba(30, 58, 138, 0.4)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/1e3a8a/1e3a8a.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-bg-blur</code></td>
+<td style="text-align: left;">Blur amount for background orbs</td>
+<td style="text-align: left;"><code>120px</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-title-color</code></td>
+<td style="text-align: left;">Classic theme title color</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-highlight-color</code></td>
+<td style="text-align: left;">Highlighted text color</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-qr-bg</code></td>
+<td style="text-align: left;">QR code container background</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-qr-shadow</code></td>
+<td style="text-align: left;">QR code shadow/glow</td>
+<td style="text-align: left;"><code>rgba(168, 85, 247, 0.4)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-counter-gradient-from</code></td>
+<td style="text-align: left;">Counter gradient start</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-counter-gradient-to</code></td>
+<td style="text-align: left;">Counter gradient end</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-gauge-size</code></td>
+<td style="text-align: left;">Size of the main gauge</td>
+<td style="text-align: left;"><code>500px</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-gauge-stroke</code></td>
+<td style="text-align: left;">Stroke width of the gauge</td>
+<td style="text-align: left;"><code>12</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-qr-size</code></td>
+<td style="text-align: left;">Size of the QR code</td>
+<td style="text-align: left;"><code>120px</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-counter-size</code></td>
+<td style="text-align: left;">Font size of the main counter</td>
+<td style="text-align: left;"><code>6rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-counter-weight</code></td>
+<td style="text-align: left;">Font weight of the main counter</td>
+<td style="text-align: left;"><code>900</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-qr-radius</code></td>
+<td style="text-align: left;">Border radius of QR container</td>
+<td style="text-align: left;"><code>0.75rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-classic-logo-radius</code></td>
+<td style="text-align: left;">Border radius of Logo</td>
+<td style="text-align: left;"><code>0.5rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-live-screen-modern-theme">Feature: Live Screen (Modern Theme)</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--live-modern-bg</code></td>
+<td style="text-align: left;">Modern theme background color</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-text</code></td>
+<td style="text-align: left;">Modern theme primary text color</td>
+<td style="text-align: left;"><code>#18181b</code></td>
+<td style="text-align: center;"><img alt="#18181b" src="https://placehold.co/20/18181b/18181b.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-header-bg</code></td>
+<td style="text-align: left;">Header background with transparency</td>
+<td style="text-align: left;"><code>rgba(255, 255, 255, 0.8)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-sidebar-bg</code></td>
+<td style="text-align: left;">Sidebar background color</td>
+<td style="text-align: left;"><code>#18181b</code></td>
+<td style="text-align: center;"><img alt="#18181b" src="https://placehold.co/20/18181b/18181b.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-sidebar-text</code></td>
+<td style="text-align: left;">Sidebar text color</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-accent</code></td>
+<td style="text-align: left;">Modern theme accent color</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-gauge-fill</code></td>
+<td style="text-align: left;">Gauge progress fill color</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-gauge-track</code></td>
+<td style="text-align: left;">Gauge background track color</td>
+<td style="text-align: left;"><code>#27272a</code></td>
+<td style="text-align: center;"><img alt="#27272a" src="https://placehold.co/20/27272a/27272a.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-feed-bg</code></td>
+<td style="text-align: left;">Feed background color</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-feed-border</code></td>
+<td style="text-align: left;">Feed container border</td>
+<td style="text-align: left;"><code>transparent</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-feed-shadow</code></td>
+<td style="text-align: left;">Feed container shadow</td>
+<td style="text-align: left;"><code>0 2px 8px -2px rgba(0, 0, 0, 0.08)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-text-secondary</code></td>
+<td style="text-align: left;">Secondary text color in feed</td>
+<td style="text-align: left;"><code>#71717a</code></td>
+<td style="text-align: center;"><img alt="#71717a" src="https://placehold.co/20/71717a/71717a.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-qr-bg</code></td>
+<td style="text-align: left;">QR Code background color</td>
+<td style="text-align: left;"><code>#fafafa</code></td>
+<td style="text-align: center;"><img alt="#fafafa" src="https://placehold.co/20/fafafa/fafafa.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-modern-qr-fg</code></td>
+<td style="text-align: left;">QR Code foreground color</td>
+<td style="text-align: left;"><code>#000000</code></td>
+<td style="text-align: center;"><img alt="#000000" src="https://placehold.co/20/000000/000000.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-live-screen-elegant-theme">Feature: Live Screen (Elegant Theme)</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-bg</code></td>
+<td style="text-align: left;">Elegant theme background color</td>
+<td style="text-align: left;"><code>#0f172a</code></td>
+<td style="text-align: center;"><img alt="#0f172a" src="https://placehold.co/20/0f172a/0f172a.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-text</code></td>
+<td style="text-align: left;">Elegant theme primary text color</td>
+<td style="text-align: left;"><code>#f8fafc</code></td>
+<td style="text-align: center;"><img alt="#f8fafc" src="https://placehold.co/20/f8fafc/f8fafc.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-gold</code></td>
+<td style="text-align: left;">Signature gold color</td>
+<td style="text-align: left;"><code>#d4af37</code></td>
+<td style="text-align: center;"><img alt="#d4af37" src="https://placehold.co/20/d4af37/d4af37.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-gold-light</code></td>
+<td style="text-align: left;">Highlight gold/yellow color</td>
+<td style="text-align: left;"><code>#fcd34d</code></td>
+<td style="text-align: center;"><img alt="#fcd34d" src="https://placehold.co/20/fcd34d/fcd34d.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-card-bg</code></td>
+<td style="text-align: left;">Card background with transparency</td>
+<td style="text-align: left;"><code>rgba(30, 41, 59, 0.5)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/1e293b/1e293b.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-feed-bg</code></td>
+<td style="text-align: left;">Feed background color</td>
+<td style="text-align: left;"><code>rgba(30, 41, 59, 0.4)</code></td>
+<td style="text-align: center;"><img alt="rgba" src="https://placehold.co/20/1e293b/1e293b.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-feed-border</code></td>
+<td style="text-align: left;">Feed border color</td>
+<td style="text-align: left;"><code>rgba(212, 175, 55, 0.2)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-text-secondary</code></td>
+<td style="text-align: left;">Secondary text color in feed</td>
+<td style="text-align: left;"><code>#94a3b8</code></td>
+<td style="text-align: center;"><img alt="#94a3b8" src="https://placehold.co/20/94a3b8/94a3b8.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-amount-color</code></td>
+<td style="text-align: left;">Donation amount text color</td>
+<td style="text-align: left;"><code>#fbbf24</code></td>
+<td style="text-align: center;"><img alt="#fbbf24" src="https://placehold.co/20/fbbf24/fbbf24.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-glass-blur</code></td>
+<td style="text-align: left;">Blur amount for glass effect</td>
+<td style="text-align: left;"><code>4px</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-qr-bg</code></td>
+<td style="text-align: left;">QR Code background color</td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+<td style="text-align: center;"><img alt="#ffffff" src="https://placehold.co/20/ffffff/ffffff.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--live-elegant-qr-fg</code></td>
+<td style="text-align: left;">QR Code foreground color</td>
+<td style="text-align: left;"><code>#000000</code></td>
+<td style="text-align: center;"><img alt="#000000" src="https://placehold.co/20/000000/000000.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="feature-staff">Feature: Staff</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Value</th>
+<th style="text-align: center;">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>--staff-page-bg</code></td>
+<td style="text-align: left;">Staff page background</td>
+<td style="text-align: left;"><code>var(--muted)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-display-bg</code></td>
+<td style="text-align: left;">Amount display background</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-display-border</code></td>
+<td style="text-align: left;">Amount display border</td>
+<td style="text-align: left;"><code>var(--border)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-bg</code></td>
+<td style="text-align: left;">Keypad area background</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-button-bg</code></td>
+<td style="text-align: left;">Keypad button background</td>
+<td style="text-align: left;"><code>var(--secondary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-button-text</code></td>
+<td style="text-align: left;">Keypad button text</td>
+<td style="text-align: left;"><code>var(--secondary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-input-bg</code></td>
+<td style="text-align: left;">Input background</td>
+<td style="text-align: left;"><code>var(--background)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-input-text</code></td>
+<td style="text-align: left;">Input text</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-input-border</code></td>
+<td style="text-align: left;">Input border</td>
+<td style="text-align: left;"><code>var(--border)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-input-placeholder</code></td>
+<td style="text-align: left;">Placeholder text color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-shadow</code></td>
+<td style="text-align: left;">Key button shadow</td>
+<td style="text-align: left;"><code>rgba(0, 0, 0, 0.05)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-delete-bg</code></td>
+<td style="text-align: left;">Delete button background</td>
+<td style="text-align: left;"><code>var(--global-error-color)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-delete-hover</code></td>
+<td style="text-align: left;">Delete button hover state</td>
+<td style="text-align: left;"><code>#dc2626</code></td>
+<td style="text-align: center;"><img alt="#dc2626" src="https://placehold.co/20/dc2626/dc2626.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-button-height</code></td>
+<td style="text-align: left;">Height of keypad buttons</td>
+<td style="text-align: left;"><code>4rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-amount-size</code></td>
+<td style="text-align: left;">Font size of amount display</td>
+<td style="text-align: left;"><code>3rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-gap</code></td>
+<td style="text-align: left;">Gap between keys</td>
+<td style="text-align: left;"><code>0.75rem</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-display-radius</code></td>
+<td style="text-align: left;">Radius of amount display</td>
+<td style="text-align: left;"><code>var(--global-radius)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-keypad-radius</code></td>
+<td style="text-align: left;">Radius of keypad container</td>
+<td style="text-align: left;"><code>var(--global-radius-lg)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-label-color</code></td>
+<td style="text-align: left;">Label text color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-amount-color</code></td>
+<td style="text-align: left;">Amount text color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-amount-placeholder-color</code></td>
+<td style="text-align: left;">Amount placeholder color</td>
+<td style="text-align: left;"><code>var(--muted-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-type-button-bg</code></td>
+<td style="text-align: left;">Donation type button bg</td>
+<td style="text-align: left;"><code>var(--staff-keypad-button-bg)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-type-button-text</code></td>
+<td style="text-align: left;">Donation type button text</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-type-button-border</code></td>
+<td style="text-align: left;">Type button border</td>
+<td style="text-align: left;"><code>var(--staff-display-border)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-type-button-icon-color</code></td>
+<td style="text-align: left;">Type button icon color</td>
+<td style="text-align: left;"><code>var(--foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-type-button-selected-bg</code></td>
+<td style="text-align: left;">Selected type background</td>
+<td style="text-align: left;"><code>var(--primary)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-type-button-selected-text</code></td>
+<td style="text-align: left;">Selected type text</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--staff-type-button-selected-icon</code></td>
+<td style="text-align: left;">Selected type icon</td>
+<td style="text-align: left;"><code>var(--primary-foreground)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="theme-class-modifiers">Theme Class Modifiers</h3>
+<p>The live themes can be activated by applying CSS classes:</p>
+<div class="highlight"><pre><span></span><code><span class="c">/* Modern theme overrides */</span>
+<span class="p">.</span><span class="nc">live-theme-modern</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">--live-feed-item-bg</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--live-modern-feed-bg</span><span class="p">);</span>
+<span class="w">    </span><span class="c">/* Maps to root variable common to theme */</span>
+<span class="w">    </span><span class="nv">--live-feed-item-border</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--live-modern-feed-border</span><span class="p">);</span>
+<span class="w">    </span><span class="nv">--live-text-main</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--live-modern-text</span><span class="p">);</span>
+<span class="w">    </span><span class="c">/* Overrideable variable */</span>
+<span class="p">}</span>
+
+<span class="c">/* Elegant theme overrides */</span>
+<span class="p">.</span><span class="nc">live-theme-elegant</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">--live-feed-item-bg</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--live-elegant-feed-bg</span><span class="p">);</span>
+<span class="w">    </span><span class="nv">--live-feed-item-border</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--live-elegant-feed-border</span><span class="p">);</span>
+<span class="w">    </span><span class="nv">--live-text-main</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--live-elegant-text</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="3-internationalization-i18n">3. Internationalization (i18n)</h2>
+<p>Translations are handled via key-value JSON resources.</p>
+<ul>
+<li><strong>Default</strong>: The package includes 4 locale files:<ul>
+<li><code>en.default.json</code> (English - <strong>Source of Truth</strong>)</li>
+<li><code>fr.default.json</code> (French)</li>
+<li><code>de.default.json</code> (German)</li>
+<li><code>it.default.json</code> (Italian)</li>
+</ul>
+</li>
+<li><strong>Custom</strong>: Application provides partial translation overrides via config.</li>
+<li><strong>Resolution</strong>: <code>mergeLocales(locale, customResources)</code> performs a deep merge.</li>
+</ul>
+<h3 id="translation-file-structure">Translation File Structure</h3>
+<p>Keys are nested by feature to ensure modularity:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;admin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Admin Dashboard&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;sidebar&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dashboard&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dashboard&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;events&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Events&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;donation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Make a Donation&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;submit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Donate Now&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;custom&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Custom Amount&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;staff&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;ui_keypad&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Keypad&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;collector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Collector&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;thankyou&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Thank You!&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;receipt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Receipt ID&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Amount&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="config-overrides-flat-structure">Config Overrides (Flat Structure)</h3>
+<p>In the <code>EventConfig</code>, locale overrides use a <strong>flat key structure</strong> where keys are dot-notated paths:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;locales&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fr&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;supported&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;en&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;de&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;it&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;overrides&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;fr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;donation.submit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Faire un don maintenant&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;donation.title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Soutenez notre cause&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;thankyou.title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Merci infiniment !&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;common.form_validation_error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Veuillez corriger les erreurs ci-dessous.&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;en&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;donation.submit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Give Now&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;thankyou.title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Thank You So Much!&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="4-assets-images">4. Assets (Images)</h2>
+<ul>
+<li><strong>Default</strong>: The package exports default assets.</li>
+<li><strong>Custom</strong>: You provide a URL string in the configuration.</li>
+<li><strong>Resolution</strong>: Configuration Property replacement.</li>
+</ul>
+<h3 id="supported-assets">Supported Assets</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">key</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>logo</code></td>
+<td style="text-align: left;">Main application logo (Header/PDF)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>favicon</code></td>
+<td style="text-align: left;">Browser tab icon</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>backgroundDonor</code></td>
+<td style="text-align: left;">Background image for Donation Page</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>backgroundLive</code></td>
+<td style="text-align: left;">Background image for Live Screen</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>backgroundLanding</code></td>
+<td style="text-align: left;">Background image for Landing Page</td>
+</tr>
+</tbody>
+</table>
+<h3 id="usage">Usage</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// In event-config.json</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;theme&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;assets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;logo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://mysite.com/my-logo.png&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;backgroundLive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://mysite.com/gala-bg.jpg&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="developer-guide">Developer Guide</h2>
+<h3 id="adding-a-new-default">Adding a New Default</h3>
+<ol>
+<li>Edit <code>packages/white-labeling/src/config/event-config.default.json</code>.</li>
+<li>Add the type definition in <code>packages/white-labeling/src/types/EventConfig.ts</code>.</li>
+</ol>
+<h3 id="publishing">Publishing</h3>
+<p>The package is built using <code>tsup</code> and exports:</p>
+<ul>
+<li><code>.</code> (Main entry: logic &amp; types)</li>
+<li><code>./css</code> (The default stylesheet)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "content.code.copy", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import PdfPrinter from 'pdfmake'
 import * as path from 'path'
+import * as fs from 'fs'
 import { WhiteLabelingService } from '../white-labeling/white-labeling.service'
 import { HttpService } from '@nestjs/axios'
 import { firstValueFrom } from 'rxjs'
@@ -19,7 +20,18 @@ export class PdfService {
         private readonly configService: ConfigService,
         private readonly httpService: HttpService,
     ) {
-        const fontBase = path.join(process.cwd(), 'src/assets/fonts')
+        this.initializePrinter()
+    }
+
+    private initializePrinter() {
+        const fontBase = this.resolveFontPath()
+
+        if (!fontBase) {
+            this.logger.error('Could not find fonts directory in any expected location.')
+            return
+        }
+
+        this.logger.log(`Found fonts at: ${fontBase}`)
 
         const fonts = {
             Roboto: {
@@ -29,11 +41,24 @@ export class PdfService {
                 bolditalics: path.join(fontBase, 'Roboto-Bold.ttf'),
             },
         }
+
         try {
             this.printer = new PdfPrinter(fonts)
+            this.logger.log('PdfPrinter initialized successfully')
         } catch (error) {
             this.logger.error('Failed to initialize PdfPrinter', error)
         }
+    }
+
+    private resolveFontPath(): string | null {
+        const potentialPaths = [
+            path.join(__dirname, '../../../assets/fonts'),
+            path.join(process.cwd(), 'dist/apps/api/assets/fonts'),
+            path.join(process.cwd(), 'src/assets/fonts'),
+            path.join(__dirname, '../../assets/fonts'),
+        ]
+
+        return potentialPaths.find((p) => fs.existsSync(p)) || null
     }
 
     // Overload 1: Convenience (Builds context then calls Overload 2)
@@ -65,6 +90,10 @@ export class PdfService {
         })
 
         return new Promise((resolve, reject) => {
+            if (!this.printer) {
+                return reject(new Error('PdfService is not completely initialized (missing fonts)'))
+            }
+
             try {
                 const pdfDoc = this.printer.createPdfKitDocument(docDefinition as any)
                 const chunks: Buffer[] = []

@@ -101,7 +101,7 @@ describe('StaffManagementPage', () => {
                 code: '5555',
             }),
         )
-        expect(toast.success).toHaveBeenCalledWith('admin_team.member_created')
+        expect(toast.success).toHaveBeenCalledWith('admin_team.success_created')
     })
 
     it('allows editing a staff member', async () => {

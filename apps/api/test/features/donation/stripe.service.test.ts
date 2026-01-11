@@ -4,17 +4,21 @@ import { ConfigService } from '@nestjs/config'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // Mock Stripe library
-const mockStripeInstance = {
-    paymentIntents: {
-        create: vi.fn(),
-    },
-    webhooks: {
-        constructEvent: vi.fn(),
-    },
-    refunds: {
-        create: vi.fn(),
-    },
-}
+const { mockStripeInstance } = vi.hoisted(() => {
+    return {
+        mockStripeInstance: {
+            paymentIntents: {
+                create: vi.fn(),
+            },
+            webhooks: {
+                constructEvent: vi.fn(),
+            },
+            refunds: {
+                create: vi.fn(),
+            },
+        },
+    }
+})
 
 vi.mock('stripe', () => {
     return {
@@ -45,6 +49,10 @@ describe('StripeService', () => {
         }).compile()
 
         service = module.get<StripeService>(StripeService)
+
+        // Mock Logger
+        vi.spyOn((service as any).logger, 'error').mockImplementation(() => {})
+
         vi.clearAllMocks()
     })
 

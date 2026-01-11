@@ -52,6 +52,8 @@ describe('AppConfigProvider', () => {
     it('handles error during initialization', async () => {
         ;(whiteLabeling.initWhiteLabeling as any).mockRejectedValue(new Error('Fatal Error'))
 
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
         render(
             <MemoryRouter>
                 <AppConfigProvider>
@@ -63,6 +65,8 @@ describe('AppConfigProvider', () => {
         await waitFor(() => expect(whiteLabeling.initWhiteLabeling).toHaveBeenCalled())
         // Since it stops being loading, it renders children (even if error is set in context)
         expect(screen.getByText('Default')).toBeDefined()
+
+        consoleSpy.mockRestore()
     })
 
     it('refreshes config when refreshConfig is called', async () => {

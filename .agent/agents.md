@@ -64,7 +64,7 @@ fundraising-event/
 │           │   ├── hooks/         # Global hooks
 │           │   ├── lib/           # Utilities (api, i18n, utils)
 │           │   ├── providers/     # Context providers
-│           │   └── stores/        # Global state (Jotai)
+│           │   └── stores/        # Global state
 │           │
 │           ├── features/          # Domain features
 │           │   ├── admin/         # Admin Dashboard
@@ -157,7 +157,6 @@ fundraising-event/
 - **Organization:** Colocate styles, tests, and sub-components within the feature folder.
 - **Hooks:** comprehensive use of custom hooks to separate logic from UI.
 - **State:**
-    - `Jotai` for global client state (e.g., live counter).
     - `TanStack Query` for server state (caching, loading states).
 - **Styling:** **Tailwind CSS v4**.
     - Use utility classes for layout and spacing.

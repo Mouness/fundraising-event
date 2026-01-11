@@ -33,6 +33,12 @@ describe('PayPalService', () => {
         }).compile()
 
         service = module.get<PayPalService>(PayPalService)
+        service = module.get<PayPalService>(PayPalService)
+
+        // Mock Logger
+        vi.spyOn((service as any).logger, 'error').mockImplementation(() => {})
+        vi.spyOn((service as any).logger, 'warn').mockImplementation(() => {})
+
         vi.clearAllMocks()
     })
 

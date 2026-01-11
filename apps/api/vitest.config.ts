@@ -7,6 +7,12 @@ export default defineConfig({
         root: './',
         include: ['test/**/*.test.ts', 'src/**/*.test.ts'],
         exclude: ['**/node_modules/**', '**/dist/**'],
+        setupFiles: ['./test/setup.ts'],
+        server: {
+            deps: {
+                inline: ['pdfmake'],
+            },
+        },
     },
     resolve: {
         alias: {

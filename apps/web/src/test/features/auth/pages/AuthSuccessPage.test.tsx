@@ -38,6 +38,8 @@ describe('AuthSuccessPage', () => {
     })
 
     it('navigates to login if no token provided', async () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
         render(
             <MemoryRouter initialEntries={['/auth/success']}>
                 <AuthSuccessPage />
@@ -47,6 +49,8 @@ describe('AuthSuccessPage', () => {
         await waitFor(() => {
             expect(mockNavigate).toHaveBeenCalledWith('/login')
         })
+
+        consoleSpy.mockRestore()
     })
 
     it('stores token and user then navigates to home when token is present', async () => {

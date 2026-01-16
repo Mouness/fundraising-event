@@ -10,9 +10,9 @@
         "test:cov": "vitest run --coverage"
     },
     "devDependencies": {
-        "@vitest/coverage-v8": "^4.0.16",
+        "@vitest/coverage-v8": "^4.0.17",
         "typescript": "^5.0.0",
-        "vitest": "^4.0.16"
+        "vitest": "^4.0.17"
     },
     "dependencies": {
         "class-validator": "^0.14.3"
